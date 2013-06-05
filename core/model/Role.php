@@ -119,7 +119,7 @@ class Role {
     }
     
     
-        /**
+    /**
      * get isArchived
      * @return type boolean is Archived
      */
