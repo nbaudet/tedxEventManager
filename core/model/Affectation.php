@@ -56,15 +56,6 @@ class Affectation {
     
     
     /**
-     * set organizerPersonNo
-     * @param type $organizerPersonNo 
-     */
-    public function setOrganizerPersonNo($organizerPersonNo) {
-        $this->organizerPersonNo = $organizerPersonNo; 
-    }
-    
-    
-    /**
      * get team role name
      * @return type teamRoleName
      */
@@ -74,11 +65,20 @@ class Affectation {
     
     
     /**
-     * set team role name
-     * @param type $teamRoleName 
+     * get isArchived
+     * @return type boolean
      */
-    public function setTeamRoleName($teamRoleName) {
-        $this->teamRoleName = $teamRoleName; 
+    public function getIsArchived() {
+        return $this->isArchived; 
+    }
+    
+    
+    /**
+     * set isArchived
+     * @param type $isArchived 
+     */
+    public function setIsArchived($isArchived) {
+        $this->isArchived = $isArchived; 
     }
     
     

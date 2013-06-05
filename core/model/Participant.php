@@ -54,12 +54,6 @@ class Participant extends Person {
     }
     
     
-    /**
-     * set person numero
-     * @param type $personNo 
-     */
-    public function setPersonNo($personNo) {
-        $this->personNo = $personNo; 
-    }
+
 }//class
 ?>

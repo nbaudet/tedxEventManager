@@ -102,8 +102,13 @@ class Person {
 }//construct
 
 
-
-
+/**
+ * get numero
+ * @return type numero
+ */
+public function getNo() {
+   return $this->no; 
+}
 
 
 /**
