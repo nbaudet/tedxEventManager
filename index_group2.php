@@ -1,0 +1,1 @@
+template groupe 2
