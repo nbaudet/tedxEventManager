@@ -2,8 +2,9 @@
 
 
 
+
 /**
- * Keyword.class.php
+ * Role.class.php
  * 
  * Author : Guillaume Lehmann
  * Date : 05.06.2013
@@ -11,37 +12,42 @@
  * Description : define the class Registration as definited in the model
  * 
  */
-class Keyword {
-    
+class Role {
     
     
     /**
-     * Keyword's value
-     * @var type int
+     * Role's name
+     * @var type string
      */
-    private $value; 
+    private $name; 
     
     
     /**
-     * Keyword's eventNo
+     * Role's numero
      * @var type int
      */
     private $eventNo; 
     
     
     /**
-     * Keyword's participantPersonNo
-     * @var type int participantPersonNo
+     * Role's organizerPersonNo
+     * @var type int
      */
-    private $participantPersonNo; 
+    private $organizerPersonNo; 
     
     
     /**
-     * Keyword's isArchived
+     * Role's level
+     * @var type int; 
+     */
+    private $level; 
+    
+    
+    /**
+     * Role's isArchived
      * @var type boolean
      */
-    private $isArtichved; 
-    
+    private $isArchived; 
     
     
     
@@ -54,11 +60,12 @@ class Keyword {
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
-            
+                       
         }//if
-        $this->value = $array['value']; 
+        $this->name = $array['name']; 
         $this->eventNo = $array['eventNo']; 
-        $this->participantPersonNo = $array['participantPersonNo']; 
+        $this->organizerPersonNo = $array['organizerPersonNo']; 
+        $this->level = $array['level']; 
         $this->isArchived = $array['isArchived']; 
         
  
@@ -67,13 +74,12 @@ class Keyword {
     
     
     
-    
     /**
-     * get value
-     * @return type value
+     * get name
+     * @return type string name
      */
-    public function getValue() {
-        return $this->value; 
+    public function getName() {
+        return $this->name; 
     }
     
     
@@ -87,15 +93,33 @@ class Keyword {
     
     
     /**
-     * get participantPersonNo
-     * @return type int participantPersonNo
+     * get organizerPersonNo
+     * @return type int organizerPersonNo
      */
-    public function getParticipantPersonNo() {
-        return $this->participantPersonNo; 
+    public function getorganizerPersonNo() {
+        return $this->organizerPersonNo; 
     }
     
     
     /**
+     * get level
+     * @return type int level
+     */
+    public function getLevel() {
+        return $this->level; 
+    }
+  
+    
+    /**
+     * set level
+     * @param type $level 
+     */
+    public function setlevel($level) {
+        $this->level = $level; 
+    }
+    
+    
+        /**
      * get isArchived
      * @return type boolean is Archived
      */
@@ -111,7 +135,6 @@ class Keyword {
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }
-    
     
     
     
