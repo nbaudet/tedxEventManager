@@ -73,7 +73,7 @@ class Access {
      */
     public function getNo() {
         return $this->no; 
-    }
+    }//function
     
     
     /**
@@ -82,7 +82,7 @@ class Access {
      */
     public function getService() {
         return $this->service; 
-    }
+    }//function
     
     
     /**
@@ -91,7 +91,7 @@ class Access {
      */
     public function setService($service) {
         $this->service = $service; 
-    }
+    }//function
     
     
     /**
@@ -100,7 +100,7 @@ class Access {
      */
     public function getType() {
         return $this->type; 
-    }
+    }//function
     
     
     /**
@@ -109,7 +109,7 @@ class Access {
      */
     public function setType($type) {
         $this->type = $type; 
-    }
+    }//function
     
     
     /**
@@ -118,7 +118,7 @@ class Access {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -127,7 +127,7 @@ class Access {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
-    }
+    }//function
     
     
     

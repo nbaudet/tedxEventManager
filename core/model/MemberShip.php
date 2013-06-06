@@ -64,7 +64,7 @@ class MemberShip {
      */
     public function getMemberId() {
         return $this->memberId; 
-    }
+    }//function
     
     
     /**
@@ -73,7 +73,7 @@ class MemberShip {
      */
     public function getUnitNo() {
         return $this->unitNo; 
-    }
+    }//function
     
     
     /**
@@ -82,7 +82,7 @@ class MemberShip {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
 
     
     /**
@@ -91,7 +91,7 @@ class MemberShip {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

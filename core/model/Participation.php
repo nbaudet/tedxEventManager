@@ -74,7 +74,7 @@ class Participation {
      */
     public function getSlotNo() {
         return $this->slotNo; 
-    }
+    }//function
     
     
     /**
@@ -83,7 +83,7 @@ class Participation {
      */
     public function getSlotEventNo() {
         return $this->slotEventNo; 
-    }
+    }//function
     
     
     /**
@@ -92,7 +92,7 @@ class Participation {
      */
     public function getParticipantPersonNo() {
         return $this->participantPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -101,7 +101,7 @@ class Participation {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -110,7 +110,7 @@ class Participation {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
 }//class

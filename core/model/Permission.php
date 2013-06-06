@@ -61,7 +61,7 @@ class Permission {
      */
     public function getAccessNo() {
         return $this->accessNo; 
-    }
+    }//function
     
     
     /**
@@ -70,7 +70,7 @@ class Permission {
      */
     public function getUnitNo() {
         return $this->unitNo; 
-    }
+    }//function
     
     
     /**
@@ -79,7 +79,7 @@ class Permission {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -88,7 +88,7 @@ class Permission {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
-    }
+    }//function
     
     
     

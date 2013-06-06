@@ -40,6 +40,7 @@ class Affectation {
         }//if       
         $this->organizerPersonNo = $array['organizerPersonNo']; 
         $this->teamRoleName = $array['teamRoleName']; 
+        $this->isArchived = $array['isArchived']; 
         
         
         
@@ -52,7 +53,7 @@ class Affectation {
      */
     public function getOrganizerPersonNo() {
         return $this->organizerPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -61,7 +62,7 @@ class Affectation {
      */
     public function getTeamRoleName() {
         return $this->teamRoleName; 
-    }
+    }//function
     
     
     /**
@@ -70,7 +71,7 @@ class Affectation {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -79,7 +80,7 @@ class Affectation {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
 }//class

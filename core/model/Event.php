@@ -106,7 +106,7 @@ class Event {
      */
     public function getNo() {
         return $this->no; 
-    }
+    }//function
     
     
     /**
@@ -115,7 +115,7 @@ class Event {
      */
     public function getMainTopic() {
         return $this->mainTopic; 
-    }
+    }//function
     
     
     /**
@@ -124,7 +124,7 @@ class Event {
      */
     public function setMainTopic($mainTopic) {
         $this->mainTopic = $mainTopic; 
-    }
+    }//function
     
     
     /**
@@ -133,7 +133,7 @@ class Event {
      */
     public function getStartingDate() {
         return $this->startingDate; 
-    }
+    }//function
     
     
     /**
@@ -142,7 +142,7 @@ class Event {
      */
     public function setStartingDate($startingDate) {
         $this->startingDate = $startingDate; 
-    }
+    }//function
     
     
     /**
@@ -151,7 +151,7 @@ class Event {
      */
     public function getEndingDate() {
         return $this->endingDate; 
-    }
+    }//function
     
     
     /**
@@ -160,7 +160,7 @@ class Event {
      */
     public function setEndingDate($endingDate) {
         $this->endingDate = $endingDate; 
-    }
+    }//function
     
     
     /**
@@ -169,7 +169,7 @@ class Event {
      */
     public function getStartingTime() {
         return $this->startingTime; 
-    }
+    }//function
     
     
     /**
@@ -178,7 +178,7 @@ class Event {
      */
     public function setStartingTime($startingTime) {
         $this->startingTime = $startingTime; 
-    }
+    }//function
     
     
     /**
@@ -187,7 +187,7 @@ class Event {
      */
     public function getEndingTime() {
         return $this->endingTime; 
-    }
+    }//function
     
     
     /**
@@ -196,7 +196,7 @@ class Event {
      */
     public function setEndingTime($endingTime) {
         $this->endingTime = $endingTime; 
-    }
+    }//function
     
     
     /**
@@ -205,7 +205,7 @@ class Event {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -214,7 +214,7 @@ class Event {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     /**
@@ -223,7 +223,7 @@ class Event {
      */
     public function getMaxParticipant() {
         return $this->maxParticipant; 
-    }
+    }//function
     
     
     /**
@@ -232,7 +232,7 @@ class Event {
      */
     public function setMaxParticipant($maxParticipant) {
         $this->maxParticipant = $maxParticipant; 
-    }
+    }//function
     
     
 }//class

@@ -73,7 +73,7 @@ class Member {
      */
     public function getId() {
         return $this->id; 
-    }
+    }//function
     
     
     /**
@@ -91,7 +91,7 @@ class Member {
      */
     public function setPassword($password) {
         $this->password = $password; 
-    }
+    }//function
     
     
     /**
@@ -100,7 +100,7 @@ class Member {
      */
     public function getPersonNo() {
         return $this->personNo; 
-    }
+    }//function
     
     
     /**
@@ -109,7 +109,7 @@ class Member {
      */
     public function setPersonNo($personNo) {
         $this->personNo = $personNo; 
-    }
+    }//function
     
     
     /**
@@ -118,7 +118,7 @@ class Member {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -127,7 +127,7 @@ class Member {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

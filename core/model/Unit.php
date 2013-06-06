@@ -62,7 +62,7 @@ class Unit {
      */
     public function getNo() {
         return $this->no; 
-    }
+    }//function
     
     
     /**
@@ -71,7 +71,7 @@ class Unit {
      */
     public function getName() {
         return $this->name; 
-    }
+    }//function
     
     
     /**
@@ -80,7 +80,7 @@ class Unit {
      */
     public function setName($name) {
         $this->name = $name; 
-    }
+    }//function
     
     
     /**
@@ -89,7 +89,7 @@ class Unit {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -98,7 +98,7 @@ class Unit {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
 }//class

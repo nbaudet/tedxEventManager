@@ -21,6 +21,12 @@ class Speaker extends Person {
     protected $personNo; 
     
     
+    /**
+     * Speaker's isArchived
+     * @var type boolean
+     */
+    protected $isArchived; 
+    
     
     /**
      * Constructs object Speaker
@@ -36,6 +42,7 @@ class Speaker extends Person {
         parent::__construct($array);
         
         $this->personNo = $array['personNo']; 
+        $this->isArchived = $array['isArchived']; 
         
         
         
@@ -52,7 +59,25 @@ class Speaker extends Person {
      */
     public function getPersonNo() {
         return $this->personNo; 
-    }
+    }//function
+    
+    
+    /**
+     * get isArchived
+     * @return type boolean isArchived
+     */
+    public function getIsArchived() {
+        return $this->isArchived; 
+    }//function
+    
+    
+    /**
+     * set isArchived
+     * @param type $isArchived 
+     */
+    public function setIsArchived($isArchived) {
+        $this->isArchived = $isArchived;   
+    }//function
     
     
   

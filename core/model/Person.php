@@ -72,6 +72,13 @@ class Person {
     * @var type string
     */
    protected $email; 
+   
+   
+   /**
+    * Person's isArchived
+    * @var type boolean
+    */
+   protected $isArchived; 
     
    
    
@@ -94,6 +101,7 @@ class Person {
         $this->country = $array['country']; 
         $this->phoneNumber = $array['phoneNumber']; 
         $this->email = $array['email']; 
+        $this->isArchived = $array['isArchived']; 
                 
         
     }//construct
@@ -214,6 +222,24 @@ class Person {
     public function setEmail($email) {
         $this->email = email; 
     }// function
+    
+    
+    /**
+     * get isArchived
+     * @return type boolean isArchived
+     */
+    public function getIsArchived() {
+        return $this->isArchived; 
+    }//function
+    
+    
+    /**
+     * set isArchived
+     * @param type $isArchived 
+     */
+    public function setIsArchived($isArchived) {
+        $this->isArchived = $isArchived;   
+    }//function
 
 
 

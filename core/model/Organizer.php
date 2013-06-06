@@ -20,6 +20,14 @@ class Organizer extends Person{
     protected $personNo; 
     
     
+    /**
+     * Organizer's isArchived
+     * @var type boolean
+     */
+    protected $isArchived; 
+
+
+    
     
     /**
      * Constructs object Organizer
@@ -35,6 +43,7 @@ class Organizer extends Person{
         parent::__construct($array);
         
         $this->personNo = $array['personNo']; 
+        $this->isArchived = $array['isArchived']; 
         
         
         
@@ -51,7 +60,25 @@ class Organizer extends Person{
      */
     public function getPersonNo() {
         return $this->personNo; 
-    }
+    }//function
+    
+    
+    /**
+     * get isArchived
+     * @return type boolean isArchived
+     */
+    public function getIsArchived() {
+        return $this->isArchived; 
+    }//function
+    
+    
+    /**
+     * set isArchived
+     * @param type $isArchived 
+     */
+    public function setIsArchived($isArchived) {
+        $this->isArchived = $isArchived;   
+    }//function
     
     
 
