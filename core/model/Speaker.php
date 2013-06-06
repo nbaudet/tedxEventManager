@@ -28,6 +28,7 @@ class Speaker extends Person {
     protected $isArchived; 
     
     
+    
     /**
      * Constructs object Speaker
      * 
@@ -47,7 +48,6 @@ class Speaker extends Person {
         
         
     }//construct
-    
     
     
     

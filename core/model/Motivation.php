@@ -75,7 +75,7 @@ class Motivation {
      */
     public function getText() {
         return $this->text; 
-    }
+    }//function
     
     
     /**
@@ -84,7 +84,7 @@ class Motivation {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
    
     
     /**
@@ -93,7 +93,7 @@ class Motivation {
      */
     public function getParticipantPersonNo($participantPersonNo) {
         $this->participantPersonNo = $participantPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -102,7 +102,7 @@ class Motivation {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -111,7 +111,7 @@ class Motivation {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

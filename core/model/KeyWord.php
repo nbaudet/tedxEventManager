@@ -40,7 +40,7 @@ class Keyword {
      * Keyword's isArchived
      * @var type boolean
      */
-    private $isArtichved; 
+    private $isArchived; 
     
     
     
@@ -74,7 +74,7 @@ class Keyword {
      */
     public function getValue() {
         return $this->value; 
-    }
+    }//function
     
     
     /**
@@ -83,7 +83,7 @@ class Keyword {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
     
     
     /**
@@ -92,7 +92,7 @@ class Keyword {
      */
     public function getParticipantPersonNo() {
         return $this->participantPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -101,7 +101,7 @@ class Keyword {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -110,7 +110,7 @@ class Keyword {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

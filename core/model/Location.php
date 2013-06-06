@@ -80,7 +80,7 @@ class Location {
      */
     public function getName() {
         return $this->name; 
-    }
+    }//function
     
     
     /**
@@ -89,7 +89,7 @@ class Location {
      */
     public function getAddress() {
         return $this->address; 
-    }
+    }//function
     
     
     /**
@@ -98,7 +98,7 @@ class Location {
      */
     public function setAddress($address) {
         $this->address = $address; 
-    }
+    }//function
     
     
     /**
@@ -107,7 +107,7 @@ class Location {
      */
     public function getCity() {
         return $this->city; 
-    }
+    }//function
     
     
     /**
@@ -116,7 +116,7 @@ class Location {
      */
     public function setCity($city) {
         $this->city = $city; 
-    }
+    }//function
     
     
     /**
@@ -125,7 +125,7 @@ class Location {
      */
     public function getCountry() {
         return $this->country; 
-    }
+    }//function
     
     
     /**
@@ -134,7 +134,7 @@ class Location {
      */
     public function setCountry($country) {
         $this->country = $country; 
-    }
+    }//function
     
     
     /**
@@ -143,7 +143,7 @@ class Location {
      */
     public function getDirection() {
         return $this->direction; 
-    }
+    }//function
    
     
     /**
@@ -152,6 +152,9 @@ class Location {
      */
     public function setDirection($direction) {
         $this->direction = $direction; 
-    }
+    }//function
+    
+    
+    
 }//class
 ?>

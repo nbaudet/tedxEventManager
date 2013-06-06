@@ -12,18 +12,28 @@
  */
 class Affectation {
     
+    
+    
     /**
-     * Organizer's Organizer person no 
+     * Affectation's organizerPersonNo
      * @var type int
      */
-    protected $organizerPersonNo; 
+    private $organizerPersonNo; 
     
     
     /**
-     * Organizer's team role name
+     * Affectation's teamRoleName
      * @var type string
      */
-    protected $teamRoleName; 
+    private $teamRoleName; 
+    
+    
+    /**
+     * Affectation's isArchived
+     * @var type boolean
+     */
+    private $isArchived; 
+    
     
     
     

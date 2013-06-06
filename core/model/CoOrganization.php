@@ -66,7 +66,7 @@ class CoOrganization {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
     
     
     /**
@@ -75,7 +75,7 @@ class CoOrganization {
      */
     public function getSpeakerPersonNo() {
         return $this->speakerPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -84,7 +84,7 @@ class CoOrganization {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -93,7 +93,7 @@ class CoOrganization {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

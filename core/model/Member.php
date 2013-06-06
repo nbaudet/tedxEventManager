@@ -82,7 +82,7 @@ class Member {
      */
     public function getPassword() {
         return $this->password; 
-    }
+    }//function
     
     
     /**

@@ -88,7 +88,7 @@ class Slot {
      */
     public function getNo() {
         return $this->no; 
-    }
+    }//function
     
     
     /**
@@ -97,7 +97,7 @@ class Slot {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
     
     
     /**
@@ -106,7 +106,7 @@ class Slot {
      */
     public function getHappeningDate() {
         return $this->happeningDate; 
-    }
+    }//function
     
     
     /**
@@ -115,7 +115,7 @@ class Slot {
      */
     public function setHappeingDate($happeningDate) {
         return $this->happeningDate; 
-    }
+    }//function
     
     
     
@@ -125,7 +125,7 @@ class Slot {
      */
     public function setHappeningDate($happeningDate) {
         $this->happeningDate = $happeningDate; 
-    }
+    }//function
     
     
     /**
@@ -134,7 +134,7 @@ class Slot {
      */
     public function getStartingTime() {
         return $this->startingTime; 
-    }
+    }//function
     
     
     /**
@@ -143,7 +143,7 @@ class Slot {
      */
     public function setStartingTime($startingTime) {
         $this->startingTime = $startingTime; 
-    }
+    }//function
     
     
     /**
@@ -152,7 +152,7 @@ class Slot {
      */
     public function getEndingTime() {
         return $this->endingTime; 
-    }
+    }//function
     
     /**
      * set endingTime
@@ -160,7 +160,7 @@ class Slot {
      */
     public function setEndingTime($endingTime) {
         $this->endingTime = $endingTime; 
-    }
+    }//function
     
     
     /**
@@ -169,7 +169,7 @@ class Slot {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -178,7 +178,7 @@ class Slot {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
    
     
 }//class

@@ -80,7 +80,7 @@ class Role {
      */
     public function getName() {
         return $this->name; 
-    }
+    }//function
     
     
     /**
@@ -89,7 +89,7 @@ class Role {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
     
     
     /**
@@ -98,7 +98,7 @@ class Role {
      */
     public function getorganizerPersonNo() {
         return $this->organizerPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -107,7 +107,7 @@ class Role {
      */
     public function getLevel() {
         return $this->level; 
-    }
+    }//function
   
     
     /**
@@ -116,7 +116,7 @@ class Role {
      */
     public function setlevel($level) {
         $this->level = $level; 
-    }
+    }//function
     
     
     /**
@@ -125,7 +125,7 @@ class Role {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -134,7 +134,7 @@ class Role {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

@@ -65,7 +65,7 @@ class TeamRole {
      */
     public function getName() {
         return $this->name; 
-    }
+    }//function
     
     
     /**
@@ -74,7 +74,7 @@ class TeamRole {
      */
     public function getIsMemberOf() {
         return $this->isMemberOf; 
-    }
+    }//function
     
     
     /**
@@ -83,7 +83,7 @@ class TeamRole {
      */
     public function setIsMemberOf($isMemberOf) {
         $this->isMemberOf = $isMemberOf; 
-    }
+    }//function
     
     
     /**
@@ -92,7 +92,7 @@ class TeamRole {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -101,7 +101,7 @@ class TeamRole {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

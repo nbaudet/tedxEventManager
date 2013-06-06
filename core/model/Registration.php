@@ -91,7 +91,7 @@ class Registration {
      */
     public function getStatus() {
         return $this->status; 
-    }
+    }//function
     
     
     /**
@@ -100,7 +100,7 @@ class Registration {
      */
     public function getEventNo() {
         return $this->eventNo; 
-    }
+    }//function
     
     
     /**
@@ -109,7 +109,7 @@ class Registration {
      */
     public function getParticipantPersonNo() {
         return $this->participantPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -118,7 +118,7 @@ class Registration {
      */
     public function getRegistrationDate() {
         return $this->registrationDate; 
-    }
+    }//function
     
     
     /**
@@ -127,7 +127,7 @@ class Registration {
      */
     public function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate; 
-    }
+    }//function
     
     
     /**
@@ -136,7 +136,7 @@ class Registration {
      */
     public function getType() {
         return $this->type; 
-    }
+    }//function
     
     
     /**
@@ -145,7 +145,7 @@ class Registration {
      */
     public function setType($type) {
         $this->type = $type; 
-    }
+    }//function
     
     
     /**
@@ -154,7 +154,7 @@ class Registration {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -163,7 +163,7 @@ class Registration {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     

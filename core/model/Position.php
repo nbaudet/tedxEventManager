@@ -78,7 +78,7 @@ class Position {
      */
     public function getNo() {
         return $this->no; 
-    }
+    }//function
     
     
     /**
@@ -87,7 +87,7 @@ class Position {
      */
     public function getSlotNo() {
         return $this->slotNo; 
-    }
+    }//function
     
     
     /**
@@ -96,7 +96,7 @@ class Position {
      */
     public function getSlotEventNo() {
         return $this->slotEventNo; 
-    }
+    }//function
     
     
     /**
@@ -105,7 +105,7 @@ class Position {
      */
     public function getSpeakerPersonNo() {
         return $this->speakerPersonNo; 
-    }
+    }//function
     
     
     /**
@@ -114,7 +114,7 @@ class Position {
      */
     public function getIsArchived() {
         return $this->isArchived; 
-    }
+    }//function
     
     
     /**
@@ -123,7 +123,7 @@ class Position {
      */
     public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
-    }
+    }//function
     
     
     
