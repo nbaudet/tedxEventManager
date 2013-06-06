@@ -17,7 +17,7 @@ class Keyword {
     
     /**
      * Keyword's value
-     * @var type int
+     * @var type string
      */
     private $value; 
     
@@ -70,7 +70,7 @@ class Keyword {
     
     /**
      * get value
-     * @return type value
+     * @return type string value
      */
     public function getValue() {
         return $this->value; 
