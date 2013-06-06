@@ -153,5 +153,5 @@ class Location {
     public function setDirection($direction) {
         $this->direction = $direction; 
     }
-}
+}//class
 ?>
