@@ -1,14 +1,11 @@
 <?php
-
-
-
 /**
  * Person.class.php
  * 
  * Author : Guillaume Lehmann
  * Date : 05.06.2013
  * 
- * Description : define the class Person as definited in the model
+ * Description : define the class Person as described in the model
  * 
  */
 class Person {
@@ -99,124 +96,124 @@ class Person {
         $this->email = $array['email']; 
                 
         
-}//construct
+    }//construct
 
 
-/**
- * get numero
- * @return type numero
- */
-public function getNo() {
-   return $this->no; 
-}
+    /**
+     * get numero
+     * @return type numero
+     */
+    public function getNo() {
+       return $this->no; 
+    }// function
 
 
-/**
- * get name
- * @return name
- */
-public function getName() {
-    return $this->name; 
-}
+    /**
+     * get name
+     * @return name
+     */
+    public function getName() {
+        return $this->name; 
+    }// function
 
 
-/**
- * set no
- * @param type $name 
- */
-public function setName($name) {
-    $this->name = $name; 
-}
+    /**
+     * set no
+     * @param type $name 
+     */
+    public function setName($name) {
+        $this->name = $name; 
+    }// function
 
 
-/**
- * get first name
- * @return type firstName
- */
-public function getFirstName() {
-    return $this->firstName; 
-}
+    /**
+     * get first name
+     * @return type firstName
+     */
+    public function getFirstName() {
+        return $this->firstName; 
+    }// function
 
 
-/**
- * set first name
- * @param type $first name 
- */
-public function setFirstName($firstName) {   
-    $this->firstName = $firstName; 
-}
+    /**
+     * set first name
+     * @param type $first name 
+     */
+    public function setFirstName($firstName) {   
+        $this->firstName = $firstName; 
+    }// function
 
 
-/**
- * get date of birth
- * @return type dateOfBirth
- */
-public function getDateOfBirth() {
-    return $this->dateOfBirth; 
-}
+    /**
+     * get date of birth
+     * @return type dateOfBirth
+     */
+    public function getDateOfBirth() {
+        return $this->dateOfBirth; 
+    }// function
 
 
-/**
- * set date of birth
- * @param type $dateOfBirth 
- */
-public function setDateOfBirth($dateOfBirth) {  
-    $this->dateOfBirth = $dateOfBirth; 
-}
+    /**
+     * set date of birth
+     * @param type $dateOfBirth 
+     */
+    public function setDateOfBirth($dateOfBirth) {  
+        $this->dateOfBirth = $dateOfBirth; 
+    }// function
 
 
-/**
- * get address
- * @return type address
- */
-public function getAddress() {
-    return $this->address; 
-}
+    /**
+     * get address
+     * @return type address
+     */
+    public function getAddress() {
+        return $this->address; 
+    }// function
 
 
-/**
- * set address
- * @param type $address 
- */
-public function setAddress($address) {
-    $this->address = $address; 
-}
+    /**
+     * set address
+     * @param type $address 
+     */
+    public function setAddress($address) {
+        $this->address = $address; 
+    }// function
 
 
-/**
- * get country
- * @return type country
- */
-public function getCountry() {
-    return $this->country; 
-}
+    /**
+     * get country
+     * @return type country
+     */
+    public function getCountry() {
+        return $this->country; 
+    }// function
 
 
-/**
- * set country
- * @param type $country 
- */
-public function setCountry($country) {
-    $this->country = $country; 
-}
+    /**
+     * set country
+     * @param type $country 
+     */
+    public function setCountry($country) {
+        $this->country = $country; 
+    }// function
 
 
-/**
- * get email
- * @return type email
- */
-public function getEmail() {
-    return $this->email; 
-}
+    /**
+     * get email
+     * @return type email
+     */
+    public function getEmail() {
+        return $this->email; 
+    }// function
 
 
-/**
- * set email
- * @param type $email 
- */
-public function setEmail($email) {
-    $this->email = email; 
-}
+    /**
+     * set email
+     * @param type $email 
+     */
+    public function setEmail($email) {
+        $this->email = email; 
+    }// function
 
 
 
