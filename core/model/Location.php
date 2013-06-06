@@ -48,6 +48,13 @@ class Location {
     private $direction; 
     
     
+    /**
+     * Location's isArchived
+     * @var type boolean
+     */
+    private $isArchived; 
+    
+    
     
     /**
      * Constructs object Location
@@ -64,7 +71,8 @@ class Location {
         $this->address = $array['address']; 
         $this->city = $array['city']; 
         $this->country = $array['country']; 
-        $this->direction = $array['direction']; 
+        $this->direction = $array['direction'];
+        $this->isArchived = $array['isArchived']; 
         
  
         
@@ -153,6 +161,25 @@ class Location {
     public function setDirection($direction) {
         $this->direction = $direction; 
     }//function
+    
+    
+    /**
+     * get isArchived
+     * @return type boolean isArchived
+     */
+    public function getIsArchived() {
+        return $this->isArchived; 
+    }
+    
+    
+    /**
+     * set IsArchived
+     * @param type $isArchived 
+     */
+    public function setIsArchived($isArchived) {
+        $this->isArchived = $isArchived; 
+    }
+    
     
     
     
