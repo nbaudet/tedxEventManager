@@ -84,7 +84,7 @@ class Slot {
     
     /**
      * get numero
-     * @return type int
+     * @return type int no
      */
     public function getNo() {
         return $this->no; 
@@ -93,7 +93,7 @@ class Slot {
     
     /**
      * get eventNo
-     * @return type int
+     * @return type int eventNo
      */
     public function getEventNo() {
         return $this->eventNo; 
@@ -102,7 +102,7 @@ class Slot {
     
     /**
      * get happeningDate
-     * @return type date
+     * @return type date happeningDate
      */
     public function getHappeningDate() {
         return $this->happeningDate; 
@@ -110,27 +110,17 @@ class Slot {
     
     
     /**
-     * get happeningDate
+     * set happeningDate
      * @param type $happeningDate 
      */
     public function setHappeingDate($happeningDate) {
         return $this->happeningDate; 
     }//function
     
-    
-    
-    /**
-     * set happeningDate
-     * @param type $happeningDate 
-     */
-    public function setHappeningDate($happeningDate) {
-        $this->happeningDate = $happeningDate; 
-    }//function
-    
-    
+      
     /**
      * getStartingTime
-     * @return type 
+     * @return type time startingTime
      */
     public function getStartingTime() {
         return $this->startingTime; 
@@ -153,6 +143,7 @@ class Slot {
     public function getEndingTime() {
         return $this->endingTime; 
     }//function
+    
     
     /**
      * set endingTime

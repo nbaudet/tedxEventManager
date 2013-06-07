@@ -55,7 +55,7 @@ class Participant extends Person {
     
     /**
      * get person numero
-     * @return type personNo
+     * @return type int personNo
      */
     public function getPersonNo() {
         return $this->personNo; 

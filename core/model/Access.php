@@ -105,7 +105,7 @@ class Access {
     
     /**
      * set type
-     * @param type $type 
+     * @param string $type 
      */
     public function setType($type) {
         $this->type = $type; 

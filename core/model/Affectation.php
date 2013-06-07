@@ -77,7 +77,7 @@ class Affectation {
     
     /**
      * get isArchived
-     * @return type boolean
+     * @return type boolean isArchived
      */
     public function getIsArchived() {
         return $this->isArchived; 

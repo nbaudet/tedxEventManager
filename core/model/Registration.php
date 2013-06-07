@@ -24,7 +24,7 @@ class Registration {
      * Registration's eventNo
      * @var type int
      */
-    private $EventNo; 
+    private $eventNo; 
     
     
     /**
@@ -150,7 +150,7 @@ class Registration {
     
     /**
      * get isArchived
-     * @return type boolean is Archived
+     * @return type boolean isArchived
      */
     public function getIsArchived() {
         return $this->isArchived; 

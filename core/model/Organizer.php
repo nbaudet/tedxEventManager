@@ -81,6 +81,7 @@ class Organizer extends Person{
     }//function
     
     
+    
 
 }//class
 ?>

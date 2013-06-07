@@ -62,14 +62,8 @@ class Event {
     private $isArchived; 
     
     
-    /**
-     * Event's maxParticipant
-     * @var type int
-     */
-    private $maxParticipant; 
-    
 
-
+   
     
     /**
      * Constructs object Event
@@ -89,7 +83,7 @@ class Event {
         $this->startingTime = $array['startingTime']; 
         $this->endingTime = $array['endingTime']; 
         $this->isArchived = $array['isArchived']; 
-        $this->maxParticipant = $array['maxParticipant']; 
+
     
 
         
@@ -97,8 +91,7 @@ class Event {
     
     
     
-    
-    
+       
     
     /**
      * get numero
@@ -217,23 +210,6 @@ class Event {
     }//function
     
     
-    /**
-     * get maxParticipant
-     * @return type int maxParticipantbb
-     */
-    public function getMaxParticipant() {
-        return $this->maxParticipant; 
-    }//function
-    
-    
-    /**
-     * set maxParticipant
-     * @param type $maxParticipant 
-     */
-    public function setMaxParticipant($maxParticipant) {
-        $this->maxParticipant = $maxParticipant; 
-    }//function
-    
-    
+        
 }//class
 ?>

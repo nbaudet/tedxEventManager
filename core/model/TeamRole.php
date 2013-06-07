@@ -88,7 +88,7 @@ class TeamRole {
     
     /**
      * get isArchived
-     * @return type boolean is Archived
+     * @return type boolean isArchived
      */
     public function getIsArchived() {
         return $this->isArchived; 

@@ -114,8 +114,6 @@ class Motivation {
     }//function
     
     
-    
-    
 
 }//class
 ?>
