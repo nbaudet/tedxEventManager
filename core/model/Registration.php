@@ -62,7 +62,7 @@ class Registration {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -89,7 +89,7 @@ class Registration {
      * get status
      * @return type status
      */
-    public function getStatus() {
+    protected function getStatus() {
         return $this->status; 
     }//function
     
@@ -98,7 +98,7 @@ class Registration {
      * get eventNo
      * @return type int eventNo
      */
-    public function getEventNo() {
+    protected function getEventNo() {
         return $this->eventNo; 
     }//function
     
@@ -107,7 +107,7 @@ class Registration {
      * get participantPersonNo
      * @return type int participantPersonNo
      */
-    public function getParticipantPersonNo() {
+    protected function getParticipantPersonNo() {
         return $this->participantPersonNo; 
     }//function
     
@@ -116,7 +116,7 @@ class Registration {
      * get registrationDate
      * @return type date registrationDate
      */
-    public function getRegistrationDate() {
+    protected function getRegistrationDate() {
         return $this->registrationDate; 
     }//function
     
@@ -125,7 +125,7 @@ class Registration {
      * set registrationDate
      * @param type $registrationDate 
      */
-    public function setRegistrationDate($registrationDate) {
+    protected function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate; 
     }//function
     
@@ -134,7 +134,7 @@ class Registration {
      * get type
      * @return type string type
      */
-    public function getType() {
+    protected function getType() {
         return $this->type; 
     }//function
     
@@ -143,7 +143,7 @@ class Registration {
      * set type
      * @param type $type 
      */
-    public function setType($type) {
+    protected function setType($type) {
         $this->type = $type; 
     }//function
     
@@ -152,7 +152,7 @@ class Registration {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -161,7 +161,7 @@ class Registration {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

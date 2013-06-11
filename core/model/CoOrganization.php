@@ -40,7 +40,7 @@ class CoOrganization {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -63,7 +63,7 @@ class CoOrganization {
      * get eventNo
      * @return type int eventNo
      */
-    public function getEventNo() {
+    protected function getEventNo() {
         return $this->eventNo; 
     }//function
     
@@ -72,7 +72,7 @@ class CoOrganization {
      * get speakerPersonNo
      * @return type int speakerPersonNo
      */
-    public function getSpeakerPersonNo() {
+    protected function getSpeakerPersonNo() {
         return $this->speakerPersonNo; 
     }//function
     
@@ -81,7 +81,7 @@ class CoOrganization {
      * get isArchived
      * @return type boolean is Archived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -90,7 +90,7 @@ class CoOrganization {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

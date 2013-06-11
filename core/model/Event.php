@@ -70,7 +70,7 @@ class Event {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -97,7 +97,7 @@ class Event {
      * get numero
      * @return type int numero
      */
-    public function getNo() {
+    protected function getNo() {
         return $this->no; 
     }//function
     
@@ -106,7 +106,7 @@ class Event {
      * get mainTopic
      * @return type string mainTopic
      */
-    public function getMainTopic() {
+    protected function getMainTopic() {
         return $this->mainTopic; 
     }//function
     
@@ -115,7 +115,7 @@ class Event {
      * set mainTopic 
      * @param type $mainTopic 
      */
-    public function setMainTopic($mainTopic) {
+    protected function setMainTopic($mainTopic) {
         $this->mainTopic = $mainTopic; 
     }//function
     
@@ -124,7 +124,7 @@ class Event {
      * get startingDate
      * @return type date startingDate
      */
-    public function getStartingDate() {
+    protected function getStartingDate() {
         return $this->startingDate; 
     }//function
     
@@ -133,7 +133,7 @@ class Event {
      * set startingDate
      * @param type $startingDate 
      */
-    public function setStartingDate($startingDate) {
+    protected function setStartingDate($startingDate) {
         $this->startingDate = $startingDate; 
     }//function
     
@@ -142,7 +142,7 @@ class Event {
      * get endingDate
      * @return type date endingDate
      */
-    public function getEndingDate() {
+    protected function getEndingDate() {
         return $this->endingDate; 
     }//function
     
@@ -151,7 +151,7 @@ class Event {
      * set endingDate
      * @param type $endingDate 
      */
-    public function setEndingDate($endingDate) {
+    protected function setEndingDate($endingDate) {
         $this->endingDate = $endingDate; 
     }//function
     
@@ -160,7 +160,7 @@ class Event {
      * get startingTime
      * @return type time startingTime
      */
-    public function getStartingTime() {
+    protected function getStartingTime() {
         return $this->startingTime; 
     }//function
     
@@ -169,7 +169,7 @@ class Event {
      * set startingTime
      * @param type $startingTime 
      */
-    public function setStartingTime($startingTime) {
+    protected function setStartingTime($startingTime) {
         $this->startingTime = $startingTime; 
     }//function
     
@@ -178,7 +178,7 @@ class Event {
      * get EndingTime
      * @return type endingTime
      */
-    public function getEndingTime() {
+    protected function getEndingTime() {
         return $this->endingTime; 
     }//function
     
@@ -187,7 +187,7 @@ class Event {
      * set endingTime
      * @param type $endingTime 
      */
-    public function setEndingTime($endingTime) {
+    protected function setEndingTime($endingTime) {
         $this->endingTime = $endingTime; 
     }//function
     
@@ -196,7 +196,7 @@ class Event {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -205,7 +205,7 @@ class Event {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

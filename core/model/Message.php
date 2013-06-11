@@ -20,7 +20,7 @@ class Message {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct() {
+    protected function __construct() {
        
         
     }

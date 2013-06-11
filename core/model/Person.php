@@ -86,7 +86,7 @@ class Person {
     * Constructs object Person
     * @param type $array of parameters that correspond to the classes properties
     */
-    public function __construct($array = null) {
+    protected function __construct($array = null) {
         
         if(!is_array($array)) {
            throw new Exception('No parameters');
@@ -111,7 +111,7 @@ class Person {
      * get numero
      * @return type numero
      */
-    public function getNo() {
+    protected function getNo() {
        return $this->no; 
     }// function
 
@@ -120,7 +120,7 @@ class Person {
      * get name
      * @return name
      */
-    public function getName() {
+    protected function getName() {
         return $this->name; 
     }// function
 
@@ -129,7 +129,7 @@ class Person {
      * set no
      * @param type $name 
      */
-    public function setName($name) {
+    protected function setName($name) {
         $this->name = $name; 
     }// function
 
@@ -138,7 +138,7 @@ class Person {
      * get first name
      * @return type firstName
      */
-    public function getFirstName() {
+    protected function getFirstName() {
         return $this->firstName; 
     }// function
 
@@ -147,7 +147,7 @@ class Person {
      * set first name
      * @param type $first name 
      */
-    public function setFirstName($firstName) {   
+    protected function setFirstName($firstName) {   
         $this->firstName = $firstName; 
     }// function
 
@@ -156,7 +156,7 @@ class Person {
      * get date of birth
      * @return type dateOfBirth
      */
-    public function getDateOfBirth() {
+    protected function getDateOfBirth() {
         return $this->dateOfBirth; 
     }// function
 
@@ -165,7 +165,7 @@ class Person {
      * set date of birth
      * @param type $dateOfBirth 
      */
-    public function setDateOfBirth($dateOfBirth) {  
+    protected function setDateOfBirth($dateOfBirth) {  
         $this->dateOfBirth = $dateOfBirth; 
     }// function
 
@@ -174,7 +174,7 @@ class Person {
      * get address
      * @return type address
      */
-    public function getAddress() {
+    protected function getAddress() {
         return $this->address; 
     }// function
 
@@ -183,7 +183,7 @@ class Person {
      * set address
      * @param type $address 
      */
-    public function setAddress($address) {
+    protected function setAddress($address) {
         $this->address = $address; 
     }// function
 
@@ -192,7 +192,7 @@ class Person {
      * get country
      * @return type country
      */
-    public function getCountry() {
+    protected function getCountry() {
         return $this->country; 
     }// function
 
@@ -201,7 +201,7 @@ class Person {
      * set country
      * @param type $country 
      */
-    public function setCountry($country) {
+    protected function setCountry($country) {
         $this->country = $country; 
     }// function
 
@@ -210,7 +210,7 @@ class Person {
      * get email
      * @return type email
      */
-    public function getEmail() {
+    protected function getEmail() {
         return $this->email; 
     }// function
 
@@ -219,7 +219,7 @@ class Person {
      * set email
      * @param type $email 
      */
-    public function setEmail($email) {
+    protected function setEmail($email) {
         $this->email = email; 
     }// function
     
@@ -228,7 +228,7 @@ class Person {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -237,7 +237,7 @@ class Person {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
     }//function
 

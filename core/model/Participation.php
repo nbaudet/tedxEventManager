@@ -47,7 +47,7 @@ class Participation {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -72,7 +72,7 @@ class Participation {
      * get slotNo
      * @return type int slotNo
      */
-    public function getSlotNo() {
+    protected function getSlotNo() {
         return $this->slotNo; 
     }//function
     
@@ -81,7 +81,7 @@ class Participation {
      * get slotEventNo
      * @return type int slotEventNo
      */
-    public function getSlotEventNo() {
+    protected function getSlotEventNo() {
         return $this->slotEventNo; 
     }//function
     
@@ -90,7 +90,7 @@ class Participation {
      * get participantPersonNo
      * @return type int participantPersonNo
      */
-    public function getParticipantPersonNo() {
+    protected function getParticipantPersonNo() {
         return $this->participantPersonNo; 
     }//function
     
@@ -99,7 +99,7 @@ class Participation {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -108,7 +108,7 @@ class Participation {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

@@ -33,7 +33,7 @@ class Participant extends Person {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -53,7 +53,7 @@ class Participant extends Person {
      * get person numero
      * @return type int personNo
      */
-    public function getPersonNo() {
+    protected function getPersonNo() {
         return $this->personNo; 
     }//function
     
@@ -62,7 +62,7 @@ class Participant extends Person {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -71,7 +71,7 @@ class Participant extends Person {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
     }//function
     

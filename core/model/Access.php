@@ -49,7 +49,7 @@ class Access {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -71,7 +71,7 @@ class Access {
      * get numero
      * @return type int no
      */
-    public function getNo() {
+    protected function getNo() {
         return $this->no; 
     }//function
     
@@ -80,7 +80,7 @@ class Access {
      * get service
      * @return type string service
      */
-    public function getService() {
+    protected function getService() {
         return $this->service; 
     }//function
     
@@ -89,7 +89,7 @@ class Access {
      * set service
      * @param type $service 
      */
-    public function setService($service) {
+    protected function setService($service) {
         $this->service = $service; 
     }//function
     
@@ -98,7 +98,7 @@ class Access {
      * get type
      * @return type string type
      */
-    public function getType() {
+    protected function getType() {
         return $this->type; 
     }//function
     
@@ -107,7 +107,7 @@ class Access {
      * set type
      * @param string $type 
      */
-    public function setType($type) {
+    protected function setType($type) {
         $this->type = $type; 
     }//function
     
@@ -116,7 +116,7 @@ class Access {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -125,7 +125,7 @@ class Access {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
     }//function
     

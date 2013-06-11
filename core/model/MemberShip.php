@@ -42,7 +42,7 @@ class MemberShip {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -62,7 +62,7 @@ class MemberShip {
      * get memberId
      * @return type int memberId
      */
-    public function getMemberId() {
+    protected function getMemberId() {
         return $this->memberId; 
     }//function
     
@@ -71,7 +71,7 @@ class MemberShip {
      * get unitNo
      * @return type int unitNo
      */
-    public function getUnitNo() {
+    protected function getUnitNo() {
         return $this->unitNo; 
     }//function
     
@@ -80,7 +80,7 @@ class MemberShip {
      * get isArchived
      * @return type boolean isArchived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
 
@@ -89,7 +89,7 @@ class MemberShip {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

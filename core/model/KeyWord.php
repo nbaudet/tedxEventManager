@@ -50,7 +50,7 @@ class Keyword {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -72,7 +72,7 @@ class Keyword {
      * get value
      * @return type string value
      */
-    public function getValue() {
+    protected function getValue() {
         return $this->value; 
     }//function
     
@@ -81,7 +81,7 @@ class Keyword {
      * get eventNo
      * @return type int eventNo
      */
-    public function getEventNo() {
+    protected function getEventNo() {
         return $this->eventNo; 
     }//function
     
@@ -90,7 +90,7 @@ class Keyword {
      * get participantPersonNo
      * @return type int participantPersonNo
      */
-    public function getParticipantPersonNo() {
+    protected function getParticipantPersonNo() {
         return $this->participantPersonNo; 
     }//function
     
@@ -99,7 +99,7 @@ class Keyword {
      * get isArchived
      * @return type boolean is Archived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -108,7 +108,7 @@ class Keyword {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

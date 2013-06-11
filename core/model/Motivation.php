@@ -49,7 +49,7 @@ class Motivation {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    public function __construct($array = null){
+    protected function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -73,7 +73,7 @@ class Motivation {
      * get text
      * @return type string text
      */
-    public function getText() {
+    protected function getText() {
         return $this->text; 
     }//function
     
@@ -82,7 +82,7 @@ class Motivation {
      * get EventNo
      * @return type int eventNo
      */
-    public function getEventNo() {
+    protected function getEventNo() {
         return $this->eventNo; 
     }//function
    
@@ -91,7 +91,7 @@ class Motivation {
      * get participantPersonNo
      * @param type $participantPersonNo 
      */
-    public function getParticipantPersonNo($participantPersonNo) {
+    protected function getParticipantPersonNo($participantPersonNo) {
         $this->participantPersonNo = $participantPersonNo; 
     }//function
     
@@ -100,7 +100,7 @@ class Motivation {
      * get isArchived
      * @return type boolean is Archived
      */
-    public function getIsArchived() {
+    protected function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -109,7 +109,7 @@ class Motivation {
      * set isArchived
      * @param type $isArchived 
      */
-    public function setIsArchived($isArchived) {
+    protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     
