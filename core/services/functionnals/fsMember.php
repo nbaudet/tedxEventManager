@@ -1,23 +1,17 @@
 <?php
 /**
- * Description of fsMember
+ * Description of FSMember
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
-class fsMember {
+class FSMember {
     
     /**
-     * Initializes and returns a Member if the MemberId and MemberPassword in
-     * $_POST are correct. Otherwise, returns NULL.
+     * Initializes and returns a Member if the received id and password
+     * are correct. Otherwise, returns NULL.
      * @param string $id the username of our member
      * @param string $password the password of our member
-     * @return Member ou NULL
-     */
-    /**
-     * 
-     * @param type $id
-     * @param type $password
-     * @return \Member
+     * @return a Member Object or NULL
      */
     protected function getMember ($id, $password) {
         $member = NULL;
