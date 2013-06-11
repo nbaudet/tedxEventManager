@@ -13,7 +13,7 @@ class FSMember {
      * @param string $password the password of our member
      * @return a Member Object or NULL
      */
-    protected function getMember ($id, $password) {
+    protected function getMember ($id) {
         $member = NULL;
         
         // Récupère le stub de notre member et crée un member
