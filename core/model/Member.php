@@ -18,7 +18,7 @@ class Member {
     
     /**
      * Member's id
-     * @var type int
+     * @var type string
      */
     private $id;
     
@@ -69,7 +69,7 @@ class Member {
     
     /**
      * get id
-     * @return type int id
+     * @return type string id
      */
     protected function getId() {
         return $this->id; 
@@ -123,7 +123,7 @@ class Member {
     
     /**
      * set isArchived
-     * @param type $isArchived 
+     * @param type $isArchived
      */
     protected function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
