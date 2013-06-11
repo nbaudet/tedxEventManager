@@ -48,11 +48,7 @@ class Participant extends Person {
         
     }//construct
     
-    
-    
-    
-    
-    
+
     /**
      * get person numero
      * @return type int personNo
