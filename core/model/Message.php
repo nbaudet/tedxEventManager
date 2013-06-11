@@ -1,31 +1,32 @@
 <?php
-
-
-
 /**
  * Message.class.php
  * 
  * Author : Guillaume Lehmann
  * Date : 11.06.2013
  * 
- * Description : define the class Message as definited in the model
+ * Description : a message is an object that contains information and transits
+ * between the layers of the application.
+ * The messages take a part in some of the controls of the application.
  * 
  */
 class Message {
     
     /*
-     * Result Criteria
+     * The message ID, possibly unique
+     * Check the CODx to verify which number to set
      * 
      */
     private $messageNumber;
 
     /*
-     * 
+     * The String value of the message
      */
     private $message;
     
     /*
-     * The status of the message : a boolean 
+     * Status of the message : a boolean indicating if everything is OK or if
+     * there was an error.
      */
     private $status;
 
@@ -43,14 +44,28 @@ class Message {
         $this->status        = $args['status']; 
     }
     
+    /**
+     * Returns the message number
+     * @return Message
+     */
     public function getMessageNumber(){
         return $this->messageNumber;
     }
     
+    /**
+     * Returns the value of the message
+     * @return String
+     */
     public function getMessage(){
         return $this->message;
     }
     
+    /**
+     * Returns the boolean status of the message.
+     * TRUE : Everything went OK
+     * FALSE : There was an error
+     * @return Boolean
+     */
     public function getStatus(){
         return $this->status;
     }
