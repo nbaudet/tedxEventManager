@@ -4,7 +4,7 @@
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
-class asMember {
+class ASMember {
     //put your code here
 }
 

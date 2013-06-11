@@ -4,14 +4,14 @@
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
-class asAuth {
+class ASAuth {
     
     /**
      * Enables users to login
      * @param mixed $args Array of values for login
      * @return aLoggedMember or NULL
      */
-    public function login( $args ) {
+    protected function login( $args ) {
         // Get the member with the given arguments
         $member = getMember($args['id'], $args['password']);
         
@@ -25,6 +25,14 @@ class asAuth {
             $messageOK = new Message($args);
             return $messageOK;
         }
+    }
+    
+    /**
+     * Enables users to logout
+     */
+    protected function logout() {
+        unset($_SESSION);
+        session_destroy();
     }
 }
 
