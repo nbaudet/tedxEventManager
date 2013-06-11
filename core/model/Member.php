@@ -130,6 +130,5 @@ class Member {
     }//function
     
     
-    
 }//class
 ?>
