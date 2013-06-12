@@ -49,8 +49,7 @@ class Tedx_manager{
         }
         
     }
-    
-    
+ 
     
     
     /**
