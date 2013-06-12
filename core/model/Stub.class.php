@@ -34,11 +34,51 @@ class Stub {
         return $messageOK = new Message($args); 
     }//function
     
-    public function login($args); 
     
-    public function logout($args); 
+    /**
+     * Stub login
+     * @param type $args
+     * @return type object Message
+     */
+    public function login($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aParticipantLogged',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+        
+    }//function
     
-    public function isMemberOf($args); 
+    
+    /**
+     * Stub logout
+     * @param type $args
+     * @return type object Message
+     */
+    public function logout($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aParticipantIsLoggedOut', 
+            '^status'       => true
+        );
+        return $messageOK = new Message($args); 
+    }//function
+    
+    
+    /**
+     * Stub isMemberOf
+     * @param type $args
+     * @return type object Message
+     */
+    public function isMemberOf($args) {
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aParticipantIsMemberOf',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function
     
     
     /**
