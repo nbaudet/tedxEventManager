@@ -14,6 +14,10 @@ class FSMember {
      * @return a Member Object or NULL
      */
     protected function getMember ($id) {
+        // get database manipulator
+        global $crud;
+        
+        
         // Récupère le stub de notre member et crée un member
         $stubMemberId = 'admin';
         $stubMemberPass = 'admin';

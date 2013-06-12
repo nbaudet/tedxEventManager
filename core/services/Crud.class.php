@@ -79,8 +79,9 @@ class Crud {
     }//construct
     
     /**
-     * Permet de retourner un enregistrement unique
+     * return a single row
      * @param type $sql
+     * @return row
      */
     public function getRow($sql){
         // exec the query
@@ -95,8 +96,9 @@ class Crud {
     }// function
     
     /**
-     * Permet de retourner un ensemble d'enregistrement
+     * return an array of rows
      * @param type $sql
+     * @return array() including rows
      */
     public function getRows($sql){
         // exec the query
@@ -108,6 +110,15 @@ class Crud {
         
         // return first row
         return $data;
+    }// function
+    
+    /**
+     * Execute SQL statement
+     * @param type $sql
+     * @return number of lines affected
+     */
+    public function exec($sql){
+        return $this->dbh->exec($sql);
     }// function
     
 }//class
