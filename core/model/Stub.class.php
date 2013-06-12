@@ -1,6 +1,6 @@
 <?php
 
-
+require_once 'Message.class.php';
 
 /**
  * Stub.class.php
@@ -18,10 +18,21 @@ class Stub {
         
     }
     
-    
+    /**
+     * Stub registerVisitor
+     * @param type $args
+     * @return type object Message
+     */
     public function registerVisitor($args){
         
-    } 
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aRegisteredVisitor',
+            'status'        => true
+        
+        );
+        return $messageOK = new Message($args); 
+    }//function
     
     public function login($args); 
     
@@ -29,32 +40,55 @@ class Stub {
     
     public function isMemberOf($args); 
     
+    
+    /**
+     * Stub registerToAnEvent
+     * @param type $args
+     * @return type object $message
+     */
     public function registerToAnEvent($args) {
         
-        if(isset($args['person'])) {
-            
-        }
-        if(isset($args['event'])) {
-            
-        }
-        if(isset($args['slots'])) {
-            
-        }
-        if(isset($args['registrationdate'])) {
-            
-        }
-        if(isset($args['type'])) {
-            
-        }
-        if(isset($args['typedescription'])) {
-            
-        }
-            
-    }
+      $args = array(
+          'messageNumber' => 001,
+          'message'       => 'aRegisteredParticipant',
+          'status'        => true
+      );
+           return $messageOK = new Message($args) ;       
+    }//function
     
-    public function changeProfil($args); 
     
-    public function changePassword($args); 
+    /**
+     * Stub changeProfil
+     * @param type $args
+     * @return type object $message
+     */
+    public function changeProfil($args) { 
+    
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aChangedProfil',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args);
+    }//function
+    
+    
+    /**
+     * Stub changePassword
+     * @param type $args
+     * @return type object $message
+     */
+    public function changePassword($args) {
+    
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aPasswordChanged',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args);       
+    }//function
+    
+    
     
     public function addKeywordsToAnEvent($args); 
     
@@ -64,7 +98,22 @@ class Stub {
     
     public function archiveMotivationToAnEvent($args); 
     
-    public function registerSpeaker($args); 
+    
+    /**
+     * Stub registerSpeaker
+     * @param type $args
+     * @return type object Message
+     */
+    public function registerSpeaker($args) {
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aSpeakerRegistered',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args);
+    }//function
+    
+    
     
     public function addSpeakerToSlot($args); 
     
@@ -78,7 +127,21 @@ class Stub {
     
     public function changeRegistrationStatus($args); 
     
-    public function registerOrganizer($args); 
+    
+    
+    /**
+     * Stub registerOrganizer
+     * @param type $args
+     * @return type object Message
+     */
+    public function registerOrganizer($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aSpeakerRegistered',
+            'status'        => true
+        );
+        return $messageOK = new Message($args); 
+    }//function
     
     public function addTeamRole($args); 
     
