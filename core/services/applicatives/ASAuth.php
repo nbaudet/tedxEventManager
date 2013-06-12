@@ -6,7 +6,7 @@
  */
 require_once('../../model/Member.php');
 require_once('../../model/Message.php');
-require_once('../functionnals/fsMember.php');
+require_once('../functionnals/FSMember.php');
 
 class ASAuth {
     
