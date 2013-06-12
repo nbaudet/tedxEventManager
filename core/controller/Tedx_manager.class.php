@@ -12,7 +12,7 @@
 /**
  * Require all Applicative Services
  */
-require_once('../services/applicatives/asAuth.class.php');
+require_once('../services/applicatives/ASAuth.class.php');
 
 
 /**
