@@ -129,6 +129,5 @@ class Member {
         $this->isArchived = $isArchived; 
     }//function
     
-    
 }//class
 ?>

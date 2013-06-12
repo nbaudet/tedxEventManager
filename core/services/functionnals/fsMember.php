@@ -30,6 +30,31 @@ class FSMember {
         
         return $member;
     }
+    
+        
+    /**
+     * Returns an array with all the units of a member
+     * @return Mixed Array of Units for a member
+     */
+    protected function getAllUnits() {
+        $units = array(
+            'participant' => 'participant',
+            'validator'   => 'validator'
+        );
+        return $units;
+    }
+    
+    /**
+     * Returns an array of accesses for a member, depending on his/her units
+     * @return Mixed 
+     */
+    protected function getAllAccess() {
+        $access = array( 
+            'readMember', 'getMember', 'getEvent', 'registerToAnEvent'
+        );
+        return $access;
+    }
+    
 }
 
 ?>

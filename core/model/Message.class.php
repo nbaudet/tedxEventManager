@@ -29,19 +29,32 @@ class Message {
      * there was an error.
      */
     private $status;
+    
+    /*
+     * (Optionnal) The object that is returned to the caller function.
+     * Is set to NULL when there was no object.
+     */
+    private $content;
 
      /**
      * Constructs object Message
      * 
      * @param type $array of parameters that correspond to the class's properties
      */
-    protected function __construct($args = NULL) {
-        if(!is_array($array))
-            throw new Exception('No parameters');
+    protected function __construct( $args = NULL ) {
+        if( !is_array( $args ) )
+            throw new Exception( 'No parameters' );
             
         $this->messageNumber = $args['messageNumber'];
         $this->message       = $args['message'];
-        $this->status        = $args['status']; 
+        $this->status        = $args['status'];
+        if( isset( $args['content'] ) ) {
+            $this->object = $args['content'];
+        }
+        else {
+            $this->object = NULL;
+        }
+        
     }
     
     /**
@@ -68,6 +81,15 @@ class Message {
      */
     public function getStatus(){
         return $this->status;
+    }
+    
+    /**
+     * Returns the optionnal Object contained in the message.
+     * Is set to NULL if there was no object.
+     * @return Object
+     */
+    public function getContent(){
+        return $this->content;
     }
 }
 ?>
