@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tedx_manager.class.php
  * 
@@ -13,7 +14,7 @@
  * Require all Applicative Services
  */
 
-require_once(APP_DIR.'core/services/applicatives/ASAuth.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
 
 /**

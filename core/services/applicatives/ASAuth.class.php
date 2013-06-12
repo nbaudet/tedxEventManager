@@ -4,9 +4,9 @@
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
-require_once('../../model/Member.php');
-require_once('../../model/Message.php');
-require_once('../functionnals/FSMember.php');
+require_once(APP_DIR.'/core/model/Member.class.php');
+require_once(APP_DIR.'/core/model/Message.class.php');
+require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
 
 class ASAuth {
     

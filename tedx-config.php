@@ -11,20 +11,21 @@
  */
 
 /* DATABASE CONFIG */
-define('DB_LOCATION'    , 'pingouin1.heig-vd.ch');
-define('DB_NAME'        , 'test');
-define('DB_USER'        , 'quentin.mathey');
+define('DB_LOCATION'    , 'www.syu.ch');
+define('DB_NAME'        , 'temp_tedx');
+define('DB_USER'        , 'event_manager');
 define('DB_PASSWORD'    , 'pratique');
 
 /* APP CONFIG */
-define('APP_DIR'   , '/localhost/tedxEventManager' );
+define('APP_DIR'   , 'C:\wamp\www\tedxEventManager' );
 define('CONFIG_DIR', APP_DIR);
 
-/* Settings the app */
+/* Settings the app  */
 require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/Crud.class.php');
 // globals vars
 $tedx_manager = new Tedx_manager();
 $crud = new Crud();
+
 
 ?>
