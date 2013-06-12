@@ -1,7 +1,13 @@
 <?php
-
-
-
+/**
+ * Tedx_manager.class.php
+ * 
+ * Author : MIT40
+ * Date : 05.06.2013
+ * 
+ * Description : 
+ * 
+ */
 
 /**
  * Require all Applicative Services
@@ -19,11 +25,17 @@ require_once('../services/applicatives/asAuth.class.php');
  */
 class Tedx_manager{
     
+    /*
+     * An Auth
+     */
     private $asAuth;
     
+
+    
     public function __construct(){
-        $this->asAuth = new AsAuth();
-    }
+        $this->asAuth = new ASAuth();
+    } // function
+    
     
     /**
      * Enable an anonym user to login
@@ -32,23 +44,22 @@ class Tedx_manager{
      * @return Message "User logged" or "Login failure"
      */
     public function login($login, $password){
-        if (checkType("string",$login) && checkType("string", $password)){
+        if (checkType("string",  $login) && checkType("string", $password)){
             $loginArgs = array (
                 'id' => $login,
                 'password' => $password
             );
-            $this->asAuth->login($loginArgs);
+            $messageLogin = $this->asAuth->login($loginArgs);
         } else {
             $messageArgs = array (
                 'messageNumber' => 004,
                 'message' => "Login or password is not a string",
                 'status' => FALSE
             );
-            $errorMessage = new Message($messageArgs);
-            return $errorMessage;
-        }
-        
-    }
+            $messageLogin = new Message($messageArgs);
+        } // else
+        return $messageLogin;
+    } // function
     
     
     
