@@ -134,7 +134,11 @@ class Stub {
     }//function
     
     
-    
+    /**
+     * Stub archiveMotivationToAnEvent
+     * @param type $args
+     * @return type object Message
+     */
     public function archiveMotivationToAnEvent($args) {
         $args = array(
             'messageNumber' => 001,
@@ -143,7 +147,7 @@ class Stub {
         
         ); 
         return $messageOK = new Message($args); 
-    }
+    }//function
     
     
     /**
@@ -161,10 +165,38 @@ class Stub {
     }//function
     
     
+    /**
+     * Stub addSpeakerToSlot
+     * @param type $args
+     * @return type object Message
+     */
+    public function addSpeakerToSlot($args) {
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aSpeakerToSlotAdded',
+            'status'        => true
+        );
+        return $messageOK = new Message($args); 
+    }//function 
     
-    public function addSpeakerToSlot($args); 
     
-    public function changePositionOfSpeakerToEvent($args); 
+    
+    /**
+     * Stub changePositionOfSpeakerToEvent
+     * @param type $args
+     * @return type object Message
+     */
+    public function changePositionOfSpeakerToEvent($args) {
+        $arts = array(
+            'messageNumber' => 001,
+            'message'       => 'aPositionOfSpeakerToEventChanged', 
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function
+    
+    
+    
     
     public function addSlotToEvent($args); 
     
@@ -183,10 +215,21 @@ class Stub {
             'status'        => true
         );
         return $messageOK = new Message($args); 
-    }   
+    }//function
     
-    
-    public function changeRegistrationStatus($args); 
+    /**
+     * Stub changeRegistrationStatus
+     * @param type $args
+     * @return type object Message
+     */
+    public function changeRegistrationStatus($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aRegistrationStatusChanged',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function
     
     
     
@@ -222,14 +265,65 @@ class Stub {
     }//function
     
     
+    /**
+     * Stub linkTeamRole
+     * @param type $args
+     * @return type object Message
+     */
+    public function linkTeamRole($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aTeamRoleLinked',
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function
     
-    public function linkTeamRole($args); 
     
-    public function changeRoleLevel($args); 
+    /**
+     * Stub changeRoleEvent
+     * @param type $args
+     * @return type object Message
+     */
+    public function changeRoleLevel($args) {
+        
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'aRoleAdded', 
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function
     
-    public function addRole($args); 
     
-    public function addEvent($args); 
+    /**
+     * Stub addRole
+     * @param type $args
+     * @return type object Message
+     */
+    public function addRole($args) {
+        $args = array(
+            'messageNumber' => 001, 
+            'message'       => 'aRoleAdded', 
+            'status'        => true
+        );
+        return $messageOK = new Message($args); 
+    }//function
+    
+    
+    /**
+     * Stub addEvent
+     * @param type $args
+     * @return type object Message
+     */
+    public function addEvent($args) {
+        $args = array(
+            'messageNumber' => 001,
+            'message'       => 'anEventAdded', 
+            'status'        => true
+        ); 
+        return $messageOK = new Message($args); 
+    }//function 
    
 }
 ?>
