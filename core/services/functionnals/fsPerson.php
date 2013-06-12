@@ -1,35 +1,62 @@
 <?php
 /**
- * Description of FSMember
+ * Description of FSPerson
  *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * @author Lauric Francelet
  */
-class FSMember {
+class FSPerson {
     
     /**
-     * Initializes and returns a Member if the received id and password
-     * are correct. Otherwise, returns NULL.
-     * @param string $id the username of our member
-     * @param string $password the password of our member
-     * @return a Member Object or NULL
+     * Returns a Person with the given No as Id.
+     * @param int $no The Id of the Person
+     * @return a Message with an existant Person
      */
-    protected function getMember ($id) {
-        $member = NULL;
+    protected function getPerson($no) {
+        $person = NULL;
         
-        // Récupère le stub de notre member et crée un member
-        $stubMemberId = 'admin';
-        $stubMemberPass = 'admin';
+        global $crud;
         
-        $args = array(
-            'id'         => $stubMemberId,
-            'password'   => $stubMemberPass,
-            'personNo'   => 1,
-            'isArchived' => 0
-        );
-        $member = new Member($args);
+        $sql = "SELECT * FROM person WHERE no = $no";
+        $data = $crud->query($sql);
         
-        return $member;
+        if($data){
+            $argsPerson = array(
+                'no'            => $data['no'],
+                'name'          => $data['name'],
+                'firstname'     => $data['firstname'],
+                'dateOfBirth'   => $data['dateOfBirth'],
+                'address'       => $data['address'],
+                'city'          => $data['city'],
+                'country'       => $data['country'],
+                'phoneNumber'   => $data['phoneNumber'],
+                'email'         => $data['email'],
+                'description'   => $data['description'],
+                'isArchived'    => $data['isArchived']
+            );
+            
+            $person = new Person($argsPerson);
+            
+            $argsMessage = array(
+                'messageNumber' => 101,
+                'message'       => 'Existant Person',
+                'status'        => true,
+                'content'       => $person
+            );
+            $message = new Message($argsMessage);
+            return $message;
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 102,
+                'message'       => 'Inexistant Person',
+                'status'        => true,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+            return $message;
+        }
     }
+    
+    
 }
 
 ?>
