@@ -34,53 +34,7 @@ class Stub {
         return $messageOK = new Message($args); 
     }//function
     
-    
-    /**
-     * Stub login
-     * @param type $args
-     * @return type object Message
-     */
-    public function login($args) {
-        $args = array(
-            'messageNumber' => 001, 
-            'message'       => 'aParticipantLogged',
-            'status'        => true
-        ); 
-        return $messageOK = new Message($args); 
-        
-    }//function
-    
-    
-    /**
-     * Stub logout
-     * @param type $args
-     * @return type object Message
-     */
-    public function logout($args) {
-        $args = array(
-            'messageNumber' => 001, 
-            'message'       => 'aParticipantIsLoggedOut', 
-            '^status'       => true
-        );
-        return $messageOK = new Message($args); 
-    }//function
-    
-    
-    /**
-     * Stub isMemberOf
-     * @param type $args
-     * @return type object Message
-     */
-    public function isMemberOf($args) {
-        $args = array(
-            'messageNumber' => 001,
-            'message'       => 'aParticipantIsMemberOf',
-            'status'        => true
-        ); 
-        return $messageOK = new Message($args); 
-    }//function
-    
-    
+ 
     /**
      * Stub registerToAnEvent
      * @param type $args
@@ -407,5 +361,7 @@ class Stub {
         return $messageOK = new Message($args); 
     }//function 
    
+    
+    
 }
 ?>
