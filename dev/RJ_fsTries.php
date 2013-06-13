@@ -7,11 +7,10 @@ var_dump(FSLocation::getLocation("L'Usine"));
 
 var_dump(FSLocation::getLocations());
 $argsLocation= array(
-            'Name'         => 'OOOOOOOOOOo',
+            'Name'         => 'Zoooooooorooo',
             'Address'   => 'Une Adresse',
             'City'   => 'Une ville',
-            'Country'   => 'Un pays',
-            'Direction' => 'Une Direction'
+            'Country'   => 'Un pays'
             /*'Direction'*/
         );
 var_dump(FSLocation::addLocation($argsLocation));

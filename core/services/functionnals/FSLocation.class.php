@@ -122,7 +122,7 @@ class FSLocation{
          */
         if(!($aValidLocation->getStatus())){ 
             /*0..1 Direction*/
-            if($args['Direction']){
+            if(isset($args['Direction'])){
                 $sql = "INSERT INTO Location (
                     Name, Address, City, Country, Direction) VALUES (
                         '".$args['Name']."', 
