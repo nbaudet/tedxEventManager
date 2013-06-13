@@ -12,6 +12,7 @@
 
 require_once (APP_DIR.'/core/services/functionnals/FSRegistration.class.php');
 require_once (APP_DIR.'/core/services/functionnals/FSParticipant.class.php');
+require_once (APP_DIR.'/core/services/functionnals/FSParticipation.class.php');
 require_once (APP_DIR.'/core/services/functionnals/FSSlot.class.php');
 require_once (APP_DIR.'/core/model/Message.class.php');
 
