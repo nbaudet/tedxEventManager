@@ -89,7 +89,7 @@ class Crud {
         $data = array();
         $return = false;
         
-        if($rawData){
+        if($rawData->rowCount() > 0){
             foreach($rawData as $row) {
                 $data[] = $row;
             }// foreach
@@ -112,7 +112,7 @@ class Crud {
         $rawData = $this->dbh->query($sql);
         $data = array();
         
-        if($rawData){
+        if($rawData->rowCount()){
             foreach($rawData as $row) {
                 $data[] = $row;
             }// foreach            
