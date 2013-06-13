@@ -16,12 +16,15 @@ class FSMembership {
      * @param int $unitNo The Id of a Unit
      * @return a Message containing an existant Membership
      */
-    public static function getMembership($memberID, $unitNo) {
+    public static function getMembership($args) {
         $membership = NULL;
+        $member = $args['member'];
+        $unit = $args['unit'];
+        var_dump($member->getId());
         
         global $crud;
         
-        $sql = "SELECT * FROM Membership WHERE MemberID = '$memberID' AND UnitNo = $unitNo";
+        $sql = "SELECT * FROM Membership WHERE MemberID = '".$member->getId()."' AND UnitNo = ".$unit->getNo();
         $data = $crud->getRow($sql);
         
         if($data){
@@ -103,7 +106,7 @@ class FSMembership {
      * @param $args Parameters of a Membership
      * @return a Message containing the new Membership
      */
-    public function addMembership($args){
+    public static function addMembership($args){
         global $crud;
         $membership = NULL;
 
@@ -115,6 +118,12 @@ class FSMembership {
             $aValidUnit = FSUnit::getUnit($args['unit']->getNo());
             
             if ($aValidUnit->getStatus()){
+                // Validate Membership
+                $anInexistantMembership = FSMembership::getMembership($args);
+                
+                if(!$anInexistantMembership->getStatus()){
+                    echo "Unit et Member valides !"; ///////////////////////
+                }
                 
             } else {
                 
@@ -129,6 +138,7 @@ class FSMembership {
             );
             
             $message = new Message($argsMessage);
+            return $message;
         }
         
         
@@ -136,14 +146,17 @@ class FSMembership {
         // Validate Membership
         
         
-        // Create Membership
+        /* Create Membership
         $sql = "INSERT INTO Membership` (`MemberID` ,`UnitNo`) VALUES (
             '".$args['memberID']."', 
             '".$args['unitNo']."'
-        );";
+        );"; */
         
+        /*
+        //Exécution de la requête
         if($crud->exec($sql) == 1){
             
+            // Récupération du membership créé
             $sql = "SELECT * FROM Membership WHERE 
               MemberID = '".$args['memberID']."' AND UnitNo = ".$args['unitNo'];
             
@@ -176,8 +189,10 @@ class FSMembership {
 
             return $message;
         }
+        */
         
     }
+    // End addMembership
     
 }
 
