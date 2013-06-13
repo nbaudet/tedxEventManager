@@ -12,7 +12,7 @@ class FSMembership {
      * @param int $unitNo The Id of a Unit
      * @return a Message containing an existant Membership
      */
-    protected function getMembership($memberID, $unitNo) {
+    public function getMembership($memberID, $unitNo) {
         $membership = NULL;
         
         global $crud;
