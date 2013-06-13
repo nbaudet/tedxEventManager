@@ -75,10 +75,20 @@ class Tedx_manager{
     } // function
     
     /**
-     * 
+     * Logs the current member out
+     * @return Message "User logged out" or "User already logged out"
      */
     public function logout() {
         return $this->asAuth->logout();
+    }
+    
+    /**
+     * Checks if the user is granted to do an action or not
+     * @param type $action the action to exexute
+     * @return Message "Missing action", "Access granted", or "Access restricted"
+     */
+    public function isGranted( $action ) {
+        return $this->asAuth->isGranted( $action );
     }
     
     

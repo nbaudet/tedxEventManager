@@ -8,6 +8,7 @@ require_once(APP_DIR.'/core/model/Member.class.php');
 require_once(APP_DIR.'/core/model/Message.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSUnit.class.php');
+require_once(APP_DIR.'/core/services/functionnals/FSAccess.class.php');
 
 
 class ASAuth {
@@ -38,17 +39,20 @@ class ASAuth {
             $member = $message->getContent();
             
             // If the passwords values are the same
-            if ( $member->getPassword() == md5($args['password'] ) ) {
+            if ( $member->getPassword() == md5( $args['password'] ) ) {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
-                $_SESSION['units']  = $this->getAllUnits($member);
-                $_SESSION['access'] = $this->getAllAccess();
+                $_SESSION['units']  = $this->getAllUnits( $member );
+                $unitNumbers = $this->getAllUnitsNumbers( $member );
+                $_SESSION['access'] = $this->getAllAccesses( $unitNumbers );
+                //var_dump($_SESSION['units']);
                 
                 // Sets the OK message
                 $args = array(
                     'messageNumber' => 001,
                     'message'       => 'User logged',
-                    'status'        => true
+                    'status'        => true,
+                    'content'       => $member
                     );
                 $messageOK = new Message( $args );
                 return $messageOK;
@@ -75,25 +79,36 @@ class ASAuth {
             );
             $messageNOK = new Message( $args );
             return $messageNOK;
-        }
-    }
+        } // else
+    } // function
     
     /**
      * Enables users to logout
      * Clears the Session variables and destroys the session
      */
     public function logout() {
+        if( isset( $_SESSION['usr'] ) ) {
+            //session_destroy();
+            unset( $_SESSION );
+
+            $args = array(
+                    'messageNumber' => 8,
+                    'message'       => 'User logged out',
+                    'status'        => true
+                );
+            $messageOK = new Message( $args );
+            return $messageOK;
+        }
+        else {
+            $args = array(
+                    'messageNumber' => 9,
+                    'message'       => 'User already logged out',
+                    'status'        => false
+                );
+            $messageNOK = new Message( $args );
+            return $messageNOK;
+        }
         
-        //session_destroy();
-        unset( $_SESSION );
-        
-        $args = array(
-                'messageNumber' => 008,
-                'message'       => 'User logged out',
-                'status'        => true
-            );
-        $messageOK = new Message( $args );
-        return $messageOK;
     }
     
     /**
@@ -103,6 +118,7 @@ class ASAuth {
      * @return boolean
      */
     public function isGranted( $action ) {
+        
         // If $action is not set, returns false
         if(!isset($action) || $action == '') {
             $args = array(
@@ -113,18 +129,10 @@ class ASAuth {
             $messageNOK = new Message( $args );
             return $messageNOK;
         }
+        
         // If the action is present in the member's session, returns true
-        if( array_search( $_SESSION['access'] != false ) ) {
-            $args = array(
-                'messageNumber' => 006,
-                'message'       => 'Access granted',
-                'status'        => true
-            );
-            $messageOK = new Message( $args );
-            return $messageOK;
-        }
-        // Else : the member doesn't have the right
-        else {
+        //if( array_search( $action, $_SESSION['access'] ) === true ) {
+        if( array_search( $action, $_SESSION['access'] ) === false ) {
             $args = array(
                 'messageNumber' => 007,
                 'message'       => 'Access restricted',
@@ -132,6 +140,16 @@ class ASAuth {
             );
             $messageNOK = new Message( $args );
             return $messageNOK;
+        }
+        // Else : the member doesn't have the right
+        else {
+            $args = array(
+                'messageNumber' => 006,
+                'message'       => 'Access granted',
+                'status'        => true
+            );
+            $messageOK = new Message( $args );
+            return $messageOK;
         }
     }
     
@@ -158,8 +176,17 @@ class ASAuth {
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
-    private function getAllUnits($member) {
-        $units = FSUnit::getAllUnitsForMember($member);
+    private function getAllUnits( $member ) {
+        $units = FSUnit::getAllUnitsForMember( $member );
+        return $units;
+    }
+    
+    /**
+     * Returns an array with all the units of a member
+     * @return Mixed Array of Units for a member
+     */
+    private function getAllUnitsNumbers( $member ) {
+        $units = FSUnit::getAllUnitsNumbersForMember( $member );
         return $units;
     }
     
@@ -167,11 +194,23 @@ class ASAuth {
      * Returns an array of accesses for a member, depending on his/her units
      * @return Mixed 
      */
-    private function getAllAccess($unit) {
-        /*$access = array(
-            'readMember', 'getMember', 'getEvent', 'registerToAnEvent'
-        );
-        return $access;*/
+    private function getAllAccesses( $units ) {
+        $tabAccesses = array();
+        foreach( $units as $unit ) {
+            $tabAccesses[] = FSAccess::getAllAccessesForUnit($unit);
+        }
+        
+        // Merge the two arrays
+        $accesses = array();
+        foreach( $tabAccesses as $extAccesses ){
+            foreach( $extAccesses as $intAccess ) {
+                $accesses[] = $intAccess;
+            }
+        }
+        // Remove the redundancies in accesses
+        $accesses = array_unique($accesses);
+
+        return $accesses;
     }
 }
 
