@@ -11,10 +11,10 @@
  */
 
 /* DATABASE CONFIG */
-define('DB_LOCATION'    , 'www.syu.ch');
-define('DB_NAME'        , 'temp_tedx');
-define('DB_USER'        , 'event_manager');
-define('DB_PASSWORD'    , 'pratique');
+define('DB_LOCATION'    , 'pingouin1.heig-vd.ch');
+define('DB_NAME'        , 'tedx-dev');
+define('DB_USER'        , 'tedx');
+define('DB_PASSWORD'    , 'BuVDuH2DRAQdFpU7');
 
 /* APP CONFIG */
 define('APP_DIR'   , 'C:\wamp\www\tedxEventManager' );

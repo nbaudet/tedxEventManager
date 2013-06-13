@@ -69,15 +69,15 @@ class Crud {
         
         // try connecting to the database
         try {
-          $this->dbh = new PDO('mysql:host=localhost'.$this->location.';dbname='.$this->name, $this->user, $this->password);
+          $this->dbh = new PDO('mysql:host='.$this->location.';dbname='.$this->name, $this->user, $this->password);
    
         } catch (PDOException $e) { 
-            print "DATABASE CONNECTION ERROR !: " . $e->getMessage() ;
+            print "DATABASE CONNECTION ERROR !: " . $e->getMessage() .'mysql:host='.$this->location.';dbname='.$this->name .' // USER : '.$this->user . ' PASSWORD : ' . $this->password;
             die();
         } // catch
      
     }//construct
-    
+     
     /**
      * return a single row
      * @param type $sql
