@@ -74,6 +74,12 @@ class Tedx_manager{
         return $messageLogin;
     } // function
     
+    /**
+     * 
+     */
+    public function logout() {
+        return $this->asAuth->logout();
+    }
     
     
     

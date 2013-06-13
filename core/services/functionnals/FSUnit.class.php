@@ -89,6 +89,50 @@ class FSUnit {
             return $message;
         }
     }
+    
+    /**
+     * Returns all the units of a member
+     * @global Crud $crud A Crud Object
+     * @param Member $member The member we are getting the units for.
+     * @return Message The Units for a member
+     */
+    public static function getAllUnitsForMember(Member $member) {
+        $unit = NULL;
+        
+        global $crud;
+        
+        $sql = "SELECT * FROM Member
+            INNER JOIN Membership
+            ON Member.ID = Membership.MemberID
+            INNER JOIN Unit
+            ON Membership.UnitNo = Unit.No
+            WHERE Member.ID = '" . $member->getId() . "'";
+        $data = $crud->getRows($sql);
+        
+        echo '<h1>asdfélkajsdfélkajsfd</h1>';
+        var_dump($data);
+        echo '<h1>asdfélkajsdfélkajsfd</h1>';
+        
+        // If we got the 
+        if($data){
+            $argsUnit = array(
+                'no'      => $data['No'],
+                'name'        => $data['Name'],
+                'isArchived'    => $data['IsArchived']
+            );
+            
+            $unit = new Unit($argsUnit);
+            
+            $argsMessage = array(
+                'messageNumber' => 400,
+                'message'       => 'Existant Unit',
+                'status'        => true,
+                'content'       => $unit
+            );
+            $message = new Message($argsMessage);
+            return $message;
+        }
+    }
 }
 
 ?>

@@ -7,6 +7,8 @@
 require_once(APP_DIR.'/core/model/Member.class.php');
 require_once(APP_DIR.'/core/model/Message.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
+require_once(APP_DIR.'/core/services/functionnals/FSUnit.class.php');
+
 
 class ASAuth {
     
@@ -36,10 +38,10 @@ class ASAuth {
             $member = $message->getContent();
             
             // If the passwords values are the same
-            if ( $member->getPassword() == $args['password'] ) {
+            if ( $member->getPassword() == md5($args['password'] ) ) {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
-                $_SESSION['units']  = $this->getAllUnits();
+                $_SESSION['units']  = $this->getAllUnits($member);
                 $_SESSION['access'] = $this->getAllAccess();
                 
                 // Sets the OK message
@@ -81,8 +83,10 @@ class ASAuth {
      * Clears the Session variables and destroys the session
      */
     public function logout() {
+        
+        //session_destroy();
         unset( $_SESSION );
-        session_destroy();
+        
         $args = array(
                 'messageNumber' => 008,
                 'message'       => 'User logged out',
@@ -154,12 +158,12 @@ class ASAuth {
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
-    private function getAllUnits() {
-        ///////////////////////////////////////////////////////STUB
-        $units = array(
+    private function getAllUnits($member) {
+        /*$units = array(
             'participant' => 'participant',
             'validator'   => 'validator'
-        );
+        );*/
+        $units = FSUnit::getAllUnitsForMember($member);
         return $units;
     }
     

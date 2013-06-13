@@ -2,15 +2,18 @@
 require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
-echo 'test de login';
-$message = $tedx_manager->login('admin', md5( 'admin' ));
+echo '<h2>Test de login</h2>';
+$message = $tedx_manager->login( 'participant', 'participant' );
 var_dump($message);
 
-// Envoi du paramètre dans login
+echo '<h2>Session apr&egrave;s login</h2>';
+var_dump($_SESSION);
 
+echo '<hr /><h2>Test de logout</h2>';
+$messageLogout = $tedx_manager->logout();
+var_dump($messageLogout);
 
-// Récupération du résultat
-
-
+echo '<h2>Session apr&egrave;s logout</h2>';
+$_SESSION['poney'] = 'Ma petite pouliche';
 var_dump($_SESSION);
 ?>
