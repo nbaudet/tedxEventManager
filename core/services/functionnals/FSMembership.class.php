@@ -4,50 +4,43 @@
  *
  * @author Lauric Francelet
  */
-class FSPerson {
+class FSMembership {
     
     /**
-     * Returns a Person with the given No as Id.
-     * @param int $no The Id of the Person
-     * @return a Message containing an existant Person
+     * Returns a Membership with the given memberID and unitNo as Id.
+     * @param String $memberID The Id of a Member
+     * @param int $unitNo The Id of a Unit
+     * @return a Message containing an existant Membership
      */
-    protected function getPerson($no) {
-        $person = NULL;
+    protected function getMembership($memberID, $unitNo) {
+        $membership = NULL;
         
         global $crud;
         
-        $sql = "SELECT * FROM person WHERE no = $no";
+        $sql = "SELECT * FROM membership WHERE MemberID = $memberID AND UnitNo = $unitNo";
         $data = $crud->getRow($sql);
         
         if($data){
-            $argsPerson = array(
-                'no'            => $data['no'],
-                'name'          => $data['name'],
-                'firstname'     => $data['firstname'],
-                'dateOfBirth'   => $data['dateOfBirth'],
-                'address'       => $data['address'],
-                'city'          => $data['city'],
-                'country'       => $data['country'],
-                'phoneNumber'   => $data['phoneNumber'],
-                'email'         => $data['email'],
-                'description'   => $data['description'],
-                'isArchived'    => $data['isArchived']
+            $argsMembership = array(
+                'memberId'      => $data['MemberID'],
+                'unitNo'        => $data['UnitNo'],
+                'isArchived'    => $data['IsArchived'],
             );
             
-            $person = new Person($argsPerson);
+            $membership = new MemberShip($argsMembership);
             
             $argsMessage = array(
-                'messageNumber' => 101,
-                'message'       => 'Existant Person',
+                'messageNumber' => 107,
+                'message'       => 'Existant membership',
                 'status'        => true,
-                'content'       => $person
+                'content'       => $membership
             );
             $message = new Message($argsMessage);
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 102,
-                'message'       => 'Inexistant Person',
+                'messageNumber' => 108,
+                'message'       => 'Inexistant Membership',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -57,50 +50,41 @@ class FSPerson {
     }
     
     /**
-     * Returns all the Persons of the database
-     * @return A Message containing an array of Persons
+     * Returns all the Memberships of the database
+     * @return A Message containing an array of Memberships
      */
     public function getPersons(){
         global $crud;
         
-        $sql = "SELECT * FROM person";
+        $sql = "SELECT * FROM membership";
         $data = $crud->getRows($sql);
         
         if ($data){
-            $persons = array();
+            $memberships = array();
 
-            
             foreach($data as $row){
-                $argsPerson = array(
-                    'no'            => $row['no'],
-                    'name'          => $row['name'],
-                    'firstname'     => $row['firstname'],
-                    'dateOfBirth'   => $row['dateOfBirth'],
-                    'address'       => $row['address'],
-                    'city'          => $row['city'],
-                    'country'       => $row['country'],
-                    'phoneNumber'   => $row['phoneNumber'],
-                    'email'         => $row['email'],
-                    'description'   => $row['description'],
-                    'isArchived'    => $row['isArchived']
+                $argsMembership = array(
+                    'memberId'      => $row['MemberID'],
+                    'unitNo'        => $row['UnitNo'],
+                    'isArchived'    => $row['IsArchived'],
                 );
             
-                $persons[] = new Person($argsPerson);
+                $memberships[] = new MemberShip($argsMembership);
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 103,
-                'message'       => 'All Persons selected',
+                'messageNumber' => 107,
+                'message'       => 'All Memberships selected',
                 'status'        => true,
-                'content'       => $persons
+                'content'       => $memberships
             );
             $message = new Message($argsMessage);
 
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 104,
-                'message'       => 'Error while SELECT * FROM person',
+                'messageNumber' => 108,
+                'message'       => 'Error while SELECT * FROM membership',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -111,44 +95,46 @@ class FSPerson {
     }
     
     /**
-     * Add a new Person in Database
-     * @param $args Parameters of a Person
-     * @return a Message containing the new Person
+     * Add a new Membership in Database
+     * @param $args Parameters of a Membership
+     * @return a Message containing the new Membership
      */
-    public function addPerson($args){
+    public function addMembership($args){
         global $crud;
         
-        $sql = "INSERT INTO `tedx`.`person` (
-            `No`, `Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, 
-            `Country`, `PhoneNumber`, `Email`, `Description`, `IsArchived`) VALUES (
-                NULL, 
-                '".$args['name']."', 
-                '".$args['firstname']."', 
-                '".$args['dateOfBirth']."', 
-                '".$args['address']."', 
-                '".$args['city']."',
-                '".$args['country']."',
-                '".$args['phoneNumber']."', 
-                '".$args['email']."',
-                '".$args['description']."',
-                '".$args['isArchived']."'
+        $membership = NULL;
+        
+        $sql = "INSERT INTO `tedx`.`membership` (`MemberID` ,`UnitNo` ,
+            `IsArchived`) VALUES (
+                '".$args['memberID']."', 
+                '".$args['unitNo']."'
         );";
         
-        if($crud->exec($sql)){
+        if($crud->exec($sql) == 1){
             
+            $sql = "SELECT * FROM membership LIMIT 1";
+            $data = $crud->getRow($sql);
+            
+            $argsMembership = array(
+                'memberId'           => $data['MemberID'],
+                'unitNo'             => $data['UnitNo'],
+                'isArchived'         => $data['IsArchived']
+            );
+            
+            $membership = new Membership($argsMembership);
             
             $argsMessage = array(
                 'messageNumber' => 105,
-                'message'       => 'New Person added !',
+                'message'       => 'New Membership added !',
                 'status'        => true,
-                'content'       => 1
+                'content'       => $membership
             );
             $message = new Message($argsMessage);
             return $message;
         } else {
             $argsMessage = array(
                 'messageNumber' => 106,
-                'message'       => 'Error while inserting new Person',
+                'message'       => 'Error while inserting new Membership',
                 'status'        => false,
                 'content'       => NULL
             );
