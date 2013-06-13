@@ -18,7 +18,7 @@ class FSUnit {
         // Nothing
     }
     
-    public static function getUnitById($aNo) {
+    public static function getUnit($aNo) {
         $unit = NULL;
         
         global $crud;

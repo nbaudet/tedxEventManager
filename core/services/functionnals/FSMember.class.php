@@ -13,31 +13,105 @@ class FSMember {
      * @param string $password the password of our member
      * @return a Member Object or NULL
      */
-    protected function getMember ($id) {
+    public static function getMember($id) {
+        $member = NULL;
+        
+        // get database manipulator
+        global $crud;
+        
+        $sql = "SELECT * FROM Member WHERE Member.ID = '" . $id . "'";
+        $data = $crud->getRow($sql);
+        
+        $argsMember = array(
+            'id'         => $data['ID'],
+            'password'   => $data['Password'],
+            'personNo'   => $data['PersonNo'],
+            'isArchived' => $data['IsArchived']
+        );
+        
+        $aValidMember = new Member($argsMember);
+        
+        $argsMessage = array(
+            'messageNumber' => 407,
+            'message'       => 'The Member is existing',
+            'status'        => true,
+            'content'       => $aValidMember
+        );
+ 
+        $messageOK = new Message( $argsMessage );
+        return $messageOK;
+    }
+    
+    protected function addMember($argsMember) {
         // get database manipulator
         global $crud;
         
         
-        // Récupère le stub de notre member et crée un member
-        $stubMemberId = 'admin';
-        $stubMemberPass = 'admin';
-        
         $argsMember = array(
-            'id'         => $stubMemberId,
-            'password'   => $stubMemberPass,
-            'personNo'   => 1,
-            'isArchived' => 0
+            'id'         => '',
+            'password'   => '',
+            'person'   => '',
+            'isArchived' => ''
         );
-        $member = new Member($argsMember);
         
-        $args = array(
-            'messageNumber' => 006,
-            'message'       => 'Access granted',
+        $noPerson = $argsMember['person']->getNo();
+        $aValidPerson = FSPerson::getPerson($noPerson);
+        
+        $anInvalidMember = self::getMember($argsMember['id']);
+        
+        $aFreePerson = $this->checkFreePerson($aValidPerson->getContent());
+        
+        $aCreatedMember = $this->createMember($aValidMember->getContent(), $aFreePerson->getContent());
+        
+        $argsMessage = array(
+            'messageNumber' => 406,
+            'message'       => 'a create Member',
             'status'        => true,
-            'content'       => $member
+            'content'       => $aCreatedMember
         );
-        $messageOK = new Message( $args );
+        $messageOK = new Message( $argsMessage );
         return $messageOK;
     }
+    
+    private function checkFreePerson($aPerson){
+        $aPersonNo = $aPerson->getNo();
+        $sql = "SELECT * FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
+        
+        $data = $crud->getRow($sql);
+
+        if(isset($data)){
+            $argsMessage = array(
+                'messageNumber' => 405,
+                'message'       => 'The Person is occuped',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }else{
+            $argsMessage = array(
+                'messageNumber' => 404,
+                'message'       => 'The Person is free',
+                'status'        => true,
+                'content'       => $aPerson
+            );
+        }
+        $message = new Message( $argsMessage );
+        return $message;
+    }
+    
+    private function createMember($aValidMember){
+        
+        
+        $argsMessage = array(
+            'messageNumber' => 403,
+            'message'       => 'The Person is free',
+            'status'        => true,
+            'content'       => $aValidMember
+        );
+        
+        $messageOK = new Message( $argsMessage );
+        return $messageOK;
+    }
+    
+    
 }
 ?>

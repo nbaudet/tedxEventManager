@@ -28,7 +28,7 @@ class ASFree {
      * @param type $args 
      * @return type 
      */
-    public function registerVisitor($args){
+    public static function registerVisitor($args){
         /**
          * Arguments for adding a Person
          */
@@ -72,12 +72,12 @@ class ASFree {
                 /**
                  * Get the Unit with the name 'Visitor' 
                  */
-                $aUnit = FSUnit::getUnitByName('Visitor');
+                $aUnit = FSUnit::getUnitByName('Visitors'); // A editer quand Unit a le bon nom de Visitor
                 /**
                  * Arguments for adding a Membership
                  */
                 $argsMembership = array(
-                    'person'  => $anAddedMember,
+                    'member'  => $anAddedMember,
                     'unit' => $aUnit
                 );
                 /**

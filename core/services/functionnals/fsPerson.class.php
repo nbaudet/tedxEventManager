@@ -28,7 +28,7 @@ class FSPerson {
             $argsPerson = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
-                'firstName'     => $data['Firstname'],
+                'firstname'     => $data['Firstname'],
                 'dateOfBirth'   => $data['DateOfBirth'],
                 'address'       => $data['Address'],
                 'city'          => $data['City'],
@@ -68,7 +68,7 @@ class FSPerson {
     public static function getPersons(){
         global $crud;
         
-        $sql = "SELECT * FROM person";
+        $sql = "SELECT * FROM Person";
         $data = $crud->getRows($sql);
         
         if ($data){
