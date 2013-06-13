@@ -112,6 +112,9 @@ class FSMembership {
         $member = $args['member'];
         $unit = $args['unit'];
         
+        echo "<hr> Mon objet Member";
+        var_dump($member);
+
         // Validate Member
         $aValidMember = FSMember::getMember($member->getId());
         

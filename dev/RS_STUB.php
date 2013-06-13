@@ -11,7 +11,6 @@ require_once('../core/model/Message.class.php ');
 require_once('../core/services/functionnals/FSUnit.class.php');
 require_once('../core/services/functionnals/FSMember.class.php');
 
-$mdp = md5('test');
 
 $args = array(
     'name'     => 'Robert', // String
@@ -24,11 +23,12 @@ $args = array(
     'email' => 'stephan.robert@test.ch', // String
     'description' => 'Professeur à la HEIG-VD', // String
     'idmember' => 'srt543', // String
-    'password' => $mdp // String encrypt to MD5
+    'password' => 'test' // String encrypt to MD5
 );
 
 $message = ASFree::registerVisitor($args);
 
+echo "<hr> Mon message final";
 var_dump($message);
 
 

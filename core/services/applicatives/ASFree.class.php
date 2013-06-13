@@ -48,7 +48,6 @@ class ASFree {
          * Add a Person
          */
         $anAddedPerson = FSPerson::addPerson($argsPerson);
-        
         /**
          * If the Person is added, continue. 
          */
@@ -65,7 +64,8 @@ class ASFree {
              * Add a Member
              */
             $anAddedMember = FSMember::addMember($argsMember);
-            
+            echo "<hr> Message Member ajouté";
+            var_dump($anAddedMember);
             /**
              * If the Member is added, continue.
              */
@@ -78,8 +78,8 @@ class ASFree {
                  * Arguments for adding a Membership
                  */
                 $argsMembership = array(
-                    'member'  => $anAddedMember,
-                    'unit' => $aUnit
+                    'member'  => $anAddedMember->getContent(),
+                    'unit' => $aUnit->getContent()
                 );
                 /**
                  * Add a Membership

@@ -129,11 +129,10 @@ class FSPerson {
         }
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('".$args['name']."', '".$args['firstname']."', '".$args['dateOfBirth']."', '".$args['address']."', '".$args['city']."', '".$args['country']."', '".$args['phoneNumber']."', '".$args['email']."', '".$description."')";
         
-        var_dump($sql);
         if($crud->exec($sql) == 1){
             
             $sql = "SELECT * FROM Person WHERE Email = '" . $args['email'] . "'";
-            $data = $crud->exec($sql);
+            $data = $crud->getRow($sql);
             
             $argsPerson = array(
                 'no'            => $data['No'],

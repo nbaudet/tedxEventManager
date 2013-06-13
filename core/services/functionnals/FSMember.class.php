@@ -28,45 +28,41 @@ class FSMember {
         
         $sql = "SELECT * FROM Member WHERE Member.ID = '" . $id . "'";
         $data = $crud->getRow($sql);
-        /**
-         * If $data return content
-         */
+        // If $data, return content
         if($data){
-           /**
-            * Send Message Valid Member
-            */
+           // Send Message Valid Member
            $argsMember = array(
                 'id'         => $data['ID'],
                 'password'   => $data['Password'],
                 'personNo'   => $data['PersonNo'],
                 'isArchived' => $data['IsArchived']
             );
-           
             $aValidMember = new Member($argsMember);
             $argsMessage = array(
                 'messageNumber' => 409,
-                'message'       => 'The Member is existing',
+                'message'       => 'The Member is valid',
                 'status'        => true,
                 'content'       => $aValidMember
             );
         }else{
-           /**
-            * Send Message Inexistant Member
-            */
+           // Send Message Inexistant Member
            $argsMessage = array(
                 'messageNumber' => 408,
-                'message'       => 'The Member is inexisting',
+                'message'       => 'The Member is inexistant',
                 'status'        => false,
                 'content'       => NULL
             );
         }
-        /**
-         * Return message
-         */
+        // Return message
         $message = new Message( $argsMessage );
         return $message;
     }
     
+    /**
+     * Functionnal Service addMember
+     * @param type $argsMember the properties of a Member
+     * @return type $message anAddedMember
+     */
     public static function addMember($argsMember) {
         // get database manipulator
         global $crud;
@@ -100,7 +96,7 @@ class FSMember {
                             'messageNumber' => 406,
                             'message'       => 'a create Member',
                             'status'        => true,
-                            'content'       => array('aValidPerson' => $aValidPerson, 'anInvalidMember' => $anInvalidMember, 'aFreePerson' => $aFreePerson, 'aCreatedMember' => $aCreatedMember)
+                            'content'       => $aCreatedMember->getContent()
                         );
                         $message = new Message( $argsMessage );
                     }else{
@@ -129,15 +125,22 @@ class FSMember {
         }
         return $message;
     }
-    
+    /**
+     * Check if the Person had already a Member associate
+     * @global type $crud
+     * @param type $aPerson
+     * @return \Message
+     */
     private static function checkFreePerson($aPerson){
         // get database manipulator
         global $crud;
         
+        // Get the Person with his member
         $aPersonNo = $aPerson->getNo();
         $sql = "SELECT * FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
-        
         $data = $crud->getRow($sql);
+        
+        // Create the message       
         if($data){
             $argsMessage = array(
                 'messageNumber' => 405,
@@ -153,35 +156,50 @@ class FSMember {
                 'content'       => $aPerson
             );
         }
+        
+        // Return the message
         $message = new Message( $argsMessage );
         return $message;
     }
     
+    /**
+     * Create a Persistant Member
+     * @global type $crud
+     * @param type $id
+     * @param type $pass
+     * @param type $person
+     * @return \Message
+     */
     private static function createMember($id, $pass, $person){
          // get database manipulator
         global $crud;
         
-        
-        $sql = "INSERT INTO Member (ID, Password, PersonNo) VALUES ('" . $id . "', ". $pass . ", " . $person->getNo(). ")";
+        // Insert the Member with password in MD5
+        $pass = md5($pass);
+        $sql = "INSERT INTO Member (ID, Password, PersonNo) VALUES ('" . $id . "', '". $pass . "', " . $person->getNo(). ")";
         $data = $crud->exec($sql);
         
+        // Get the Member just added
         $aCreatedMember = self::getMember($id);
         
-        if($aCreatedMember){
+        // Create the message
+        if($aCreatedMember->getStatus()){
             $argsMessage = array(
                 'messageNumber' => 403,
-                'message'       => 'The person is created',
+                'message'       => 'The Member is created',
                 'status'        => true,
-                'content'       => $aCreatedMember
+                'content'       => $aCreatedMember->getContent()
             );
         }else{
             $argsMessage = array(
                 'messageNumber' => 410,
-                'message'       => 'The person is not created',
+                'message'       => 'The Member is not created',
                 'status'        => false,
-                'content'       => $aCreatedMember
+                'content'       => $aCreatedMember->getContent()
             );
         }
+        
+        // Return the message
         $message = new Message( $argsMessage );
         return $message;
     }
