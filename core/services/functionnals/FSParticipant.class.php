@@ -20,12 +20,21 @@ class FSParticipant{
         
         global $crud;
         $personNo = addslashes($personNo);
-        $sql = "SELECT * FROM Participant WHERE PersonNo = $personNo";
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No WHERE Pe.No = $personNo";
         $data = $crud->getRow($sql);
         
         if($data){
             $argsParticipant = array(
-                'personNo'          => $data['PersonNo'],
+                'no'            => $data['No'],
+                'name'          => $data['Name'],
+                'firstname'     => $data['Firstname'],
+                'dateOfBirth'   => $data['DateOfBirth'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'phoneNumber'   => $data['PhoneNumber'],
+                'email'         => $data['Email'],
+                'description'   => $data['Description'],
                 'isArchived'    => $data['IsArchived']
             );
         

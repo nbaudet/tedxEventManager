@@ -11,23 +11,7 @@ require_once('Person.class.php');
  * 
  */
 class Participant extends Person {
-    
-    
-    /**
-     * Participant's person numero
-     * @var type int
-     */
-    protected $personNo; 
-    
-    
-    /**
-     * Participant's isArchived
-     * @var type boolean
-     */
-    protected $isArchived; 
-    
-    
-    
+        
     /**
      * Constructs object Participant
      * 
@@ -39,13 +23,8 @@ class Participant extends Person {
             throw new Exception('No parameters');
             
         }//if
-        parent::__construct($array);
         
-        $this->personNo = $array['personNo']; 
-        $this->isArchived = $array['isArchived']; 
-        
-        
-        
+        parent::__construct($array);      
     }//construct
     
 
