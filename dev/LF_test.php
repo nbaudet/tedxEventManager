@@ -12,6 +12,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
@@ -33,22 +34,24 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 //var_dump(FSMembership::getMembership($argsMembership));
 //var_dump(FSMembership::addMembership($argsMembership));
 
-$event = FSEvent::getEvent(1)->getContent();
-var_dump($event);
+//$event = FSEvent::getEvent(1)->getContent();
+//var_dump($event);
 
-$argsSlot = array (
+/*$argsSlot = array (
     'no'    => '1',
     'event' => $event
-);
+);*/
 
-$slot = FSSlot::getSlot($argsSlot)->getContent();
-var_dump($slot);
+//$slot = FSSlot::getSlot($argsSlot)->getContent();
+//var_dump($slot);
 
-var_dump(FSSlot::getSlotsByEvent($event));
+//var_dump(FSSlot::getSlotsByEvent($event));
 
-var_dump(FSSlot::getSlots());
+//var_dump(FSSlot::getSlots());
 
 
+var_dump(FSSpeaker::getSpeaker(6));
+var_dump(FSSpeaker::getSpeakers());
 
 
 ?>

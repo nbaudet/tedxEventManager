@@ -45,8 +45,6 @@ class Speaker extends Person {
         $this->personNo = $array['personNo']; 
         $this->isArchived = $array['isArchived']; 
         
-        
-        
     }//construct
     
     

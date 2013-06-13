@@ -1,31 +1,33 @@
 <?php
 
 /**
- * Description of FSParticipant
+ * Description of FSSpeaker
  *
- * @author Robin Jet-Pierre
+ * @author Lauric Francelet
  */
 
-require_once(APP_DIR . '/core/model/Participant.class.php');
+require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 
-class FSParticipant{
+class FSSpeaker{
     /**
-     *Returns a Participantwith the given No as Id
-     *@param string $name the id of the Participant
-     *@return a Message with an existant Participant
+     *Returns a Speaker with the given No as Id
+     *@param string $name the id of the Speaker
+     *@return a Message with an existant Speaker
      */
-    public static function getParticipant($personNo){
-        $participant = NULL;
-        
+    public static function getSpeaker($personNo){
+        $speaker = NULL;
         global $crud;
-        $personNo = addslashes($personNo);
-        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No WHERE Pe.No = $personNo";
+        
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
+Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Sp.PersonNo ,Sp.IsArchived 
+FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = $personNo";
+        
         $data = $crud->getRow($sql);
         
         if($data){
-            $argsParticipant = array(
+            $argsSpeaker = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
                 'firstname'     => $data['FirstName'],
@@ -36,47 +38,50 @@ class FSParticipant{
                 'phoneNumber'   => $data['PhoneNumber'],
                 'email'         => $data['Email'],
                 'description'   => $data['Description'],
+                'personNo'      => $data['PersonNo'],
                 'isArchived'    => $data['IsArchived']
             );
         
-            $participant = new Participant($argsParticipant);
+            $speaker = new Speaker($argsSpeaker);
 
             $argsMessage = array(
-                'messageNumber'     => 207,
-                'message'           => 'Existant Participant',
+                'messageNumber'     => 120,
+                'message'           => 'Existant Speaker',
                 'status'            => true,
-                'content'           => $participant
+                'content'           => $speaker
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
+
         }else{
             $argsMessage = array(
-                'messageNumber'     => 208,
-                'message'           => 'Inexistant Participant',
+                'messageNumber'     => 121,
+                'message'           => 'Inexistant Speaker',
                 'status'            => false,
                 'content'           => NULL    
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
+
         }
+        return $return;
     }
 
     /**
-     * Returns all the Participants of the database
-     * @return A Message containing an array of Participants
+     * Returns all the Speaers of the database
+     * @return A Message containing an array of Speakers
      */
-    public static function getParticipants(){
+    public static function getSpeakers(){
         global $crud;
 
-        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No";
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
+            Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Sp.PersonNo , 
+            Sp.IsArchived FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No";
         $data = $crud->getRows($sql);
         
         if ($data){
-            $participants = array();
+            $speakers = array();
 
-            
             foreach($data as $row){
-                $argsParticipant = array(
+                $argsSpeaker = array(
                     'no'            => $row['No'],
                     'name'          => $row['Name'],
                     'firstname'     => $row['FirstName'],
@@ -87,36 +92,38 @@ class FSParticipant{
                     'phoneNumber'   => $row['PhoneNumber'],
                     'email'         => $row['Email'],
                     'description'   => $row['Description'],
+                    'personNo'      => $row['PersonNo'],
                     'isArchived'    => $row['IsArchived']
                 );
             
-                $participants[] = new Participant($argsParticipant);
+                $speakers[] = new Speaker($argsSpeaker);
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 209,
-                'message'       => 'All Participants selected',
+                'messageNumber' => 122,
+                'message'       => 'All Speakers selected',
                 'status'        => true,
-                'content'       => $participants
+                'content'       => $speakers
             );
-            $message = new Message($argsMessage);
+            $return = new Message($argsMessage);
 
-            return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 210,
-                'message'       => 'Error while SELECT * FROM Participant',
+                'messageNumber' => 123,
+                'message'       => 'Error while SELECT * FROM Speaker',
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }
-    }
+        
+        return $return;
+    }// End getSpeakers
+    
+    
     
        /**
-     * Add a new Participant in Database
+     * Add a new Speaker in Database
      * @param $args Parameters of a Participant
      * @return a Message containing the new Participant
      */
