@@ -64,8 +64,7 @@ class ASFree {
              * Add a Member
              */
             $anAddedMember = FSMember::addMember($argsMember);
-            echo "<hr> Message Member ajouté";
-            var_dump($anAddedMember);
+            
             /**
              * If the Member is added, continue.
              */
@@ -93,7 +92,7 @@ class ASFree {
                         'messageNumber' => 402,
                         'message'       => 'Visitor registered',
                         'status'        => true,
-                        'content'       => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
+                        'content'       => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember)
                     );
                     $aRegisteredVisitor = new Message($argsMessage);
                 }else{

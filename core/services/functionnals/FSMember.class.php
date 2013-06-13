@@ -94,7 +94,7 @@ class FSMember {
                          */
                         $argsMessage = array(
                             'messageNumber' => 406,
-                            'message'       => 'a create Member',
+                            'message'       => 'The Member is created',
                             'status'        => true,
                             'content'       => $aCreatedMember->getContent()
                         );
@@ -192,7 +192,7 @@ class FSMember {
             );
         }else{
             $argsMessage = array(
-                'messageNumber' => 410,
+                'messageNumber' => 407,
                 'message'       => 'The Member is not created',
                 'status'        => false,
                 'content'       => $aCreatedMember->getContent()
