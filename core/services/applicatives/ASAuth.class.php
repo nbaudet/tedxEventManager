@@ -132,6 +132,25 @@ class ASAuth {
     }
     
     /**
+     * Let you know if the current visitor of the page is logged or not
+     * @return boolean Returns if the current user is logged or not 
+     */
+    public function isLogged() {
+        if( isset( $_SESSION['usr'] ) )
+            return true;
+        else
+            return false;
+    }
+    
+    /**
+     * Returns the member's username. Exists only if the user is logged
+     * @return string The member's username
+     */
+    public function getUsername() {
+        return $_SESSION['usr'];
+    }
+    
+    /**
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
