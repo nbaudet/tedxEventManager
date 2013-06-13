@@ -8,4 +8,5 @@ var_dump(FSLocation::getLocations());
 /*var_dump(FSLocation::addLocation('Un nom', 'Une adresse', 'Une ville', 'Un pays'));*/
 var_dump(FSParticipant::getParticipant(5));
 var_dump(FSParticipant::getParticipants());
+var_dump(FSParticipant::addParticipant(8));
 ?>

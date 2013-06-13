@@ -8,6 +8,7 @@
 
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
+require_once(APP_DIR . '/core/model/Person.class.php');
 
 class FSParticipant{
     /**
@@ -122,27 +123,21 @@ class FSParticipant{
     public function addParticipant($args){
         global $crud;
         
-        /*0..1 Direction*/
-        if($args['Direction']){
+        /*Validate Person No Existant*/
+        $aValidPerson = FSPerson::getPerson($args);
+        
+        /*Validate Participant PersonNo Inexistant*/
+        $aValidParticipant = FSParticipant::getParticipant($args);
+        
+        /*If already existant Person and Inexistant Participant*/
+        if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
             $sql = "INSERT INTO Participant (
-                Name, Address, City, Country, Direction) VALUES (
-                    NULL, 
-                    '".$args['Name']."', 
-                    '".$args['Address']."', 
-                    '".$args['City']."', 
-                    '".$args['Country']."',
-                    '".$args['Direction']."'
+                PersonNo) VALUES (
+                    '".$args."'
             );";
         }else{
-            $sql = "INSERT INTO Participant (
-                Name, Address, City, Country) VALUES (
-                    NULL, 
-                    '".$args['Name']."', 
-                    '".$args['Address']."', 
-                    '".$args['City']."', 
-                    '".$args['Country']."'
-            );";
-        }
+            $sql="";
+        };
         
         if($crud->exec($sql) == 1){       
             $argsMessage = array(
