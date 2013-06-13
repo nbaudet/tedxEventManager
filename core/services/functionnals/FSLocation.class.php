@@ -112,27 +112,37 @@ class FSLocation{
     public function addLocation($args){
         global $crud;
         
-        /*0..1 Direction*/
-        if($args['Direction']){
-            $sql = "INSERT INTO Location (
-                Name, Address, City, Country, Direction) VALUES (
-                    NULL, 
-                    '".$args['Name']."', 
-                    '".$args['Address']."', 
-                    '".$args['City']."', 
-                    '".$args['Country']."',
-                    '".$args['Direction']."'
-            );";
+        /*
+         * Validate Location NotExistant
+         */
+        $aValidLocation = FSLocation::getLocation($args['Name']);
+        
+        /*
+         * If already Inexistant Location
+         */
+        if(!($aValidLocation->getStatus())){ 
+            /*0..1 Direction*/
+            if($args['Direction']){
+                $sql = "INSERT INTO Location (
+                    Name, Address, City, Country, Direction) VALUES (
+                        '".$args['Name']."', 
+                        '".$args['Address']."', 
+                        '".$args['City']."', 
+                        '".$args['Country']."',
+                        '".$args['Direction']."'
+                );";
+            }else{
+                $sql = "INSERT INTO Location (
+                    Name, Address, City, Country) VALUES (
+                        '".$args['Name']."', 
+                        '".$args['Address']."', 
+                        '".$args['City']."', 
+                        '".$args['Country']."'
+                );";
+            }
         }else{
-            $sql = "INSERT INTO Location (
-                Name, Address, City, Country) VALUES (
-                    NULL, 
-                    '".$args['Name']."', 
-                    '".$args['Address']."', 
-                    '".$args['City']."', 
-                    '".$args['Country']."'
-            );";
-        }
+            $sql="";
+        };
         
         if($crud->exec($sql)){       
             $argsMessage = array(

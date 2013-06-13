@@ -123,13 +123,19 @@ class FSParticipant{
     public function addParticipant($args){
         global $crud;
         
-        /*Validate Person No Existant*/
+        /*
+         * Validate Person No Existant
+         */
         $aValidPerson = FSPerson::getPerson($args);
         
-        /*Validate Participant PersonNo Inexistant*/
+        /*
+         * Validate Participant PersonNo Inexistant
+         */
         $aValidParticipant = FSParticipant::getParticipant($args);
         
-        /*If already existant Person and Inexistant Participant*/
+        /*
+         * If already existant Person and Inexistant Participant
+         */
         if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
             $sql = "INSERT INTO Participant (
                 PersonNo) VALUES (
