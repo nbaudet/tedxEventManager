@@ -117,14 +117,10 @@ class FSMembership {
         
         if($aValidMember->getStatus()){
             
-            echo "Membre valide";
-            
             // Validate Unit
             $aValidUnit = FSUnit::getUnit($unit->getNo());
             
             if ($aValidUnit->getStatus()){
-                
-                echo "Unit valide";
                 
                 // Validate Membership
                 $anInexistantMembership = FSMembership::getMembership($args);
@@ -132,36 +128,22 @@ class FSMembership {
                 if(!$anInexistantMembership->getStatus()){
                     
                     // Create new Membership
-                    echo "Membership inexistant"; 
-                    
                     $sql = "INSERT INTO `Membership` (`MemberID` ,`UnitNo`) VALUES (
                         '".$member->getId()."', 
                         '".$unit->getNo()."'
                     );";
                     
-                    var_dump($sql);
-                    
                     if($crud->exec($sql) != 0){
                         echo "New Membership created !";
-                        /*// Récupération du membership créé
-                        $sql = "SELECT * FROM Membership WHERE 
-                          MemberID = '".$args['memberID']."' AND UnitNo = ".$args['unitNo'];
-
-                        $data = $crud->getRow($sql);
-
-                        $argsMembership = array(
-                            'memberId'           => $data['MemberID'],
-                            'unitNo'             => $data['UnitNo'],
-                            'isArchived'         => $data['IsArchived']
-                        );
-
-                        $membership = new Membership($argsMembership); */
+                        
+                        // Get created Membership
+                        $aCreatedMembership = FSMembership::getMembership($args);
 
                         $argsMessage = array(
                             'messageNumber' => 111,
                             'message'       => 'New Membership added !',
                             'status'        => true,
-                            'content'       => 1111111111111111
+                            'content'       => $aCreatedMembership
                         );
                         $return = new Message($argsMessage);
                         
@@ -176,7 +158,6 @@ class FSMembership {
                         $return = new Message($argsMessage);
                     }
                     
-                    
                 } // End Create new Membership
                 else {
                     $argsMessage = array(
@@ -187,7 +168,6 @@ class FSMembership {
                     );
 
                 $return = new Message($argsMessage);
-                    
                 }
                 
             } else {
@@ -215,51 +195,6 @@ class FSMembership {
         
         return $return;
         
-        
-        /* Create Membership
-        $sql = "INSERT INTO Membership` (`MemberID` ,`UnitNo`) VALUES (
-            '".$args['memberID']."', 
-            '".$args['unitNo']."'
-        );"; */
-        
-        /*
-        //Exécution de la requête
-        if($crud->exec($sql) == 1){
-            
-            // Récupération du membership créé
-            $sql = "SELECT * FROM Membership WHERE 
-              MemberID = '".$args['memberID']."' AND UnitNo = ".$args['unitNo'];
-            
-            $data = $crud->getRow($sql);
-            
-            $argsMembership = array(
-                'memberId'           => $data['MemberID'],
-                'unitNo'             => $data['UnitNo'],
-                'isArchived'         => $data['IsArchived']
-            );
-            
-            $membership = new Membership($argsMembership);
-            
-            $argsMessage = array(
-                'messageNumber' => 111,
-                'message'       => 'New Membership added !',
-                'status'        => true,
-                'content'       => $membership
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 112,
-                'message'       => 'Error while inserting new Membership',
-                'status'        => false,
-                'content'       => NULL
-            );
-            $message = new Message($argsMessage);
-
-            return $message;
-        }
-        */
         
     }// End addMembership
     
