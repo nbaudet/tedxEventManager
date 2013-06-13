@@ -13,7 +13,6 @@
 /**
  * Require all Applicative Services
  */
-
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
@@ -41,18 +40,20 @@ require_once (APP_DIR.'/core/model/Stub.class.php');
 class Tedx_manager{
     
     /*
-     * An Auth
+     * An ASAuth object. Manages user loging and privileges
      */
     private $asAuth;
     
+    /*
+     * Object enabling to receive all the stubs
+     */
     private $stub; 
     
 
     
     public function __construct(){
         $this->asAuth = new ASAuth();
-        $this->stub = new Stub();  //new object Stub 
-
+        $this->stub   = new Stub();  //new object Stub 
     } // construct
     
    /**
@@ -76,24 +77,24 @@ class Tedx_manager{
     
     /**
      * Enable an anonym user to login
-     * @param $login    The user's login
-     * @param $password The user's password
+     * @param String $login The user's login
+     * @param String $password The user's password
      * @return Message "User logged" or "Login failure"
      */
-    public function login($login, $password){
+    public function login( $login, $password ){
         if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
             $loginArgs = array (
                 'id' => $login,
                 'password' => $password
             );
-            $messageLogin = $this->asAuth->login($loginArgs);
+            $messageLogin = $this->asAuth->login( $loginArgs );
         } else {
             $messageArgs = array (
                 'messageNumber' => 004,
                 'message' => "Login or password is not a string",
                 'status' => FALSE
             );
-            $messageLogin = new Message($messageArgs);
+            $messageLogin = new Message( $messageArgs );
         } // else
         return $messageLogin;
     } // function
@@ -107,12 +108,28 @@ class Tedx_manager{
     }
     
     /**
+     * Returns the value of the currently logged user, or NULL
+     * @return String The current username
+     */
+    public function getUsername() {
+        return $this->asAuth->getUsername();
+    }
+    
+    /**
      * Checks if the user is granted to do an action or not
-     * @param type $action the action to exexute
+     * @param String $action the action to execute
      * @return Message "Missing action", "Access granted", or "Access restricted"
      */
     public function isGranted( $action ) {
         return $this->asAuth->isGranted( $action );
+    }
+    
+    /**
+     * Returns if a user is logged or not.
+     * @return Boolean
+     */
+    public function isLogged() {
+        return $this->asAuth->isLogged();
     }
     
     
@@ -140,91 +157,117 @@ class Tedx_manager{
         }
     }//function
     
+     
+    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
+    
+    /*public function registerVisitor( $args ) {
+        return $this->stub->registerVisitor( $args ); 
+    }//function*/
     
     
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------    
+    /*public function registerToAnEvent( $args ) {
+        return $this->stub->registerToAnEvent( $args ); 
+    }//function*/
     
-    public function changeProfil($args) {
-        return $this->stub->changePassword($args); 
+    public function changeProfil( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changeProfil" );
+        if( $messageAccess->getStatus() ) {
+            return $this->stub->changePassword( $args );
+        }
+        else {
+            return $hasAccess->getMessage();
+        }
     }//function
     
     
-    public function addKeywordsToAnEvent($args) {
-        return $this->stub->addKeywordsToAnEvent($args); 
+    public function addKeywordsToAnEvent( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            return $this->stub->addKeywordsToAnEvent( $args );
+        }
+        else {
+            return $hasAccess->getMessage();
+        }
     }//function
     
     
-    public function archiveKeyword($args) {
-        return $this->stub->archiveKeyword($args); 
+    public function archiveKeyword( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "archiveKeyword" );
+        if( $messageAccess->getStatus() ) {
+            return $this->stub->archiveKeyword( $args ); 
+        }
+        else {
+            return $hasAccess->getMessage();
+        }
     }//function
     
     
-    public function addMotivationToAnEvent($args) {
-        return $this->stub->addMovtivationToAnEvent($args); 
+    public function addMotivationToAnEvent( $args ) {
+        return $this->stub->addMovtivationToAnEvent( $args ); 
     }//function
     
     
-    public function archiveMotivationToAnEvent($args) {
-        return $this->stub->archiveMotivationToAnEvent($args); 
+    public function archiveMotivationToAnEvent( $args ) {
+        return $this->stub->archiveMotivationToAnEvent( $args ); 
     }//function
     
     
-    public function registerSpeaker($args) {
-        return $this->stub->registerSpeaker($args); 
+    public function registerSpeaker( $args ) {
+        return $this->stub->registerSpeaker( $args ); 
     }//function
     
     
-    public function addSpeakerToSlot($args) {
-        return $this->stub->addSpeakerToSlot($args); 
+    public function addSpeakerToSlot( $args ) {
+        return $this->stub->addSpeakerToSlot( $args ); 
     }//function
     
     
-    public function changePositionOfSpeakerToEvent($args) {
-        return $this->stub->changePositionOfSpeakerToEvent($args); 
+    public function changePositionOfSpeakerToEvent( $args ) {
+        return $this->stub->changePositionOfSpeakerToEvent( $args ); 
     }//function
     
     
-    public function addSlotToEvent($args) {
-        return $this->stub->addSlotToEvent($args); 
+    public function addSlotToEvent( $args ) {
+        return $this->stub->addSlotToEvent( $args ); 
     }//function
     
     
-    public function addLocation($args) {
-        return $this->stub->addLocation($args); 
+    public function addLocation( $args ) {
+        return $this->stub->addLocation( $args ); 
     }//function
     
     
-    public function changeRegistrationStatus($args) {
-        return $this->stub->changeRegistrationStatus($args); 
+    public function changeRegistrationStatus( $args ) {
+        return $this->stub->changeRegistrationStatus( $args ); 
     }//function
     
     
-    public function registerOrganizer($args) {
-        return $this->stub->registerOrganizer($args); 
+    public function registerOrganizer( $args ) {
+        return $this->stub->registerOrganizer( $args ); 
     }//function
     
     
-    public function addTeamRole($args) {
-        return $this->stub->addTeamRole($args); 
+    public function addTeamRole( $args ) {
+        return $this->stub->addTeamRole( $args ); 
     }//function
     
     
-    public function linkTeamRole($args) {
-        return $this->stub->linkTeamRole($args); 
+    public function linkTeamRole( $args ) {
+        return $this->stub->linkTeamRole( $args ); 
     }//function
     
-    public function changeRoleLevel($args) {
-        return $this->stub->changeRoleLevel($args); 
-    }//function
-    
-    
-    public function addRole($args) {
-        return $this->stub->addRole($args); 
+    public function changeRoleLevel( $args ) {
+        return $this->stub->changeRoleLevel( $args ); 
     }//function
     
     
-    public function addEvent($args) {
-        return $this->stub->addEvent($args); 
+    public function addRole( $args ) {
+        return $this->stub->addRole( $args ); 
+    }//function
+    
+    
+    public function addEvent( $args ) {
+        return $this->stub->addEvent( $args ); 
     }//function
 
     

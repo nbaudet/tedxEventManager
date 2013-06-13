@@ -3,9 +3,12 @@ require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
 echo '<h2>Test de login</h2>';
+//$message = $tedx_manager->login( 'gabor', 'gabor' );
 $message = $tedx_manager->login( 'Penelope', 'anitakevinlove' ); // Visitor
 //$message = $tedx_manager->login( 'Penelope', '1' ); // Wrong UserName
 //$message = $tedx_manager->login( 'admin', 'admin' ); // Admin
+
+echo $tedx_manager->getUsername();
 
 echo 'Message : ';
 var_dump($message);

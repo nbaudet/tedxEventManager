@@ -55,6 +55,12 @@ class ASAuth {
                     'content'       => $member
                     );
                 $messageOK = new Message( $args );
+                
+                // Easter Egg : Spécialement  pour toi, Gabor ! :)
+                if($member->getId() == 'gabor' ){
+                    echo '<img href="http://www.baudet.me/heig/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="100px" />';
+                }
+                
                 return $messageOK;
             }
             // Else : wrong password
@@ -88,7 +94,7 @@ class ASAuth {
      */
     public function logout() {
         if( isset( $_SESSION['usr'] ) ) {
-            //session_destroy();
+            session_destroy();
             unset( $_SESSION );
 
             $args = array(
@@ -124,6 +130,17 @@ class ASAuth {
             $args = array(
                 'messageNumber' => 005,
                 'message'       => 'Missing action argument',
+                'status'        => false
+            );
+            $messageNOK = new Message( $args );
+            return $messageNOK;
+        }
+        
+        // If the user is not logged, returns false
+        if( !isset( $_SESSION['usr'] ) ) {
+            $args = array(
+                'messageNumber' => 010,
+                'message'       => 'Need to login first',
                 'status'        => false
             );
             $messageNOK = new Message( $args );

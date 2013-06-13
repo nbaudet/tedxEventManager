@@ -27,5 +27,8 @@ require_once(APP_DIR.'/core/services/Crud.class.php');
 $tedx_manager = new Tedx_manager();
 $crud = new Crud();
 
+/* SESSION AND COOKIES*/
+//session_set_cookie_params($lifetime, $path, $domain, $secure, $httponly);
+session_start();
 
 ?>
