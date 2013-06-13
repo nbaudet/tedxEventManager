@@ -125,8 +125,13 @@ class Crud {
      * @return number of lines affected
      */
     public function exec($sql){
-        return $this->dbh->exec($sql);
+        
+        /* Exécute une requête préparée en passant un tableau de valeurs */
+        $sth = $this->dbh->prepare($sql);
+        
+        return $sth->execute();
     }// function
+    
     
 }//class
 ?>
