@@ -106,66 +106,81 @@ class Tedx_manager{
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
     
+
     public function registerVisitor($args) {
-        
         return $this->stub->registerVisitor($args); 
     }//function
+    
     
     public function registerToAnEvent($args) {
         return $this->stub->registerToAnEvent($args); 
     }//function
     
+    
     public function changeProfil($args) {
         return $this->stub->changePassword($args); 
     }//function
+    
     
     public function addKeywordsToAnEvent($args) {
         return $this->stub->addKeywordsToAnEvent($args); 
     }//function
     
+    
     public function archiveKeyword($args) {
         return $this->stub->archiveKeyword($args); 
     }//function
+    
     
     public function addMotivationToAnEvent($args) {
         return $this->stub->addMovtivationToAnEvent($args); 
     }//function
     
+    
     public function archiveMotivationToAnEvent($args) {
         return $this->stub->archiveMotivationToAnEvent($args); 
     }//function
+    
     
     public function registerSpeaker($args) {
         return $this->stub->registerSpeaker($args); 
     }//function
     
+    
     public function addSpeakerToSlot($args) {
         return $this->stub->addSpeakerToSlot($args); 
     }//function
+    
     
     public function changePositionOfSpeakerToEvent($args) {
         return $this->stub->changePositionOfSpeakerToEvent($args); 
     }//function
     
+    
     public function addSlotToEvent($args) {
         return $this->stub->addSlotToEvent($args); 
     }//function
+    
     
     public function addLocation($args) {
         return $this->stub->addLocation($args); 
     }//function
     
+    
     public function changeRegistrationStatus($args) {
         return $this->stub->changeRegistrationStatus($args); 
     }//function
+    
     
     public function registerOrganizer($args) {
         return $this->stub->registerOrganizer($args); 
     }//function
     
+    
     public function addTeamRole($args) {
         return $this->stub->addTeamRole($args); 
     }//function
+    
     
     public function linkTeamRole($args) {
         return $this->stub->linkTeamRole($args); 
@@ -175,14 +190,17 @@ class Tedx_manager{
         return $this->stub->changeRoleLevel($args); 
     }//function
     
+    
     public function addRole($args) {
         return $this->stub->addRole($args); 
     }//function
+    
     
     public function addEvent($args) {
         return $this->stub->addEvent($args); 
     }//function
 
+    
 }//class
 
 
