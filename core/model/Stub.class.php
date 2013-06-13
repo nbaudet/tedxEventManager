@@ -173,8 +173,7 @@ class Stub {
         return $messageOK = new Message($args); 
     }//function 
     
-    
-    
+        
     /**
      * Stub changePositionOfSpeakerToEvent
      * @param type $args
@@ -189,8 +188,7 @@ class Stub {
         return $messageOK = new Message($args); 
     }//function
     
-    
-    
+       
     /**
      * Stub addSlotToEvent
      * @param type $args
@@ -253,7 +251,6 @@ class Stub {
         ); 
         return $messageOK = new Message($args); 
     }//function
-    
     
     
     /**
