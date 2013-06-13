@@ -4,6 +4,9 @@
  *
  * @author Lauric Francelet
  */
+
+require_once(APP_DIR . '/core/model/Membership.class.php');
+
 class FSMembership {
     
     /**
@@ -12,12 +15,12 @@ class FSMembership {
      * @param int $unitNo The Id of a Unit
      * @return a Message containing an existant Membership
      */
-    public function getMembership($memberID, $unitNo) {
+    public static function getMembership($memberID, $unitNo) {
         $membership = NULL;
         
         global $crud;
         
-        $sql = "SELECT * FROM membership WHERE MemberID = $memberID AND UnitNo = $unitNo";
+        $sql = "SELECT * FROM Membership WHERE MemberID = '$memberID' AND UnitNo = $unitNo";
         $data = $crud->getRow($sql);
         
         if($data){
@@ -27,7 +30,7 @@ class FSMembership {
                 'isArchived'    => $data['IsArchived'],
             );
             
-            $membership = new MemberShip($argsMembership);
+            $membership = new Membership($argsMembership);
             
             $argsMessage = array(
                 'messageNumber' => 107,
