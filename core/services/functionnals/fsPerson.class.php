@@ -138,14 +138,32 @@ class FSPerson {
                 0
         );";
         
-        if($crud->exec($sql)){
+        if($crud->exec($sql) == 1){
             
+            $sql = "SELECT * FROM Person LIMIT 1";
+            $data = $crud->exec($sql);
+            
+            $argsPerson = array(
+                'no'            => $data['No'],
+                'name'          => $data['Name'],
+                'firstname'     => $data['Firstname'],
+                'dateOfBirth'   => $data['DateOfBirth'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'phoneNumber'   => $data['PhoneNumber'],
+                'email'         => $data['Email'],
+                'description'   => $data['Description'],
+                'isArchived'    => $data['IsArchived']
+            );
+            
+            $person = new Person($argsPerson);
             
             $argsMessage = array(
                 'messageNumber' => 105,
                 'message'       => 'New Person added !',
                 'status'        => true,
-                'content'       => 1
+                'content'       => $person
             );
             $message = new Message($argsMessage);
             return $message;

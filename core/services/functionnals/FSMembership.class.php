@@ -107,10 +107,9 @@ class FSMembership {
         
         $membership = NULL;
         
-        $sql = "INSERT INTO `tedx`.`membership` (`MemberID` ,`UnitNo` ,
-            `IsArchived`) VALUES (
-                '".$args['memberID']."', 
-                '".$args['unitNo']."'
+        $sql = "INSERT INTO Membership` (`MemberID` ,`UnitNo`) VALUES (
+            '".$args['memberID']."', 
+            '".$args['unitNo']."'
         );";
         
         if($crud->exec($sql) == 1){
@@ -127,7 +126,7 @@ class FSMembership {
             $membership = new Membership($argsMembership);
             
             $argsMessage = array(
-                'messageNumber' => 105,
+                'messageNumber' => 107,
                 'message'       => 'New Membership added !',
                 'status'        => true,
                 'content'       => $membership
@@ -136,7 +135,7 @@ class FSMembership {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 106,
+                'messageNumber' => 108,
                 'message'       => 'Error while inserting new Membership',
                 'status'        => false,
                 'content'       => NULL
