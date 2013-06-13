@@ -16,17 +16,17 @@ class FSLocation{
         
         global $crud;
         
-        $sql = "SELECT * FROM location WHERE name = $name";
+        $sql = "SELECT * FROM Location WHERE Name = $name";
         $data = $crud->getRow($sql);
         
         if($data){
             $argsLocation = array(
-                'name'          => $data['name'],
-                'address'       => $data['address'],
-                'city'          => $data['city'],
-                'country'       => $data['country'],
-                'direction'     => $data['direction'],
-                'isArchived'    => $data['isArchived']
+                'name'          => $data['Name'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'direction'     => $data['Direction'],
+                'isArchived'    => $data['IsArchived']
             );
         
             $location = new Location($argsLocation);
@@ -58,7 +58,7 @@ class FSLocation{
     public function getLocations(){
         global $crud;
         
-        $sql = "SELECT * FROM location";
+        $sql = "SELECT * FROM Location";
         $data = $crud->getRows($sql);
         
         if ($data){
@@ -67,12 +67,12 @@ class FSLocation{
             
             foreach($data as $row){
                 $argsLocation = array(
-                    'name'          => $data['name'],
-                    'address'       => $data['address'],
-                    'city'          => $data['city'],
-                    'country'       => $data['country'],
-                    'direction'     => $data['direction'],
-                    'isArchived'    => $data['isArchived']
+                    'name'          => $data['Name'],
+                    'address'       => $data['Address'],
+                    'city'          => $data['City'],
+                    'country'       => $data['Country'],
+                    'direction'     => $data['Direction'],
+                    'isArchived'    => $data['IsArchived']
                 );
             
                 $locations[] = new Location($argsLocation);
@@ -90,7 +90,7 @@ class FSLocation{
         } else {
             $argsMessage = array(
                 'messageNumber' => 204,
-                'message'       => 'Error while SELECT * FROM location',
+                'message'       => 'Error while SELECT * FROM Location',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -99,6 +99,59 @@ class FSLocation{
             return $message;
         }
     }
+    
+       /**
+     * Add a new Location in Database
+     * @param $args Parameters of a Location
+     * @return a Message containing the new Location
+     */
+    public function addLocation($args){
+        global $crud;
+        
+        /*0..1 Direction*/
+        if($args['direction']){
+            $sql = "INSERT INTO Location (
+                Name, Address, City, Country) VALUES (
+                    NULL, 
+                    '".$args['Name']."', 
+                    '".$args['Address']."', 
+                    '".$args['City']."', 
+                    '".$args['Country']."',
+                    '".$args['Direction']."'
+            );";
+        }else{
+            $sql = "INSERT INTO Location (
+                Name, Address, City, Country) VALUES (
+                    NULL, 
+                    '".$args['Name']."', 
+                    '".$args['Address']."', 
+                    '".$args['City']."', 
+                    '".$args['Country']."'
+            );";
+        }
+        
+        if($crud->exec($sql)){       
+            $argsMessage = array(
+                'messageNumber' => 205,
+                'message'       => 'New Location added !',
+                'status'        => true,
+                'content'       => 1
+            );
+            $message = new Message($argsMessage);
+            return $message;
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 206,
+                'message'       => 'Error while inserting new Location',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+
+            return $message;
+        }   
+    }
+    
  }
     
 ?>
