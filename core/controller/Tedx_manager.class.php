@@ -15,6 +15,13 @@
  */
 
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASOrganizer.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASValidator.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASAdmin.class.php');
+
 
 
 /**
@@ -48,7 +55,24 @@ class Tedx_manager{
 
     } // construct
     
-   
+   /**
+     * Applicatives services to register a Visitor
+     * @param type $args all the arguments of Person and Member
+     * @return type Message Registered Visitor or Specifics messages about a problem.
+     */
+    public function registerVisitor($args) {
+        return ASFree::registerVisitor($args); 
+    }//function
+    
+    /**
+     * Applicatives services to register a Visitor to an Event
+     * @param type $args the arguments needs about Slot, and Registration
+     * @return type Message registeredToAnEvent or Specifics messages about a problem.
+     */
+    public function registerToAnEvent($args) {
+        return ASVisitor::registerToAnEvent($args);
+    }//function
+    
     
     /**
      * Enable an anonym user to login
@@ -118,20 +142,7 @@ class Tedx_manager{
     
     
     
-    
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
-    
-    
-
-    public function registerVisitor($args) {
-        return $this->stub->registerVisitor($args); 
-    }//function
-    
-    
-    public function registerToAnEvent($args) {
-        return $this->stub->registerToAnEvent($args); 
-    }//function
-    
+    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------    
     
     public function changeProfil($args) {
         return $this->stub->changePassword($args); 

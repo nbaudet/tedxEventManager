@@ -25,7 +25,7 @@ class ASVisitor {
         // do nothing;
     } // function
     
-    public function registerToAnEvent($args){
+    public static function registerToAnEvent($args){
         $return;
         
         // gets params
@@ -47,26 +47,24 @@ class ASVisitor {
         /**
          * Validate Participant
          */
-        $aValidParticipant = FSParticipant::getParticipant($aPerson);
+        $messageValidParticipant = FSParticipant::getParticipant($aPerson);
         $messageRegistration = null;
-        if($aValidParticipant->getStatus()){
+        if($messageValidParticipant->getStatus()){
             
             // add registration
             $argsRegistration = array(
                 'event'         => $anEvent,
-                'participant'   => $aValidParticipant->getContent(),
+                'participant'   => $messageValidParticipant->getContent(),
                 'type'          => $typeRegistration,
                 'description'   => $typeDescription,
                 'date'          => date('Y-m-d')
             );
             
             // do Registration 
-            $messageRegistration = $FSRegistration::addRegistration($aValidParticipant);
+            $messageRegistration = $FSRegistration::addRegistration($messageValidParticipant);
             
         }// if
         else {
-            // an invalidParticipant so register as Participant
-            $aValidParticipant; // Participant Innexistant
             // add registration
             $argsPatricipant = array(
                 'event'         => $anEvent,
