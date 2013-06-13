@@ -36,7 +36,7 @@ class FSUnit {
             $unit = new Unit($argsUnit);
             
             $argsMessage = array(
-                'messageNumber' => 150,
+                'messageNumber' => 400,
                 'message'       => 'Existant Unit',
                 'status'        => true,
                 'content'       => $unit
@@ -45,7 +45,7 @@ class FSUnit {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 151,
+                'messageNumber' => 401,
                 'message'       => 'Inexistant Unit',
                 'status'        => false,
                 'content'       => NULL
@@ -73,7 +73,7 @@ class FSUnit {
             $unit = new Unit($argsUnit);
             
             $argsMessage = array(
-                'messageNumber' => 150,
+                'messageNumber' => 400,
                 'message'       => 'Existant Unit',
                 'status'        => true,
                 'content'       => $unit
@@ -82,7 +82,7 @@ class FSUnit {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 151,
+                'messageNumber' => 401,
                 'message'       => 'Inexistant Unit',
                 'status'        => false,
                 'content'       => NULL
