@@ -61,7 +61,7 @@ class Slot {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -86,7 +86,7 @@ class Slot {
      * get numero
      * @return type int no
      */
-    protected function getNo() {
+    public function getNo() {
         return $this->no; 
     }//function
     
@@ -95,7 +95,7 @@ class Slot {
      * get eventNo
      * @return type int eventNo
      */
-    protected function getEventNo() {
+    public function getEventNo() {
         return $this->eventNo; 
     }//function
     
@@ -104,7 +104,7 @@ class Slot {
      * get happeningDate
      * @return type date happeningDate
      */
-    protected function getHappeningDate() {
+    public function getHappeningDate() {
         return $this->happeningDate; 
     }//function
     
@@ -113,7 +113,7 @@ class Slot {
      * set happeningDate
      * @param type $happeningDate 
      */
-    protected function setHappeingDate($happeningDate) {
+    public function setHappeingDate($happeningDate) {
         return $this->happeningDate; 
     }//function
     
@@ -122,7 +122,7 @@ class Slot {
      * getStartingTime
      * @return type time startingTime
      */
-    protected function getStartingTime() {
+    public function getStartingTime() {
         return $this->startingTime; 
     }//function
     
@@ -131,7 +131,7 @@ class Slot {
      * set startingTime 
      * @param type $startingTime 
      */
-    protected function setStartingTime($startingTime) {
+    public function setStartingTime($startingTime) {
         $this->startingTime = $startingTime; 
     }//function
     
@@ -140,7 +140,7 @@ class Slot {
      * get endingTime
      * @return type time endingTime
      */
-    protected function getEndingTime() {
+    public function getEndingTime() {
         return $this->endingTime; 
     }//function
     
@@ -149,7 +149,7 @@ class Slot {
      * set endingTime
      * @param type $endingTime 
      */
-    protected function setEndingTime($endingTime) {
+    public function setEndingTime($endingTime) {
         $this->endingTime = $endingTime; 
     }//function
     
@@ -158,7 +158,7 @@ class Slot {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -167,7 +167,7 @@ class Slot {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
    

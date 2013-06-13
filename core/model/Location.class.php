@@ -61,7 +61,7 @@ class Location {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -86,7 +86,7 @@ class Location {
      * get name
      * @return type string name
      */
-    protected function getName() {
+    public function getName() {
         return $this->name; 
     }//function
     
@@ -95,7 +95,7 @@ class Location {
      * get address
      * @return type string address
      */
-    protected function getAddress() {
+    public function getAddress() {
         return $this->address; 
     }//function
     
@@ -104,7 +104,7 @@ class Location {
      * set address
      * @param type $address 
      */
-    protected function setAddress($address) {
+    public function setAddress($address) {
         $this->address = $address; 
     }//function
     
@@ -113,7 +113,7 @@ class Location {
      * get city
      * @return type string city
      */
-    protected function getCity() {
+    public function getCity() {
         return $this->city; 
     }//function
     
@@ -122,7 +122,7 @@ class Location {
      * set city
      * @param type $city 
      */
-    protected function setCity($city) {
+    public function setCity($city) {
         $this->city = $city; 
     }//function
     
@@ -131,7 +131,7 @@ class Location {
      * get country
      * @return type string country
      */
-    protected function getCountry() {
+    public function getCountry() {
         return $this->country; 
     }//function
     
@@ -140,7 +140,7 @@ class Location {
      * set country
      * @param type $country 
      */
-    protected function setCountry($country) {
+    public function setCountry($country) {
         $this->country = $country; 
     }//function
     
@@ -149,7 +149,7 @@ class Location {
      * get direction
      * @return type string direction 
      */
-    protected function getDirection() {
+    public function getDirection() {
         return $this->direction; 
     }//function
    
@@ -158,7 +158,7 @@ class Location {
      * set direction
      * @param type $direction 
      */
-    protected function setDirection($direction) {
+    public function setDirection($direction) {
         $this->direction = $direction; 
     }//function
     
@@ -167,7 +167,7 @@ class Location {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }
     
@@ -176,7 +176,7 @@ class Location {
      * set IsArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }
     

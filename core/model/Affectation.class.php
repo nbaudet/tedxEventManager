@@ -42,7 +42,7 @@ class Affectation {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -61,7 +61,7 @@ class Affectation {
      * get organizerPersonNo
      * @return type organizer person no 
      */
-    protected function getOrganizerPersonNo() {
+    public function getOrganizerPersonNo() {
         return $this->organizerPersonNo; 
     }//function
     
@@ -70,7 +70,7 @@ class Affectation {
      * get team role name
      * @return type teamRoleName
      */
-    protected function getTeamRoleName() {
+    public function getTeamRoleName() {
         return $this->teamRoleName; 
     }//function
     
@@ -79,7 +79,7 @@ class Affectation {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -88,7 +88,7 @@ class Affectation {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

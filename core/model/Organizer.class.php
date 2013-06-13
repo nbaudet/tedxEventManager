@@ -34,7 +34,7 @@ class Organizer extends Person{
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -58,7 +58,7 @@ class Organizer extends Person{
      * get person numero
      * @return type personNo
      */
-    protected function getPersonNo() {
+    public function getPersonNo() {
         return $this->personNo; 
     }//function
     
@@ -67,7 +67,7 @@ class Organizer extends Person{
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -76,7 +76,7 @@ class Organizer extends Person{
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
     }//function
     

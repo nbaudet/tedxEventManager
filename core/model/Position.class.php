@@ -55,7 +55,7 @@ class Position {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -76,7 +76,7 @@ class Position {
      * get numero
      * @return type int numero
      */
-    protected function getNo() {
+    public function getNo() {
         return $this->no; 
     }//function
     
@@ -85,7 +85,7 @@ class Position {
      * get slotNo
      * @return type int slotNo
      */
-    protected function getSlotNo() {
+    public function getSlotNo() {
         return $this->slotNo; 
     }//function
     
@@ -94,7 +94,7 @@ class Position {
      * get slotEventNo
      * @return type int slotEventNo
      */
-    protected function getSlotEventNo() {
+    public function getSlotEventNo() {
         return $this->slotEventNo; 
     }//function
     
@@ -103,7 +103,7 @@ class Position {
      * get speakerPersonNo
      * @return type int speakerPersonNo
      */
-    protected function getSpeakerPersonNo() {
+    public function getSpeakerPersonNo() {
         return $this->speakerPersonNo; 
     }//function
     
@@ -112,7 +112,7 @@ class Position {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -121,7 +121,7 @@ class Position {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

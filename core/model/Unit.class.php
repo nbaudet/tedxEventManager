@@ -39,7 +39,7 @@ class Unit {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -60,7 +60,7 @@ class Unit {
      * get no
      * @return type int no
      */
-    protected function getNo() {
+    public function getNo() {
         return $this->no; 
     }//function
     
@@ -69,7 +69,7 @@ class Unit {
      * get name
      * @return type string name
      */
-    protected function getName() {
+    public function getName() {
         return $this->name; 
     }//function
     
@@ -78,7 +78,7 @@ class Unit {
      * set name
      * @param type $name 
      */
-    protected function setName($name) {
+    public function setName($name) {
         $this->name = $name; 
     }//function
     
@@ -87,7 +87,7 @@ class Unit {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -96,7 +96,7 @@ class Unit {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

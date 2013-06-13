@@ -42,7 +42,7 @@ class TeamRole {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -63,7 +63,7 @@ class TeamRole {
      * get name
      * @return type string name
      */
-    protected function getName() {
+    public function getName() {
         return $this->name; 
     }//function
     
@@ -72,7 +72,7 @@ class TeamRole {
      * get isMemberOf
      * @return type string isMemberOf
      */
-    protected function getIsMemberOf() {
+    public function getIsMemberOf() {
         return $this->isMemberOf; 
     }//function
     
@@ -81,7 +81,7 @@ class TeamRole {
      * set isMemberOf
      * @param type $isMemberOf 
      */
-    protected function setIsMemberOf($isMemberOf) {
+    public function setIsMemberOf($isMemberOf) {
         $this->isMemberOf = $isMemberOf; 
     }//function
     
@@ -90,7 +90,7 @@ class TeamRole {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -99,7 +99,7 @@ class TeamRole {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

@@ -38,7 +38,7 @@ class Permission {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -59,7 +59,7 @@ class Permission {
      * get accessNo
      * @return type int accessNo
      */
-    protected function getAccessNo() {
+    public function getAccessNo() {
         return $this->accessNo; 
     }//function
     
@@ -68,7 +68,7 @@ class Permission {
      * get unitNo
      * @return type int unitNo
      */
-    protected function getUnitNo() {
+    public function getUnitNo() {
         return $this->unitNo; 
     }//function
     
@@ -77,7 +77,7 @@ class Permission {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -86,7 +86,7 @@ class Permission {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived;   
     }//function
     

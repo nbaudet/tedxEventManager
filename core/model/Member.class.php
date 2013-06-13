@@ -50,7 +50,7 @@ class Member {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -71,7 +71,7 @@ class Member {
      * get id
      * @return type string id
      */
-    protected function getId() {
+    public function getId() {
         return $this->id; 
     }//function
     
@@ -80,7 +80,7 @@ class Member {
      * get password
      * @return type string password
      */
-    protected function getPassword() {
+    public function getPassword() {
         return $this->password; 
     }//function
     
@@ -89,7 +89,7 @@ class Member {
      * set password
      * @param type $password 
      */
-    protected function setPassword($password) {
+    public function setPassword($password) {
         $this->password = $password; 
     }//function
     
@@ -98,7 +98,7 @@ class Member {
      * get PersonNo
      * @return type int personNo
      */
-    protected function getPersonNo() {
+    public function getPersonNo() {
         return $this->personNo; 
     }//function
     
@@ -107,7 +107,7 @@ class Member {
      * set personNo
      * @param type $personNo 
      */
-    protected function setPersonNo($personNo) {
+    public function setPersonNo($personNo) {
         $this->personNo = $personNo; 
     }//function
     
@@ -116,7 +116,7 @@ class Member {
      * get isArchived
      * @return type boolean isArchived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -125,7 +125,7 @@ class Member {
      * set isArchived
      * @param type $isArchived
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     

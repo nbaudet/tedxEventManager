@@ -55,7 +55,7 @@ class Role {
      * 
      * @param type $array of parameters that correspond to the classes properties
      */
-    protected function __construct($array = null){
+    public function __construct($array = null){
         
         if(!is_array($array)) {
             throw new Exception('No parameters');
@@ -77,7 +77,7 @@ class Role {
      * get name
      * @return type string name
      */
-    protected function getName() {
+    public function getName() {
         return $this->name; 
     }//function
     
@@ -86,7 +86,7 @@ class Role {
      * get eventNo
      * @return type int eventNo
      */
-    protected function getEventNo() {
+    public function getEventNo() {
         return $this->eventNo; 
     }//function
     
@@ -95,7 +95,7 @@ class Role {
      * get organizerPersonNo
      * @return type int organizerPersonNo
      */
-    protected function getorganizerPersonNo() {
+    public function getorganizerPersonNo() {
         return $this->organizerPersonNo; 
     }//function
     
@@ -104,7 +104,7 @@ class Role {
      * get level
      * @return type int level
      */
-    protected function getLevel() {
+    public function getLevel() {
         return $this->level; 
     }//function
   
@@ -113,7 +113,7 @@ class Role {
      * set level
      * @param type $level 
      */
-    protected function setlevel($level) {
+    public function setlevel($level) {
         $this->level = $level; 
     }//function
     
@@ -122,7 +122,7 @@ class Role {
      * get isArchived
      * @return type boolean is Archived
      */
-    protected function getIsArchived() {
+    public function getIsArchived() {
         return $this->isArchived; 
     }//function
     
@@ -131,7 +131,7 @@ class Role {
      * set isArchived
      * @param type $isArchived 
      */
-    protected function setIsArchived($isArchived) {
+    public function setIsArchived($isArchived) {
         $this->isArchived = $isArchived; 
     }//function
     
