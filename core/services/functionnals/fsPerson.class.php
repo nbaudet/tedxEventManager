@@ -126,15 +126,15 @@ class FSPerson {
             `No`, `Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, 
             `Country`, `PhoneNumber`, `Email`, `Description`, `IsArchived`) VALUES (
                 NULL, 
-                '".$args['Name']."', 
-                '".$args['Firstname']."', 
-                '".$args['DateOfBirth']."', 
-                '".$args['Address']."', 
-                '".$args['City']."',
-                '".$args['Country']."',
-                '".$args['PhoneNumber']."', 
-                '".$args['Email']."',
-                '".$args['Description']."'
+                '".$args['name']."', 
+                '".$args['firstname']."', 
+                '".$args['dateOfBirth']."', 
+                '".$args['address']."', 
+                '".$args['city']."',
+                '".$args['country']."',
+                '".$args['phoneNumber']."', 
+                '".$args['email']."',
+                '".$args['description']."'
         );";
         
         if($crud->exec($sql) == 1){
