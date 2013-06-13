@@ -134,8 +134,7 @@ class FSPerson {
                 '".$args['Country']."',
                 '".$args['PhoneNumber']."', 
                 '".$args['Email']."',
-                '".$args['Description']."',
-                0
+                '".$args['Description']."'
         );";
         
         if($crud->exec($sql) == 1){

@@ -135,7 +135,7 @@ class FSParticipant{
             );";
         }
         
-        if($crud->exec($sql)){       
+        if($crud->exec($sql) == 1){       
             $argsMessage = array(
                 'messageNumber' => 205,
                 'message'       => 'New Participant added !',
