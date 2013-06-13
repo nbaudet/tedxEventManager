@@ -87,7 +87,7 @@ class FSEvent {
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 103,
+                'messageNumber' => 213,
                 'message'       => 'All Events selected',
                 'status'        => true,
                 'content'       => $events
@@ -97,7 +97,7 @@ class FSEvent {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 104,
+                'messageNumber' => 214,
                 'message'       => 'Error while SELECT * FROM event',
                 'status'        => false,
                 'content'       => NULL
@@ -116,32 +116,28 @@ class FSEvent {
     public static function addEvent($args){
         global $crud;
         
-        $sql = "INSERT INTO `Event` (`Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('".$args['name']."', '".$args['firstname']."', '".$args['dateOfBirth']."', '".$args['address']."', '".$args['city']."', '".$args['country']."', '".$args['phoneNumber']."', '".$args['email']."', '".$description."')";
+        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".$args['mainTopic']."', '".$args['description']."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
         
-        var_dump($sql);
         if($crud->exec($sql) == 1){
             
-            $sql = "SELECT * FROM Event WHERE Email = '" . $args['email'] . "'";
+            $sql = "SELECT * FROM Event ORDER BY No DESC LIMIT 0,1;";
             $data = $crud->exec($sql);
             
             $argsEvent = array(
-                'no'            => $data['No'],
-                'name'          => $data['Name'],
-                'firstname'     => $data['Firstname'],
-                'dateOfBirth'   => $data['DateOfBirth'],
-                'address'       => $data['Address'],
-                'city'          => $data['City'],
-                'country'       => $data['Country'],
-                'phoneNumber'   => $data['PhoneNumber'],
-                'email'         => $data['Email'],
-                'description'   => $data['Description'],
+                'no'                =>$data['No'],
+                'mainTopic'          => $data['MainTopic'],
+                'description'       => $data['Description'],
+                'startingDate'     => $data['StartingDate'],
+                'endingDate'   => $data['EndingDate'],
+                'startingTime'       => $data['StartingTime'],
+                'endingTime'          => $data['EndingTime'],
                 'isArchived'    => $data['IsArchived']
             );
             
             $event = new Event($argsEvent);
             
             $argsMessage = array(
-                'messageNumber' => 105,
+                'messageNumber' => 215,
                 'message'       => 'New Event added !',
                 'status'        => true,
                 'content'       => $event
@@ -150,7 +146,7 @@ class FSEvent {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 106,
+                'messageNumber' => 216,
                 'message'       => 'Error while inserting new Event',
                 'status'        => false,
                 'content'       => NULL

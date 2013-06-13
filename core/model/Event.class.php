@@ -26,6 +26,11 @@ class Event {
      */
     private $mainTopic; 
     
+    /**
+     * Event's description
+     * @var type boolean
+     */
+    private $description; 
     
     /**
      * Event's starting date
@@ -78,6 +83,7 @@ class Event {
         }//if
         $this->no = $array['no']; 
         $this->mainTopic = $array['mainTopic']; 
+        $this->description = $array['description']; 
         $this->startingDate = $array['startingDate']; 
         $this->endingDate = $array['endingDate'];
         $this->startingTime = $array['startingTime']; 
@@ -110,6 +116,13 @@ class Event {
         return $this->mainTopic; 
     }//function
     
+    /**
+     * get description
+     * @return type string mainTopic
+     */
+    public function getDescription() {
+        return $this->description; 
+    }//function
     
     /**
      * set mainTopic 
@@ -117,6 +130,14 @@ class Event {
      */
     public function setMainTopic($mainTopic) {
         $this->mainTopic = $mainTopic; 
+    }//function
+    
+    /**
+     * set mainTopic 
+     * @param type $mainTopic 
+     */
+    public function setDescription($description) {
+        $this->description = $description; 
     }//function
     
     
