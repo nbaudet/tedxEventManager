@@ -122,24 +122,17 @@ class FSPerson {
     public static function addPerson($args){
         global $crud;
         
-        $sql = "INSERT INTO `tedx`.`person` (
-            `No`, `Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, 
-            `Country`, `PhoneNumber`, `Email`, `Description`, `IsArchived`) VALUES (
-                NULL, 
-                '".$args['name']."', 
-                '".$args['firstname']."', 
-                '".$args['dateOfBirth']."', 
-                '".$args['address']."', 
-                '".$args['city']."',
-                '".$args['country']."',
-                '".$args['phoneNumber']."', 
-                '".$args['email']."',
-                '".$args['description']."'
-        );";
+        if(!isset($args['description']) || $args['description'] == ''){
+            $description = NULL;
+        }else{
+            $description = $args['description'];
+        }
+        $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('".$args['name']."', '".$args['firstname']."', '".$args['dateOfBirth']."', '".$args['address']."', '".$args['city']."', '".$args['country']."', '".$args['phoneNumber']."', '".$args['email']."', '".$description."')";
         
+        var_dump($sql);
         if($crud->exec($sql) == 1){
             
-            $sql = "SELECT * FROM Person WHERE Email = '" . $args['Email'] . "'";
+            $sql = "SELECT * FROM Person WHERE Email = '" . $args['email'] . "'";
             $data = $crud->exec($sql);
             
             $argsPerson = array(
