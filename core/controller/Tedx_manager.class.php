@@ -20,7 +20,7 @@ require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 /**
  * Require all Stub functions
  */
-require_once '../model/Stub.class.php';
+require_once (APP_DIR.'/core/model/Stub.class.php');
 
 
 /**
