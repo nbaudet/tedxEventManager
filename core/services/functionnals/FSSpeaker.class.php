@@ -124,19 +124,19 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
     
        /**
      * Add a new Speaker in Database
-     * @param $args Parameters of a Participant
-     * @return a Message containing the new Participant
+     * @param $args Parameters of a Speaker
+     * @return a Message containing the new Speaker
      */
-    public static function addParticipant($args){
+    public static function addSpeaker($args){
         global $crud;
         
         /*
-         * Validate Person No Existant
+         * Validate non-existing Person 
          */
-        $aValidPerson = FSPerson::getPerson($args);
+        $messageValidPerson = FSPerson::getPerson($args);
         
         /*
-         * Validate Participant PersonNo Inexistant
+         * Validate non-existant Speaker
          */
         $aValidParticipant = FSParticipant::getParticipant($args);
         
