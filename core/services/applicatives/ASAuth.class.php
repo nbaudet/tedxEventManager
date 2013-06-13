@@ -39,8 +39,8 @@ class ASAuth {
             if ( $member->getPassword() == $args['password'] ) {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
-                $_SESSION['units']  = getAllUnits();
-                $_SESSION['access'] = getAllAccess();
+                $_SESSION['units']  = $this->getAllUnits();
+                $_SESSION['access'] = $this->getAllAccess();
                 
                 // Sets the OK message
                 $args = array(

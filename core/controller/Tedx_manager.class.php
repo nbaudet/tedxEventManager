@@ -57,7 +57,7 @@ class Tedx_manager{
      * @return Message "User logged" or "Login failure"
      */
     public function login($login, $password){
-        if (checkType("string",  $login) && checkType("string", $password)){
+        if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
             $loginArgs = array (
                 'id' => $login,
                 'password' => $password
