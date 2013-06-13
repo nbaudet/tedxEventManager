@@ -4,6 +4,7 @@ require_once(APP_DIR.'/core/model/Person.class.php');
 require_once(APP_DIR.'/core/model/Member.class.php');
 require_once(APP_DIR.'/core/model/Message.class.php');
 require_once(APP_DIR.'/core/model/Unit.class.php');
+require_once(APP_DIR.'/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSMembership.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSPerson.class.php');
@@ -37,15 +38,16 @@ class ASFree {
         $anAddedPerson = FSPerson::addPerson($argsPerson);
         if($anAddedPerson->getStatus()){
             $argsMember = array(
-                'id'         => $args['id'],
+                'id'         => $args['idmember'],
                 'password'   => $args['password'],
-                'person'     =>  $anAddedPerson->getContent()
+                'person'     => $anAddedPerson->getContent()
             );
             $anAddedMember = FSMember::addMember($argsMember);
             if($anAddedMember->getStatus()){
+                $aUnit = FSUnit::getUnitByName('Visitor');
                 $argsMembership = array(
                     'person'  => $anAddedMember,
-                    // 'unit'    => FSUnit::getUnit('Visitor');
+                    'unit' => $aUnit
                 );
                 $anAddedMembership = FSMembership::addMembership($argsMembership);
                 if($anAddedMembership->getStatus()){
@@ -53,7 +55,7 @@ class ASFree {
                         'messageNumber' => 401,
                         'message'       => 'Visitor registered',
                         'status'        => true,
-                        'content'       => $array($anAddedPerson, $anAddedMember, $anAddedMembership)
+                        'content'       => array($anAddedPerson, $anAddedMember, $anAddedMembership)
                     );
                     $aRegisteredVisitor = new Message($argsMessage);
                 }else{
