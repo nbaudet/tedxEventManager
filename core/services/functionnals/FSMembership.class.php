@@ -4,11 +4,6 @@
  *
  * @author Lauric Francelet
  */
-
-require_once(APP_DIR . '/core/model/Person.class.php');
-require_once(APP_DIR . '/core/model/Message.class.php');
-
-
 class FSPerson {
     
     /**
@@ -16,7 +11,7 @@ class FSPerson {
      * @param int $no The Id of the Person
      * @return a Message containing an existant Person
      */
-    public static function getPerson($no) {
+    protected function getPerson($no) {
         $person = NULL;
         
         global $crud;
@@ -26,17 +21,17 @@ class FSPerson {
         
         if($data){
             $argsPerson = array(
-                'no'            => $data['No'],
-                'name'          => $data['Name'],
-                'firstname'     => $data['Firstname'],
-                'dateOfBirth'   => $data['DateOfBirth'],
-                'address'       => $data['Address'],
-                'city'          => $data['City'],
-                'country'       => $data['Country'],
-                'phoneNumber'   => $data['PhoneNumber'],
-                'email'         => $data['Email'],
-                'description'   => $data['Description'],
-                'isArchived'    => $data['IsArchived']
+                'no'            => $data['no'],
+                'name'          => $data['name'],
+                'firstname'     => $data['firstname'],
+                'dateOfBirth'   => $data['dateOfBirth'],
+                'address'       => $data['address'],
+                'city'          => $data['city'],
+                'country'       => $data['country'],
+                'phoneNumber'   => $data['phoneNumber'],
+                'email'         => $data['email'],
+                'description'   => $data['description'],
+                'isArchived'    => $data['isArchived']
             );
             
             $person = new Person($argsPerson);
@@ -65,7 +60,7 @@ class FSPerson {
      * Returns all the Persons of the database
      * @return A Message containing an array of Persons
      */
-    public static function getPersons(){
+    public function getPersons(){
         global $crud;
         
         $sql = "SELECT * FROM person";
@@ -74,19 +69,20 @@ class FSPerson {
         if ($data){
             $persons = array();
 
+            
             foreach($data as $row){
                 $argsPerson = array(
-                    'no'            => $row['No'],
-                    'name'          => $row['Name'],
-                    'firstname'     => $row['Firstname'],
-                    'dateOfBirth'   => $row['DateOfBirth'],
-                    'address'       => $row['Address'],
-                    'city'          => $row['City'],
-                    'country'       => $row['Country'],
-                    'phoneNumber'   => $row['PhoneNumber'],
-                    'email'         => $row['Email'],
-                    'description'   => $row['Description'],
-                    'isArchived'    => $row['IsArchived']
+                    'no'            => $row['no'],
+                    'name'          => $row['name'],
+                    'firstname'     => $row['firstname'],
+                    'dateOfBirth'   => $row['dateOfBirth'],
+                    'address'       => $row['address'],
+                    'city'          => $row['city'],
+                    'country'       => $row['country'],
+                    'phoneNumber'   => $row['phoneNumber'],
+                    'email'         => $row['email'],
+                    'description'   => $row['description'],
+                    'isArchived'    => $row['isArchived']
                 );
             
                 $persons[] = new Person($argsPerson);
@@ -119,23 +115,23 @@ class FSPerson {
      * @param $args Parameters of a Person
      * @return a Message containing the new Person
      */
-    public static function addPerson($args){
+    public function addPerson($args){
         global $crud;
         
         $sql = "INSERT INTO `tedx`.`person` (
             `No`, `Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, 
             `Country`, `PhoneNumber`, `Email`, `Description`, `IsArchived`) VALUES (
                 NULL, 
-                '".$args['Name']."', 
-                '".$args['Firstname']."', 
-                '".$args['DateOfBirth']."', 
-                '".$args['Address']."', 
-                '".$args['City']."',
-                '".$args['Country']."',
-                '".$args['PhoneNumber']."', 
-                '".$args['Email']."',
-                '".$args['Description']."',
-                0
+                '".$args['name']."', 
+                '".$args['firstname']."', 
+                '".$args['dateOfBirth']."', 
+                '".$args['address']."', 
+                '".$args['city']."',
+                '".$args['country']."',
+                '".$args['phoneNumber']."', 
+                '".$args['email']."',
+                '".$args['description']."',
+                '".$args['isArchived']."'
         );";
         
         if($crud->exec($sql)){

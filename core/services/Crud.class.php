@@ -87,12 +87,19 @@ class Crud {
         // exec the query
         $rawData = $this->dbh->query($sql);
         $data = array();
-        foreach($rawData as $row) {
-            $data[] = $row;
-        }// foreach
+        $return = false;
+        
+        if($rawData){
+            foreach($rawData as $row) {
+                $data[] = $row;
+            }// foreach
+            
+            $return = $data[0];
+        }
         
         // return first row
-        return $data[0];
+        return $return;
+        
     }// function
     
     /**

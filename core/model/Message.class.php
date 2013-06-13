@@ -41,7 +41,7 @@ class Message {
      * 
      * @param type $array of parameters that correspond to the class's properties
      */
-    protected function __construct( $args = NULL ) {
+    public function __construct( $args = NULL ) {
         if( !is_array( $args ) )
             throw new Exception( 'No parameters' );
             
