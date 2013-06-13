@@ -99,6 +99,7 @@ class Person {
         $this->dateOfBirth = $array['dateOfBirth']; 
         $this->address = $array['address']; 
         $this->country = $array['country']; 
+        $this->city = $array['city']; 
         $this->phoneNumber = $array['phoneNumber']; 
         $this->email = $array['email']; 
         $this->isArchived = $array['isArchived']; 

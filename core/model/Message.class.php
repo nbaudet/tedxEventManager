@@ -49,10 +49,10 @@ class Message {
         $this->message       = $args['message'];
         $this->status        = $args['status'];
         if( isset( $args['content'] ) ) {
-            $this->object = $args['content'];
+            $this->content = $args['content'];
         }
         else {
-            $this->object = NULL;
+            $this->content = NULL;
         }
         
     }

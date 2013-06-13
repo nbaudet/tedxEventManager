@@ -21,14 +21,14 @@ class FSPerson {
         
         global $crud;
         
-        $sql = "SELECT * FROM person WHERE no = $no";
+        $sql = "SELECT * FROM Person WHERE No = $no";
         $data = $crud->getRow($sql);
         
         if($data){
             $argsPerson = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
-                'firstname'     => $data['Firstname'],
+                'firstName'     => $data['Firstname'],
                 'dateOfBirth'   => $data['DateOfBirth'],
                 'address'       => $data['Address'],
                 'city'          => $data['City'],
