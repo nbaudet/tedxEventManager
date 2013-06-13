@@ -104,9 +104,19 @@ class FSMembership {
      */
     public function addMembership($args){
         global $crud;
-        
         $membership = NULL;
+
+        // Validate Member
+        $sql = "SELECT * FROM Member WHERE ID = '".$args['memberID']."'";
+        $data = $crud->getRow($sql);
         
+        // Validate Unit
+        $sql = "SELECT * FROM Unit";        
+        
+        // Validate Membership
+        
+        
+        // Create Membership
         $sql = "INSERT INTO Membership` (`MemberID` ,`UnitNo`) VALUES (
             '".$args['memberID']."', 
             '".$args['unitNo']."'
@@ -114,7 +124,9 @@ class FSMembership {
         
         if($crud->exec($sql) == 1){
             
-            $sql = "SELECT * FROM membership LIMIT 1";
+            $sql = "SELECT * FROM Membership WHERE 
+              MemberID = '".$args['memberID']."' AND UnitNo = ".$args['unitNo'];
+            
             $data = $crud->getRow($sql);
             
             $argsMembership = array(

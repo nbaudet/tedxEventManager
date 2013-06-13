@@ -140,7 +140,7 @@ class FSPerson {
         
         if($crud->exec($sql) == 1){
             
-            $sql = "SELECT * FROM Person LIMIT 1";
+            $sql = "SELECT * FROM Person WHERE No = (SELECT MAX(No)FROM Person)";
             $data = $crud->exec($sql);
             
             $argsPerson = array(
