@@ -32,7 +32,7 @@ class FSMember {
         $aValidMember = new Member($argsMember);
         
         $argsMessage = array(
-            'messageNumber' => 405,
+            'messageNumber' => 407,
             'message'       => 'The Member is existing',
             'status'        => true,
             'content'       => $aValidMember
@@ -57,14 +57,14 @@ class FSMember {
         $noPerson = $argsMember['person']->getNo();
         $aValidPerson = FSPerson::getPerson($noPerson);
         
-        $aValidMember = $this->getMember($argsMember['id']);
+        $anInvalidMember = self::getMember($argsMember['id']);
         
         $aFreePerson = $this->checkFreePerson($aValidPerson->getContent());
         
         $aCreatedMember = $this->createMember($aValidMember->getContent(), $aFreePerson->getContent());
         
         $argsMessage = array(
-            'messageNumber' => 404,
+            'messageNumber' => 406,
             'message'       => 'a create Member',
             'status'        => true,
             'content'       => $aCreatedMember
@@ -74,17 +74,28 @@ class FSMember {
     }
     
     private function checkFreePerson($aPerson){
+        $aPersonNo = $aPerson->getNo();
+        $sql = "SELECT * FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
         
-        
-        $argsMessage = array(
-            'messageNumber' => 403,
-            'message'       => 'The Person is free',
-            'status'        => true,
-            'content'       => $aPerson
-        );
-        
-        $messageOK = new Message( $argsMessage );
-        return $messageOK;
+        $data = $crud->getRow($sql);
+
+        if(isset($data)){
+            $argsMessage = array(
+                'messageNumber' => 405,
+                'message'       => 'The Person is occuped',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }else{
+            $argsMessage = array(
+                'messageNumber' => 404,
+                'message'       => 'The Person is free',
+                'status'        => true,
+                'content'       => $aPerson
+            );
+        }
+        $message = new Message( $argsMessage );
+        return $message;
     }
     
     private function createMember($aValidMember){

@@ -28,7 +28,7 @@ class ASFree {
      * @param type $args 
      * @return type 
      */
-    public function registerVisitor($args){
+    public static function registerVisitor($args){
         /**
          * Arguments for adding a Person
          */
