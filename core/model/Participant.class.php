@@ -28,13 +28,121 @@ class Participant extends Person {
     }//construct
     
 
-    /**
-     * get person numero
-     * @return type int personNo
+   /**
+     * get numero
+     * @return type numero
      */
-    public function getPersonNo() {
-        return $this->personNo; 
-    }//function
+    public function getNo() {
+       return parent::getNo(); 
+    }// function
+
+
+    /**
+     * get name
+     * @return name
+     */
+    public function getName() {
+        return parent::getName(); 
+    }// function
+
+
+    /**
+     * set no
+     * @param type $name 
+     */
+    public function setName($name) {
+        parent::setName($name); 
+    }// function
+
+
+    /**
+     * get first name
+     * @return type firstName
+     */
+    public function getFirstName() {
+         return parent::getFirstName(); 
+    }// function
+
+
+    /**
+     * set first name
+     * @param type $first name 
+     */
+    public function setFirstName($firstName) {   
+        parent::setFirstName($firstName); 
+    }// function
+
+
+    /**
+     * get date of birth
+     * @return type dateOfBirth
+     */
+    public function getDateOfBirth() {
+        return parent::getDateOfBirth(); 
+    }// function
+
+
+    /**
+     * set date of birth
+     * @param type $dateOfBirth 
+     */
+    public function setDateOfBirth($dateOfBirth) {  
+        parent::setDateOfBirth($dateOfBirth); 
+    }// function
+
+
+    /**
+     * get address
+     * @return type address
+     */
+    public function getAddress() {
+        return parent::getAddress(); 
+    }// function
+
+
+    /**
+     * set address
+     * @param type $address 
+     */
+    public function setAddress($address) {
+        parent::setAddress($address); 
+    }// function
+
+
+    /**
+     * get country
+     * @return type country
+     */
+    public function getCountry() {
+        return parent::getCountry(); 
+    }// function
+
+
+    /**
+     * set country
+     * @param type $country 
+     */
+    public function setCountry($country) {
+        parent::setCountry($country); 
+    }// function
+
+
+    /**
+     * get email
+     * @return type email
+     */
+    public function getEmail() {
+        return parent::getEmail(); 
+    }// function
+
+
+    /**
+     * set email
+     * @param type $email 
+     */
+    public function setEmail($email) {
+        parent::setEmail($email); 
+    }// function
     
     
     /**
@@ -42,7 +150,7 @@ class Participant extends Person {
      * @return type boolean isArchived
      */
     public function getIsArchived() {
-        return $this->isArchived; 
+        return parent::getIsArchived(); 
     }//function
     
     
@@ -51,7 +159,7 @@ class Participant extends Person {
      * @param type $isArchived 
      */
     public function setIsArchived($isArchived) {
-        $this->isArchived = $isArchived;   
+        parent::setIsArchived($isArchived);   
     }//function
     
     
