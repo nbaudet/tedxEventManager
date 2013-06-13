@@ -1,4 +1,11 @@
 <?php
+
+require_once(APP_DIR . '/core/model/Member.class.php');
+require_once(APP_DIR . '/core/model/Person.class.php');
+require_once(APP_DIR . '/core/model/Message.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
+
+
 /**
  * Description of FSMember
  *
@@ -59,9 +66,10 @@ class FSMember {
         
         $anInvalidMember = self::getMember($argsMember['id']);
         
-        $aFreePerson = $this->checkFreePerson($aValidPerson->getContent());
+        $aPersonToCheck = $aValidPerson->getContent();
+        $aFreePerson = self::checkFreePerson($aPersonToCheck);
         
-        $aCreatedMember = $this->createMember($aValidMember->getContent(), $aFreePerson->getContent());
+        $aCreatedMember = $this->createMember($aFreePerson->getContent());
         
         $argsMessage = array(
             'messageNumber' => 406,
@@ -73,12 +81,13 @@ class FSMember {
         return $messageOK;
     }
     
-    private function checkFreePerson($aPerson){
+    public static function checkFreePerson($aPerson){
+        global $crud;
+        
         $aPersonNo = $aPerson->getNo();
         $sql = "SELECT * FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
         
         $data = $crud->getRow($sql);
-
         if(isset($data)){
             $argsMessage = array(
                 'messageNumber' => 405,
@@ -100,6 +109,8 @@ class FSMember {
     
     private function createMember($aValidMember){
         
+        $sql = "INSERT INTO Member FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
+        $data = $crud->getRow($sql);
         
         $argsMessage = array(
             'messageNumber' => 403,
