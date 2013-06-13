@@ -56,10 +56,10 @@ class FSMembership {
      * Returns all the Memberships of the database
      * @return A Message containing an array of Memberships
      */
-    public function getPersons(){
+    public static function getMemberships(){
         global $crud;
         
-        $sql = "SELECT * FROM membership";
+        $sql = "SELECT * FROM Membership";
         $data = $crud->getRows($sql);
         
         if ($data){
@@ -109,6 +109,18 @@ class FSMembership {
         // Validate Member
         $sql = "SELECT * FROM Member WHERE ID = '".$args['memberID']."'";
         $data = $crud->getRow($sql);
+        if($data){
+            
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 109,
+                'message'       => 'No matching Member found',
+                'status'        => FALSE,
+                'content'       => null
+            );
+            
+            $message = new Message($argsMessage);
+        }
         
         // Validate Unit
         $sql = "SELECT * FROM Unit";        
