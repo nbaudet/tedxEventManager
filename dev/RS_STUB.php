@@ -5,29 +5,31 @@
  * and open the template in the editor.
  */
 require_once('../tedx-config.php');
-
+require_once('../core/services/applicatives/ASFree.class.php');
 require_once('../core/model/Person.class.php ');
+require_once('../core/model/Message.class.php ');
 require_once('../core/services/functionnals/FSUnit.class.php');
 require_once('../core/services/functionnals/FSMember.class.php');
 
+$mdp = md5('test');
 
+$args = array(
+    'name'     => 'Robert', // String
+    'firstname'     => 'Stephan',   // String
+    'dateofbirth'  => '1991-04-26', // Date
+    'adresse'    => 'Rue du chemin', // String
+    'city'  => 'Lausanne', // String
+    'country' => 'Suisse', // String
+    'phonenumber' => '079-345-67-89', // String
+    'email' => 'stephan.robert@test.ch', // String
+    'description' => 'Professeur à la HEIG-VD', // String
+    'idmember' => 'srt543', // String
+    'password' => $mdp // String encrypt to MD5
+);
 
-$person = FSPerson::getPerson(8);
+$message = ASFree::registerVisitor($args);
 
-$argsMember = array(
-            'id'         => 'RapouSchmutz1234',
-            'password'   => md5('test'),
-            'person'   => $person->getContent(),
-        );
+var_dump($message);
 
-$message2 = FSMember::addMember($argsMember);
-
-//$moi = FSPerson::getPerson(7);
-//$message3 = FSMember::checkFreePerson($moi->getContent());
-//$args = array();
-
-// $message = $tedx_manager->registerVisitor($args);
-var_dump($message2);
-//var_dump($message3);
 
 ?>

@@ -139,7 +139,7 @@ class FSPerson {
         
         if($crud->exec($sql) == 1){
             
-            $sql = "SELECT * FROM Person WHERE No = (SELECT MAX(No)FROM Person)";
+            $sql = "SELECT * FROM Person WHERE Email = '" . $args['Email'] . "'";
             $data = $crud->exec($sql);
             
             $argsPerson = array(
