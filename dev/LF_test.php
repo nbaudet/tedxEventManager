@@ -19,33 +19,17 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 //var_dump(FSPerson::getPersons());
 
 
-$argsMember = array (
-    'id'   => 'admin',
-    'password'   => '21232f297a57a5a743894a0e4a801fc3',
-    'personNo'   => '1',
-    'isArchived' => false
-);
 
-$member = new Member($argsMember);
+$member = FSMember::getMember('admin')->getContent();
+var_dump($member);
 
-
-
-
-$argsUnit = array (
-    'no'                 => 2,
-    'name'               => 'Validator',
-    'isArchived'         => false
-);
- 
-// instance Unit
-$unit = new Unit($argsUnit);
+$unit = FSUnit::getUnit(2)->getContent();
+var_dump($unit);
 
 $argsMembership = array ('member' => $member, 'unit' => $unit);
 
-var_dump(FSMembership::getMembership($argsMembership));
-
-
-//var_dump(FSMembership::addMembership($argsMembership));
+//var_dump(FSMembership::getMembership($argsMembership));
+var_dump(FSMembership::addMembership($argsMembership));
 
 
 

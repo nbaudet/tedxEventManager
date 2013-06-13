@@ -20,11 +20,11 @@ class FSMembership {
         $membership = NULL;
         $member = $args['member'];
         $unit = $args['unit'];
-        var_dump($member->getId());
         
         global $crud;
         
         $sql = "SELECT * FROM Membership WHERE MemberID = '".$member->getId()."' AND UnitNo = ".$unit->getNo();
+        
         $data = $crud->getRow($sql);
         
         if($data){
@@ -108,25 +108,97 @@ class FSMembership {
      */
     public static function addMembership($args){
         global $crud;
-        $membership = NULL;
-
+        $return = null;
+        $member = $args['member'];
+        $unit = $args['unit'];
+        
         // Validate Member
-        $aValidMember = FSMember::getMember($args['member']->getId());
+        $aValidMember = FSMember::getMember($member->getId());
         
         if($aValidMember->getStatus()){
+            
+            echo "Membre valide";
+            
             // Validate Unit
-            $aValidUnit = FSUnit::getUnit($args['unit']->getNo());
+            $aValidUnit = FSUnit::getUnit($unit->getNo());
             
             if ($aValidUnit->getStatus()){
+                
+                echo "Unit valide";
+                
                 // Validate Membership
                 $anInexistantMembership = FSMembership::getMembership($args);
                 
                 if(!$anInexistantMembership->getStatus()){
-                    echo "Unit et Member valides !"; ///////////////////////
+                    
+                    // Create new Membership
+                    echo "Membership inexistant"; 
+                    
+                    $sql = "INSERT INTO `Membership` (`MemberID` ,`UnitNo`) VALUES (
+                        '".$member->getId()."', 
+                        '".$unit->getNo()."'
+                    );";
+                    
+                    var_dump($sql);
+                    
+                    if($crud->exec($sql) != 0){
+                        echo "New Membership created !";
+                        /*// Récupération du membership créé
+                        $sql = "SELECT * FROM Membership WHERE 
+                          MemberID = '".$args['memberID']."' AND UnitNo = ".$args['unitNo'];
+
+                        $data = $crud->getRow($sql);
+
+                        $argsMembership = array(
+                            'memberId'           => $data['MemberID'],
+                            'unitNo'             => $data['UnitNo'],
+                            'isArchived'         => $data['IsArchived']
+                        );
+
+                        $membership = new Membership($argsMembership); */
+
+                        $argsMessage = array(
+                            'messageNumber' => 111,
+                            'message'       => 'New Membership added !',
+                            'status'        => true,
+                            'content'       => 1111111111111111
+                        );
+                        $return = new Message($argsMessage);
+                        
+                        
+                    } else {
+                        $argsMessage = array(
+                            'messageNumber' => 112,
+                            'message'       => 'Error while inserting new Membership',
+                            'status'        => false,
+                            'content'       => NULL
+                        );
+                        $return = new Message($argsMessage);
+                    }
+                    
+                    
+                } // End Create new Membership
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 114,
+                        'message'       => 'Membership already existant !',
+                        'status'        => FALSE,
+                        'content'       => null
+                    );
+
+                $return = new Message($argsMessage);
+                    
                 }
                 
             } else {
-                
+                $argsMessage = array(
+                    'messageNumber' => 114,
+                    'message'       => 'No matching Unit found',
+                    'status'        => FALSE,
+                    'content'       => null
+                );
+            
+            $return = new Message($argsMessage);
             }
             
         } else {
@@ -137,13 +209,11 @@ class FSMembership {
                 'content'       => null
             );
             
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
+            
         }
         
-        
-        
-        // Validate Membership
+        return $return;
         
         
         /* Create Membership
@@ -191,8 +261,8 @@ class FSMembership {
         }
         */
         
-    }
-    // End addMembership
+    }// End addMembership
+    
     
 }
 
