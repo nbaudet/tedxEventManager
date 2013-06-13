@@ -1,5 +1,5 @@
 <?php
-
+require_once('Person.class.php');
 
 /**
  * Participant.class.php
