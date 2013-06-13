@@ -10,7 +10,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSPerson.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSMembership.class.php');
 
 var_dump(FSPerson::getPerson(1));
-var_dump(FSMembership::getMembership("Tony",5));
+var_dump(FSMembership::getMembership("admin",1));
 var_dump(FSPerson::getPersons());
 
 ?>

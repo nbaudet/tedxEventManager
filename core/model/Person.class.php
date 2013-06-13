@@ -95,7 +95,7 @@ class Person {
         }//if      
         $this->no = $array['no'];
         $this->name = $array['name']; 
-        $this->firstName = $array['firstName']; 
+        $this->firstname = $array['firstname']; 
         $this->dateOfBirth = $array['dateOfBirth']; 
         $this->address = $array['address']; 
         $this->country = $array['country']; 
