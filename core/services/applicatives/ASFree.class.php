@@ -72,7 +72,7 @@ class ASFree {
                 /**
                  * Get the Unit with the name 'Visitor' 
                  */
-                $aUnit = FSUnit::getUnitByName('Visitor');
+                $aUnit = FSUnit::getUnitByName('Visitors'); // A editer quand Unit a le bon nom de Visitor
                 /**
                  * Arguments for adding a Membership
                  */
