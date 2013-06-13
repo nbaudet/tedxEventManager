@@ -28,67 +28,117 @@ class FSMember {
         
         $sql = "SELECT * FROM Member WHERE Member.ID = '" . $id . "'";
         $data = $crud->getRow($sql);
-        
-        $argsMember = array(
-            'id'         => $data['ID'],
-            'password'   => $data['Password'],
-            'personNo'   => $data['PersonNo'],
-            'isArchived' => $data['IsArchived']
-        );
-        
-        $aValidMember = new Member($argsMember);
-        
-        $argsMessage = array(
-            'messageNumber' => 407,
-            'message'       => 'The Member is existing',
-            'status'        => true,
-            'content'       => $aValidMember
-        );
- 
-        $messageOK = new Message( $argsMessage );
-        return $messageOK;
+        /**
+         * If $data return content
+         */
+        if($data){
+           /**
+            * Send Message Valid Member
+            */
+           $argsMember = array(
+                'id'         => $data['ID'],
+                'password'   => $data['Password'],
+                'personNo'   => $data['PersonNo'],
+                'isArchived' => $data['IsArchived']
+            );
+           
+            $aValidMember = new Member($argsMember);
+            $argsMessage = array(
+                'messageNumber' => 409,
+                'message'       => 'The Member is existing',
+                'status'        => true,
+                'content'       => $aValidMember
+            );
+        }else{
+           /**
+            * Send Message Inexistant Member
+            */
+           $argsMessage = array(
+                'messageNumber' => 408,
+                'message'       => 'The Member is inexisting',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }
+        /**
+         * Return message
+         */
+        $message = new Message( $argsMessage );
+        return $message;
     }
     
-    protected function addMember($argsMember) {
+    public static function addMember($argsMember) {
         // get database manipulator
         global $crud;
         
-        
-        $argsMember = array(
-            'id'         => '',
-            'password'   => '',
-            'person'   => '',
-            'isArchived' => ''
-        );
-        
+        /**
+         * Valider Person
+         */
         $noPerson = $argsMember['person']->getNo();
         $aValidPerson = FSPerson::getPerson($noPerson);
-        
-        $anInvalidMember = self::getMember($argsMember['id']);
-        
-        $aPersonToCheck = $aValidPerson->getContent();
-        $aFreePerson = self::checkFreePerson($aPersonToCheck);
-        
-        $aCreatedMember = $this->createMember($aFreePerson->getContent());
-        
-        $argsMessage = array(
-            'messageNumber' => 406,
-            'message'       => 'a create Member',
-            'status'        => true,
-            'content'       => $aCreatedMember
-        );
-        $messageOK = new Message( $argsMessage );
-        return $messageOK;
+        if($aValidPerson->getStatus()== TRUE){
+            /**
+             * Valid Inexistence of Member
+             */ 
+            $anInvalidMember = self::getMember($argsMember['id']);
+            if($anInvalidMember->getStatus()== FALSE){
+                $aPersonToCheck = $aValidPerson->getContent();
+                $aFreePerson = self::checkFreePerson($aPersonToCheck);
+                /**
+                 * Check CI Free person
+                 */
+                if($aFreePerson->getStatus()== TRUE){
+                    /**
+                     * Create Member
+                     */
+                    $aCreatedMember = self::createMember($argsMember['id'], $argsMember['password'], $aFreePerson->getContent());
+                    if($aCreatedMember->getStatus()){
+                        /**
+                         * Message Member created
+                         */
+                        $argsMessage = array(
+                            'messageNumber' => 406,
+                            'message'       => 'a create Member',
+                            'status'        => true,
+                            'content'       => array('aValidPerson' => $aValidPerson, 'anInvalidMember' => $anInvalidMember, 'aFreePerson' => $aFreePerson, 'aCreatedMember' => $aCreatedMember)
+                        );
+                        $message = new Message( $argsMessage );
+                    }else{
+                        /**
+                         * Message Member no-created.
+                         */
+                        $message = $aCreatedMember;
+                    }
+                }else{
+                   /**
+                    * Message Person used.
+                    */
+                    $message = $aFreePerson;
+                }
+            }else{
+               /**
+                * Message Member valid.
+                */
+                $message = $anInvalidMember;
+            }
+        }else{
+           /**
+            * Message Person inexistant.
+            */
+            $message = $aValidPerson;
+        }
+        return $message;
     }
     
-    public static function checkFreePerson($aPerson){
+    private static function checkFreePerson($aPerson){
+        // get database manipulator
         global $crud;
         
         $aPersonNo = $aPerson->getNo();
         $sql = "SELECT * FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
         
         $data = $crud->getRow($sql);
-        if(isset($data)){
+        if($data){
             $argsMessage = array(
                 'messageNumber' => 405,
                 'message'       => 'The Person is occuped',
@@ -107,20 +157,33 @@ class FSMember {
         return $message;
     }
     
-    private function createMember($aValidMember){
+    private static function createMember($id, $pass, $person){
+         // get database manipulator
+        global $crud;
         
-        $sql = "INSERT INTO Member FROM Person INNER JOIN Member ON Person.No = Member.PersonNo WHERE Person.No = $aPersonNo";
-        $data = $crud->getRow($sql);
         
-        $argsMessage = array(
-            'messageNumber' => 403,
-            'message'       => 'The Person is free',
-            'status'        => true,
-            'content'       => $aValidMember
-        );
+        $sql = "INSERT INTO Member (ID, Password, PersonNo) VALUES ('" . $id . "', ". $pass . ", " . $person->getNo(). ")";
+        $data = $crud->exec($sql);
         
-        $messageOK = new Message( $argsMessage );
-        return $messageOK;
+        $aCreatedMember = self::getMember($id);
+        
+        if($aCreatedMember){
+            $argsMessage = array(
+                'messageNumber' => 403,
+                'message'       => 'The person is created',
+                'status'        => true,
+                'content'       => $aCreatedMember
+            );
+        }else{
+            $argsMessage = array(
+                'messageNumber' => 410,
+                'message'       => 'The person is not created',
+                'status'        => false,
+                'content'       => $aCreatedMember
+            );
+        }
+        $message = new Message( $argsMessage );
+        return $message;
     }
     
     

@@ -40,7 +40,8 @@ class ASFree {
             'city'         => $args['city'],
             'country'      => $args['country'],
             'phoneNumber'  => $args['phoneNumber'],
-            'email'        => $args['email']
+            'email'        => $args['email'],
+            'description'  => $args['description']
         );
         
         /**
@@ -72,7 +73,7 @@ class ASFree {
                 /**
                  * Get the Unit with the name 'Visitor' 
                  */
-                $aUnit = FSUnit::getUnitByName('Visitors'); // A editer quand Unit a le bon nom de Visitor
+                $aUnit = FSUnit::getUnitByName('Visitor');
                 /**
                  * Arguments for adding a Membership
                  */
@@ -92,7 +93,7 @@ class ASFree {
                         'messageNumber' => 402,
                         'message'       => 'Visitor registered',
                         'status'        => true,
-                        'content'       => array($anAddedPerson, $anAddedMember, $anAddedMembership)
+                        'content'       => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
                     );
                     $aRegisteredVisitor = new Message($argsMessage);
                 }else{
