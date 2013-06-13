@@ -127,6 +127,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
      * @param $args Parameters of a Speaker
      * @return a Message containing the new Speaker
      */
+    
     public static function addSpeaker($args){
         global $crud;
         
@@ -142,7 +143,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
         
         /*
          * If already existant Person and Inexistant Participant
-         */
+         */ 
         if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
             $sql = "INSERT INTO Participant (
                 PersonNo) VALUES (
