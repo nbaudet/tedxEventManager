@@ -27,7 +27,7 @@ class FSParticipant{
             $argsParticipant = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
-                'firstname'     => $data['Firstname'],
+                'firstname'     => $data['FirstName'],
                 'dateOfBirth'   => $data['DateOfBirth'],
                 'address'       => $data['Address'],
                 'city'          => $data['City'],
@@ -67,7 +67,7 @@ class FSParticipant{
     public function getParticipants(){
         global $crud;
 
-        $sql = "SELECT * FROM Participant";
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No";
         $data = $crud->getRows($sql);
         
         if ($data){
@@ -76,8 +76,17 @@ class FSParticipant{
             
             foreach($data as $row){
                 $argsParticipant = array(
-                    'personNo'          => $data['PersonNo'],
-                    'isArchived'    => $data['IsArchived']
+                    'no'            => $row['No'],
+                    'name'          => $row['Name'],
+                    'firstname'     => $row['FirstName'],
+                    'dateOfBirth'   => $row['DateOfBirth'],
+                    'address'       => $row['Address'],
+                    'city'          => $row['City'],
+                    'country'       => $row['Country'],
+                    'phoneNumber'   => $row['PhoneNumber'],
+                    'email'         => $row['Email'],
+                    'description'   => $row['Description'],
+                    'isArchived'    => $row['IsArchived']
                 );
             
                 $participants[] = new Participant($argsParticipant);
