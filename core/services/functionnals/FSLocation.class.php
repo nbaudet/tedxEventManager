@@ -5,6 +5,10 @@
  *
  * @author Robin Jet-Pierre
  */
+
+require_once(APP_DIR . '/core/model/Location.class.php');
+require_once(APP_DIR . '/core/model/Message.class.php');
+
 class FSLocation{
     /**
      *Returns a Locationwith the given No as Id
@@ -12,11 +16,11 @@ class FSLocation{
      *@return a Mesage with an existant Location
      */
     public function getLocation($name){
-        $location='';
+        $location = NULL;
         
         global $crud;
-        
-        $sql = "SELECT * FROM Location WHERE Name = $name";
+        $name = addslashes($name);
+        $sql = "SELECT * FROM Location WHERE Name = '$name'";
         $data = $crud->getRow($sql);
         
         if($data){
@@ -37,7 +41,7 @@ class FSLocation{
                 'status'            => true,
                 'content'           => $location
             );
-            $message = new Message($argMessage);
+            $message = new Message($argsMessage);
             return $message;
         }else{
             $argsMessage = array(
@@ -57,7 +61,7 @@ class FSLocation{
      */
     public function getLocations(){
         global $crud;
-        
+
         $sql = "SELECT * FROM Location";
         $data = $crud->getRows($sql);
         
@@ -67,12 +71,12 @@ class FSLocation{
             
             foreach($data as $row){
                 $argsLocation = array(
-                    'name'          => $data['Name'],
-                    'address'       => $data['Address'],
-                    'city'          => $data['City'],
-                    'country'       => $data['Country'],
-                    'direction'     => $data['Direction'],
-                    'isArchived'    => $data['IsArchived']
+                    'name'          => $row['Name'],
+                    'address'       => $row['Address'],
+                    'city'          => $row['City'],
+                    'country'       => $row['Country'],
+                    'direction'     => $row['Direction'],
+                    'isArchived'    => $row['IsArchived']
                 );
             
                 $locations[] = new Location($argsLocation);
@@ -109,9 +113,9 @@ class FSLocation{
         global $crud;
         
         /*0..1 Direction*/
-        if($args['direction']){
+        if($args['Direction']){
             $sql = "INSERT INTO Location (
-                Name, Address, City, Country) VALUES (
+                Name, Address, City, Country, Direction) VALUES (
                     NULL, 
                     '".$args['Name']."', 
                     '".$args['Address']."', 
