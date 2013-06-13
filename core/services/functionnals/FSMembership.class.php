@@ -6,6 +6,7 @@
  */
 
 require_once(APP_DIR . '/core/model/Membership.class.php');
+require_once(APP_DIR . '/core/model/Member.class.php');
 
 class FSMembership {
     
@@ -76,7 +77,7 @@ class FSMembership {
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 107,
+                'messageNumber' => 109,
                 'message'       => 'All Memberships selected',
                 'status'        => true,
                 'content'       => $memberships
@@ -86,7 +87,7 @@ class FSMembership {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 108,
+                'messageNumber' => 110,
                 'message'       => 'Error while SELECT * FROM membership',
                 'status'        => false,
                 'content'       => NULL
@@ -107,13 +108,21 @@ class FSMembership {
         $membership = NULL;
 
         // Validate Member
-        $sql = "SELECT * FROM Member WHERE ID = '".$args['memberID']."'";
-        $data = $crud->getRow($sql);
-        if($data){
+        $aValidMember = FSMember::getMember($args['member']->getId());
+        
+        if($aValidMember->getStatus()){
+            // Validate Unit
+            $aValidUnit = FSUnit::getUnit($args['unit']->getNo());
+            
+            if ($aValidUnit->getStatus()){
+                
+            } else {
+                
+            }
             
         } else {
             $argsMessage = array(
-                'messageNumber' => 109,
+                'messageNumber' => 113,
                 'message'       => 'No matching Member found',
                 'status'        => FALSE,
                 'content'       => null
@@ -122,8 +131,7 @@ class FSMembership {
             $message = new Message($argsMessage);
         }
         
-        // Validate Unit
-        $sql = "SELECT * FROM Unit";        
+        
         
         // Validate Membership
         
@@ -150,7 +158,7 @@ class FSMembership {
             $membership = new Membership($argsMembership);
             
             $argsMessage = array(
-                'messageNumber' => 107,
+                'messageNumber' => 111,
                 'message'       => 'New Membership added !',
                 'status'        => true,
                 'content'       => $membership
@@ -159,7 +167,7 @@ class FSMembership {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 108,
+                'messageNumber' => 112,
                 'message'       => 'Error while inserting new Membership',
                 'status'        => false,
                 'content'       => NULL

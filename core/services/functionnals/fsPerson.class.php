@@ -28,7 +28,7 @@ class FSPerson {
             $argsPerson = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
-                'firstName'     => $data['Firstname'],
+                'firstname'     => $data['Firstname'],
                 'dateOfBirth'   => $data['DateOfBirth'],
                 'address'       => $data['Address'],
                 'city'          => $data['City'],
@@ -78,7 +78,7 @@ class FSPerson {
                 $argsPerson = array(
                     'no'            => $row['No'],
                     'name'          => $row['Name'],
-                    'firstName'     => $row['Firstname'],
+                    'firstname'     => $row['Firstname'],
                     'dateOfBirth'   => $row['DateOfBirth'],
                     'address'       => $row['Address'],
                     'city'          => $row['City'],

@@ -77,7 +77,7 @@ class ASFree {
                  * Arguments for adding a Membership
                  */
                 $argsMembership = array(
-                    'person'  => $anAddedMember,
+                    'member'  => $anAddedMember,
                     'unit' => $aUnit
                 );
                 /**

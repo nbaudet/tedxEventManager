@@ -29,7 +29,7 @@ class Person {
     * Person's first name
     * @var string
     */
-   protected $firstName; 
+   protected $firstname; 
    
    
    /**
