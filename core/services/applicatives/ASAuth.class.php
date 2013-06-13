@@ -159,10 +159,6 @@ class ASAuth {
      * @return Mixed Array of Units for a member
      */
     private function getAllUnits($member) {
-        /*$units = array(
-            'participant' => 'participant',
-            'validator'   => 'validator'
-        );*/
         $units = FSUnit::getAllUnitsForMember($member);
         return $units;
     }
@@ -171,12 +167,11 @@ class ASAuth {
      * Returns an array of accesses for a member, depending on his/her units
      * @return Mixed 
      */
-    private function getAllAccess() {
-        ////////////////////////////////////////////////STUB
-        $access = array( 
+    private function getAllAccess($unit) {
+        /*$access = array(
             'readMember', 'getMember', 'getEvent', 'registerToAnEvent'
         );
-        return $access;
+        return $access;*/
     }
 }
 

@@ -91,7 +91,8 @@ class FSUnit {
     }
     
     /**
-     * Returns all the units of a member
+     * Returns all the units of a member, or NULL if the member doesn't have 
+     * any units
      * @global Crud $crud A Crud Object
      * @param Member $member The member we are getting the units for.
      * @return Message The Units for a member
@@ -101,36 +102,29 @@ class FSUnit {
         
         global $crud;
         
-        $sql = "SELECT * FROM Member
+        $sql = "SELECT Unit.Name FROM Member
             INNER JOIN Membership
             ON Member.ID = Membership.MemberID
             INNER JOIN Unit
             ON Membership.UnitNo = Unit.No
             WHERE Member.ID = '" . $member->getId() . "'";
+        
         $data = $crud->getRows($sql);
         
-        echo '<h1>asdfélkajsdfélkajsfd</h1>';
-        var_dump($data);
-        echo '<h1>asdfélkajsdfélkajsfd</h1>';
-        
-        // If we got the 
-        if($data){
-            $argsUnit = array(
-                'no'      => $data['No'],
-                'name'        => $data['Name'],
-                'isArchived'    => $data['IsArchived']
-            );
+        // If we got the units, we give them back to the caller
+        if( $data ) {
             
-            $unit = new Unit($argsUnit);
+            $units = array();
             
-            $argsMessage = array(
-                'messageNumber' => 400,
-                'message'       => 'Existant Unit',
-                'status'        => true,
-                'content'       => $unit
-            );
-            $message = new Message($argsMessage);
-            return $message;
+            foreach( $data as $unit ) {
+                $units[] = $unit['Name'];
+            }
+            
+            return $units;
+        }
+        // Else : we give NULL back
+        else {
+            return NULL;
         }
     }
 }

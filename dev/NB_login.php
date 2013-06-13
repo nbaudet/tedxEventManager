@@ -3,7 +3,7 @@ require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
 echo '<h2>Test de login</h2>';
-$message = $tedx_manager->login( 'participant', 'participant' );
+$message = $tedx_manager->login( 'Penelope', 'anitakevinlove' );
 var_dump($message);
 
 echo '<h2>Session apr&egrave;s login</h2>';
