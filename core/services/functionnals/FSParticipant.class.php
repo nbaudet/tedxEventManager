@@ -122,12 +122,12 @@ class FSParticipant{
         /*
          * Validate Person No Existant
          */
-        $aValidPerson = FSPerson::getPerson($aPerson->getNo());
+        $aValidPerson = FSPerson::getPerson($aPerson);
         
         /*
          * Validate Participant PersonNo Inexistant
          */
-        $aValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
+        $aValidParticipant = FSParticipant::getParticipant($aPerson);
         
         /*
          * If already existant Person and Inexistant Participant

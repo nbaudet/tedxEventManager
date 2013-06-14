@@ -76,6 +76,13 @@ class Participation {
         return $this->slotNo; 
     }//function
     
+    /**
+     * set slotNo
+     * @param type $slotNo 
+     */
+    public function setSlotNo($slotNo) {
+        $this->slotNo = $slotNo; 
+    }//function
     
     /**
      * get slotEventNo
@@ -85,6 +92,13 @@ class Participation {
         return $this->slotEventNo; 
     }//function
     
+    /**
+     * set slotEventNo
+     * @param type $slotEventNo 
+     */
+    public function setSlotEventNo($slotEventNo) {
+        $this->slotEventNo = $slotEventNo; 
+    }//function
     
     /**
      * get participantPersonNo
@@ -92,6 +106,14 @@ class Participation {
      */
     public function getParticipantPersonNo() {
         return $this->participantPersonNo; 
+    }//function
+    
+    /**
+     * set participantPersonNo
+     * @param type $participantPersonNo 
+     */
+    public function setParticipantPersonNo($participantPersonNo) {
+        $this->participantPersonNo = $participantPersonNo; 
     }//function
     
     

@@ -1,5 +1,6 @@
 <?php
 require_once(APP_DIR . '/core/model/Slot.class.php');
+require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
 /**
@@ -26,7 +27,7 @@ class FSSlot {
         $event = $args['event'];
         $return = NULL;
         
-        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo();
+        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event;
         $data = $crud->getRow($sql);
         
         

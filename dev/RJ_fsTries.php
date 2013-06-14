@@ -5,6 +5,7 @@ require_once('../tedx-config.php');
 require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSParticipation.class.php');
 
 echo '<h1>Location</h1>';
 var_dump(FSLocation::getLocation("L'Usine"));
@@ -34,7 +35,22 @@ $argsEvent = array(
             "endingTime"   => "18:00:00"
             /*'Direction'*/
         );
-var_dump(FSEvent::addEvent($argsEvent));
+//var_dump(FSEvent::addEvent($argsEvent));
+
+echo '<h1>Participation</h1>';
+$aParticipation = array(
+            'slotNo'         => 1,
+            'slotEventNo'   => 1,
+            'participantPersonNo'   => 6
+        );
+var_dump(FSParticipation::getParticipation($aParticipation));
+var_dump(FSParticipation::getParticipations());
+$argsParticipation = array(
+            "slotNo"         => 2,
+            "slotEventNo"   => 2,
+            "participantPersonNo"   => 8
+        );
+var_dump(FSParticipation::addParticipation($argsParticipation));
 ?>
     </body>
 </html>
