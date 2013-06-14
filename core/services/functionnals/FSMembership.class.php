@@ -134,7 +134,6 @@ class FSMembership {
                     );";
                     
                     if($crud->exec($sql) != 0){
-                        echo "New Membership created !";
                         
                         // Get created Membership
                         $aCreatedMembership = FSMembership::getMembership($args);
@@ -194,7 +193,6 @@ class FSMembership {
         }
         
         return $return;
-        
         
     }// End addMembership
     

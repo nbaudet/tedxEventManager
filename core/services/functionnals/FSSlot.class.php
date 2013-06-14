@@ -164,7 +164,11 @@ class FSSlot {
         return $return;
     } 
     
-
+    /**
+     * Adds a new Slot in Database
+     * @param type $args
+     * @return Message containing the created Slot
+     */
     public static function addSlot($args){
         global $crud;
         $return = null;
@@ -174,45 +178,47 @@ class FSSlot {
         $aValidEvent = FSEvent::getEvent($event->getNo());
                 
         if($aValidEvent->getStatus()){
-            
-            // Validate Slot
-            $messageInexistantSlot = FSSlot::getSlot($args);
-            
-            if (!$messageInexistantSlot->getStatus()){
+           
+            // Create new Slot
+            $sql = "INSERT INTO `Slot` (`EventNo`, `HappeningDate`, `StartingTime`, `EndingTime`) VALUES (
+                ".$event->getNo().", 
+                '".$args['happeningDate']."',
+                '".$args['startingTime']."',
+                '".$args['endingTime']."',  
+            );";
                     
-                    // Create new Slot
-                    $sql = "INSERT INTO `Slot` (`EventNo`, `HappeningDate`, `StartingTime`, `EndingTime`) VALUES (
-                        ".$event->getNo().", 
-                        '".$args['happeningDate']."',
-                        '".$args['startingTime']."',
-                        '".$args['endingTime']."',  
-                    );";
-                    
-                    if($crud->exec($sql) != 0){
-                        echo "New Slot created !";
-                        
-                        // Get created Membership
-                        $messageCreatedSlot = FSSlot::getSlot($args);
-
-                        $argsMessage = array(
-                            'messageNumber' => 134,
-                            'message'       => 'New Slot added !',
-                            'status'        => true,
-                            'content'       => $messageCreatedSlot->getContent()
-                        );
-                        $return = new Message($argsMessage);
-                        
-                    } else {
-                        $argsMessage = array(
-                            'messageNumber' => 135,
-                            'message'       => 'Error while inserting new Slot',
-                            'status'        => false,
-                            'content'       => NULL
-                        );
-                        $return = new Message($argsMessage);
-                    }
-                } // End Create new Membership
+            if($crud->exec($sql) != 0){
+                echo "New Slot created !";
+                      
+                // Get created Membership
                 
+                
+                $sql = "SELECT * FROM Slot WHERE EventNo = ".$event->getNo()." ORDER BY No DESC LIMIT 1";
+                
+                $data = $crud->getRow($sql);
+                
+                $argsSlot = array (
+                    
+                );
+
+                $argsMessage = array(
+                    'messageNumber' => 134,
+                    'message'       => 'New Slot added !',
+                    'status'        => true,
+                    'content'       => $messageCreatedSlot->getContent()
+                );
+                $return = new Message($argsMessage);
+                      
+            } else {
+                $argsMessage = array(
+                   'messageNumber' => 135,
+                   'message'       => 'Error while inserting new Slot',
+                   'status'        => false,
+                   'content'       => NULL
+               );
+               $return = new Message($argsMessage);
+            } // END Create Slot
+                    
         } else {
             $argsMessage = array(
                 'messageNumber' => 133,
