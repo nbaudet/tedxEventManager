@@ -217,7 +217,8 @@ class ASAuth {
     private function getAllAccesses( $units ) {
         $tabAccesses = array();
         foreach( $units as $unit ) {
-            $tabAccesses[] = FSAccess::getAllAccessesForUnit($unit);
+            $messageAccess = FSAccess::getAllAccessesForUnit($unit);
+            $tabAccesses[] = $messageAccess->getContent();
         }
         
         // Merge the two arrays

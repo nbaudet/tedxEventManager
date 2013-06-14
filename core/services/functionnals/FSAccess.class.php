@@ -21,6 +21,7 @@ class FSAccess {
     public static function getAllAccessesForUnit( $unit ) {
         global $crud;
         
+        //SQL Statement for getting all access from UNIT
         $sql = "SELECT Access.Service FROM Unit
             INNER JOIN Permission
             ON Unit.No = Permission.UnitNo
@@ -37,15 +38,30 @@ class FSAccess {
             
             foreach( $data as $access ) {
                 $accesses[] = $access['Service'];
-            }
+            }// foreach
             
-            return $accesses;
-        }
+            $args = array(
+                'messageNumber' => 011,
+                'message'       => 'Accesses founds',
+                'status'        => true,
+                'content'       => $accesses
+            );
+            $message= new Message($args);
+            
+        }// if
         // Else : we give NULL back
         else {
-            return NULL;
-        }
-    }
-}
+            $args = array(
+                'messageNumber' => 012,
+                'message'       => 'Accesses not found',
+                'status'        => true,
+                'content'       => NULL
+            );
+            $message= new Message($args);
+        }// else
+        
+        return $message;
+    }// function
+} // class
 
 ?>
