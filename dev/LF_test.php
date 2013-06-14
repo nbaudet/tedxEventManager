@@ -59,13 +59,40 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 //var_dump(FSParticipant::getParticipants());
 
 
-var_dump(FSOrganizer::getOrganizer(2));
-var_dump(FSOrganizer::getOrganizers());
+//var_dump(FSOrganizer::getOrganizer(2));
+//var_dump(FSOrganizer::getOrganizers());
 
-$aPerson = FSPerson::getPerson(5)->getContent();
-FSOrganizer::addOrganizer($aPerson);
-var_dump(FSOrganizer::getOrganizers());
+//$aPerson = FSPerson::getPerson(5)->getContent();
+//var_dump(FSOrganizer::addOrganizer($aPerson));
+//var_dump(FSOrganizer::getOrganizers());
 
+/*var_dump($aPerson = FSPerson::getPerson(8)->getContent());
 
+$argsPerson = array (
+    'no'           => 8,
+    'name'         => 'Jubin',
+    'firstname'    => 'Alberto',
+    'dateOfBirth'  => '1961-03-11',
+    'address'      => 'Rue des Alpes, 22',
+    'city'         => 'Lausanne',
+    'country'      => 'Switzerland',
+    'phoneNumber'  => '0798867275',
+    'email'        => 'rsz@tedx.com',
+    'description'  => 'Petit Jubin aime PAS les frittes',
+    'isArchived'   => 0,
+);
+ 
+$aPersonToSet = new Person( $argsPerson ) ;
+
+var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
+
+$event = FSEvent::getEvent(1)->getContent();
+
+$argsSlot = array (
+    'event'     => $event,
+    
+);
 
 ?>
+
+

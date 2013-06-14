@@ -137,6 +137,28 @@ class Crud {
         return $sth->execute();
     }// function
     
+    /**
+     * Can Insert SQL and return last ID from table
+     * @param type $sql
+     * @return type int otherwise false
+     */
+    public function insertReturnLastId($sql){
+        $return ; 
+        // transaction
+        $this->dbh->beginTransaction();
+            $queryReturn = $pdo->query($sql);
+            // catch last id
+            $return = $this->dbh->lastInsertId();
+        $this->dbh->commit();
+        
+        // If query failed
+        if($queryReturn == false) {
+            $return = false;
+        }// if
+        
+        // return last id commited
+        return $return;
+    }// function
     
 }//class
 ?>

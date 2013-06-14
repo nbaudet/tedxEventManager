@@ -71,7 +71,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-        return "coucou"; //ASVisitor::registerToAnEvent($args);
+        return $this->stub->registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
     }//function
     
     

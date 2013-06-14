@@ -1,35 +1,44 @@
-<?php
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Montest</title>
+    </head>
+    <body>
+    <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-require_once('../tedx-config.php');
-require_once('../core/services/applicatives/ASFree.class.php');
-require_once('../core/model/Person.class.php ');
-require_once('../core/model/Message.class.php ');
-require_once('../core/services/functionnals/FSUnit.class.php');
-require_once('../core/services/functionnals/FSMember.class.php');
+    /*
+     * To change this template, choose Tools | Templates
+     * and open the template in the editor.
+     */
+    require_once('../tedx-config.php');
+    require_once('../core/services/applicatives/ASFree.class.php');
+    require_once('../core/model/Person.class.php ');
+    require_once('../core/model/Event.class.php ');
+    require_once('../core/model/Participant.class.php ');
+    require_once('../core/model/Message.class.php ');
+    require_once('../core/services/functionnals/FSEvent.class.php');
+    require_once('../core/services/functionnals/FSRegistration.class.php');
+    require_once('../core/services/functionnals/FSParticipant.class.php');
 
+    $event = FSEvent::getEvent(1)->getContent();
+    $participant = FSParticipant::getParticipant(7)->getContent();
 
-/*$args = array(
-    'name'     => 'Robert', // String
-    'firstname'     => 'Stephan',   // String
-    'dateOfBirth'  => '1991-04-26', // Date
-    'address'    => 'Rue du chemin', // String
-    'city'  => 'Lausanne', // String
-    'country' => 'Suisse', // String
-    'phoneNumber' => '079-345-67-89', // String
-    'email' => 'stephan.robert@test.ch', // String
-    'description' => 'Professeur à la HEIG-VD', // String
-    'idmember' => 'srt543', // String
-    'password' => 'test' // String encrypt to MD5
-);
+    $args = array(
+        'status'            => 'Accepted',
+        'event'             => $event,
+        'participant'       => $participant
+    );
 
-$message = ASFree::registerVisitor($args);
+    $message = FSRegistration::getRegistration($args);
 
-echo "<hr> Mon message final";*/
-var_dump('plop');
-
-
-?>
+    echo "<hr> Mon message final";
+    var_dump($message);
+    
+    $message2 = FSRegistration::getRegistrations();
+    
+    echo "<hr> Mon message final 2";
+    var_dump($message2);
+    ?>
+    </body>
+</html>
