@@ -22,23 +22,21 @@
     require_once('../core/services/functionnals/FSParticipant.class.php');
 
     $event = FSEvent::getEvent(1)->getContent();
-    $participant = FSParticipant::getParticipant(7)->getContent();
-
-    $args = array(
-        'status'            => 'Accepted',
+    $participant = FSParticipant::addParticipant(FSPerson::getPerson(23)->getContent())->getContent();
+    
+    /*$args = array(
+        'status'            => 'Refused',
         'event'             => $event,
-        'participant'       => $participant
+        'participant'       => $participant,
+        'type'              => 'VIP', // String
+        'typeDescription'   => 'Boom' // Optionel - String
     );
-
-    $message = FSRegistration::getRegistration($args);
+    
+    
+    $message = FSRegistration::addRegistration($args);*/
 
     echo "<hr> Mon message final";
     var_dump($message);
-    
-    $message2 = FSRegistration::getRegistrations();
-    
-    echo "<hr> Mon message final 2";
-    var_dump($message2);
     ?>
     </body>
 </html>
