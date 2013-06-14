@@ -12,15 +12,15 @@ require_once(APP_DIR . '/core/model/Person.class.php');
 
 class FSParticipant{
     /**
-     *Returns a Participantwith the given No as Id
-     *@param string $name the id of the Participant
+     *Returns a Participant with the given No as Id
+     *@param string $personNo the id of the Participant
      *@return a Message with an existant Participant
      */
     public static function getParticipant($personNo){
         $participant = NULL;
         
         global $crud;
-        $personNo = addslashes($personNo);
+
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No WHERE Pe.No = $personNo";
         $data = $crud->getRow($sql);
         
@@ -47,8 +47,7 @@ class FSParticipant{
                 'status'            => true,
                 'content'           => $participant
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
         }else{
             $argsMessage = array(
                 'messageNumber'     => 208,
@@ -56,9 +55,9 @@ class FSParticipant{
                 'status'            => false,
                 'content'           => NULL    
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
         }
+        return $return;
     }
 
     /**
@@ -99,9 +98,7 @@ class FSParticipant{
                 'status'        => true,
                 'content'       => $participants
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         } else {
             $argsMessage = array(
                 'messageNumber' => 210,
@@ -109,10 +106,9 @@ class FSParticipant{
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }
+        return $return;
     }
     
        /**
@@ -120,18 +116,18 @@ class FSParticipant{
      * @param $args Parameters of a Participant
      * @return a Message containing the new Participant
      */
-    public static function addParticipant($args){
+    public static function addParticipant($aPerson){
         global $crud;
         
         /*
          * Validate Person No Existant
          */
-        $aValidPerson = FSPerson::getPerson($args);
+        $aValidPerson = FSPerson::getPerson($aPerson->getNo());
         
         /*
          * Validate Participant PersonNo Inexistant
          */
-        $aValidParticipant = FSParticipant::getParticipant($args);
+        $aValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
         
         /*
          * If already existant Person and Inexistant Participant
@@ -139,21 +135,22 @@ class FSParticipant{
         if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
             $sql = "INSERT INTO Participant (
                 PersonNo) VALUES (
-                    '".$args."'
+                    '".$aPerson->getNo()."'
             );";
         }else{
             $sql="";
         };
         
-        if($crud->exec($sql) == 1){       
+        if($crud->exec($sql) == 1){   
+            $aCreatedParticipant = FSParticipant::getParticipant($aPerson->getNo());
+            
             $argsMessage = array(
                 'messageNumber' => 205,
                 'message'       => 'New Participant added !',
                 'status'        => true,
-                'content'       => 1
+                'content'       => $aCreatedParticipant
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
         } else {
             $argsMessage = array(
                 'messageNumber' => 206,
@@ -161,10 +158,9 @@ class FSParticipant{
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }   
+        return $return;
     }
     
  }

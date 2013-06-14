@@ -13,6 +13,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
@@ -52,6 +53,9 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 var_dump(FSSpeaker::getSpeaker(6));
 var_dump(FSSpeaker::getSpeakers());
+var_dump(FSParticipant::getParticipant(8));
+var_dump(FSParticipant::getParticipants());
+
 
 
 ?>
