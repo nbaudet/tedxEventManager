@@ -163,99 +163,68 @@ class FSSlot {
         return $return;
     } 
     
-    /*
+
     public static function addSlot($args){
         global $crud;
         $return = null;
         $event = $args['event'];
         
-
-        // Validate Member
-        $aValidMember = FSMember::getMember($member->getId());
-        
-        $messageValidEvent = 
-        
-        if($aValidMember->getStatus()){
-            
-            // Validate Unit
-            $aValidUnit = FSUnit::getUnit($unit->getNo());
-            
-            if ($aValidUnit->getStatus()){
+        // Validate Event
+        $aValidEvent = FSEvent::getEvent($event->getNo());
                 
-                // Validate Membership
-                $anInexistantMembership = FSMembership::getMembership($args);
-                
-                if(!$anInexistantMembership->getStatus()){
+        if($aValidEvent->getStatus()){
+            
+            // Validate Slot
+            $messageInexistantSlot = FSSlot::getSlot($args);
+            
+            if (!$messageInexistantSlot->getStatus()){
                     
-                    // Create new Membership
-                    $sql = "INSERT INTO `Membership` (`MemberID` ,`UnitNo`) VALUES (
-                        '".$member->getId()."', 
-                        '".$unit->getNo()."'
+                    // Create new Slot
+                    $sql = "INSERT INTO `Slot` (`EventNo`, `HappeningDate`, `StartingTime`, `EndingTime`) VALUES (
+                        ".$event->getNo().", 
+                        '".$args['happeningDate']."',
+                        '".$args['startingTime']."',
+                        '".$args['endingTime']."',  
                     );";
                     
                     if($crud->exec($sql) != 0){
-                        echo "New Membership created !";
+                        echo "New Slot created !";
                         
                         // Get created Membership
-                        $aCreatedMembership = FSMembership::getMembership($args);
+                        $messageCreatedSlot = FSSlot::getSlot($args);
 
                         $argsMessage = array(
-                            'messageNumber' => 111,
-                            'message'       => 'New Membership added !',
+                            'messageNumber' => 134,
+                            'message'       => 'New Slot added !',
                             'status'        => true,
-                            'content'       => $aCreatedMembership
+                            'content'       => $messageCreatedSlot->getContent()
                         );
                         $return = new Message($argsMessage);
                         
-                        
                     } else {
                         $argsMessage = array(
-                            'messageNumber' => 112,
-                            'message'       => 'Error while inserting new Membership',
+                            'messageNumber' => 135,
+                            'message'       => 'Error while inserting new Slot',
                             'status'        => false,
                             'content'       => NULL
                         );
                         $return = new Message($argsMessage);
                     }
-                    
                 } // End Create new Membership
-                else {
-                    $argsMessage = array(
-                        'messageNumber' => 114,
-                        'message'       => 'Membership already existant !',
-                        'status'        => FALSE,
-                        'content'       => null
-                    );
-
-                $return = new Message($argsMessage);
-                }
                 
-            } else {
-                $argsMessage = array(
-                    'messageNumber' => 114,
-                    'message'       => 'No matching Unit found',
-                    'status'        => FALSE,
-                    'content'       => null
-                );
-            
-            $return = new Message($argsMessage);
-            }
-            
         } else {
             $argsMessage = array(
-                'messageNumber' => 113,
-                'message'       => 'No matching Member found',
+                'messageNumber' => 133,
+                'message'       => 'No valid Event found',
                 'status'        => FALSE,
                 'content'       => null
             );
             
-            $return = new Message($argsMessage);
-            
+            $return = new Message($argsMessage);            
         }
         
         return $return;
-        
-    }*/
+    } // END addSlot()
     
 }
 

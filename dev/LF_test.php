@@ -66,7 +66,7 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 //var_dump(FSOrganizer::addOrganizer($aPerson));
 //var_dump(FSOrganizer::getOrganizers());
 
-var_dump($aPerson = FSPerson::getPerson(8)->getContent());
+/*var_dump($aPerson = FSPerson::getPerson(8)->getContent());
 
 $argsPerson = array (
     'no'           => 8,
@@ -78,13 +78,20 @@ $argsPerson = array (
     'country'      => 'Switzerland',
     'phoneNumber'  => '0798867275',
     'email'        => 'rsz@tedx.com',
-    'description'  => 'Petit Jubin aime les frittes',
+    'description'  => 'Petit Jubin aime PAS les frittes',
     'isArchived'   => 0,
 );
  
 $aPersonToSet = new Person( $argsPerson ) ;
 
-var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));
+var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
+
+$event = FSEvent::getEvent(1)->getContent();
+
+$argsSlot = array (
+    'event'     => $event,
+    
+);
 
 ?>
 
