@@ -23,10 +23,6 @@
 
     $event = FSEvent::getEvent(1)->getContent();
     $participant = FSParticipant::getParticipant(7)->getContent();
-    echo "<hr> Mon Event";
-    var_dump($event);
-    echo "<hr> Mon Participant";
-    var_dump($participant);
 
     $args = array(
         'status'            => 'Accepted',
@@ -38,8 +34,11 @@
 
     echo "<hr> Mon message final";
     var_dump($message);
-
-
+    
+    $message2 = FSRegistration::getRegistrations();
+    
+    echo "<hr> Mon message final 2";
+    var_dump($message2);
     ?>
     </body>
 </html>

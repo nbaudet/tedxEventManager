@@ -21,7 +21,7 @@ class FSRegistration {
     
     public static function getRegistration($args){
         $registration = NULL;
-
+        
         global $crud;
         
         // SQL request for getting a Registration
@@ -62,6 +62,47 @@ class FSRegistration {
             $message = new Message($argsMessage);
         }
         return $message;
+    }
+    
+    public static function getRegistrations(){
+        global $crud;
+
+        $sql = "SELECT * FROM Registration";
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $participants = array();
+
+            
+            foreach($data as $row){
+                $argsRegistration = array(
+                    'status'              => $data['Status'],
+                    'eventNo'             => $data['EventNo'],
+                    'participantPersonNo' => $data['ParticipantPersonNo'],
+                    'registrationDate'    => $data['RegistrationDate'],
+                    'type'                => $data['Type'],
+                    'typeDescription'     => $data['TypeDescription'],
+                    'isArchived'          => $data['IsArchived']
+                );
+            
+                $participants[] = new Registration($argsRegistration);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 412,
+                'message'       => 'All Registration getted',
+                'status'        => true,
+                'content'       => $participants
+            );
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 413,
+                'message'       => 'Error with SELECT * FROM Registration',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }
+        $return = new Message($argsMessage);
     }
 }
 
