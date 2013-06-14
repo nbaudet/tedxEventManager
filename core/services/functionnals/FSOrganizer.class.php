@@ -22,8 +22,11 @@ class FSOrganizer{
         global $crud;
 
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
-Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Or.IsArchived FROM
-Organizer AS Or INNER JOIN Person AS Pe ON Or.PersonNo = Pe.No WHERE Pe.No = $personNo";
+Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.PersonNo, Org.IsArchived 
+FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.No = $personNo";    
+        
+        echo $sql;
+
         $data = $crud->getRow($sql);
         
         if($data){
@@ -71,10 +74,10 @@ Organizer AS Or INNER JOIN Person AS Pe ON Or.PersonNo = Pe.No WHERE Pe.No = $pe
         global $crud;
 
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
-            Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Or.IsArchived
-            FROM Organizer AS Or INNER JOIN Person AS Pe ON Or.PersonNo = Pe.No";
+            Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.IsArchived
+            FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No";
         $data = $crud->getRows($sql);
-        
+        echo $sql;
         if ($data){
             $organizers = array();
 
