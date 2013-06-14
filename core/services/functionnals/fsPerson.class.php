@@ -166,11 +166,75 @@ class FSPerson {
                 'content'       => NULL
             );
             $message = new Message($argsMessage);
-
-            return $message;
         }
         
-    }
+        return $message;
+    } // END addPerson
+    
+    /**
+     * Set new parameters to a Person
+     * @param Person $aPersonToSet
+     * @return Message containing the setted Person
+     */
+    public static function setPerson($aPersonToSet){
+        global $crud;
+        
+        $sql = "UPDATE  Person SET  
+            Name =          '".$aPersonToSet->getName()."',
+            Firstname =     '".$aPersonToSet->getFirstname()."',
+            DateOfBirth =   '".$aPersonToSet->getDateOfBirth()."',
+            Address =       '".$aPersonToSet->getAddress()."',
+            City =          '".$aPersonToSet->getCity()."',
+            Country =       '".$aPersonToSet->getCountry()."',
+            PhoneNumber =   '".$aPersonToSet->getPhoneNumber()."',
+            Email =         '".$aPersonToSet->getEmail()."',
+            Description =   '".$aPersonToSet->getDescription()."',
+            IsArchived =    '".$aPersonToSet->getIsArchived()."'
+            
+                WHERE  Person.No = ". $aPersonToSet->getNo();
+        
+        echo $sql;
+        
+         if($crud->exec($sql) == 1){
+            
+            $sql = "SELECT * FROM Person WHERE No = ". $aPersonToSet->getNo();
+            $data = $crud->getRow($sql);
+            
+            $argsPerson = array(
+                'no'            => $data['No'],
+                'name'          => $data['Name'],
+                'firstname'     => $data['Firstname'],
+                'dateOfBirth'   => $data['DateOfBirth'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'phoneNumber'   => $data['PhoneNumber'],
+                'email'         => $data['Email'],
+                'description'   => $data['Description'],
+                'isArchived'    => $data['IsArchived']
+            );
+            
+            $aSettedPerson = new Person($argsPerson);
+            
+            $argsMessage = array(
+                'messageNumber' => 131,
+                'message'       => 'Person setted !',
+                'status'        => true,
+                'content'       => $aSettedPerson
+            );
+            $message = new Message($argsMessage);
+            return $message;
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 132,
+                'message'       => 'Error while setting new Person',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+        }
+        return $message;
+    } // END setPerson
     
 }
 

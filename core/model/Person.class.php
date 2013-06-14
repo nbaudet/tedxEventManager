@@ -72,6 +72,12 @@ class Person {
     * @var type string
     */
    protected $email; 
+
+   /**
+    * Person's description
+    * @var type string
+    */
+   protected $description; 
    
    
    /**
@@ -90,9 +96,14 @@ class Person {
         
         if(!is_array($array)) {
            throw new Exception('No parameters');
-            
-
         }//if      
+        
+        if(!isset($array['description']) || $array['description'] == ''){
+            $description = NULL;
+        } else {
+            $description = $array['description'];
+        }
+        
         $this->no = $array['no'];
         $this->name = $array['name']; 
         $this->firstname = $array['firstname']; 
@@ -102,6 +113,7 @@ class Person {
         $this->city = $array['city']; 
         $this->phoneNumber = $array['phoneNumber']; 
         $this->email = $array['email']; 
+        $this->description = $description;
         $this->isArchived = $array['isArchived']; 
                 
         
@@ -139,8 +151,8 @@ class Person {
      * get first name
      * @return type firstName
      */
-    public function getFirstName() {
-        return $this->firstName; 
+    public function getFirstname() {
+        return $this->firstname; 
     }// function
 
 
@@ -148,8 +160,8 @@ class Person {
      * set first name
      * @param type $first name 
      */
-    public function setFirstName($firstName) {   
-        $this->firstName = $firstName; 
+    public function setFirstname($firstname) {   
+        $this->firstname = $firstname; 
     }// function
 
 
@@ -188,7 +200,23 @@ class Person {
         $this->address = $address; 
     }// function
 
+    /**
+     * get city
+     * @return String city
+     */
+    public function getCity() {
+        return $this->city; 
+    }// function
 
+
+    /**
+     * set country
+     * @param type $country 
+     */
+    public function setCity($city) {
+        $this->city = $city; 
+    }// function
+    
     /**
      * get country
      * @return type country
@@ -221,10 +249,40 @@ class Person {
      * @param type $email 
      */
     public function setEmail($email) {
-        $this->email = email; 
+        $this->email = $email; 
     }// function
     
+    /**
+     * get phoneNumber
+     * @return type phoneNumber
+     */
+    public function getPhoneNumber() {
+        return $this->phoneNumber; 
+    }// function
+
+    /**
+     * set phoneNumber
+     * @param type $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber) {
+        $this->phoneNumber = $phoneNumber; 
+    }// function
     
+    /**
+     * get description
+     * @return String description
+     */
+    public function getDescription() {
+        return $this->description; 
+    }// function
+
+    /**
+     * set description
+     * @param type $description
+     */
+    public function setDescription($description) {
+        $this->description = $description; 
+    }// function
     /**
      * get isArchived
      * @return type boolean isArchived
