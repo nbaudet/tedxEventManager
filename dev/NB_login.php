@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
@@ -8,7 +8,13 @@ $message = $tedx_manager->login( 'Penelope', 'anitakevinlove' ); // Visitor
 //$message = $tedx_manager->login( 'Penelope', '1' ); // Wrong UserName
 //$message = $tedx_manager->login( 'admin', 'admin' ); // Admin
 
-echo $tedx_manager->getUsername();
+if( $tedx_manager->isLogged() ) {
+    echo '<p><strong>Logg&eacute; en tant que : ' . $tedx_manager->getUsername().
+        '</strong></p>';
+}
+else {
+    echo '<p><strong>Pas logg&eacute;</strong></p>';
+}
 
 echo 'Message : ';
 var_dump($message);

@@ -186,7 +186,10 @@ class ASAuth {
      * @return string The member's username
      */
     public function getUsername() {
-        return $_SESSION['usr'];
+        if( isset( $_SESSION['usr'] ) )
+            return $_SESSION['usr'];
+        else
+            return FALSE;
     }
     
     /**
