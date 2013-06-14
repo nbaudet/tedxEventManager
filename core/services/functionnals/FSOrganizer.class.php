@@ -1,33 +1,36 @@
 <?php
 
 /**
- * Description of FSSpeaker
+ * Description of FSOrganizer
  *
  * @author Lauric Francelet
  */
 
-require_once(APP_DIR . '/core/model/Speaker.class.php');
+require_once(APP_DIR . '/core/model/Organizer.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 
-class FSSpeaker{
+class FSOrganizer{
     /**
-     *Returns a Speaker with the given No as Id
-     *@param string $name the id of the Speaker
-     *@return a Message with an existant Speaker
+     *Returns an Organizer twith the given No as Id
+     *@param string $personNo the id of the Organizer
+     *@return a Message with an existant Organizer
      */
-    public static function getSpeaker($personNo){
-        $speaker = NULL;
+    public static function getOrganizer($personNo){
+        $organizer = NULL;
+        
         global $crud;
-        
+
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
-Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Sp.PersonNo ,Sp.IsArchived 
-FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = $personNo";
+Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.PersonNo, Org.IsArchived 
+FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.No = $personNo";    
         
+        echo $sql;
+
         $data = $crud->getRow($sql);
         
         if($data){
-            $argsSpeaker = array(
+            $argsOrganizer = array(
                 'no'            => $data['No'],
                 'name'          => $data['Name'],
                 'firstname'     => $data['FirstName'],
@@ -38,50 +41,48 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
                 'phoneNumber'   => $data['PhoneNumber'],
                 'email'         => $data['Email'],
                 'description'   => $data['Description'],
-                'personNo'      => $data['PersonNo'],
                 'isArchived'    => $data['IsArchived']
             );
         
-            $speaker = new Speaker($argsSpeaker);
+            $organizer = new Organizer($argsOrganizer);
 
             $argsMessage = array(
-                'messageNumber'     => 121,
-                'message'           => 'Existant Speaker',
+                'messageNumber'     => 125,
+                'message'           => 'Existant Organizer',
                 'status'            => true,
-                'content'           => $speaker
+                'content'           => $organizer
             );
             $return = new Message($argsMessage);
 
         }else{
             $argsMessage = array(
-                'messageNumber'     => 122,
-                'message'           => 'Inexistant Speaker',
+                'messageNumber'     => 126,
+                'message'           => 'Inexistant Organizer',
                 'status'            => false,
                 'content'           => NULL    
             );
             $return = new Message($argsMessage);
-
         }
         return $return;
     }
 
     /**
-     * Returns all the Speaers of the database
-     * @return A Message containing an array of Speakers
+     * Returns all the Organizers of the database
+     * @return A Message containing an array of Organizers
      */
-    public static function getSpeakers(){
+    public static function getOrganizers(){
         global $crud;
 
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
-            Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Sp.PersonNo , 
-            Sp.IsArchived FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No";
+            Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.IsArchived
+            FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No";
         $data = $crud->getRows($sql);
-        
+        echo $sql;
         if ($data){
-            $speakers = array();
+            $organizers = array();
 
             foreach($data as $row){
-                $argsSpeaker = array(
+                $argsOrganizer = array(
                     'no'            => $row['No'],
                     'name'          => $row['Name'],
                     'firstname'     => $row['FirstName'],
@@ -92,60 +93,55 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
                     'phoneNumber'   => $row['PhoneNumber'],
                     'email'         => $row['Email'],
                     'description'   => $row['Description'],
-                    'personNo'      => $row['PersonNo'],
                     'isArchived'    => $row['IsArchived']
                 );
             
-                $speakers[] = new Speaker($argsSpeaker);
+                $organizers[] = new Organizer($argsOrganizer);
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 123,
-                'message'       => 'All Speakers selected',
+                'messageNumber' => 127,
+                'message'       => 'All Organizers selected',
                 'status'        => true,
-                'content'       => $speakers
+                'content'       => $organizers
             );
             $return = new Message($argsMessage);
 
         } else {
             $argsMessage = array(
-                'messageNumber' => 124,
-                'message'       => 'Error while SELECT * FROM Speaker',
+                'messageNumber' => 128,
+                'message'       => 'Error while SELECT * FROM Organizer',
                 'status'        => false,
                 'content'       => NULL
             );
             $return = new Message($argsMessage);
         }
-        
         return $return;
-    }// End getSpeakers
-    
-    
+    }
     
        /**
-     * Add a new Speaker in Database
-     * @param $args Parameters of a Speaker
-     * @return a Message containing the new Speaker
+     * Add a new Organizer in Database
+     * @param $args Parameters of a Organizer
+     * @return a Message containing the new Organizer
      */
-    
-    public static function addSpeaker($aPerson){
+    public static function addOrganizer($aPerson){
         global $crud;
         
         /*
-         * Validate non-existing Person 
+         * Validate Person No Existant
          */
         $aValidPerson = FSPerson::getPerson($aPerson->getNo());
         
         /*
-         * Validate non-existant Speaker
+         * Validate Organizer PersonNo Inexistant
          */
-        $aValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
+        $aValidOrganizer = FSOrganizer::getOrganizer($aPerson->getNo());
         
         /*
-         * If already existant Person and Inexistant Participant
-         */ 
-        if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
-            $sql = "INSERT INTO Speaker (
+         * If already existant Person and Inexistant Organizer
+         */
+        if(($aValidPerson->getStatus())&&(!($aValidOrganizer->getStatus()))){  
+            $sql = "INSERT INTO Organizer (
                 PersonNo) VALUES (
                     '".$aPerson->getNo()."'
             );";
@@ -154,27 +150,26 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
         };
         
         if($crud->exec($sql) == 1){   
-            $aCreatedSpeaker = FSSpeaker::getSpeaker($aPerson->getNo());
+            $aCreatedOrganizer = FSOrganizer::getOrganizer($aPerson->getNo())->getContent();
             
             $argsMessage = array(
-                'messageNumber' => 131,
-                'message'       => 'New Speaker added !',
+                'messageNumber' => 129,
+                'message'       => 'New Organizer added !',
                 'status'        => true,
-                'content'       => $aCreatedSpeaker
+                'content'       => $aCreatedOrganizer
             );
-            $message = new Message($argsMessage);
-            return $message;
+            
+            $return = new Message($argsMessage);
         } else {
             $argsMessage = array(
-                'messageNumber' => 132,
-                'message'       => 'Error while inserting new Speaker',
+                'messageNumber' => 130,
+                'message'       => 'Error while inserting new Organizer',
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }   
+        return $return;
     }
     
  }
