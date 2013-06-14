@@ -27,6 +27,10 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'showMember':
         echo 'Show a member';
         break;
+    
+    case 'registerMember':
+        echo 'Register the changes for a member';
+        break;
 
     default:
         echo 'Bad action selected';
