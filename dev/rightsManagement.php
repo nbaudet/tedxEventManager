@@ -5,7 +5,7 @@
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
-require_once( 'tedx-config.php' );
+require_once( '../tedx-config.php' );
 
 // Verify if the user is logged
 if(!$tedx_manager->isLogged()) {
