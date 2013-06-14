@@ -146,7 +146,7 @@ class Crud {
         $return ; 
         // transaction
         $this->dbh->beginTransaction();
-            $queryReturn = $pdo->query($sql);
+            $queryReturn = $this->dbh->query($sql);
             // catch last id
             $return = $this->dbh->lastInsertId();
         $this->dbh->commit();
