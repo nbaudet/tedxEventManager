@@ -42,21 +42,25 @@
 				<p>Sélectionnez un template réalisé par les classes médias</p>
 			</header>
 			<section id="content">
+
 				<section class="groupe">
-					<a href="index_group1.php">
-						Accéder au template du groupe 1
+					<a href="cortX/index.php">
+						Accéder au template du groupe cortX
 					</a>
 				</section>
-				<section class="groupe">
-					<a href="index_group2.php">
-						Accéder au template du groupe 2
-					</a>
-				</section>
+				
 				<section class="groupe" style="margin-right:0px">
-					<a href="index_group3.php">
-						Accéder au template du groupe 3
+					<a href="projet_mi/index.php">
+						Accéder au template du groupe projet_mi
 					</a>
 				</section>
+
+				<section class="groupe">
+					<a href="SplashyPants/index.php">
+						Accéder au template du groupe SplashyPants
+					</a>
+				</section>
+
 				<div style="clear:both"></div>
 			</section>
 			<footer>

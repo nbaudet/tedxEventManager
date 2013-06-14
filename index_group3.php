@@ -1,1 +1,0 @@
-template groupe 3
