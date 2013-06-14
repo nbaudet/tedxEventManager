@@ -18,23 +18,24 @@
     require_once('../core/model/Participant.class.php ');
     require_once('../core/model/Message.class.php ');
     require_once('../core/services/functionnals/FSEvent.class.php');
+    require_once('../core/services/functionnals/FSSlot.class.php');
     require_once('../core/services/functionnals/FSRegistration.class.php');
     require_once('../core/services/functionnals/FSParticipant.class.php');
 
-    $event = FSEvent::getEvent(1)->getContent();
-    $participant = FSParticipant::addParticipant(FSPerson::getPerson(23)->getContent())->getContent();
     
-    /*$args = array(
-        'status'            => 'Refused',
-        'event'             => $event,
-        'participant'       => $participant,
-        'type'              => 'VIP', // String
-        'typeDescription'   => 'Boom' // Optionel - String
-    );
+    $aPerson = FSPerson::getPerson(23)->getContent();
+    $anEvent = FSEvent::getEvent(1)->getContent();
+    $aListOfSlots = FSSlot::getSlotsByEvent($anEvent)->getContent();
     
-    
-    $message = FSRegistration::addRegistration($args);*/
-
+    $args = array(
+                'person' => $aPerson,
+                'event'  => $anEvent,
+                'slots'  => $aListOfSlots,
+                'registrationType' => 'business',
+                'registrationTypeDescription' => 'The business description'
+            );
+   
+    $message = FSParticipant::addParticipant($args);
     echo "<hr> Mon message final";
     var_dump($message);
     ?>

@@ -9,6 +9,10 @@
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
+require_once('../core/services/functionnals/FSEvent.class.php');
+require_once('../core/services/functionnals/FSSlot.class.php');
+require_once('../core/services/functionnals/FSRegistration.class.php');
+require_once('../core/services/functionnals/FSParticipation.class.php');
 
 class FSParticipant{
     /**
@@ -116,53 +120,134 @@ class FSParticipant{
      * @param $args Parameters of a Participant
      * @return a Message containing the new Participant
      */
-    public static function addParticipant($aPerson){
-        global $crud;
-        
-        /*
-         * Validate Person No Existant
-         */
-        $aValidPerson = FSPerson::getPerson($aPerson);
-        
-        /*
-         * Validate Participant PersonNo Inexistant
-         */
-        $aValidParticipant = FSParticipant::getParticipant($aPerson);
-        
-        /*
-         * If already existant Person and Inexistant Participant
-         */
-        if(($aValidPerson->getStatus())&&(!($aValidParticipant->getStatus()))){  
-            $sql = "INSERT INTO Participant (
-                PersonNo) VALUES (
-                    '".$aPerson->getNo()."'
-            );";
+    public static function addParticipant($args){
+        /* --------------------------------------------------------------------    
+            $args = array(
+                'person' => $aPerson,
+                'event'  => $anEvent,
+                'slots'  => $aListOfSlots,
+
+                // Args Registration to create
+                'registrationType'           => 'business',
+                'registrationTypeDescription' => 'The business description',
+            );
+        ----------------------------------------------------------------------- */
+        // Validate Existant Person
+        $messageValidPerson = FSPerson::getPerson($args['person']->getNo());
+        if($messageValidPerson->getStatus()){
+            // Generate the Person aValidPerson
+            $aValidPerson = $messageValidPerson->getContent();
+            // Validate Existant Event
+            $messageValidEvent = FSEvent::getEvent($args['event']->getNo());
+            if($messageValidEvent->getStatus()){
+                // Generate the Event aValidEvent
+                $aValidEvent = $messageValidEvent->getContent();
+                // For each slot, validate the slot existence.
+                $i = 0;
+                $flagValidSlots = true;
+                foreach($args['slots'] as $slot){
+                    $argsSlot = array('no' =>$slot->getNo(), 'event' => $args['event']);
+                    $messagesValidSlot[$i] = FSSlot::getSlot($argsSlot);
+                    if($messagesValidSlot[$i]->getStatus()== false){
+                        $flagValidSlots = false;
+                    }
+                    $i++;
+                }
+                // If all slots are valid, continue 
+                if($flagValidSlots){
+                    // Generate the list of aValidSlot
+                    foreach($messagesValidSlot as $messageValidSlot){
+                        $listOfValidSlot[] = $messageValidSlot;
+                    }
+                    // Validate Inexistant Participant
+                    $messageValidParticipant = self::getParticipant($aValidPerson->getNo());
+                    if($messageValidParticipant->getStatus() == false){
+                        // Create the args for create a Participant
+                        $argsParticipant = array(
+                            'person' => $aValidPerson,
+                            'event'  => $aValidEvent,
+                            'slots'  => $listOfValidSlot,
+                            'registrationType' => $args['registrationType'],
+                            'registrationTypeDescription' => $args['registrationTypeDescription']
+                        );
+                        
+                        $messageCreateParticipant = self::createParticipant($argsParticipant);
+                        // Create final message - Message Participant added or not added.
+                        $finalMessage = $messageCreateParticipant;
+                    }else{
+                        // Create final message - Message Participant existe.
+                        $finalMessage = $messageValidParticipant;
+                    }
+                }else{
+                    // Create final message - List of message Slot inexistant.
+                    $finalMessage = $messagesValidSlot;
+                }
+            }else{
+                // Create final message - Message Inexistant Event.
+                $finalMessage = $messageValidEvent;
+            }
         }else{
-            $sql="";
-        };
-        
-        if($crud->exec($sql) == 1){   
-            $aCreatedParticipant = FSParticipant::getParticipant($aPerson->getNo());
-            
+            // Create final message - Message Inexistant Person.
+            $finalMessage = $messageValidPerson;
+        }
+        return $finalMessage;
+    }
+  
+    private static function createParticipant($args){
+        global $crud;
+        /* ---------------------------------------------------------------------
+        $args = array(
+            'person' => $aValidPerson,
+            'event'  => $aValidEvent,
+            'slots'  => $listOfValidSlot,
+            'registrationType' => $args['registrationType'],
+            'registrationTypeDescription' => $args['registrationTypeDescription']
+        );
+        ------------------------------------------------------------------------ */
+        // Insert Participant in database
+        $aPerson = $args['person'];
+        $anEvent = $args['event'];
+        $listOfValidSlot = $args['listOfValidSlot'];
+        $sql = "INSERT INTO Participant (PersonNo) VALUES ('".$aPerson->getNo()."')";
+        $crud->exec($sql);
+        // Validate Existant Participant
+        $messageValidParticipant = self::getParticipant($aPerson->getNo());
+        if($messageValidParticipant->getStatus() == false){
+            $aValidParticipant = $messageValidParticipant->getContent();
+            // Create final message - Message Participant added.
             $argsMessage = array(
                 'messageNumber' => 205,
                 'message'       => 'New Participant added !',
                 'status'        => true,
-                'content'       => $aCreatedParticipant
+                'content'       => $aValidParticipant
             );
-            $return = new Message($argsMessage);
-        } else {
+            $messageParticipantAdded = new Message($argsMessage);
+            // Foreach Slot insert Participation
+            $i=0;
+            $flagParticipationAdded = true;
+            foreach($listOfValidSlot as $slot){
+                $argsParticipation = array('slot'=>$slot, 'event'=>$anEvent, 'participant'=>$aValidParticipant);
+                $messagesAddedSlots[$i] = FSParticipation::addParticipation($argsParticipation);
+                if($messagesAddedSlots[$i]->getStatus()== false){$flagParticipationAdded = false;}
+                $i++;
+            }
+            if($flagParticipationAdded){
+                // AJOUTER addRegistration
+            }else{
+                $finalMessage = $messagesAddedSlots;
+            }
+        }else{
+            // Create final message - Message Participant unadded.
             $argsMessage = array(
                 'messageNumber' => 206,
                 'message'       => 'Error while inserting new Participant',
                 'status'        => false,
                 'content'       => NULL
             );
-            $return = new Message($argsMessage);
-        }   
-        return $return;
+            $finalMessage = new Message($argsMessage);
+        }
+        return $finalMessage;
     }
-    
  }
     
 ?>

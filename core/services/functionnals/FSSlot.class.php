@@ -27,7 +27,7 @@ class FSSlot {
         $event = $args['event'];
         $return = NULL;
         
-        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event;
+        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo();
         $data = $crud->getRow($sql);
         
         

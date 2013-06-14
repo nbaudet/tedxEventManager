@@ -9,9 +9,11 @@
 require_once(APP_DIR . '/core/model/Participation.class.php');
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSParticipant.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/model/Slot.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSSlot.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
+require_once(APP_DIR . '/core/model/Event.class.php');
 
 class FSParticipation{
     /**
@@ -114,63 +116,110 @@ class FSParticipation{
      * @param $args Parameters of a Participation
      * @return a Message containing the new Participation
      */
-    public static function addParticipation($aParticipation){
+    public static function addParticipation($args){
         global $crud;
-        
-        $aSlot= array(
-          'no' =>   $aParticipation['slotNo'],
-          'event' =>   $aParticipation['slotEventNo']  
-        );
+        /* ------------------------------------
+         * $args(
+         *  'slot'        => $slot, 
+         *  'event'       => $event,
+         *  'participant' => $aValidParticipant
+         * )
+         * ------------------------------------ */
                 
-        /*
-         * Validate Participant No Existant
-         */
-        $messageValidParticipant = FSParticipant::getParticipant($aParticipation['participantPersonNo']);
-        
-        /*
-         * Validate Slot No Existant
-         */
-        $messageValidSlot = FSSlot::getSlot($aSlot);
-        
-        /*
-         * Validate Participation PersonNo Inexistant
-         */
-        $messageValidParticipation = FSParticipation::getParticipation($aParticipation);
-        
-        /*
-         * If already existant Person and Inexistant Participation
-         */
-        if(($messageValidParticipant->getStatus())&&($messageValidSlot->getStatus())&&(!($messageValidParticipation->getStatus()))){  
-            $sql = "INSERT INTO Participation (
-                slotNo, slotEventNo, participantPersonNo) VALUES (
-                    '".$aParticipation['slotNo']."',
-                    '".$aParticipation['slotEventNo']."',
-                    '".$aParticipation['participantPersonNo']."'
-            );";
+        // Validate Existant Participant
+        $messageValidParticipant = FSParticipant::getParticipant($args['partipant']->getNo());
+        if($messageValidParticipant->getStatus()){
+            $aValidPaticipant = $messageValidParticipant->getContent();
+            $messageValidEvent = FSEvent::getEvent($args['event']->getNo);
+            if($messageValidEvent){
+                $aValidEvent = $messageValidEvent->getContent();
+                // Validate Slot No Existant
+                $argsSlot = array(
+                    'no' => $args['slot']->getNo(),
+                    'event' => $aValidEvent
+                );
+                $messageValidSlot = FSSlot::getSlot($argsSlot);
+                if($messageValidSlot->getStatus()){
+                    $aValidSlot = $messageValidSlot->getContent();
+                    // Validate Inexistant Participation
+                    $argsParticipation = array(
+                        'slotNo' => $aValidSlot->getNo(),
+                        'slotEventNo' => $aValidEvent->getNo(),
+                        'participantNo' => $aValidPaticipant->getNo()
+                    );
+                    $messageValidParticipation = FSParticipation::getParticipation($argsParticipation);
+                    if($messageValidParticipation == false){
+                        $argsCreateParticipation = array(
+                            'slot' => $aValidSlot,
+                            'event' => $aValidEvent,
+                            'participant' => $aValidPaticipant
+                        );
+                        $messageCreateParticipation = self::createParticipation($argsCreateParticipation);
+                        // Create final message - Message Participant added or not added.
+                        $finalMessage = $messageCreateParticipation;
+                    }else{
+                        // Generate Message - Valid Participation
+                        $finalMessage = $messageValidParticipation;
+                    }
+                }else{
+                    // Generate Message - Invalid Slot
+                    $finalMessage = $messageValidSlot;
+                }
+            }else{
+                // Generate Message - Invalid Event
+                $finalMessage = $messageValidEvent;
+            }
         }else{
-            $sql="";
-        };
-        
-        if($crud->exec($sql) == 1){   
-            $aCreatedParticipation = FSParticipation::getParticipation($aParticipation);
-            
+            // Generate Message - Invalid Participant
+            $finalMessage = $messageValidParticipant;
+        }
+        return $finalMessage;
+    }
+    
+    private static function createParticipation($args){
+        /* --------------------------------------------
+         *  $argsCreateParticipation = array(
+         *      'slot' => $aValidSlot,
+         *      'event' => $aValidEvent,
+         *      'participant' => $aValidPaticipant
+         *   );
+         * -------------------------------------------- */
+        global $crud;
+        $sql = "INSERT INTO Participation (
+            slotNo, slotEventNo, participantPersonNo) VALUES (
+            '".$args['slot']->getNo()."',
+            '".$args['event']->getNo()."',
+            '".$args['participant']->getNo()."'
+        )";
+        $crud->exec($sql);
+        // Validate Existant Participation
+        $argsParticipation = array(
+            'slotNo' => $args['slot']->getNo(),
+            'slotEventNo' => $args['event']->getNo(),
+            'participantNo' => $args['participant']->getNo()
+        );
+        $messageValidParticipation = self::getParticipation($argsParticipation);
+        if($messageValidParticipation->getStatus()){
+            $aValidParticipation = $messageValidParticipation->getContent();
+            // Generate message - Message Participation added.
             $argsMessage = array(
                 'messageNumber' => 221,
                 'message'       => 'New Participation added !',
                 'status'        => true,
-                'content'       => $aCreatedParticipation
+                'content'       => $aValidParticipation
             );
-            $return = new Message($argsMessage);
-        } else {
+            $finalMessage = new Message($argsMessage);
+        }else{
+            // Generate Message - Participation not Added            
             $argsMessage = array(
-                'messageNumber' => 222,
-                'message'       => 'Error while inserting new Participation',
-                'status'        => false,
-                'content'       => NULL
-            );
-            $return = new Message($argsMessage);
-        }   
-        return $return;
+                    'messageNumber' => 222,
+                    'message'       => 'Error while inserting new Participation',
+                    'status'        => false,
+                    'content'       => NULL
+                );
+            $finalMessage = new Message($argsMessage);
+        }
+        return $finalMessage;
     }
     
  }
