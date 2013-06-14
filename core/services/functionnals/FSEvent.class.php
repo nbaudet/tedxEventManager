@@ -27,12 +27,12 @@ class FSEvent {
         if($data){
             $argsEvent = array(
                 'no'            => $data['No'],
-                'mainTopic'          => $data['MainTopic'],
-                'startingDate'     => $data['StartingDate'],
-                'endingDate'   => $data['EndingDate'],
-                'startingTime'       => $data['StartingTime'],
-                'endingTime'          => $data['EndingTime'],
-                'description'       => $data['Description'],
+                'mainTopic'     => $data['MainTopic'],
+                'startingDate'  => $data['StartingDate'],
+                'endingDate'    => $data['EndingDate'],
+                'startingTime'  => $data['StartingTime'],
+                'endingTime'    => $data['EndingTime'],
+                'description'   => $data['Description'],
                 'isArchived'    => $data['IsArchived']
             );
             
@@ -55,8 +55,8 @@ class FSEvent {
             );
             $message = new Message($argsMessage);
             return $message;
-        }
-    }
+        } // else
+    }// function
     
     /**
      * Returns all the Events of the database
@@ -73,14 +73,14 @@ class FSEvent {
 
             foreach($data as $row){
                 $argsEvent = array(
-                    'no'            => $row['No'],
-                    'mainTopic'          => $row['MainTopic'],
-                    'startingDate'     => $row['StartingDate'],
+                    'no'           => $row['No'],
+                    'mainTopic'    => $row['MainTopic'],
+                    'startingDate' => $row['StartingDate'],
                     'endingDate'   => $row['EndingDate'],
-                    'startingTime'       => $row['StartingTime'],
-                    'endingTime'          => $row['EndingTime'],
-                    'description'       => $row['Description'],
-                    'isArchived'    => $row['IsArchived']
+                    'startingTime' => $row['StartingTime'],
+                    'endingTime'   => $row['EndingTime'],
+                    'description'  => $row['Description'],
+                    'isArchived'   => $row['IsArchived']
                 );
             
                 $events[] = new Event($argsEvent);
@@ -105,8 +105,8 @@ class FSEvent {
             $message = new Message($argsMessage);
 
             return $message;
-        }
-    }
+        }// else
+    }// function
     
     /**
      * Add a new Event in Database
@@ -124,14 +124,14 @@ class FSEvent {
             $data = $crud->exec($sql);
             
             $argsEvent = array(
-                'no'                =>$data['No'],
-                'mainTopic'          => $data['MainTopic'],
-                'description'       => $data['Description'],
-                'startingDate'     => $data['StartingDate'],
+                'no'           =>$data['No'],
+                'mainTopic'    => $data['MainTopic'],
+                'description'  => $data['Description'],
+                'startingDate' => $data['StartingDate'],
                 'endingDate'   => $data['EndingDate'],
-                'startingTime'       => $data['StartingTime'],
-                'endingTime'          => $data['EndingTime'],
-                'isArchived'    => $data['IsArchived']
+                'startingTime' => $data['StartingTime'],
+                'endingTime'   => $data['EndingTime'],
+                'isArchived'   => $data['IsArchived']
             );
             
             $event = new Event($argsEvent);
@@ -154,11 +154,11 @@ class FSEvent {
             $message = new Message($argsMessage);
 
             return $message;
-        }
+        }// else
         
-    }
+    }// function
     
-}
+}// class
 
 ?>
 
