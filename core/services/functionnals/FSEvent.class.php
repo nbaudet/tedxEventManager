@@ -116,7 +116,7 @@ class FSEvent {
     public static function addEvent($args){
         global $crud;
         
-        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".$args['mainTopic']."', '".$args['description']."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
+        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".addslashes($args['mainTopic'])."', '".addslashes($args['description'])."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
         
         if($crud->exec($sql) == 1){
             

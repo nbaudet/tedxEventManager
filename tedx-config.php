@@ -17,7 +17,7 @@ define('DB_USER'        , 'tedx');
 define('DB_PASSWORD'    , 'BuVDuH2DRAQdFpU7');
 
 /* APP CONFIG */
-define('APP_DIR'   , 'C:\wamp\www\tedxEventManager' );
+define('APP_DIR'   , 'E:\SiteWeb\tedxEventManager' );
 define('CONFIG_DIR', APP_DIR);
 
 /* Settings the app  */
