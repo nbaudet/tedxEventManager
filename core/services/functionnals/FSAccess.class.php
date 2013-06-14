@@ -18,16 +18,16 @@ class FSAccess {
      * @param Unit $unit The unit we are getting the accesses for
      * @return mixed Array of Accesses Names OR NULL
      */
-    public static function getAllAccessesForUnit( $unit ) {
+    public static function getAllAccessesFromUnit( $unit ) {
         global $crud;
-        
+        var_dump($unit);
         //SQL Statement for getting all access from UNIT
         $sql = "SELECT Access.Service FROM Unit
             INNER JOIN Permission
             ON Unit.No = Permission.UnitNo
             INNER JOIN Access
             ON Permission.AccessNo = Access.No
-            WHERE Unit.No = '" . $unit . "'";
+            WHERE Unit.No = '" . $unit->getNo() . "'";
         
         $data = $crud->getRows($sql);
         
@@ -54,8 +54,8 @@ class FSAccess {
             $args = array(
                 'messageNumber' => 012,
                 'message'       => 'Accesses not found',
-                'status'        => true,
-                'content'       => NULL
+                'status'        => false,
+                'content'       => null
             );
             $message= new Message($args);
         }// else

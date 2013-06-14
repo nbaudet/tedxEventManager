@@ -18,7 +18,7 @@ class ASAuth {
      */
     public function __construct() {
         // Nothing
-    }
+    } // function
     
     /**
      * Enables members to login
@@ -43,8 +43,7 @@ class ASAuth {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
                 $_SESSION['units']  = $this->getAllUnits( $member );
-                $unitNumbers = $this->getAllUnitsNumbers( $member );
-                $_SESSION['access'] = $this->getAllAccesses( $unitNumbers );
+                $_SESSION['access'] = $this->getAllAccessesFromUnits( $_SESSION['units'] );
                 //var_dump($_SESSION['units']);
                 
                 // Sets the OK message
@@ -104,7 +103,7 @@ class ASAuth {
                 );
             $messageOK = new Message( $args );
             return $messageOK;
-        }
+        }// if
         else {
             $args = array(
                     'messageNumber' => 9,
@@ -113,9 +112,9 @@ class ASAuth {
                 );
             $messageNOK = new Message( $args );
             return $messageNOK;
-        }
+        }// else
         
-    }
+    }// functionm
     
     /**
      * Checks if the current member is allowed to do the $action.
@@ -134,7 +133,7 @@ class ASAuth {
             );
             $messageNOK = new Message( $args );
             return $messageNOK;
-        }
+        }// if
         
         // If the user is not logged, returns false
         if( !isset( $_SESSION['usr'] ) ) {
@@ -145,7 +144,7 @@ class ASAuth {
             );
             $messageNOK = new Message( $args );
             return $messageNOK;
-        }
+        }// if
         
         // If the action is present in the member's session, returns true
         //if( array_search( $action, $_SESSION['access'] ) === true ) {
@@ -157,7 +156,7 @@ class ASAuth {
             );
             $messageNOK = new Message( $args );
             return $messageNOK;
-        }
+        }// if
         // Else : the member doesn't have the right
         else {
             $args = array(
@@ -167,8 +166,8 @@ class ASAuth {
             );
             $messageOK = new Message( $args );
             return $messageOK;
-        }
-    }
+        }// else
+    }// function
     
     /**
      * Let you know if the current visitor of the page is logged or not
@@ -179,7 +178,7 @@ class ASAuth {
             return true;
         else
             return false;
-    }
+    }// function
     
     /**
      * Returns the member's username. Exists only if the user is logged
@@ -190,16 +189,16 @@ class ASAuth {
             return $_SESSION['usr'];
         else
             return FALSE;
-    }
+    }// function
     
     /**
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
     private function getAllUnits( $member ) {
-        $units = FSUnit::getAllUnitsForMember( $member );
+        $units = FSUnit::getAllUnitsFromMember( $member );
         return $units;
-    }
+    }// function
     
     /**
      * Returns an array with all the units of a member
@@ -208,31 +207,31 @@ class ASAuth {
     private function getAllUnitsNumbers( $member ) {
         $units = FSUnit::getAllUnitsNumbersForMember( $member );
         return $units;
-    }
+    }// function
     
     /**
      * Returns an array of accesses for a member, depending on his/her units
      * @return Mixed 
      */
-    private function getAllAccesses( $units ) {
+    private function getAllAccessesFromUnits( $units ) {
         $tabAccesses = array();
         foreach( $units as $unit ) {
-            $messageAccess = FSAccess::getAllAccessesForUnit($unit);
+            $messageAccess = FSAccess::getAllAccessesFromUnit($unit);
             $tabAccesses[] = $messageAccess->getContent();
-        }
+        }// foreach
         
         // Merge the two arrays
         $accesses = array();
         foreach( $tabAccesses as $extAccesses ){
             foreach( $extAccesses as $intAccess ) {
                 $accesses[] = $intAccess;
-            }
-        }
+            } // foreach
+        }// foreach
         // Remove the redundancies in accesses
         $accesses = array_unique($accesses);
 
         return $accesses;
-    }
-}
+    }// function
+}// class
 
 ?>
