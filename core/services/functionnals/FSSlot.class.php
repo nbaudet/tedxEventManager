@@ -101,7 +101,7 @@ class FSSlot {
         } else {
             $argsMessage = array(
                 'messageNumber' => 118,
-                'message'       => 'Error while SELECT * FROM person',
+                'message'       => 'Error while SELECT * FROM Slots WHERE ...',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -151,7 +151,7 @@ class FSSlot {
         } else {
             $argsMessage = array(
                 'messageNumber' => 120,
-                'message'       => 'Error while SELECT * FROM person',
+                'message'       => 'Error while SELECT * FROM Slots',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -162,7 +162,101 @@ class FSSlot {
         
         return $return;
     } 
+    
+    /*
+    public static function addSlot($args){
+        global $crud;
+        $return = null;
+        $event = $args['event'];
+        
 
+        // Validate Member
+        $aValidMember = FSMember::getMember($member->getId());
+        
+        $messageValidEvent = 
+        
+        if($aValidMember->getStatus()){
+            
+            // Validate Unit
+            $aValidUnit = FSUnit::getUnit($unit->getNo());
+            
+            if ($aValidUnit->getStatus()){
+                
+                // Validate Membership
+                $anInexistantMembership = FSMembership::getMembership($args);
+                
+                if(!$anInexistantMembership->getStatus()){
+                    
+                    // Create new Membership
+                    $sql = "INSERT INTO `Membership` (`MemberID` ,`UnitNo`) VALUES (
+                        '".$member->getId()."', 
+                        '".$unit->getNo()."'
+                    );";
+                    
+                    if($crud->exec($sql) != 0){
+                        echo "New Membership created !";
+                        
+                        // Get created Membership
+                        $aCreatedMembership = FSMembership::getMembership($args);
+
+                        $argsMessage = array(
+                            'messageNumber' => 111,
+                            'message'       => 'New Membership added !',
+                            'status'        => true,
+                            'content'       => $aCreatedMembership
+                        );
+                        $return = new Message($argsMessage);
+                        
+                        
+                    } else {
+                        $argsMessage = array(
+                            'messageNumber' => 112,
+                            'message'       => 'Error while inserting new Membership',
+                            'status'        => false,
+                            'content'       => NULL
+                        );
+                        $return = new Message($argsMessage);
+                    }
+                    
+                } // End Create new Membership
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 114,
+                        'message'       => 'Membership already existant !',
+                        'status'        => FALSE,
+                        'content'       => null
+                    );
+
+                $return = new Message($argsMessage);
+                }
+                
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 114,
+                    'message'       => 'No matching Unit found',
+                    'status'        => FALSE,
+                    'content'       => null
+                );
+            
+            $return = new Message($argsMessage);
+            }
+            
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 113,
+                'message'       => 'No matching Member found',
+                'status'        => FALSE,
+                'content'       => null
+            );
+            
+            $return = new Message($argsMessage);
+            
+        }
+        
+        return $return;
+        
+    }*/
+    
 }
 
 ?>

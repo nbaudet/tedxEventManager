@@ -45,7 +45,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
             $speaker = new Speaker($argsSpeaker);
 
             $argsMessage = array(
-                'messageNumber'     => 120,
+                'messageNumber'     => 121,
                 'message'           => 'Existant Speaker',
                 'status'            => true,
                 'content'           => $speaker
@@ -54,7 +54,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
 
         }else{
             $argsMessage = array(
-                'messageNumber'     => 121,
+                'messageNumber'     => 122,
                 'message'           => 'Inexistant Speaker',
                 'status'            => false,
                 'content'           => NULL    
@@ -100,7 +100,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 122,
+                'messageNumber' => 123,
                 'message'       => 'All Speakers selected',
                 'status'        => true,
                 'content'       => $speakers
@@ -109,7 +109,7 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
 
         } else {
             $argsMessage = array(
-                'messageNumber' => 123,
+                'messageNumber' => 124,
                 'message'       => 'Error while SELECT * FROM Speaker',
                 'status'        => false,
                 'content'       => NULL
