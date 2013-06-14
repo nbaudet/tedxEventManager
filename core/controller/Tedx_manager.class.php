@@ -15,7 +15,7 @@
  */
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
-require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
+//require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASOrganizer.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASValidator.class.php');

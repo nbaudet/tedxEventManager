@@ -12,7 +12,7 @@ require_once('../core/services/functionnals/FSUnit.class.php');
 require_once('../core/services/functionnals/FSMember.class.php');
 
 
-$args = array(
+/*$args = array(
     'name'     => 'Robert', // String
     'firstname'     => 'Stephan',   // String
     'dateOfBirth'  => '1991-04-26', // Date
@@ -28,8 +28,8 @@ $args = array(
 
 $message = ASFree::registerVisitor($args);
 
-echo "<hr> Mon message final";
-var_dump($message);
+echo "<hr> Mon message final";*/
+var_dump('plop');
 
 
 ?>
