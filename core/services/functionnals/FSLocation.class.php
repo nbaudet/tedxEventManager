@@ -67,8 +67,6 @@ class FSLocation{
         
         if ($data){
             $locations = array();
-
-            
             foreach($data as $row){
                 $argsLocation = array(
                     'name'          => $row['Name'],
