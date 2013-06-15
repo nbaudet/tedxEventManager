@@ -204,6 +204,67 @@ class FSMember {
         return $message;
     }
     
+    /**
+     * Search in the existing members for their ID, and returns the members that
+     * have an ID similar to the needle.
+     * @global PDO Object $crud
+     * @param string $needle The string to look for
+     * @return Message "Members found", "No members found" or "Missing search argument"
+     */
+    public static function searchMemberByID ( $needle = NULL ) {
+        // get database manipulator
+        global $crud;
+        
+        // We search for the given needle in the database
+        if( isset( $needle ) && $needle != '' ) {
+            $sql = "SELECT * FROM Member
+                WHERE Member.ID LIKE '%" . $needle . "%'
+                AND Member.IsArchived = 0
+                ORDER BY Member.ID";
+            $data = $crud->getRows($sql);
+            // If $data, sets message
+            if( $data ) {
+                $arrayOfMembers = array();
+                foreach( $data as $member ) {
+                    $argsMember = array(
+                         'id'         => $member['ID'],
+                         'password'   => 'nope', // Password not necessary for a search result
+                         'personNo'   => $member['PersonNo'],
+                         'isArchived' => $member['IsArchived']
+                     );
+                     $aFoundMember = new Member($argsMember);
+                     $arrayOfMembers[] = $aFoundMember;
+                }//foreach
+                $argsMessage = array(
+                    'messageNumber' => 015,
+                    'message'       => 'Members found',
+                    'status'        => true,
+                    'content'       => $arrayOfMembers
+                );
+            }//if
+            // Else : No member found with this needle
+            else {
+               // Sets Message No member found
+               $argsMessage = array(
+                    'messageNumber' => 016,
+                    'message'       => 'No member found',
+                    'status'        => false
+                );
+            }//else
+        }//if
+        //Else : There was no needle
+        else {
+            $argsMessage = array(
+                'messageNumber' => 017,
+                'message'       => 'Missing search argument',
+                'status'        => false
+            );
+            
+        }
+        // Returns the message
+        $message = new Message( $argsMessage );
+        return $message;
+    }
     
 }
 ?>
