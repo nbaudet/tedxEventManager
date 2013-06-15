@@ -52,8 +52,8 @@ class FSLocation{
             );
             $message = new Message($argsMessage);
             return $message;
-        }
-    }
+        }// else
+    }// function
 
     /**
      * Returns all the Locations of the database
@@ -101,8 +101,8 @@ class FSLocation{
             $message = new Message($argsMessage);
 
             return $message;
-        }
-    }
+        }// else
+    }// function
     
        /**
      * Add a new Location in Database
@@ -163,9 +163,9 @@ class FSLocation{
             $message = new Message($argsMessage);
 
             return $message;
-        }   
-    }
+        }// else   
+    }// function
     
- }
+ }// class
     
 ?>
