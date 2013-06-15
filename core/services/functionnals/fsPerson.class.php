@@ -195,7 +195,7 @@ class FSPerson {
         
         echo $sql;
         
-         if($crud->exec($sql) == 1){
+        if($crud->exec($sql) == 1){
             
             $sql = "SELECT * FROM Person WHERE No = ". $aPersonToSet->getNo();
             $data = $crud->getRow($sql);
@@ -235,6 +235,74 @@ class FSPerson {
         }
         return $message;
     } // END setPerson
+    
+    /**
+     * Search in the existing persons for their ID, and returns the persons that
+     * have an ID similar to the needle.
+     * @global PDO Object $crud
+     * @param string $needle The string to look for
+     * @return Message "Persons found", "No person found" or "Missing search argument"
+     */
+    public static function searchPersonByName ( $needle = NULL ) {
+        // get database manipulator
+        global $crud;
+        
+        // We search for the given needle in the database
+        if( isset( $needle ) && $needle != '' ) {
+            $sql = "SELECT * FROM Person
+                WHERE concat(Name, ' ', Firstname) LIKE '%" . $needle . "%'
+                ORDER BY Person.No";
+            $data = $crud->getRows($sql);
+            // If $data, sets message
+            if( $data ) {
+                $arrayOfPersons = array();
+                foreach( $data as $person ) {
+                    $argsPerson = array(
+                        'no'            => $person['No'],
+                        'name'          => $person['Name'],
+                        'firstname'     => $person['Firstname'],
+                        'dateOfBirth'   => $person['DateOfBirth'],
+                        'address'       => $person['Address'],
+                        'city'          => $person['City'],
+                        'country'       => $person['Country'],
+                        'phoneNumber'   => $person['PhoneNumber'],
+                        'email'         => $person['Email'],
+                        'description'   => $person['Description'],
+                        'isArchived'    => $person['IsArchived']
+                    );
+                    $aFoundPerson = new Person( $argsPerson );
+                    $arrayOfPersons[] = $aFoundPerson;
+                }//foreach
+                $argsMessage = array(
+                    'messageNumber' => 018,
+                    'message'       => 'Persons found',
+                    'status'        => true,
+                    'content'       => $arrayOfPersons
+                );
+            }//if
+            // Else : No person found with this needle
+            else {
+               // Sets Message No person found
+               $argsMessage = array(
+                    'messageNumber' => 019,
+                    'message'       => 'No person found',
+                    'status'        => false
+                );
+            }//else
+        }//if
+        //Else : There was no needle
+        else {
+            $argsMessage = array(
+                'messageNumber' => 017,
+                'message'       => 'Missing search argument',
+                'status'        => false
+            );
+            
+        }
+        // Returns the message
+        $message = new Message( $argsMessage );
+        return $message;
+    }//searchPersonByName
     
 }
 

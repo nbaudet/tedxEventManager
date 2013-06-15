@@ -217,7 +217,7 @@ class FSMember {
         
         // We search for the given needle in the database
         if( isset( $needle ) && $needle != '' ) {
-            $sql = "SELECT ID FROM Member
+            $sql = "SELECT * FROM Member
                 WHERE Member.ID LIKE '%" . $needle . "%'
                 ORDER BY Member.ID";
             $data = $crud->getRows($sql);
