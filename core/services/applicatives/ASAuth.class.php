@@ -10,7 +10,6 @@ require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSAccess.class.php');
 
-
 class ASAuth {
     
     /**
@@ -123,11 +122,11 @@ class ASAuth {
             return $messageNOK;
         }// else
         
-    }// functionm
+    }// function
     
     /**
      * Checks if the current member is allowed to do the $action.
-     * Returns 
+     * Returns
      * @param String $action The action we want to check the access for
      * @return boolean
      */
@@ -135,12 +134,12 @@ class ASAuth {
         // return var
         $message ; 
         
-        // if action is set & action diffrent than nothing
-        if(isset($action) && $action != ''){
+        // If action is set & action different than nothing
+        if( isset( $action ) && $action != '' ) {
             // user specified
-            if( isset($_SESSION['usr']) ){
+            if( isset( $_SESSION['usr'] ) ){
                 // if access founds in array access
-                if(array_search( $action, $_SESSION['access']) !== false){
+                if( array_search( $action, $_SESSION['access'] ) !== false ){
                     $args = array(
                         'messageNumber' => 006,
                         'message'       => 'Access granted',
@@ -225,19 +224,19 @@ class ASAuth {
     private function getAllAccessesFromUnits( $units ) {
         $tabAccesses = array();
         foreach( $units as $unit ) {
-            $messageAccess = FSAccess::getAllAccessesFromUnit($unit);
+            $messageAccess = FSAccess::getAllAccessesFromUnit( $unit );
             $tabAccesses[] = $messageAccess->getContent();
         }// foreach
         
         // Merge the two arrays
         $accesses = array();
-        foreach( $tabAccesses as $extAccesses ){
+        foreach( $tabAccesses as $extAccesses ) {
             foreach( $extAccesses as $intAccess ) {
                 $accesses[] = $intAccess;
             } // foreach
         }// foreach
         // Remove the redundancies in accesses
-        $accesses = array_unique($accesses);
+        $accesses = array_unique( $accesses );
 
         return $accesses;
     }// function

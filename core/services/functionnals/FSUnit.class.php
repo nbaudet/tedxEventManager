@@ -115,7 +115,6 @@ class FSUnit {
             $units = array();
             
             foreach( $data as $row ) {
-                var_dump($row);
                 $argsUnit = array(
                     'no'            => $row['No'],
                     'name'          => $row['Name'],

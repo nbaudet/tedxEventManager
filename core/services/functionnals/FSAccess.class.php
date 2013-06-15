@@ -20,8 +20,8 @@ class FSAccess {
      */
     public static function getAllAccessesFromUnit( $unit ) {
         global $crud;
-        var_dump($unit);
-        //SQL Statement for getting all access from UNIT
+        
+        // SQL Statement to get the accesses for a specified UNIT
         $sql = "SELECT Access.Service FROM Unit
             INNER JOIN Permission
             ON Unit.No = Permission.UnitNo
@@ -42,7 +42,7 @@ class FSAccess {
             
             $args = array(
                 'messageNumber' => 011,
-                'message'       => 'Accesses founds',
+                'message'       => 'Accesses found',
                 'status'        => true,
                 'content'       => $accesses
             );

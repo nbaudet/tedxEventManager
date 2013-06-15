@@ -1,6 +1,5 @@
-﻿<?php
+<?php
 require_once('../tedx-config.php');
-require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 
 echo '<h2>Test de login</h2>';
 //$message = $tedx_manager->login( 'gabor', 'gabor' );
