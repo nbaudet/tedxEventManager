@@ -27,11 +27,9 @@ class FSParticipation{
         global $crud;
 
         $sql = "SELECT * FROM Participation as PAON
-            INNER JOIN Slot as S ON S.No = PAON.SlotNo and S.EventNo = PAON.SlotEventNo 
-            INNER JOIN Participant as PAT ON PAT.PersonNo = PAON.ParticipantPersonNo
-            WHERE PAON.SlotNo = " . $argsParticipation['slotNo']. " and
-                PAON.SlotEventNo = " . $argsParticipation['slotEventNo']. " and
-                PAON.ParticipantPersonNo = " . $argsParticipation['participantPersonNo']. ";";
+                WHERE PAON.SlotNo = " . $argsParticipation['slot']->getNo(). " and
+                PAON.SlotEventNo = " . $argsParticipation['event']->getNo(). " and
+                PAON.ParticipantPersonNo = " . $argsParticipation['participant']->getNo();
 
         $data = $crud->getRow($sql);
         
@@ -111,13 +109,12 @@ class FSParticipation{
         return $return;
     }
     
-       /**
+    /**
      * Add a new Participation in Database
      * @param $args Parameters of a Participation
      * @return a Message containing the new Participation
      */
     public static function addParticipation($args){
-        global $crud;
         /* ------------------------------------
          * $args(
          *  'slot'        => $slot, 
@@ -125,12 +122,11 @@ class FSParticipation{
          *  'participant' => $aValidParticipant
          * )
          * ------------------------------------ */
-                
         // Validate Existant Participant
-        $messageValidParticipant = FSParticipant::getParticipant($args['partipant']->getNo());
+        $messageValidParticipant = FSParticipant::getParticipant($args['participant']->getNo());
         if($messageValidParticipant->getStatus()){
             $aValidPaticipant = $messageValidParticipant->getContent();
-            $messageValidEvent = FSEvent::getEvent($args['event']->getNo);
+            $messageValidEvent = FSEvent::getEvent($args['event']->getNo());
             if($messageValidEvent){
                 $aValidEvent = $messageValidEvent->getContent();
                 // Validate Slot No Existant
@@ -143,18 +139,14 @@ class FSParticipation{
                     $aValidSlot = $messageValidSlot->getContent();
                     // Validate Inexistant Participation
                     $argsParticipation = array(
-                        'slotNo' => $aValidSlot->getNo(),
-                        'slotEventNo' => $aValidEvent->getNo(),
-                        'participantNo' => $aValidPaticipant->getNo()
+                        'slot' => $aValidSlot,
+                        'event' => $aValidEvent,
+                        'participant' => $aValidPaticipant
                     );
+                    
                     $messageValidParticipation = FSParticipation::getParticipation($argsParticipation);
-                    if($messageValidParticipation == false){
-                        $argsCreateParticipation = array(
-                            'slot' => $aValidSlot,
-                            'event' => $aValidEvent,
-                            'participant' => $aValidPaticipant
-                        );
-                        $messageCreateParticipation = self::createParticipation($argsCreateParticipation);
+                    if($messageValidParticipation->getStatus() == false){
+                        $messageCreateParticipation = self::createParticipation($argsParticipation);
                         // Create final message - Message Participant added or not added.
                         $finalMessage = $messageCreateParticipation;
                     }else{
@@ -194,9 +186,9 @@ class FSParticipation{
         $crud->exec($sql);
         // Validate Existant Participation
         $argsParticipation = array(
-            'slotNo' => $args['slot']->getNo(),
-            'slotEventNo' => $args['event']->getNo(),
-            'participantNo' => $args['participant']->getNo()
+            'slot' => $args['slot'],
+            'event' => $args['event'],
+            'participant' => $args['participant']
         );
         $messageValidParticipation = self::getParticipation($argsParticipation);
         if($messageValidParticipation->getStatus()){

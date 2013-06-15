@@ -47,6 +47,12 @@ class Registration {
      */
     private $type; 
     
+    /**
+     * Participant's typeDescription
+     * @var type string
+     */
+    private $typeDescription; 
+    
     
     /**
      * Participant's isArchived
@@ -73,6 +79,7 @@ class Registration {
         $this->participantPersonNo = $array['participantPersonNo']; 
         $this->registrationDate = $array['registrationDate']; 
         $this->type = $array['type']; 
+        $this->typeDescription = $array['typeDescription'];
         $this->isArchived = $array['isArchived']; 
         
         
@@ -145,6 +152,24 @@ class Registration {
      */
     public function setType($type) {
         $this->type = $type; 
+    }//function
+    
+    
+    /**
+     * get typeDescription
+     * @return type string typeDescription
+     */
+    public function getTypeDescription() {
+        return $this->typeDescription; 
+    }//function
+    
+    
+    /**
+     * set typeDescription
+     * @param type $typeDescription 
+     */
+    public function setTypeDescription($typeDescription) {
+        $this->typeDescription = $typeDescription; 
     }//function
     
     

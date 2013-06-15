@@ -159,7 +159,7 @@ class FSParticipant{
                 if($flagValidSlots){
                     // Generate the list of aValidSlot
                     foreach($messagesValidSlot as $messageValidSlot){
-                        $listOfValidSlot[] = $messageValidSlot;
+                        $listOfValidSlot[] = $messageValidSlot->getContent();
                     }
                     // Validate Inexistant Participant
                     $messageValidParticipant = self::getParticipant($aValidPerson->getNo());
@@ -209,30 +209,34 @@ class FSParticipant{
         // Insert Participant in database
         $aPerson = $args['person'];
         $anEvent = $args['event'];
-        $listOfValidSlot = $args['listOfValidSlot'];
+        $listOfValidSlot = $args['slots'];
         $sql = "INSERT INTO Participant (PersonNo) VALUES ('".$aPerson->getNo()."')";
         $crud->exec($sql);
         // Validate Existant Participant
         $messageAddedParticipant = self::getParticipant($aPerson->getNo());
-        if($messageAddedParticipant->getStatus() == false){
+        if($messageAddedParticipant->getStatus()){
             $aValidParticipant = $messageAddedParticipant->getContent();
             // Foreach Slot insert Participation
             $i=0;
             $flagParticipationAdded = true;
             foreach($listOfValidSlot as $slot){
-                $argsParticipation = array('slot'=>$slot, 'event'=>$anEvent, 'participant'=>$aValidParticipant);
-                $messagesAddedSlots[$i] = FSParticipation::addParticipation($argsParticipation);
-                if($messagesAddedSlots[$i]->getStatus()== false){$flagParticipationAdded = false;}
+                $argsParticipation = array('slot' => $slot, 'event' => $anEvent, 'participant' => $aValidParticipant);
+                $messagesAddedParticipation[$i] = FSParticipation::addParticipation($argsParticipation);
+                if($messagesAddedParticipation[$i]->getStatus() == false){$flagParticipationAdded = false;}
                 $i++;
             }
             if($flagParticipationAdded){
+                // Insert the first registration.
+                foreach($messagesAddedParticipation as $message){
+                    $listOfValidParticipations[] = $message->getContent();
+                }
                 // Insert the first registration.
                 $argsRegistration = array(
                     'status'          => 'Waiting', // String
                     'type'            => $args['registrationType'], // String
                     'typeDescription' => $args['registrationTypeDescription'], // Optionel - String
                     'event'           => $args['event'], // object Event
-                    'participant'     => $args['participant']  // object Participant
+                    'participant'     => $aValidParticipant  // object Participant
                 );
                 $messageAddedRegistration = FSRegistration::addRegistration($argsRegistration);
                 if($messageAddedRegistration->getStatus()){
@@ -242,7 +246,7 @@ class FSParticipant{
                         'messageNumber' => 205,
                         'message'       => 'New Participant added, with his first Registration, and participations !',
                         'status'        => true,
-                        'content'       => array('aValidParticipant' => $aValidParticipant, 'listOfValidParticipations' => '', 'aValidRegistration'=>$aValidRegistration)
+                        'content'       => array('aValidParticipant' => $aValidParticipant, 'listOfValidParticipations' => $listOfValidParticipations, 'aValidRegistration'=>$aValidRegistration)
                     );
                     $finalMessage = new Message($argsMessage);
                 }else{
@@ -250,7 +254,7 @@ class FSParticipant{
                 }
             }else{
                 // Create final message - Some Slots not added.
-                $finalMessage = $messagesAddedSlots;
+                $finalMessage = $messagesAddedParticipation;
             }
         }else{
             // Create final message - Message Participant unadded.
@@ -260,7 +264,7 @@ class FSParticipant{
                 'status'        => false,
                 'content'       => NULL
             );
-            $finalMessage = $messageValidParticipant;
+            $finalMessage = $messageAddedParticipant;
         }
         return $finalMessage;
     }

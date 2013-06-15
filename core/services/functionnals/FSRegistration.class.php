@@ -167,10 +167,15 @@ class FSRegistration {
             $description = $args['typeDescription'];
         }
         
-        $sql = "INSERT INTO `Registration` (`Status`, `EventNo`, `participantPersonNo`, `Type`, `TypeDescription`) VALUES ('".$args['status']."', '".$args['event']->getNo()."', '".$args['participant']->getNo()."', '".$args['type']."', '".$description."')";
-
+        // Execute the INSERT sql
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO `Registration` (`Status`, `EventNo`, `ParticipantPersonNo`, `RegistrationDate`, `Type`, `TypeDescription`) VALUES ('".$args['status']."', '".$args['event']->getNo()."', '".$args['participant']->getNo()."', '" . $date . "', '".$args['type']."', '".$description."')";
+        $crud->exec($sql);
+        
+        // Check if the Registration is added.
         $messageValidRegistration = self::getRegistration($args);
         if($messageValidRegistration->getStatus()){
+            $aRegistration = $messageValidRegistration->getContent();
             $argsMessage = array(
                 'messageNumber' => 414,
                 'message'       => 'Registration inserted',

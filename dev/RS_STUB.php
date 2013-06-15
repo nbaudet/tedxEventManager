@@ -26,18 +26,21 @@
     $aPerson = FSPerson::getPerson(23)->getContent();
     $anEvent = FSEvent::getEvent(1)->getContent();
     $aListOfSlots = FSSlot::getSlotsByEvent($anEvent)->getContent();
+    //var_dump($aListOfSlots);
+    
+    
     
     $args = array(
                 'person' => $aPerson,
                 'event'  => $anEvent,
                 'slots'  => $aListOfSlots,
-                'registrationType' => 'business',
-                'registrationTypeDescription' => 'The business description'
+                'registrationType' => 'VIP',
+                'registrationTypeDescription' => 'Master of counting in COMEM+ department'
             );
    
-   /* $message = FSParticipant::addParticipant($args);
+    $message = FSParticipant::addParticipant($args);
     echo "<hr> Mon message final";
     var_dump($message);
-    */?>
+    ?>
     </body>
 </html>
