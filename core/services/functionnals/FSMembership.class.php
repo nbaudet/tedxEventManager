@@ -53,8 +53,8 @@ class FSMembership {
             );
             $message = new Message($argsMessage);
             return $message;
-        }
-    }
+        }// else
+    }// function
     
     /**
      * Returns all the Memberships of the database
@@ -98,8 +98,8 @@ class FSMembership {
             $message = new Message($argsMessage);
 
             return $message;
-        }
-    }
+        }// else
+    }// function
     
     /**
      * Add a new Membership in Database
@@ -155,7 +155,7 @@ class FSMembership {
                             'content'       => NULL
                         );
                         $return = new Message($argsMessage);
-                    }
+                    }// else
                     
                 } // End Create new Membership
                 else {
@@ -167,7 +167,7 @@ class FSMembership {
                     );
 
                 $return = new Message($argsMessage);
-                }
+                }// else
                 
             } else {
                 $argsMessage = array(
@@ -178,7 +178,7 @@ class FSMembership {
                 );
             
             $return = new Message($argsMessage);
-            }
+            }// else
             
         } else {
             $argsMessage = array(
@@ -190,13 +190,13 @@ class FSMembership {
             
             $return = new Message($argsMessage);
             
-        }
+        }// end
         
         return $return;
         
     }// End addMembership
     
     
-}
+}// class
 
 ?>
