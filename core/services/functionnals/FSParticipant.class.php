@@ -128,8 +128,6 @@ class FSParticipant{
                 'person' => $aPerson,
                 'event'  => $anEvent,
                 'slots'  => $aListOfSlots,
-
-                // Args Registration to create
                 'registrationType'           => 'business',
                 'registrationTypeDescription' => 'The business description',
             );

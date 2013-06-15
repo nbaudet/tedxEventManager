@@ -15,7 +15,7 @@
  */
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
-//require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASOrganizer.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASValidator.class.php');
@@ -71,7 +71,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-        return $this->stub->registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
+        return ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
     }//function
     
     

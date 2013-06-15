@@ -71,7 +71,7 @@ class FSSlot {
     public static function getSlotsByEvent($event){
         global $crud;
         
-        $sql = "SELECT * FROM Slot WHERE EventNo = ".$event->getNo();
+        $sql = "SELECT * FROM Slot WHERE EventNo = ". $event->getNo();
         $data = $crud->getRows($sql);
         
         if ($data){

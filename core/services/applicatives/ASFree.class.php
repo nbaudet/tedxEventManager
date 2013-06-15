@@ -29,6 +29,21 @@ class ASFree {
      * @return type 
      */
     public static function registerVisitor($args){
+        /*
+            $argsPerson = array(
+               'name'         => '',
+               'firstname'    => '',
+               'dateOfBirth'  => '',
+               'address'      => '',
+               'city'         => '',
+               'country'      => '',
+               'phoneNumber'  => '',
+               'email'        => '',
+               'description'  => '',
+               'idmember'     => '',
+               'password'     => '',
+            );
+         */
         /**
          * Arguments for adding a Person
          */
@@ -47,71 +62,74 @@ class ASFree {
         /**
          * Add a Person
          */
-        $anAddedPerson = FSPerson::addPerson($argsPerson);
+        $messageAddedPerson = FSPerson::addPerson($argsPerson);
         /**
          * If the Person is added, continue. 
          */
-        if($anAddedPerson->getStatus()){
+        if($messageAddedPerson->getStatus()){      
+            $anAddedPerson = $messageAddedPerson->getContent();
             /**
              * Arguments for adding a Member
              */
             $argsMember = array(
                 'id'         => $args['idmember'],
                 'password'   => $args['password'],
-                'person'     => $anAddedPerson->getContent()
+                'person'     => $anAddedPerson
             );
             /**
              * Add a Member
              */
-            $anAddedMember = FSMember::addMember($argsMember);
-            
+            $messageAddedMember = FSMember::addMember($argsMember);
             /**
              * If the Member is added, continue.
              */
-            if($anAddedMember->getStatus()){
+            if($messageAddedMember->getStatus()){
+                $anAddedMember = $messageAddedMember->getContent();
                 /**
                  * Get the Unit with the name 'Visitor' 
                  */
-                $aUnit = FSUnit::getUnitByName('Visitor');
+                $messageUnit = FSUnit::getUnitByName('Visitor');
+                $visitorUnit = $messageUnit->getContent();
                 /**
                  * Arguments for adding a Membership
                  */
                 $argsMembership = array(
-                    'member'  => $anAddedMember->getContent(),
-                    'unit' => $aUnit->getContent()
+                    'member'  => $anAddedMember,
+                    'unit' => $visitorUnit
                 );
                 /**
                  * Add a Membership
                  */
-                $anAddedMembership = FSMembership::addMembership($argsMembership);
+                $messageAddedMembership = FSMembership::addMembership($argsMembership);
                 /**
                  * If the Membership is added, generate the message OK
                  */
-                if($anAddedMembership->getStatus()){
+                if($messageAddedMembership->getStatus()){
+                    $anAddedMembership = $messageAddedMembership->getContent();
                     $argsMessage = array(
                         'messageNumber' => 402,
                         'message'       => 'Visitor registered',
                         'status'        => true,
-                        'content'       => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember)
+                        'content'       => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
                     );
                     $aRegisteredVisitor = new Message($argsMessage);
                 }else{
                     /**
                      * Else give the error message about non-adding Membership
                      */
-                    $aRegisteredVisitor = $anAddedMembership;
+                    $aRegisteredVisitor = $messageAddedMembership;
                 }
             }else{
                 /**
                  * Else give the error message about non-adding Member
                  */
-                $aRegisteredVisitor = $anAddedMember;
+                $aRegisteredVisitor = $messageAddedMember;
             }
         }else{
             /**
              * Else give the error message about non-adding Person
              */
-            $aRegisteredVisitor = $anAddedPerson;
+            $aRegisteredVisitor = $messageAddedPerson;
         }
         /**
          * Return the message Visitor Registed or not Registred
