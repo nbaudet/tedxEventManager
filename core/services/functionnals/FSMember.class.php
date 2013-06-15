@@ -219,7 +219,6 @@ class FSMember {
         if( isset( $needle ) && $needle != '' ) {
             $sql = "SELECT ID FROM Member
                 WHERE Member.ID LIKE '%" . $needle . "%'
-                AND Member.IsArchived = 0
                 ORDER BY Member.ID";
             $data = $crud->getRows($sql);
             // If $data, sets message
