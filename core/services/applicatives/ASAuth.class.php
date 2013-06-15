@@ -32,6 +32,8 @@ class ASAuth {
     public function login( $args ) {
         // Get the member with the given arguments
         $message = FSMember::getMember( $args['id'] );
+        // message to return
+        $messageReturn ;
         
         // If the member was found in the database
         if ( $message->getStatus() ) {
@@ -42,7 +44,15 @@ class ASAuth {
             if ( $member->getPassword() == md5( $args['password'] ) ) {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
-                $_SESSION['units']  = $this->getAllUnits( $member );
+                // get alls units from member
+                $messageUnits = $this->getAllUnitsFromMember( $member );
+                // if message units 
+                if($messageUnits->getStatus()){
+                    $_SESSION['units']  = $messageUnits->getContent();
+                }// if
+                else { // error send message untis
+                    return $messageUnits;
+                }// else
                 $_SESSION['access'] = $this->getAllAccessesFromUnits( $_SESSION['units'] );
                 //var_dump($_SESSION['units']);
                 
@@ -53,15 +63,15 @@ class ASAuth {
                     'status'        => true,
                     'content'       => $member
                     );
-                $messageOK = new Message( $args );
+                
+                $messageReturn = new Message( $args );
                 
                 // Easter Egg : Spécialement  pour toi, Gabor ! :)
                 if($member->getId() == 'gabor' ){
                     echo '<img href="http://www.baudet.me/heig/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="100px" />';
-                }
+                }// if
                 
-                return $messageOK;
-            }
+            }// if
             // Else : wrong password
             else {
                 // Sets the NOK message
@@ -70,8 +80,7 @@ class ASAuth {
                     'message'       => 'Wrong password',
                     'status'        => false
                 );
-                $messageNOK = new Message( $args );
-                return $messageNOK;
+                $messageReturn = new Message( $args );
             } // else
         } // if
 
@@ -82,9 +91,9 @@ class ASAuth {
                 'message'       => 'Login failure',
                 'status'        => false
             );
-            $messageNOK = new Message( $args );
-            return $messageNOK;
+            $messageReturn = new Message( $args );
         } // else
+        return $messageReturn;
     } // function
     
     /**
@@ -123,50 +132,50 @@ class ASAuth {
      * @return boolean
      */
     public function isGranted( $action ) {
+        // return var
+        $message ; 
         
-        // If $action is not set, returns false
-        if(!isset($action) || $action == '') {
+        // if action is set & action diffrent than nothing
+        if(isset($action) && $action != ''){
+            // user specified
+            if( isset($_SESSION['usr']) ){
+                // if access founds in array access
+                if(array_search( $action, $_SESSION['access']) !== false){
+                    $args = array(
+                        'messageNumber' => 006,
+                        'message'       => 'Access granted',
+                        'status'        => true
+                    );
+                    $message = new Message( $args );
+                }// if
+                else {
+                    $args = array(
+                        'messageNumber' => 007,
+                        'message'       => 'Access restricted',
+                        'status'        => false
+                    );
+                    $message = new Message( $args );
+                }// else
+            }// if
+            else{ // user is not logged, returns false
+                 $args = array(
+                'messageNumber' => 010,
+                'message'       => 'Need to login first',
+                'status'        => false
+                 );
+                $message = new Message( $args );
+            }// else
+        }// if
+        else { // $action is not set, returns false
             $args = array(
                 'messageNumber' => 005,
                 'message'       => 'Missing action argument',
                 'status'        => false
             );
-            $messageNOK = new Message( $args );
-            return $messageNOK;
-        }// if
-        
-        // If the user is not logged, returns false
-        if( !isset( $_SESSION['usr'] ) ) {
-            $args = array(
-                'messageNumber' => 010,
-                'message'       => 'Need to login first',
-                'status'        => false
-            );
-            $messageNOK = new Message( $args );
-            return $messageNOK;
-        }// if
-        
-        // If the action is present in the member's session, returns true
-        //if( array_search( $action, $_SESSION['access'] ) === true ) {
-        if( array_search( $action, $_SESSION['access'] ) === false ) {
-            $args = array(
-                'messageNumber' => 007,
-                'message'       => 'Access restricted',
-                'status'        => false
-            );
-            $messageNOK = new Message( $args );
-            return $messageNOK;
-        }// if
-        // Else : the member doesn't have the right
-        else {
-            $args = array(
-                'messageNumber' => 006,
-                'message'       => 'Access granted',
-                'status'        => true
-            );
-            $messageOK = new Message( $args );
-            return $messageOK;
+            $message = new Message( $args );
         }// else
+        // return message
+        return $message;
     }// function
     
     /**
@@ -195,7 +204,7 @@ class ASAuth {
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
-    private function getAllUnits( $member ) {
+    private function getAllUnitsFromMember( $member ) {
         $units = FSUnit::getAllUnitsFromMember( $member );
         return $units;
     }// function
