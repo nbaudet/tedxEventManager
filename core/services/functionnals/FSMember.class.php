@@ -217,7 +217,7 @@ class FSMember {
         
         // We search for the given needle in the database
         if( isset( $needle ) && $needle != '' ) {
-            $sql = "SELECT * FROM Member
+            $sql = "SELECT ID FROM Member
                 WHERE Member.ID LIKE '%" . $needle . "%'
                 AND Member.IsArchived = 0
                 ORDER BY Member.ID";
@@ -264,7 +264,7 @@ class FSMember {
         // Returns the message
         $message = new Message( $argsMessage );
         return $message;
-    }
+    }//searchMemberByID
     
 }
 ?>
