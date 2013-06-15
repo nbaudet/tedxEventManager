@@ -35,9 +35,9 @@
                 'registrationTypeDescription' => 'The business description'
             );
    
-    $message = FSParticipant::addParticipant($args);
+   /* $message = FSParticipant::addParticipant($args);
     echo "<hr> Mon message final";
     var_dump($message);
-    ?>
+    */?>
     </body>
 </html>

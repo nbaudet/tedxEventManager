@@ -9,6 +9,8 @@
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
+require_once(APP_DIR . '/core/model/Registration.class.php');
+require_once(APP_DIR . '/core/model/Participation.class.php');
 require_once('../core/services/functionnals/FSEvent.class.php');
 require_once('../core/services/functionnals/FSSlot.class.php');
 require_once('../core/services/functionnals/FSRegistration.class.php');
@@ -211,17 +213,9 @@ class FSParticipant{
         $sql = "INSERT INTO Participant (PersonNo) VALUES ('".$aPerson->getNo()."')";
         $crud->exec($sql);
         // Validate Existant Participant
-        $messageValidParticipant = self::getParticipant($aPerson->getNo());
-        if($messageValidParticipant->getStatus() == false){
-            $aValidParticipant = $messageValidParticipant->getContent();
-            // Create final message - Message Participant added.
-            $argsMessage = array(
-                'messageNumber' => 205,
-                'message'       => 'New Participant added !',
-                'status'        => true,
-                'content'       => $aValidParticipant
-            );
-            $messageParticipantAdded = new Message($argsMessage);
+        $messageAddedParticipant = self::getParticipant($aPerson->getNo());
+        if($messageAddedParticipant->getStatus() == false){
+            $aValidParticipant = $messageAddedParticipant->getContent();
             // Foreach Slot insert Participation
             $i=0;
             $flagParticipationAdded = true;
@@ -232,8 +226,30 @@ class FSParticipant{
                 $i++;
             }
             if($flagParticipationAdded){
-                // AJOUTER addRegistration
+                // Insert the first registration.
+                $argsRegistration = array(
+                    'status'          => 'Waiting', // String
+                    'type'            => $args['registrationType'], // String
+                    'typeDescription' => $args['registrationTypeDescription'], // Optionel - String
+                    'event'           => $args['event'], // object Event
+                    'participant'     => $args['participant']  // object Participant
+                );
+                $messageAddedRegistration = FSRegistration::addRegistration($argsRegistration);
+                if($messageAddedRegistration->getStatus()){
+                    $aValidRegistration = $messageAddedRegistration->getContent();
+                    // Create final message - Message Participant added.
+                    $argsMessage = array(
+                        'messageNumber' => 205,
+                        'message'       => 'New Participant added, with his first Registration, and participations !',
+                        'status'        => true,
+                        'content'       => array('aValidParticipant' => $aValidParticipant, 'listOfValidParticipations' => '', 'aValidRegistration'=>$aValidRegistration)
+                    );
+                    $finalMessage = new Message($argsMessage);
+                }else{
+                    
+                }
             }else{
+                // Create final message - Some Slots not added.
                 $finalMessage = $messagesAddedSlots;
             }
         }else{
@@ -244,7 +260,7 @@ class FSParticipant{
                 'status'        => false,
                 'content'       => NULL
             );
-            $finalMessage = new Message($argsMessage);
+            $finalMessage = $messageValidParticipant;
         }
         return $finalMessage;
     }

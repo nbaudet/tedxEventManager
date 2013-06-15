@@ -146,6 +146,7 @@ class FSRegistration {
                     $messageCreateRegistration = self::createRegisatration($args);
                     $finalMessage = $messageCreateRegistration;
                 }else{
+                    
                     $finalMessage = $messageValidRegistration; 
                 }
             }else{
