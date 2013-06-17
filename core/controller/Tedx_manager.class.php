@@ -71,7 +71,14 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-        return ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
+        $messageAccess = $tedx_manager->auth->isGranted( "registerToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
+        }
+        else {
+            $message = $hasAccess;
+        }
+        return $message;
     }//function
     
     
@@ -172,33 +179,36 @@ class Tedx_manager{
     public function changeProfil( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "changeProfil" );
         if( $messageAccess->getStatus() ) {
-            return $this->stub->changePassword( $args );
+            $message = $this->stub->changePassword( $args );
         }
         else {
-            return $hasAccess->getMessage();
+            $message = $hasAccess;
         }
+        return $message;
     }//function
     
     
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            return $this->stub->addKeywordsToAnEvent( $args );
+            $message = $this->stub->addKeywordsToAnEvent( $args );
         }
         else {
-            return $hasAccess->getMessage();
+            $message = $hasAccess;
         }
+        return $message;
     }//function
     
     
     public function archiveKeyword( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "archiveKeyword" );
         if( $messageAccess->getStatus() ) {
-            return $this->stub->archiveKeyword( $args ); 
+            $message = $this->stub->archiveKeyword( $args ); 
         }
         else {
-            return $hasAccess->getMessage();
+            $message = $hasAccess;
         }
+        return $message;
     }//function
     
     
