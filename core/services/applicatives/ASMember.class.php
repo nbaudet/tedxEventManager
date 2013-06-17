@@ -2,10 +2,20 @@
 /**
  * Description of asMember
  *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * @author Robin Jespierre
  */
 class ASMember {
-    //put your code here
+    /**
+     * Constructor of applicative service Visitor
+     */
+    public function __construct() {
+        // do nothing;
+    }
+    
+    public static function setMember ($arg){
+        
+    }
+    
 }
 
 ?>

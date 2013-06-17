@@ -19,6 +19,35 @@ class Stub {
     }
     
     /**
+     * Stub getAnEvent
+     * @param type $args
+     * @return type object $message
+     */
+    public function getEvent($args) {
+        
+      $args = array(
+          'messageNumber' => 001,
+          'message'       => 'aGottenEvent',
+          'status'        => true
+      );
+           return $messageOK = new Message($args) ;       
+    }//function
+    /**
+     * Stub getSomeEvents
+     * @param type $args
+     * @return type object $message
+     */
+    public function getEvents() {
+        
+      $args = array(
+          'messageNumber' => 001,
+          'message'       => 'someGottenEvents',
+          'status'        => true
+      );
+           return $messageOK = new Message($args) ;       
+    }//function
+    
+    /**
      * Stub registerVisitor
      * @param type $args
      * @return type object Message
@@ -118,7 +147,7 @@ class Stub {
      * @param type $args
      * @return type object Message
      */
-    public function addMovtivationToAnEvent($args) {
+    public function addMotivationToAnEvent($args) {
         $args = array(
             'messageNumber' => 001,
             'message'       => 'aMotivationToAnEventAdded',

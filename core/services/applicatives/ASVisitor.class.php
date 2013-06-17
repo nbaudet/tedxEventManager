@@ -22,10 +22,10 @@ class ASVisitor {
      */
     public function __construct() {
         // do nothing;
+
     }
 
-// function
-
+    // function
     public static function registerToAnEvent($args) {
         /*
          * $args = array(
@@ -36,6 +36,7 @@ class ASVisitor {
          *      'typedescription' => 'Redacteur chez Edipresse SA' // String
          *  ); 
          */
+
 
         // gets params
         $aPerson = $args['person'];
@@ -57,6 +58,7 @@ class ASVisitor {
         /**
          * Validate Participant
          */
+
         $messageValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
         if ($messageValidParticipant->getStatus()) {
             $aValidParticipant = $messageValidParticipant->getContent();
@@ -67,8 +69,10 @@ class ASVisitor {
                 'typeDescription' => $aTypeDescription, // Optionel - String
                 'event' => $anEvent, // object Event
                 'participant' => $aValidParticipant  // object Participant
+
             );
             // do Registration 
+
             $messageAddedRegistration = FSRegistration::addRegistration($argsRegistration);
             // If registration sucessfull
             if ($messageAddedRegistration->getStatus()) {
@@ -112,15 +116,27 @@ class ASVisitor {
                 'slots' => $listOfSlots,
                 'registrationType' => $aType,
                 'registrationTypeDescription' => $aTypeDescription,
+
             );
             // add registration
             $finalMessage = FSParticipant::addParticipant($argsParticipant);
-        }// else
+        } // else
         return $finalMessage;
+    } // function
+
+    public static function changeProfil($args) {
+        /*
+         * $args = array(
+         *      'person' => $aPerson, // object Person
+         *      'event' => $anEvent, // object Event
+         *      'slots' => $aListOfSlots, // List of objects Slot
+         *      'type' => 'Presse', // String
+         *      'typedescription' => 'Redacteur chez Edipresse SA' // String
+         *  ); 
+         */
+        
+        
+        
     }
-
-// function
-}
-
-// class
+} // class
 ?>

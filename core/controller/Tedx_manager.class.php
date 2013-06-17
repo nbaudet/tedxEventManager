@@ -61,8 +61,8 @@ class Tedx_manager{
      * @param type $args all the arguments of Person and Member
      * @return type Message Registered Visitor or Specifics messages about a problem.
      */
-    public function registerVisitor($args) {
-        return  ASFree::registerVisitor($args);
+    public function registerVisitor( $args ) {
+        return  ASFree::registerVisitor( $args );
     }//function
     
     /**
@@ -71,6 +71,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
+
         $messageAccess = $tedx_manager->auth->isGranted( "registerToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
@@ -79,6 +80,7 @@ class Tedx_manager{
             $message = $hasAccess;
         }
         return $message;
+
     }//function
     
     
@@ -164,6 +166,7 @@ class Tedx_manager{
         }
     }//function
     
+
      
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -187,6 +190,7 @@ class Tedx_manager{
         return $message;
     }//function
     
+
     
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
@@ -278,6 +282,14 @@ class Tedx_manager{
     
     public function addEvent( $args ) {
         return $this->stub->addEvent( $args ); 
+    }//function
+    
+    public function getEvent( $args ) {
+        return $this->stub->getEvent( $args ); 
+    }//function
+    
+    public function getEvents() {
+        return $this->stub->getEvents(); 
     }//function
 
     
