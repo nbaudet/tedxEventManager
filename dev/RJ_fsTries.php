@@ -3,16 +3,27 @@
 <?php
 require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
-require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
+
+echo '<h1>Get Event</h1>';
+$anEvent= ASFree::getEvent(1);
+// Message
+if( $anEvent->getStatus())
+    echo 'Congrats! ' . $anEvent->getMessage();
+else
+    echo 'Error! ' . $anEvent->getMessage();
+    var_dump($anEvent);
     
-echo '<h1>AS Member</h1>';
-$argsMember= array(
+echo '<h1>Get Events</h1>';
+$someEvents= ASFree::getEvents();
+// Message
+if( $anEvent->getStatus())
+    echo 'Congrats! ' . $someEvents->getMessage();
+else
+    echo 'Error! ' . $someEvents->getMessage();
+    var_dump($someEvents);
    
-            'Password'         => 'password',
-            'PersonNo'   => 'personNo',
-            'IsArchived'   => 0
-        );
-var_dump(FSMember::setMember($argsMember));
+
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
@@ -73,18 +84,3 @@ var_dump(ASEvent::getEvents());*/
 ?>
     </body>
 </html>
-=======
-
-var_dump(FSEvent::getEvent(1));
-var_dump(FSEvent::getEvents());
-$argsEvent= array(
-            'mainTopic'         => 'Tom Pouce n\'était pas si petit',
-            'description'   => '18:00:00',
-            'startingDate'   => 'Petit mais pas vert!',
-            'endingDate'   => '2014-10-05',
-            'startingTime'   => '2014-10-05',
-            'endingTime'   => '13:00:00'
-            );
-var_dump(FSEvent::addEvent($argsEvent));
-?>
->>>>>>> Commit MF

@@ -28,7 +28,8 @@ class Stub {
       $args = array(
           'messageNumber' => 001,
           'message'       => 'aGottenEvent',
-          'status'        => true
+          'status'        => true,
+          'content'       => SFEvent::getEvent()
       );
            return $messageOK = new Message($args) ;       
     }//function
