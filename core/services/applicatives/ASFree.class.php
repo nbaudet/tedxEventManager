@@ -145,13 +145,13 @@ class ASFree {
     public static function getEvent($no) {
         $anEvent = FSEvent::getEvent($no);
         return $anEvent;
-    }
+    }// function
 
     //Show all event
     public static function getEvents() {
         $events = FSEvent::getEvents();
         return $events;
-    }
+    }// function
     
     /**
      * Search events with args
@@ -160,8 +160,8 @@ class ASFree {
      */
     public static function searchEvent($args) {
         $messageEvents = FSEvent::searchEvents($args);
-        return $messageEventsM;
+        return $messageEvents;
     }// public 
-}
+}// class
 
 ?>

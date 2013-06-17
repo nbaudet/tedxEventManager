@@ -11,18 +11,11 @@
  * @author Quentin
  */
 require_once('../tedx-config.php');
-require_once APP_DIR.'/core/services/functionnals/FSEvent.class.php';
 
-
-echo '<h1>SEARCH WITHOUT ARGS</h1>';
-
-$args = array();
-
-var_dump(FSEvent::searchEvents($args));
-
-echo '<h1>SEARCH WITH ARGS</h1>';
-$args = array(
-    'where' => "StartingDate >= '2014-01-01'",
+$searchArgs = array(
+    'where'      => "StartingDate >= '2014-01-01'",
+    'orderBy'    => 'StartingDate',
+    'orderByType' => 'ASC'
 );
-var_dump(FSEvent::searchEvents($args))
+var_dump($tedx_manager->searchEvents($searchArgs));
 ?>

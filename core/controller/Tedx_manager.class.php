@@ -327,6 +327,16 @@ class Tedx_manager{
         $someEvents = ASFree::getEvents(); 
         return $someEvents; 
     }//function
+    
+    /**
+     * Search events with args (where, orderBy, orderByType)
+     * @param type $args
+     * @return type message
+     */
+    public function searchEvents($args){
+        $messageSearchEvents = ASFree::searchEvent($args);
+        return $messageSearchEvents;
+    }// function
 
     
 }//class

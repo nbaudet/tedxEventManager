@@ -186,7 +186,7 @@ class FSEvent {
             
             // SQL statement
             $sql = "SELECT * From Event WHERE $where AND isArchived = 0 $orderBy";
-            echo '<strong>'.$sql.'</strong>';
+           
             // exec query
             $data = $crud->getRows($sql);
             
@@ -223,7 +223,7 @@ class FSEvent {
             }else {
                 $argsMessage = array(
                     'messageNumber' => 501,
-                    'message'       => 'No event found',
+                    'message'       => 'Event not found',
                     'status'        => false,
                     'content'       => NULL
                 );
