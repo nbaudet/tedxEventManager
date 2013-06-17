@@ -308,7 +308,7 @@ class FSMember {
             $aSettedMember = new Member($argsMember);
 
             $argsMessage = array(
-                'messageNumber' => 131,
+                'messageNumber' => 223,
                 'message' => 'Member setted !',
                 'status' => true,
                 'content' => $aSettedMember
@@ -317,7 +317,7 @@ class FSMember {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 132,
+                'messageNumber' => 224,
                 'message' => 'Error while setting new Member',
                 'status' => false,
                 'content' => NULL
@@ -328,8 +328,10 @@ class FSMember {
     }
 
 // END setPerson
-=======
->>>>>>> 78727c0b15b13f10ad295ac958fe0809e414ee92
+
+    
+    
+
 }
 
 ?>
