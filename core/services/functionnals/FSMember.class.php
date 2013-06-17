@@ -324,11 +324,7 @@ class FSMember {
             $message = new Message($argsMessage);
         }
         return $message;
-    }
-
-// END setPerson
-
-
+    }// END setMember
 }
 
 ?>
