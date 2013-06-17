@@ -25,19 +25,12 @@
 
 
         $args = array(
-            'no' => '23', // int
-            'name' => '', // String
-            'firstName' => '', // String
-            'dateOfBirth' => '', // String
-            'address' => 'Chemin du coin', // String
-            'city' => 'Paris', // String
-            'country' => 'France', // String
-            'phoneNumber' => '', // String
-            'email' => 'jusi@gmail.org', // String
-            'description' => '', // String
-        );
+            'ID' => 'nicolas', // int
+            'password' => 'test' // String
+            );
+            
 
-        $message = ASVisitor::changeProfil($args);
+        $message = ASVisitor::changePassword($args);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>
