@@ -172,9 +172,9 @@ class FSPerson {
         if (!isset($args['description']) || $args['description'] == '') {
             $description = NULL;
         } else {
-            $description = $args['description'];
+            $description = addslashes($args['description']);
         }
-        $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . $args['name'] . "', '" . $args['firstname'] . "', '" . $args['dateOfBirth'] . "', '" . $args['address'] . "', '" . $args['city'] . "', '" . $args['country'] . "', '" . $args['phoneNumber'] . "', '" . $args['email'] . "', '" . $description . "')";
+        $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . addslashes($args['name']) . "', '" . addslashes($args['firstname']) . "', '" . addslashes($args['dateOfBirth']) . "', '" . addslashes($args['address']) . "', '" . addslashes($args['city']) . "', '" . addslashes($args['country']) . "', '" . addslashes($args['phoneNumber']) . "', '" . addslashes($args['email']) . "', '" . $description . "')";
 
         $messageFreeEmail = self::checkFreeEmail($args['email']);
         if ($messageFreeEmail->getStatus()) {

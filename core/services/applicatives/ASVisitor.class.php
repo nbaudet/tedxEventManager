@@ -122,7 +122,11 @@ class ASVisitor {
     }
 
 // function
-
+    /**
+     * Edit the profil of a Person.
+     * @param type $args the news arguments and the ID of the Person
+     * @return type message
+     */
     public static function changeProfil($args) {
         /*
           $argsPerson = array(
@@ -148,6 +152,42 @@ class ASVisitor {
             $finalMessage = $messageValidPerson;
         }
         return $finalMessage;
+    }
+    /**
+     * Edit the password of a Member
+     * @param type $args the password and the ID of a Member
+     * @return type message
+     */
+    public static function changePassword($args) {
+        /*
+          $args = array(
+          'ID' => '', // int
+          'password' => '', // String
+          );
+         */
+        $messageValidMember = FSMember::getMember($args['ID']);
+        if ($messageValidMember->getStatus()) {
+            $aValidMember = $messageValidMember->getContent();
+            $aMemberToSet = self::setPassword($aValidMember, $args);
+            $messageSetMember = FSMember::setMember($aMemberToSet);
+            $finalMessage = $messageSetMember;
+        } else {
+            $finalMessage = $messageValidMember;
+        }
+        return $finalMessage;
+    }
+
+    private static function setPassword($aValidMember, $argsToSet) {
+        /*
+          $args = array(
+          'password' => '', // String
+          );
+         */
+        if (($argsToSet['password'] != '') and ($argsToSet['password'] != $aValidMember->getPassword())) {
+            $aValidMember->setPassword($argsToSet['password']);
+        }
+
+        return $aValidMember;
     }
 
     private static function setProfil($aValidPerson, $argsToSet) {
