@@ -23,13 +23,12 @@ class Stub {
      * @param type $args
      * @return type object $message
      */
-    public function getEvent($args) {
+    public function getEvent() {
         
       $args = array(
           'messageNumber' => 001,
           'message'       => 'aGottenEvent',
           'status'        => true,
-          'content'       => SFEvent::getEvent()
       );
            return $messageOK = new Message($args) ;       
     }//function

@@ -285,11 +285,15 @@ class Tedx_manager{
     }//function
     
     public function getEvent( $args ) {
-        return $this->stub->getEvent( $args ); 
+        //No check needed ->Free
+        $anEvent = ASFree::getEvent($args); 
+        return $anEvent; 
     }//function
-    
+
     public function getEvents() {
-        return $this->stub->getEvents(); 
+        //No check needed ->Free
+        $someEvents = ASFree::getEvents(); 
+        return $someEvents; 
     }//function
 
     
