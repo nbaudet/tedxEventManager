@@ -6,13 +6,25 @@ require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 
 echo '<h1>Get Event</h1>';
-$anEvent= ASFree::getEvent(1);
+$id=1;
+$anEvent= ASFree::getEvent($id);
 // Message
 if( $anEvent->getStatus())
     echo 'Congrats! ' . $anEvent->getMessage();
 else
     echo 'Error! ' . $anEvent->getMessage();
     var_dump($anEvent);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 echo '<h1>Get Events</h1>';
 $someEvents= ASFree::getEvents();
