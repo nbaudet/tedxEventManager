@@ -13,6 +13,7 @@
 /**
  * Require all Applicative Services
  */
+require_once(APP_DIR.'/core/services/applicatives/ASEvent.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
@@ -268,6 +269,14 @@ class Tedx_manager{
     
     public function addEvent( $args ) {
         return $this->stub->addEvent( $args ); 
+    }//function
+    
+    public function getEvent( $args ) {
+        return $this->stub->getEvent( $args ); 
+    }//function
+    
+    public function getEvents() {
+        return $this->stub->getEvents(); 
     }//function
 
     
