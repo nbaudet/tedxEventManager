@@ -22,9 +22,7 @@ var_dump(FSEvent::searchEvents($args));
 
 echo '<h1>SEARCH WITH ARGS</h1>';
 $args = array(
-    'where' => 'StartingDate >= 2014-01-01',
-    'orderBy' => 'StartingDate',
-    'orderByType' => 'DESC'
+    'where' => "StartingDate >= '2014-01-01'",
 );
 var_dump(FSEvent::searchEvents($args))
 ?>
