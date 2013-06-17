@@ -179,8 +179,8 @@ class Tedx_manager{
         return $this->stub->registerToAnEvent( $args ); 
     }//function*/
     
-    public function changeProfil( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "changeProfil" );
+    public function changeProfile( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changeProfile" );
         if( $messageAccess->getStatus() ) {
             $message = $this->stub->changePassword( $args );
         }
