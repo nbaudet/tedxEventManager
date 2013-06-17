@@ -13,6 +13,7 @@
      */
     require_once('../tedx-config.php');
     require_once('../core/services/applicatives/ASFree.class.php');
+    require_once('../core/services/applicatives/ASVisitor.class.php');
     require_once('../core/model/Person.class.php ');
     require_once('../core/model/Event.class.php ');
     require_once('../core/model/Participant.class.php ');
@@ -21,24 +22,23 @@
     require_once('../core/services/functionnals/FSSlot.class.php');
     require_once('../core/services/functionnals/FSRegistration.class.php');
     require_once('../core/services/functionnals/FSParticipant.class.php');
-
-    
-    $aPerson = FSPerson::getPerson(23)->getContent();
-    $anEvent = FSEvent::getEvent(1)->getContent();
-    $aListOfSlots = FSSlot::getSlotsByEvent($anEvent)->getContent();
-    //var_dump($aListOfSlots);
     
     
     
-    $args = array(
-                'person' => $aPerson,
-                'event'  => $anEvent,
-                'slots'  => $aListOfSlots,
-                'registrationType' => 'VIP',
-                'registrationTypeDescription' => 'Master of counting in COMEM+ department'
+   $args= array(
+                'no' => '23', // int
+                'name' => '', // String
+                'firstName' => '', // String
+                'dateOfBirth' => '', // String
+                'address' => 'Chemin du coin', // String
+                'city' => 'Vevey', // String
+                'country' => '', // String
+                'phoneNumber' => '', // String
+                'email' => '', // String
+                'description' => '', // String
             );
    
-    $message = FSParticipant::addParticipant($args);
+    $message = ASVisitor::changeProfil($args);
     echo "<hr> Mon message final";
     var_dump($message);
     ?>

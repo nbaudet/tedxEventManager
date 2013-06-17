@@ -61,6 +61,54 @@ class FSPerson {
     }
 
     /**
+     * Returns a Person with the given Email as Email.
+     * @param int $email The Email of the Person
+     * @return a Message containing an existant Person
+     */
+    public static function getPersonByEmail($email) {
+        $person = NULL;
+
+        global $crud;
+
+        $sql = "SELECT * FROM Person WHERE Email = $email";
+        $data = $crud->getRow($sql);
+
+        if ($data) {
+            $argsPerson = array(
+                'no' => $data['No'],
+                'name' => $data['Name'],
+                'firstname' => $data['Firstname'],
+                'dateOfBirth' => $data['DateOfBirth'],
+                'address' => $data['Address'],
+                'city' => $data['City'],
+                'country' => $data['Country'],
+                'phoneNumber' => $data['PhoneNumber'],
+                'email' => $data['Email'],
+                'description' => $data['Description'],
+                'isArchived' => $data['IsArchived']
+            );
+
+            $person = new Person($argsPerson);
+
+            $argsMessage = array(
+                'messageNumber' => 101,
+                'message' => 'Existant Person',
+                'status' => true,
+                'content' => $person
+            );
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 102,
+                'message' => 'Inexistant Person',
+                'status' => false,
+                'content' => NULL
+            );
+        }
+        $message = new Message($argsMessage);
+        return $message;
+    }
+
+    /**
      * Returns all the Persons of the database
      * @return A Message containing an array of Persons
      */
@@ -128,45 +176,50 @@ class FSPerson {
         }
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . $args['name'] . "', '" . $args['firstname'] . "', '" . $args['dateOfBirth'] . "', '" . $args['address'] . "', '" . $args['city'] . "', '" . $args['country'] . "', '" . $args['phoneNumber'] . "', '" . $args['email'] . "', '" . $description . "')";
 
-        if ($crud->exec($sql) == 1) {
+        $messageFreeEmail = self::checkFreeEmail($args['email']);
+        if ($messageFreeEmail->getStatus()) {
+            $aFreeEmail = $messageFreeEmail->getContent();
+            if ($crud->exec($sql) == 1) {
 
-            $sql = "SELECT * FROM Person WHERE Email = '" . $args['email'] . "'";
-            $data = $crud->getRow($sql);
+                $sql = "SELECT * FROM Person WHERE Email = '" . $aFreeEmail . "'";
+                $data = $crud->getRow($sql);
 
-            $argsPerson = array(
-                'no' => $data['No'],
-                'name' => $data['Name'],
-                'firstname' => $data['Firstname'],
-                'dateOfBirth' => $data['DateOfBirth'],
-                'address' => $data['Address'],
-                'city' => $data['City'],
-                'country' => $data['Country'],
-                'phoneNumber' => $data['PhoneNumber'],
-                'email' => $data['Email'],
-                'description' => $data['Description'],
-                'isArchived' => $data['IsArchived']
-            );
+                $argsPerson = array(
+                    'no' => $data['No'],
+                    'name' => $data['Name'],
+                    'firstname' => $data['Firstname'],
+                    'dateOfBirth' => $data['DateOfBirth'],
+                    'address' => $data['Address'],
+                    'city' => $data['City'],
+                    'country' => $data['Country'],
+                    'phoneNumber' => $data['PhoneNumber'],
+                    'email' => $aFreeEmail,
+                    'description' => $data['Description'],
+                    'isArchived' => $data['IsArchived']
+                );
 
-            $person = new Person($argsPerson);
+                $person = new Person($argsPerson);
 
-            $argsMessage = array(
-                'messageNumber' => 105,
-                'message' => 'New Person added !',
-                'status' => true,
-                'content' => $person
-            );
-            $message = new Message($argsMessage);
-            return $message;
+                $argsMessage = array(
+                    'messageNumber' => 105,
+                    'message' => 'New Person added !',
+                    'status' => true,
+                    'content' => $person
+                );
+                $message = new Message($argsMessage);
+                return $message;
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 106,
+                    'message' => 'Error while inserting new Person',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
         } else {
-            $argsMessage = array(
-                'messageNumber' => 106,
-                'message' => 'Error while inserting new Person',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage);
+            $message = $messageFreeEmail;
         }
-
         return $message;
     }
 
@@ -180,59 +233,63 @@ class FSPerson {
     public static function setPerson($aPersonToSet) {
         global $crud;
 
-        $sql = "UPDATE  Person SET  
-            Name =          '" . $aPersonToSet->getName() . "',
-            Firstname =     '" . $aPersonToSet->getFirstname() . "',
-            DateOfBirth =   '" . $aPersonToSet->getDateOfBirth() . "',
-            Address =       '" . $aPersonToSet->getAddress() . "',
-            City =          '" . $aPersonToSet->getCity() . "',
-            Country =       '" . $aPersonToSet->getCountry() . "',
-            PhoneNumber =   '" . $aPersonToSet->getPhoneNumber() . "',
-            Email =         '" . $aPersonToSet->getEmail() . "',
-            Description =   '" . $aPersonToSet->getDescription() . "',
-            IsArchived =    '" . $aPersonToSet->getIsArchived() . "'
-            
+        $messageFreeEmail = self::checkFreeEmail($aPersonToSet->getEmail());
+        if ($messageFreeEmail->getStatus()) {
+            $aFreeEmail = $messageFreeEmail->getContent();
+            $sql = "UPDATE  Person SET  
+                Name =          '" . $aPersonToSet->getName() . "',
+                Firstname =     '" . $aPersonToSet->getFirstname() . "',
+                DateOfBirth =   '" . $aPersonToSet->getDateOfBirth() . "',
+                Address =       '" . $aPersonToSet->getAddress() . "',
+                City =          '" . $aPersonToSet->getCity() . "',
+                Country =       '" . $aPersonToSet->getCountry() . "',
+                PhoneNumber =   '" . $aPersonToSet->getPhoneNumber() . "',
+                Email =         '" . $aFreeEmail . "',
+                Description =   '" . $aPersonToSet->getDescription() . "',
+                IsArchived =    '" . $aPersonToSet->getIsArchived() . "'
                 WHERE  Person.No = " . $aPersonToSet->getNo();
 
-        echo $sql;
+            echo $sql;
 
-        if ($crud->exec($sql) == 1) {
+            if ($crud->exec($sql) == 1) {
 
-            $sql = "SELECT * FROM Person WHERE No = " . $aPersonToSet->getNo();
-            $data = $crud->getRow($sql);
+                $sql = "SELECT * FROM Person WHERE No = " . $aPersonToSet->getNo();
+                $data = $crud->getRow($sql);
 
-            $argsPerson = array(
-                'no' => $data['No'],
-                'name' => $data['Name'],
-                'firstname' => $data['Firstname'],
-                'dateOfBirth' => $data['DateOfBirth'],
-                'address' => $data['Address'],
-                'city' => $data['City'],
-                'country' => $data['Country'],
-                'phoneNumber' => $data['PhoneNumber'],
-                'email' => $data['Email'],
-                'description' => $data['Description'],
-                'isArchived' => $data['IsArchived']
-            );
+                $argsPerson = array(
+                    'no' => $data['No'],
+                    'name' => $data['Name'],
+                    'firstname' => $data['Firstname'],
+                    'dateOfBirth' => $data['DateOfBirth'],
+                    'address' => $data['Address'],
+                    'city' => $data['City'],
+                    'country' => $data['Country'],
+                    'phoneNumber' => $data['PhoneNumber'],
+                    'email' => $data['Email'],
+                    'description' => $data['Description'],
+                    'isArchived' => $data['IsArchived']
+                );
 
-            $aSettedPerson = new Person($argsPerson);
+                $aSettedPerson = new Person($argsPerson);
 
-            $argsMessage = array(
-                'messageNumber' => 131,
-                'message' => 'Person setted !',
-                'status' => true,
-                'content' => $aSettedPerson
-            );
-            $message = new Message($argsMessage);
-            return $message;
+                $argsMessage = array(
+                    'messageNumber' => 131,
+                    'message' => 'Person setted !',
+                    'status' => true,
+                    'content' => $aSettedPerson
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 132,
+                    'message' => 'Error while setting new Person',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
         } else {
-            $argsMessage = array(
-                'messageNumber' => 132,
-                'message' => 'Error while setting new Person',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage);
+            $message = $messageFreeEmail;
         }
         return $message;
     }
@@ -307,6 +364,33 @@ class FSPerson {
     }
 
 //searchPersonByName
+
+    /**
+     * Check if email is already used
+     * @param type $email
+     * @return $Message the free email
+     */
+    private static function checkFreeEmail($email) {
+        $messagePersonWithEmail = self::getPersonByEmail($email);
+        if ($messagePersonWithEmail == false) {
+            $argsMessage = array(
+                'messageNumber' => 421,
+                'message' => 'The email is free',
+                'status' => true,
+                'content' => $email
+            );
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 422,
+                'message' => 'The email is occuped',
+                'status' => false,
+                'status' => $messagePersonWithEmail->getContent()
+            );
+        }
+        $message = new Message($argsMessage);
+        return $message;
+    }
+
 }
 
 ?>

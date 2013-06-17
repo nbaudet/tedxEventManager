@@ -9,6 +9,7 @@
  * Description : Application Service for Vistiors
  * 
  */
+require_once (APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 require_once (APP_DIR . '/core/services/functionnals/FSRegistration.class.php');
 require_once (APP_DIR . '/core/services/functionnals/FSParticipant.class.php');
 require_once (APP_DIR . '/core/services/functionnals/FSParticipation.class.php');
@@ -126,17 +127,83 @@ class ASVisitor {
 
     public static function changeProfil($args) {
         /*
-         * $args = array(
-         *      'person' => $aPerson, // object Person
-         *      'event' => $anEvent, // object Event
-         *      'slots' => $aListOfSlots, // List of objects Slot
-         *      'type' => 'Presse', // String
-         *      'typedescription' => 'Redacteur chez Edipresse SA' // String
-         *  ); 
+           $argsPerson = array(
+                'no' => '', // int
+                'name' => '', // String
+                'firstName' => '', // String
+                'dateOfBirth' => '', // String
+                'address' => '', // String
+                'city' => '', // String
+                'country' => '', // String
+                'phoneNumber' => '', // String
+                'email' => '', // String
+                'description' => '', // String
+            );
+        */
+        $messageValidPerson = FSPerson::getPerson($args['no']);
+        if($messageValidPerson->getStatus()){
+            $aValidPerson = $messageValidPerson->getContent();
+            $aPersonToSet = self::setProfil($aValidPerson, $args);
+            $messageSetPerson = FSPerson::setPerson($aPersonToSet);
+            $finalMessage = $aPersonToSet;
+        }else{
+            $finalMessage = $messageValidPerson;
+        }
+        return $finalMessage;
+    }
+    
+    private static function setProfil($aValidPerson, $argsToSet){
+        /*
+           $argsToSet = array(
+                'name' => '', // String
+                'firstName' => '', // String
+                'dateOfBirth' => '', // String
+                'address' => '', // String
+                'city' => '', // String
+                'country' => '', // String
+                'phoneNumber' => '', // String
+                'email' => '', // String
+                'description' => '', // String
+            );
          */
-        
-        
-        
+       
+       if(($argsToSet['name'] != '') and ($argsToSet['name'] != $aValidPerson->getName())){
+           $aValidPerson->setName($argsToSet['name']);
+       }
+       
+       if(($argsToSet['firstName'] != '') and ($argsToSet['firstName'] != $aValidPerson->getFirstName())){
+           $aValidPerson->setFirstName($argsToSet['firstName']);
+       }
+       
+       if(($argsToSet['dateOfBirth'] != '') and ($argsToSet['dateOfBirth'] != $aValidPerson->getDateOfBirth())){
+           $aValidPerson->setDateOfBirth($argsToSet['dateOfBirth']);
+       }
+       
+       if(($argsToSet['address'] != '') and ($argsToSet['address'] != $aValidPerson->getAddress())){
+           $aValidPerson->setAddress($argsToSet['address']);
+       }
+       
+       if(($argsToSet['city'] != '') and ($argsToSet['city'] != $aValidPerson->getCity())){
+           $aValidPerson->setCity($argsToSet['city']);
+       }
+       
+       if(($argsToSet['country'] != '') and ($argsToSet['country'] != $aValidPerson->getCountry())){
+           $aValidPerson->setCountry($argsToSet['country']);
+       }
+       
+       if(($argsToSet['phoneNumber'] != '') and ($argsToSet['phoneNumber'] != $aValidPerson->getPhoneNumber())){
+           $aValidPerson->setPhoneNumber($argsToSet['phoneNumber']);
+       }
+       
+       if(($argsToSet['email'] != '') and ($argsToSet['email'] != $aValidPerson->getEmail())){
+           $aValidPerson->setEmail($argsToSet['email']);
+       }
+       
+       if(($argsToSet['description'] != '') and ($argsToSet['description'] != $aValidPerson->getDescription())){
+           $aValidPerson->setDescription($argsToSet['description']);
+       }
+       
+       return $aValidPerson;
     }
 } // class
 ?>
