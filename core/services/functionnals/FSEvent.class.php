@@ -116,7 +116,11 @@ class FSEvent {
     public static function addEvent($args){
         global $crud;
         
+<<<<<<< HEAD
         $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".addslashes($args['mainTopic'])."', '".addslashes($args['description'])."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
+=======
+        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".$args['mainTopic']."', '".$args['description']."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
+>>>>>>> Commit MF
         
         if($crud->exec($sql) == 1){
             
@@ -124,6 +128,7 @@ class FSEvent {
             $data = $crud->exec($sql);
             
             $argsEvent = array(
+<<<<<<< HEAD
                 'no'           =>$data['No'],
                 'mainTopic'    => $data['MainTopic'],
                 'description'  => $data['Description'],
@@ -132,6 +137,16 @@ class FSEvent {
                 'startingTime' => $data['StartingTime'],
                 'endingTime'   => $data['EndingTime'],
                 'isArchived'   => $data['IsArchived']
+=======
+                'no'                =>$data['No'],
+                'mainTopic'          => $data['MainTopic'],
+                'description'       => $data['Description'],
+                'startingDate'     => $data['StartingDate'],
+                'endingDate'   => $data['EndingDate'],
+                'startingTime'       => $data['StartingTime'],
+                'endingTime'          => $data['EndingTime'],
+                'isArchived'    => $data['IsArchived']
+>>>>>>> Commit MF
             );
             
             $event = new Event($argsEvent);

@@ -16,8 +16,11 @@ else
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+<<<<<<< HEAD
 require_once(APP_DIR .'/core/services/functionnals/FSParticipation.class.php');
 require_once(APP_DIR .'/core/services/applicatives/ASEvent.class.php');*/
+=======
+>>>>>>> Commit MF
 
 /*
 echo '<h1>Location</h1>';
@@ -36,6 +39,7 @@ echo '<h1>Participant</h1>';
 var_dump(FSParticipant::getParticipant(5));
 var_dump(FSParticipant::getParticipants());
 var_dump(FSParticipant::addParticipant(8));
+<<<<<<< HEAD
 echo '<h1>Event</h1>';
 var_dump(FSEvent::getEvent(1));
 var_dump(FSEvent::getEvents());
@@ -73,3 +77,18 @@ var_dump(ASEvent::getEvents());*/
 ?>
     </body>
 </html>
+=======
+
+var_dump(FSEvent::getEvent(1));
+var_dump(FSEvent::getEvents());
+$argsEvent= array(
+            'mainTopic'         => 'Tom Pouce n\'était pas si petit',
+            'description'   => '18:00:00',
+            'startingDate'   => 'Petit mais pas vert!',
+            'endingDate'   => '2014-10-05',
+            'startingTime'   => '2014-10-05',
+            'endingTime'   => '13:00:00'
+            );
+var_dump(FSEvent::addEvent($argsEvent));
+?>
+>>>>>>> Commit MF
