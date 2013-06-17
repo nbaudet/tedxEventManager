@@ -64,45 +64,45 @@ class FSMember {
      */
     public static function getMembers() {
         $members = array();
-        
+
         // get database manipulator
         global $crud;
-        
+
         $sql = "SELECT * FROM Member ORDER BY Member.ID";
         $data = $crud->getRows($sql);
         // If $data, return content
-        if($data){
-            foreach( $data as $member ) {
+        if ($data) {
+            foreach ($data as $member) {
                 // Fills the array of members to return
                 $argsMember = array(
-                     'id'         => $member['ID'],
-                     'password'   => $member['Password'],
-                     'personNo'   => $member['PersonNo'],
-                     'isArchived' => $member['IsArchived']
+                    'id' => $member['ID'],
+                    'password' => $member['Password'],
+                    'personNo' => $member['PersonNo'],
+                    'isArchived' => $member['IsArchived']
                 );
                 $aValidMember = new Member($argsMember);
                 $members[] = $aValidMember;
             } // foreach
             $argsMessage = array(
                 'messageNumber' => 020,
-                'message'       => 'All the members',
-                'status'        => true,
-                'content'       => $members
+                'message' => 'All the members',
+                'status' => true,
+                'content' => $members
             );
-        }else{
-        // Send Message Inexistant Member
+        } else {
+            // Send Message Inexistant Member
             $argsMessage = array(
                 'messageNumber' => 019,
-                'message'       => 'No Members found',
-                'status'        => false,
-                'content'       => NULL
+                'message' => 'No Members found',
+                'status' => false,
+                'content' => NULL
             );
         }
         // Return message
-        $message = new Message( $argsMessage );
+        $message = new Message($argsMessage);
         return $message;
     }
-    
+
     /**
      * Functionnal Service addMember
      * @param type $argsMember the properties of a Member
@@ -310,8 +310,6 @@ class FSMember {
         return $message;
     }
 
-
-
     /**
      * Set new parameters to a Member
      * @param Member $aMemberToSet
@@ -320,14 +318,46 @@ class FSMember {
     public static function setMember($aMemberToSet) {
         global $crud;
 
-        $aValidMember = self::getMember($aMemberToSet->getId());
+        $messageValidMember = self::getMember($aMemberToSet->getId());
 
-        if (isset($aValidMember)) {
+        if ($messageValidMember->getStatus()) {
+            $aValidMember = $messageValidMember->getContent();
             $sql = "UPDATE  Member SET  
                 Password =          '" . md5($aMemberToSet->getPassword()) . "',
                 PersonNo =     '" . $aMemberToSet->getPersonNo() . "',
                 IsArchived =   '" . $aMemberToSet->getIsArchived() . "'
-                    WHERE  Member.ID = " . $aValidMember;
+                WHERE  Member.ID = " . $aValidMember;
+            
+            if ($crud->exec($sql) == 1) {
+                
+                $sql = "SELECT * FROM Member WHERE ID = " . $aValidMember;
+                $data = $crud->getRow($sql);
+
+                $argsMember = array(
+                    'id' => $data['id'],
+                    'password' => $data['password'],
+                    'personNo' => $data['personNo'],
+                    'isArchived' => $data['IsArchived']
+                );
+
+                $aSettedMember = new Member($argsMember);
+
+                $argsMessage = array(
+                    'messageNumber' => 223,
+                    'message' => 'Member setted !',
+                    'status' => true,
+                    'content' => $aSettedMember
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 224,
+                    'message' => 'Error while setting new Member',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
         } else {
             $argsMessage = array(
                 'messageNumber' => 408,
@@ -337,40 +367,10 @@ class FSMember {
             );
             $message = new Message($argsMessage);
         }
-
-        if ($crud->exec($sql) == 1) {
-
-            $sql = "SELECT * FROM Member WHERE ID = " . $aValidMember;
-            $data = $crud->getRow($sql);
-
-            $argsMember = array(
-                'id' => $data['id'],
-                'password' => $data['password'],
-                'personNo' => $data['personNo'],
-                'isArchived' => $data['IsArchived']
-            );
-
-            $aSettedMember = new Member($argsMember);
-
-            $argsMessage = array(
-                'messageNumber' => 223,
-                'message' => 'Member setted !',
-                'status' => true,
-                'content' => $aSettedMember
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 224,
-                'message' => 'Error while setting new Member',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage);
-        }
         return $message;
-    }// END setMember
+    }
+
+// END setMember
 }
 
 ?>

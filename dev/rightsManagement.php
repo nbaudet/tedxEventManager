@@ -9,6 +9,7 @@ require_once( '../tedx-config.php' );
 require_once( APP_DIR.'/core/services/functionnals/FSMember.class.php' );
 require_once( APP_DIR.'/core/services/functionnals/FSUnit.class.php' );
 require_once( APP_DIR.'/core/model/Member.class.php' );
+require_once( APP_DIR.'/core/model/Unit.class.php' );
 
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
@@ -60,7 +61,7 @@ if( isset( $_REQUEST['action'] ) ) {
     
     switch ( $_REQUEST['action'] ) {
     case 'setMembersUnits':
-        echo 'Set the members\' units';
+        echo '<h1>Set the members\' units</h1>';
         $members = FSMember::getMembers()->getContent();
         showMembers( $members );
         break;
@@ -133,29 +134,34 @@ function showMembers( $members ) {
     //var_dump($units);
     
     // Construct the table to display
+    echo '<p>Warning : please only change one line at a time before updating!</p>';
+    echo '<p>Note : when checked, it means the member is in this unit.</p>';
     echo '<table><tr>'.PHP_EOL;
     echo '<td style="background-color: #555555; color: white;">Login</td>';
     foreach($units as $unit){
         echo '<td style="background-color: #555555; color: white;">'.$unit->getName().'</td>';
     }
-    echo '</tr>'.PHP_EOL;
+    echo '<td>Update</td></tr>'.PHP_EOL;
     
     foreach( $members as $member ) {
         
         //echo '<br />'.$member->getID();
-        echo '<tr>'.PHP_EOL;
+        echo '<form method="POST">
+            <input type="hidden" id="action" value="setMembership"/>
+            <input type="hidden" id="memberId" value="'.$member->getId().'" /><tr>'.PHP_EOL;
         $messageUnits = FSUnit::getAllUnitsFromMember( $member );
         $unitsOfMember = $messageUnits->getContent();
         echo '<td>'.$member->getID().'</td>';
         foreach ( $units as $unit ) {
-            if( array_search($unit, $unitsOfMember)) {
-                echo '<td><input type="checkbox" checked /></td>';
+            //var_dump($unit);
+            if( array_search( $unit->getName(), $unitsOfMember ) ) {
+                echo '<td><input id="'.$unit->getNo().'" type="checkbox" checked /></td>';
             }
             else {
-                echo '<td><input type="checkbox" unchecked /></td>';
+                echo '<td><input id="'.$unit->getNo().'" type="checkbox" /></td>';
             }
         }
-        echo '</tr>'.PHP_EOL;
+        echo '<td><input type="submit" value="udpate Units" /></td></tr></form>'.PHP_EOL;
         
         //var_dump($messageUnits->getContent());
     }
