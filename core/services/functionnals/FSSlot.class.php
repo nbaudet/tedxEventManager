@@ -184,23 +184,21 @@ class FSSlot {
                 ".$event->getNo().", 
                 '".$args['happeningDate']."',
                 '".$args['startingTime']."',
-                '".$args['endingTime']."',  
+                '".$args['endingTime']."' 
             );";
-                    
-            if($crud->exec($sql) != 0){
-                echo "New Slot created !";
+            
+            $idSlot = $crud->insertReturnLastId($sql);
+            
+            if($idSlot != FALSE){
                       
                 // Get created Membership
-                
-                
-                $sql = "SELECT * FROM Slot WHERE EventNo = ".$event->getNo()." ORDER BY No DESC LIMIT 1";
-                
-                $data = $crud->getRow($sql);
-                
                 $argsSlot = array (
-                    
+                    'no'    => $idSlot,
+                    'event' => $event
                 );
-
+                
+                $messageCreatedSlot = FSSlot::getSlot($argsSlot);
+                
                 $argsMessage = array(
                     'messageNumber' => 134,
                     'message'       => 'New Slot added !',
