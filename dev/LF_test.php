@@ -89,9 +89,13 @@ var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
 $event = FSEvent::getEvent(1)->getContent();
 
 $argsSlot = array (
-    'event'     => $event,
-    
+    'event'         => $event,
+    'happeningDate' => '2000-02-02',
+    'startingTime'  => '07:00:00',
+    'endingTime'    => '08:00:00'
 );
+
+var_dump(FSSlot::addSlot($argsSlot));
 
 ?>
 
