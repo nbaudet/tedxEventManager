@@ -13,7 +13,6 @@
 /**
  * Require all Applicative Services
  */
-require_once(APP_DIR.'/core/services/applicatives/ASEvent.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
@@ -63,11 +62,9 @@ class Tedx_manager{
      * @return type Message Registered Visitor or Specifics messages about a problem.
      */
     public function registerVisitor($args) {
-<<<<<<< HEAD
+
         return  ASFree::registerVisitor($args); 
-=======
-        return ASFree::registerVisitor($args); 
->>>>>>> Commit MF
+
     }//function
     
     /**
@@ -76,7 +73,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-<<<<<<< HEAD
+
         $messageAccess = $tedx_manager->auth->isGranted( "registerToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
@@ -85,9 +82,7 @@ class Tedx_manager{
             $message = $hasAccess;
         }
         return $message;
-=======
-        return ASVisitor::registerToAnEvent($args);
->>>>>>> Commit MF
+
     }//function
     
     
@@ -173,7 +168,7 @@ class Tedx_manager{
         }
     }//function
     
-<<<<<<< HEAD
+
      
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -197,11 +192,7 @@ class Tedx_manager{
         return $message;
     }//function
     
-=======
-    
-    
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------    
->>>>>>> Commit MF
+
     
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
