@@ -326,17 +326,17 @@ class FSMember {
                 Password =          '" . md5($aMemberToSet->getPassword()) . "',
                 PersonNo =     '" . $aMemberToSet->getPersonNo() . "',
                 IsArchived =   '" . $aMemberToSet->getIsArchived() . "'
-                WHERE  Member.ID = " . $aValidMember;
-            
+                WHERE  Member.ID = '" . $aValidMember->getId() . "'";
+            echo $sql;
             if ($crud->exec($sql) == 1) {
                 
-                $sql = "SELECT * FROM Member WHERE ID = " . $aValidMember;
+                $sql = "SELECT * FROM Member WHERE ID = '" . $aValidMember->getId() . "'";
                 $data = $crud->getRow($sql);
 
                 $argsMember = array(
-                    'id' => $data['id'],
-                    'password' => $data['password'],
-                    'personNo' => $data['personNo'],
+                    'id' => $data['ID'],
+                    'password' => $data['Password'],
+                    'personNo' => $data['PersonNo'],
                     'isArchived' => $data['IsArchived']
                 );
 

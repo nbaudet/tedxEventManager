@@ -83,6 +83,37 @@ class Tedx_manager{
 
     }//function
     
+    /**
+     * Applicative service to change the Profil of a Person
+     * @param type $args the aruments and the ID of a Person
+     * @return type message
+     */
+    public function changeProfil( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changeProfile" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::changeProfil( $args );
+        }
+        else {
+            $message = $hasAccess;
+        }
+        return $message;
+    }//function
+    
+    /**
+     * Applicative service to change the Password of a Member
+     * @param type $args the Password and the ID of a Member
+     * @return type message
+     */
+    public function changePassword( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changePassword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::changePassword( $args );
+        }
+        else {
+            $message = $hasAccess;
+        }
+        return $message;
+    }//function
     
     /**
      * Enable an anonym user to login
@@ -211,16 +242,6 @@ class Tedx_manager{
         return $this->stub->registerToAnEvent( $args ); 
     }//function*/
     
-    public function changeProfile( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "changeProfile" );
-        if( $messageAccess->getStatus() ) {
-            $message = $this->stub->changePassword( $args );
-        }
-        else {
-            $message = $hasAccess;
-        }
-        return $message;
-    }//function
     
 
     
