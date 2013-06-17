@@ -6,6 +6,9 @@
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
 require_once( '../tedx-config.php' );
+require_once( APP_DIR.'/core/services/functionnals/FSMember.class.php' );
+require_once( APP_DIR.'/core/services/functionnals/FSUnit.class.php' );
+require_once( APP_DIR.'/core/model/Member.class.php' );
 
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
@@ -56,16 +59,18 @@ else {
 if( isset( $_REQUEST['action'] ) ) {
     
     switch ( $_REQUEST['action'] ) {
-    case 'showAllMembers':
-        echo 'Show all the members';
+    case 'setMembersUnits':
+        echo 'Set the members\' units';
+        $members = FSMember::getMembers()->getContent();
+        showMembers( $members );
         break;
     
     case 'registerMember':
         echo 'Register the changes for a member';
         break;
     
-    case 'showAllUnits':
-        echo 'Show all the units';
+    case 'setUnitsAccesses':
+        echo 'Set the units\' accesses';
         break;
     
     case 'loginForm':
@@ -114,11 +119,33 @@ function showMenu(){
     echo '<h2>Welcome to the rights management page</h2>
     <p>Select one of the option to access the corresponding page</p>
     <ul>
-        <li><a href="?action=showAllMembers">Show all the members</a></li>
-        <li><a href="?action=showAllUnits">Show all the units</a></li>
+        <li><a href="?action=setMembersUnits">Set the members\' units</a></li>
+        <li><a href="?action=setUnitsAccesses">Set the units\' accesses</a></li>
         <li><a href="?action=logout">Log out</a></li>
     </ul>
     ';
+}
+
+
+function showMembers( $members ) {
+    $messageUnits = FSUnit::getAllUnits();
+    $units = $messageUnits->getContent();
+    var_dump($units);
+    
+    // Construct the table to display
+    echo '<table><tr>'.PHP_EOL;
+    echo '<td style="background-color: #555555; color: white;">Login</td>';
+    foreach($units as $unit){
+        echo '<td style="background-color: #555555; color: white;">'.$unit->getName().'</td>';
+    }
+    
+    foreach( $members as $member ) {
+        
+        echo '<br />'.$member->getID();
+        $messageUnits = FSUnit::getAllUnitsFromMember( $member );
+        var_dump($messageUnits->getContent());
+    }
+    echo '</tr></table>'.PHP_EOL;
 }
 
 ?>

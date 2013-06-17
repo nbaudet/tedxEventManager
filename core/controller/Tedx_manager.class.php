@@ -62,7 +62,7 @@ class Tedx_manager{
      * @return type Message Registered Visitor or Specifics messages about a problem.
      */
     public function registerVisitor($args) {
-        return  ASFree::registerVisitor($args); 
+        return  ASFree::registerVisitor($args);
     }//function
     
     /**

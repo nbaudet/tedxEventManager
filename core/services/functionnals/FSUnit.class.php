@@ -137,7 +137,7 @@ class FSUnit {
             
         }// if
         //
-        else {$
+        else {
             // message units not found
             $args = array(
                 'messageNumber' => 014,
@@ -149,7 +149,64 @@ class FSUnit {
         }// else
         
         return $message;
-    }// if
+    }// function
+    
+    
+    /**
+     * A way to get all the units in the database.
+     * @global Crud $crud
+     * @return Message with all the units
+     */
+    public static function getAllUnits() {
+        
+        global $crud;
+        // SQL statement
+        $sql = "SELECT * FROM Unit
+            WHERE Unit.IsArchived = 0
+            ORDER BY Unit.No";
+        // exec query
+        $data = $crud->getRows($sql);
+        
+        // If we got the units, we give them back to the caller
+        if( $data ) {
+            // list of units
+            $units = array();
+            
+            foreach( $data as $row ) {
+                $argsUnit = array(
+                    'no'            => $row['No'],
+                    'name'          => $row['Name'],
+                    'isArchived'    => $row['IsArchived'],
+                );
+
+                $aUnit = new Unit($argsUnit);
+                // put into array $units
+                $units[] = $aUnit;
+            }// foreach
+            
+            // message units found
+            $args = array(
+                'messageNumber' => 013,
+                'message'       => 'Units founds',
+                'status'        => true,
+                'content'       => $units
+            );
+            $message= new Message($args);
+            
+        }// if
+        //
+        else {
+            // message units not found
+            $args = array(
+                'messageNumber' => 014,
+                'message'       => 'Units not founds',
+                'status'        => false,
+                'content'       => null
+            );
+            $message= new Message($args);
+        }// else
+        return $message;
+    }// function
     
 }// class
 
