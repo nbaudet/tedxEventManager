@@ -60,18 +60,27 @@ else {
 if( isset( $_REQUEST['action'] ) ) {
     
     switch ( $_REQUEST['action'] ) {
-    case 'setMembersUnits':
+    case 'seeMembersUnits':
         echo '<h1>Set the members\' units</h1>';
         $members = FSMember::getMembers()->getContent();
         showMembers( $members );
         break;
     
-    case 'registerMember':
-        echo 'Register the changes for a member';
+    case 'displayMember':
+        echo '<h1>Members\' units</h1>';
+        showMember();
         break;
     
-    case 'setUnitsAccesses':
-        echo 'Set the units\' accesses';
+    case 'updateMember':
+        echo '<h1>Register the changes for a member</h1>';
+        break;
+    
+    case 'seeUnitsAccesses':
+        echo '<h1>See the units\' accesses</h1>';
+        break;
+    
+    case 'updateUnit':
+        echo '<h1>Register the changes for a unit</h1>';
         break;
     
     case 'loginForm':
@@ -86,10 +95,6 @@ if( isset( $_REQUEST['action'] ) ) {
         else {
             header( "Location: rightsManagement.php?try=fail" );
         }
-        break;
-    
-    case '':
-        showMenu();
         break;
     
     default:
@@ -120,8 +125,8 @@ function showMenu(){
     echo '<h2>Welcome to the rights management page</h2>
     <p>Select one of the option to access the corresponding page</p>
     <ul>
-        <li><a href="?action=setMembersUnits">Set the members\' units</a></li>
-        <li><a href="?action=setUnitsAccesses">Set the units\' accesses</a></li>
+        <li><a href="?action=seeMembersUnits">See the members\' units</a></li>
+        <li><a href="?action=seeUnitsAccesses">See the units\' accesses</a></li>
         <li><a href="?action=logout">Log out</a></li>
     </ul>
     ';
@@ -129,43 +134,60 @@ function showMenu(){
 
 
 function showMembers( $members ) {
-    $messageUnits = FSUnit::getAllUnits();
-    $units = $messageUnits->getContent();
-    //var_dump($units);
+    // Get all the existing units and make an array
+    $units = FSUnit::getAllUnits()->getContent();
+    $tabOfAllUnits = array();
+    foreach ( $units as $unit) {
+        $tabOfAllUnits[] = $unit->getName();
+    }
     
     // Construct the table to display
-    echo '<p>Warning : please only change one line at a time before updating!</p>';
     echo '<p>Note : when checked, it means the member is in this unit.</p>';
+    echo '<p><a href="?">Go back</a></p>';
     echo '<table><tr>'.PHP_EOL;
-    echo '<td style="background-color: #555555; color: white;">Login</td>';
+    echo '<th>Login\Units</th>';
     foreach($units as $unit){
-        echo '<td style="background-color: #555555; color: white;">'.$unit->getName().'</td>';
+        echo '<th>'.$unit->getName().'</th>';
     }
-    echo '<td>Update</td></tr>'.PHP_EOL;
+    echo '<th>Update</th></tr>'.PHP_EOL;
     
+    $lineColor = 0;
     foreach( $members as $member ) {
         
-        //echo '<br />'.$member->getID();
-        echo '<form method="POST">
-            <input type="hidden" id="action" value="setMembership"/>
-            <input type="hidden" id="memberId" value="'.$member->getId().'" /><tr>'.PHP_EOL;
-        $messageUnits = FSUnit::getAllUnitsFromMember( $member );
-        $unitsOfMember = $messageUnits->getContent();
+        echo '<tr style="background-color: '. ($lineColor++%2 == 0 ? 'lightgray' : 'whitesmoke') .';">'.PHP_EOL;
+        
+        //echo '<input type="hidden" id="memberId" value="'.$member->getId().'" /><tr>'.PHP_EOL;
+        // Get all the units of a member and make an array
+        $unitsOfMember = FSUnit::getAllUnitsFromMember( $member )->getContent();
+        $tabUnitsOfMember = array();
+        foreach($unitsOfMember as $unit){
+            $tabUnitsOfMember[] = $unit->getName();
+        }
+        
         echo '<td>'.$member->getID().'</td>';
-        foreach ( $units as $unit ) {
-            //var_dump($unit);
-            if( array_search( $unit->getName(), $unitsOfMember ) ) {
-                echo '<td><input id="'.$unit->getNo().'" type="checkbox" checked /></td>';
+        foreach ( $tabOfAllUnits as $unit ) {
+
+            if( in_array( $unit, $tabUnitsOfMember ) ) {
+                echo '<td style="text-align: center;">&#10003;</td>';
             }
             else {
-                echo '<td><input id="'.$unit->getNo().'" type="checkbox" /></td>';
+                echo '<td style="text-align: center; color: darkgray;">&#10005;</td>';
             }
         }
-        echo '<td><input type="submit" value="udpate Units" /></td></tr></form>'.PHP_EOL;
-        
-        //var_dump($messageUnits->getContent());
+        echo '<td><a href="?action=displayMember&memberID='.$member->getID().'">Change rights</a></td></tr>'.PHP_EOL;
     }
-    echo '</tr></table>'.PHP_EOL;
+    echo '</table>'.PHP_EOL;
+}
+
+
+function showMember() {
+    if( isset( $_REQUEST['memberID'] ) ) {
+        $member = FSMember::getMember($_REQUEST['memberID']);
+        var_dump($member);
+    }
+    else {
+        echo 'Error: no member set.';
+    }
 }
 
 ?>
