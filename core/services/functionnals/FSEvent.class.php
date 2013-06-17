@@ -98,7 +98,7 @@ class FSEvent {
         } else {
             $argsMessage = array(
                 'messageNumber' => 214,
-                'message'       => 'Error while SELECT * FROM event',
+                'message'       => 'Error while SELECT * FROM event WHERE IsArchived = 0',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -159,6 +159,100 @@ class FSEvent {
             return $message;
         }// else
         
+    }// function
+    
+    /**
+     * Search events with args
+     * @param type $args
+     * @return type message 
+     */
+    public static function searchEvents($args){
+        global $crud;
+        
+        // return value
+        $message ;
+        
+        // if args are supplied
+        if( isset ($args['where']) ) {
+            $where  = $args['where'];
+            // optional args
+            if(isset($args['orderBy'])) {
+                $orderBy  = 'ORDER BY '.$args['orderBy'];
+                if( isset( $args['orderByType'] ) )
+                    $orderBy .= ' '.$args['orderByType'];
+            }// if
+            else
+                $orderBy = '';
+            
+            // SQL statement
+            $sql = "SELECT * From Event WHERE $where AND isArchived = 0 $orderBy";
+            echo '<strong>'.$sql.'</strong>';
+            // exec query
+            $data = $crud->getRows($sql);
+            
+            // if query returned results
+            if($data) {
+                
+                $events = array();
+                
+                // make object for each row
+                foreach($data as $row){
+                    $argsEvent = array(
+                        'no'           => $row['No'],
+                        'mainTopic'    => $row['MainTopic'],
+                        'startingDate' => $row['StartingDate'],
+                        'endingDate'   => $row['EndingDate'],
+                        'startingTime' => $row['StartingTime'],
+                        'endingTime'   => $row['EndingTime'],
+                        'description'  => $row['Description'],
+                        'isArchived'   => $row['IsArchived']
+                    );
+
+                    $events[] = new Event($argsEvent);
+                } //foreach
+                
+                
+                $argsMessage = array(
+                    'messageNumber' => 500,
+                    'message'       => 'Events Founds',
+                    'status'        => true,
+                    'content'       => $events
+                );
+                $message = new Message($argsMessage);
+                
+            }else {
+                $argsMessage = array(
+                    'messageNumber' => 501,
+                    'message'       => 'No event found',
+                    'status'        => false,
+                    'content'       => NULL
+                );
+                $message = new Message($argsMessage);
+            }// else
+        }// if
+        else {
+            // By default, search all events
+            $messageEvents = self::getEvents();
+            // if events founds
+            if($messageEvents->getStatus()){
+                $argsMessage = array(
+                    'messageNumber' => 500,
+                    'message'       => 'Events Founds',
+                    'status'        => true,
+                    'content'       => $messageEvents->getContent()
+                );
+                $message = new Message($argsMessage);
+            }// if
+            else {
+                // events not found
+                $message = $messageEvents;
+            }// else
+            
+            
+        }// else
+        
+        // return message
+        return $message;
     }// function
     
 }// class

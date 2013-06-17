@@ -153,6 +153,16 @@ class ASFree {
         $Events = FSEvent::getEvents();
         return $Events;
     }
+    
+    /**
+     * Search events with args
+     * @param type $args
+     * @return type message
+     */
+    public static function searchEvent($args) {
+        $messageEvents = FSEvent::searchEvents($args);
+        return $messageEventsM;
+    }// public 
 }
 
 ?>

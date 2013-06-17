@@ -118,7 +118,7 @@ class Crud {
             foreach($rawData as $row) {
                 $data[] = $row;
             }// foreach            
-        }
+        }// if
 
         // return first row
         return $data;
