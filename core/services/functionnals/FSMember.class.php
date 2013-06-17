@@ -265,6 +265,7 @@ class FSMember {
     }
 
 //searchMemberByID
+<<<<<<< HEAD
 
 
     /**
@@ -332,6 +333,8 @@ class FSMember {
     
     
 
+=======
+>>>>>>> 78727c0b15b13f10ad295ac958fe0809e414ee92
 }
 
 ?>
