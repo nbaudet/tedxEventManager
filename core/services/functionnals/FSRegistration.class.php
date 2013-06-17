@@ -158,7 +158,7 @@ class FSRegistration {
         return $finalMessage;
     }
     
-    private static function createRegisatration($args){
+    private static function createRegistration($args){
         global $crud;
         
         if(!isset($args['typeDescription']) || $args['typeDescription'] == ''){
