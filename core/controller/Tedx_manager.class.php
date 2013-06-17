@@ -125,6 +125,38 @@ class Tedx_manager{
     }
     
     /**
+     * Returns the logged person as an object or NULL
+     * @return Message
+     */
+    public function getLoggedPerson() {
+        if( $this->asAuth->isLogged() ) {
+            // Message with logged person
+            $messageMember = FSMember::getMember( $this->getUsername() );
+            $member        = $messageMember->getContent();
+            $personNo      = $member->getPersonNo();
+            $messagePerson = FSPerson::getPerson($personNo);
+            $person = $messagePerson->getContent();
+            $messageArgs = array (
+                'messageNumber' => 021,
+                'message'       => "The logged person",
+                'status'        => TRUE,
+                'content'       => $person
+            );
+            $messagePersonLogged = new Message( $messageArgs );
+        }
+        else {
+            // Message not a logged person
+            $messageArgs = array (
+                'messageNumber' => 022,
+                'message'       => "No logged member",
+                'status'        => FALSE
+            );
+            $messagePersonLogged = new Message( $messageArgs );
+        }
+        return $messagePersonLogged;
+    }
+    
+    /**
      * Checks if the user is granted to do an action or not
      * @param String $action the action to execute
      * @return Message "Missing action", "Access granted", or "Access restricted"
