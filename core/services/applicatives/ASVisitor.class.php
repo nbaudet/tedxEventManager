@@ -22,7 +22,7 @@ class ASVisitor {
      */
     public function __construct() {
         // do nothing;
-<<<<<<< HEAD
+
     }
 
     // function
@@ -37,13 +37,7 @@ class ASVisitor {
          *  ); 
          */
 
-=======
-    } // function
-    
-    public static function registerToAnEvent($args){
-        $return;
-        
->>>>>>> Commit MF
+
         // gets params
         $aPerson = $args['person'];
         $anEvent = $args['event'];
@@ -64,7 +58,7 @@ class ASVisitor {
         /**
          * Validate Participant
          */
-<<<<<<< HEAD
+
         $messageValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
         if ($messageValidParticipant->getStatus()) {
             $aValidParticipant = $messageValidParticipant->getContent();
@@ -75,22 +69,10 @@ class ASVisitor {
                 'typeDescription' => $aTypeDescription, // Optionel - String
                 'event' => $anEvent, // object Event
                 'participant' => $aValidParticipant  // object Participant
-=======
-        $messageValidParticipant = FSParticipant::getParticipant($aPerson);
-        $messageRegistration = null;
-        if($messageValidParticipant->getStatus()){
-            
-            // add registration
-            $argsRegistration = array(
-                'event'         => $anEvent,
-                'participant'   => $messageValidParticipant->getContent(),
-                'type'          => $typeRegistration,
-                'description'   => $typeDescription,
-                'date'          => date('Y-m-d')
->>>>>>> Commit MF
+
             );
             // do Registration 
-<<<<<<< HEAD
+
             $messageAddedRegistration = FSRegistration::addRegistration($argsRegistration);
             // If registration sucessfull
             if ($messageAddedRegistration->getStatus()) {
@@ -134,19 +116,7 @@ class ASVisitor {
                 'slots' => $listOfSlots,
                 'registrationType' => $aType,
                 'registrationTypeDescription' => $aTypeDescription,
-=======
-            $messageRegistration = $FSRegistration::addRegistration($messageValidParticipant);
-            
-        }// if
-        else {
-            // add registration
-            $argsPatricipant = array(
-                'event'         => $anEvent,
-                'person'        => $aPerson,
-                'type'          => $typeRegistration,
-                'description'   => $typeDescription,
-                'date'          => date('Y-m-d')
->>>>>>> Commit MF
+
             );
             // add registration
             $finalMessage = FSParticipant::addParticipant($argsParticipant);

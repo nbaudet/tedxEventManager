@@ -16,11 +16,6 @@ else
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
-<<<<<<< HEAD
-require_once(APP_DIR .'/core/services/functionnals/FSParticipation.class.php');
-require_once(APP_DIR .'/core/services/applicatives/ASEvent.class.php');*/
-=======
->>>>>>> Commit MF
 
 /*
 echo '<h1>Location</h1>';
