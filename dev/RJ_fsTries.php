@@ -3,15 +3,16 @@
 <?php
 require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
-
-echo '<h1>AS Event</h1>';
-$anEvent= ASEvent::getEvent(1);
-// Message
-if( $anEvent->getStatus())
-    echo 'Congrats! ' . $anEvent->getMessage();
-else
-    echo 'Error! ' . $anEvent->getMessage();
-    var_dump($anEvent);
+require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
+    
+echo '<h1>AS Member</h1>';
+$argsMember= array(
+   
+            'Password'         => 'password',
+            'PersonNo'   => 'personNo',
+            'IsArchived'   => 0
+        );
+var_dump(FSMember::setMember($argsMember));
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');

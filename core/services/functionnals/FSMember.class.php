@@ -278,7 +278,7 @@ class FSMember {
 
         if (isset($aValidMember)) {
             $sql = "UPDATE  Member SET  
-                Password =          '" . $aMemberToSet->getPassword() . "',
+                Password =          '" . md5($aMemberToSet->getPassword()) . "',
                 PersonNo =     '" . $aMemberToSet->getPersonNo() . "',
                 IsArchived =   '" . $aMemberToSet->getIsArchived() . "'
                     WHERE  Member.ID = " . $aValidMember;
