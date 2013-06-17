@@ -23,7 +23,6 @@ class ASVisitor {
      */
     public function __construct() {
         // do nothing;
-
     }
 
     // function
@@ -59,7 +58,6 @@ class ASVisitor {
         /**
          * Validate Participant
          */
-
         $messageValidParticipant = FSParticipant::getParticipant($aPerson->getNo());
         if ($messageValidParticipant->getStatus()) {
             $aValidParticipant = $messageValidParticipant->getContent();
@@ -70,7 +68,6 @@ class ASVisitor {
                 'typeDescription' => $aTypeDescription, // Optionel - String
                 'event' => $anEvent, // object Event
                 'participant' => $aValidParticipant  // object Participant
-
             );
             // do Registration 
 
@@ -117,93 +114,96 @@ class ASVisitor {
                 'slots' => $listOfSlots,
                 'registrationType' => $aType,
                 'registrationTypeDescription' => $aTypeDescription,
-
             );
             // add registration
             $finalMessage = FSParticipant::addParticipant($argsParticipant);
         } // else
         return $finalMessage;
-    } // function
+    }
+
+// function
 
     public static function changeProfil($args) {
         /*
-           $argsPerson = array(
-                'no' => '', // int
-                'name' => '', // String
-                'firstName' => '', // String
-                'dateOfBirth' => '', // String
-                'address' => '', // String
-                'city' => '', // String
-                'country' => '', // String
-                'phoneNumber' => '', // String
-                'email' => '', // String
-                'description' => '', // String
-            );
-        */
+          $argsPerson = array(
+          'no' => '', // int
+          'name' => '', // String
+          'firstName' => '', // String
+          'dateOfBirth' => '', // String
+          'address' => '', // String
+          'city' => '', // String
+          'country' => '', // String
+          'phoneNumber' => '', // String
+          'email' => '', // String
+          'description' => '', // String
+          );
+         */
         $messageValidPerson = FSPerson::getPerson($args['no']);
-        if($messageValidPerson->getStatus()){
+        if ($messageValidPerson->getStatus()) {
             $aValidPerson = $messageValidPerson->getContent();
             $aPersonToSet = self::setProfil($aValidPerson, $args);
             $messageSetPerson = FSPerson::setPerson($aPersonToSet);
-            $finalMessage = $aPersonToSet;
-        }else{
+            $finalMessage = $messageSetPerson;
+        } else {
             $finalMessage = $messageValidPerson;
         }
         return $finalMessage;
     }
-    
-    private static function setProfil($aValidPerson, $argsToSet){
+
+    private static function setProfil($aValidPerson, $argsToSet) {
         /*
-           $argsToSet = array(
-                'name' => '', // String
-                'firstName' => '', // String
-                'dateOfBirth' => '', // String
-                'address' => '', // String
-                'city' => '', // String
-                'country' => '', // String
-                'phoneNumber' => '', // String
-                'email' => '', // String
-                'description' => '', // String
-            );
+          $argsToSet = array(
+          'name' => '', // String
+          'firstName' => '', // String
+          'dateOfBirth' => '', // String
+          'address' => '', // String
+          'city' => '', // String
+          'country' => '', // String
+          'phoneNumber' => '', // String
+          'email' => '', // String
+          'description' => '', // String
+          );
          */
-       
-       if(($argsToSet['name'] != '') and ($argsToSet['name'] != $aValidPerson->getName())){
-           $aValidPerson->setName($argsToSet['name']);
-       }
-       
-       if(($argsToSet['firstName'] != '') and ($argsToSet['firstName'] != $aValidPerson->getFirstName())){
-           $aValidPerson->setFirstName($argsToSet['firstName']);
-       }
-       
-       if(($argsToSet['dateOfBirth'] != '') and ($argsToSet['dateOfBirth'] != $aValidPerson->getDateOfBirth())){
-           $aValidPerson->setDateOfBirth($argsToSet['dateOfBirth']);
-       }
-       
-       if(($argsToSet['address'] != '') and ($argsToSet['address'] != $aValidPerson->getAddress())){
-           $aValidPerson->setAddress($argsToSet['address']);
-       }
-       
-       if(($argsToSet['city'] != '') and ($argsToSet['city'] != $aValidPerson->getCity())){
-           $aValidPerson->setCity($argsToSet['city']);
-       }
-       
-       if(($argsToSet['country'] != '') and ($argsToSet['country'] != $aValidPerson->getCountry())){
-           $aValidPerson->setCountry($argsToSet['country']);
-       }
-       
-       if(($argsToSet['phoneNumber'] != '') and ($argsToSet['phoneNumber'] != $aValidPerson->getPhoneNumber())){
-           $aValidPerson->setPhoneNumber($argsToSet['phoneNumber']);
-       }
-       
-       if(($argsToSet['email'] != '') and ($argsToSet['email'] != $aValidPerson->getEmail())){
-           $aValidPerson->setEmail($argsToSet['email']);
-       }
-       
-       if(($argsToSet['description'] != '') and ($argsToSet['description'] != $aValidPerson->getDescription())){
-           $aValidPerson->setDescription($argsToSet['description']);
-       }
-       
-       return $aValidPerson;
+
+        if (($argsToSet['name'] != '') and ($argsToSet['name'] != $aValidPerson->getName())) {
+            $aValidPerson->setName($argsToSet['name']);
+        }
+
+        if (($argsToSet['firstName'] != '') and ($argsToSet['firstName'] != $aValidPerson->getFirstName())) {
+            $aValidPerson->setFirstName($argsToSet['firstName']);
+        }
+
+        if (($argsToSet['dateOfBirth'] != '') and ($argsToSet['dateOfBirth'] != $aValidPerson->getDateOfBirth())) {
+            $aValidPerson->setDateOfBirth($argsToSet['dateOfBirth']);
+        }
+
+        if (($argsToSet['address'] != '') and ($argsToSet['address'] != $aValidPerson->getAddress())) {
+            $aValidPerson->setAddress($argsToSet['address']);
+        }
+
+        if (($argsToSet['city'] != '') and ($argsToSet['city'] != $aValidPerson->getCity())) {
+            $aValidPerson->setCity($argsToSet['city']);
+        }
+
+        if (($argsToSet['country'] != '') and ($argsToSet['country'] != $aValidPerson->getCountry())) {
+            $aValidPerson->setCountry($argsToSet['country']);
+        }
+
+        if (($argsToSet['phoneNumber'] != '') and ($argsToSet['phoneNumber'] != $aValidPerson->getPhoneNumber())) {
+            $aValidPerson->setPhoneNumber($argsToSet['phoneNumber']);
+        }
+
+        if (($argsToSet['email'] != '') and ($argsToSet['email'] != $aValidPerson->getEmail())) {
+            $aValidPerson->setEmail($argsToSet['email']);
+        }
+
+        if (($argsToSet['description'] != '') and ($argsToSet['description'] != $aValidPerson->getDescription())) {
+            $aValidPerson->setDescription($argsToSet['description']);
+        }
+        return $aValidPerson;
     }
-} // class
+
+}
+
+// class
 ?>

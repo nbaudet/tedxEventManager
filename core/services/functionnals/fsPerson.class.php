@@ -70,7 +70,7 @@ class FSPerson {
 
         global $crud;
 
-        $sql = "SELECT * FROM Person WHERE Email = $email";
+        $sql = "SELECT * FROM Person WHERE Email = '" . $email . "'";
         $data = $crud->getRow($sql);
 
         if ($data) {
@@ -232,8 +232,7 @@ class FSPerson {
      */
     public static function setPerson($aPersonToSet) {
         global $crud;
-
-        $messageFreeEmail = self::checkFreeEmail($aPersonToSet->getEmail());
+        $messageFreeEmail = self::checkFreeEmail($aPersonToSet->getEmail(), $aPersonToSet->getNo());
         if ($messageFreeEmail->getStatus()) {
             $aFreeEmail = $messageFreeEmail->getContent();
             $sql = "UPDATE  Person SET  
@@ -249,10 +248,7 @@ class FSPerson {
                 IsArchived =    '" . $aPersonToSet->getIsArchived() . "'
                 WHERE  Person.No = " . $aPersonToSet->getNo();
 
-            echo $sql;
-
             if ($crud->exec($sql) == 1) {
-
                 $sql = "SELECT * FROM Person WHERE No = " . $aPersonToSet->getNo();
                 $data = $crud->getRow($sql);
 
@@ -370,9 +366,9 @@ class FSPerson {
      * @param type $email
      * @return $Message the free email
      */
-    private static function checkFreeEmail($email) {
+    private static function checkFreeEmail($email, $no) {
         $messagePersonWithEmail = self::getPersonByEmail($email);
-        if ($messagePersonWithEmail == false) {
+        if ($messagePersonWithEmail->getStatus() == false) {
             $argsMessage = array(
                 'messageNumber' => 421,
                 'message' => 'The email is free',
@@ -380,12 +376,22 @@ class FSPerson {
                 'content' => $email
             );
         } else {
-            $argsMessage = array(
-                'messageNumber' => 422,
-                'message' => 'The email is occuped',
-                'status' => false,
-                'status' => $messagePersonWithEmail->getContent()
-            );
+            $aPersonWithEmail = $messagePersonWithEmail->getContent();
+            if (isset($no) and $no == $aPersonWithEmail->getNo()) {
+                $argsMessage = array(
+                    'messageNumber' => 421,
+                    'message' => 'The email is free',
+                    'status' => true,
+                    'content' => $email
+                );
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 422,
+                    'message' => 'The email is occuped',
+                    'status' => false,
+                    'content' => $aPersonWithEmail
+                );
+            }
         }
         $message = new Message($argsMessage);
         return $message;
