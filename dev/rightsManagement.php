@@ -130,7 +130,7 @@ function showMenu(){
 function showMembers( $members ) {
     $messageUnits = FSUnit::getAllUnits();
     $units = $messageUnits->getContent();
-    var_dump($units);
+    //var_dump($units);
     
     // Construct the table to display
     echo '<table><tr>'.PHP_EOL;
@@ -138,12 +138,26 @@ function showMembers( $members ) {
     foreach($units as $unit){
         echo '<td style="background-color: #555555; color: white;">'.$unit->getName().'</td>';
     }
+    echo '</tr>'.PHP_EOL;
     
     foreach( $members as $member ) {
         
-        echo '<br />'.$member->getID();
+        //echo '<br />'.$member->getID();
+        echo '<tr>'.PHP_EOL;
         $messageUnits = FSUnit::getAllUnitsFromMember( $member );
-        var_dump($messageUnits->getContent());
+        $unitsOfMember = $messageUnits->getContent();
+        echo '<td>'.$member->getID().'</td>';
+        foreach ( $units as $unit ) {
+            if( array_search($unit, $unitsOfMember)) {
+                echo '<td><input type="checkbox" checked /></td>';
+            }
+            else {
+                echo '<td><input type="checkbox" unchecked /></td>';
+            }
+        }
+        echo '</tr>'.PHP_EOL;
+        
+        //var_dump($messageUnits->getContent());
     }
     echo '</tr></table>'.PHP_EOL;
 }
