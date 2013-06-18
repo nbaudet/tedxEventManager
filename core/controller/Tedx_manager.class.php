@@ -66,6 +66,33 @@ class Tedx_manager{
     }//function
     
     /**
+     * Applicatives services to get a Registration
+     * @param type $args a Status, an Event, a Participant
+     * @return type Message The registration.
+     */
+    public function getRegistration( $args ) {
+        return  ASFree::getRegistration( $args );
+    }//function
+    
+     /**
+     * Applicatives services to get all the Registration
+     * @return type Message A tab of the registrations.
+     */
+    public function getRegistrations() {
+        return  ASFree::getRegistrations();
+    }//function
+    
+    /**
+     * Applicatives services to get the Registrations of an Event
+     * @param type $anEvent an Event
+     * @return type Message The registrations of an Event.
+     */
+    public function getRegistrationsByEvent( $anEvent ) {
+        return  ASFree::getRegistrationsByEvent( $anEvent );
+    }//function
+    
+    
+    /**
      * Applicatives services to register a Visitor to an Event
      * @param type $args the arguments needs about Slot, and Registration
      * @return type Message registeredToAnEvent or Specifics messages about a problem.

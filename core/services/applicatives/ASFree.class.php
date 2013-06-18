@@ -153,6 +153,24 @@ class ASFree {
         return $events;
     }// function
     
+    //Find a Registration from the status, the participant, and the event
+    public static function getRegistration($args) {
+        $aRegistration = FSRegistration::getRegistration($args);
+        return $aRegistration;
+    }// function
+
+    // Show all Registration of an event
+    public static function getRegistrations(){
+        $registrations = FSRegistration::getRegistrations();
+        return $registrations;
+    }// function
+    //
+    // Show all Registration of an event
+    public static function getRegistrationsByEvent($anEvent){
+        $registrations = FSRegistration::getRegistrationsByEvent($anEvent);
+        return $registrations;
+    }// function
+    
     /**
      * Search events with args
      * @param type $args

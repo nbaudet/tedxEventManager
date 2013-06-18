@@ -74,7 +74,7 @@ class FSRegistration {
         global $crud;
         
         // SQL Request for getting all Persistants Registrations
-        $sql = "SELECT * FROM Registration WHERE IsArchived = 0;";
+        $sql = "SELECT * FROM Registration WHERE IsArchived = 0";
         $data = $crud->getRows($sql);
         
         // If there is persistants Registrations
@@ -114,6 +114,58 @@ class FSRegistration {
         }
         return new Message($argsMessage);
     }
+    
+    /**
+     * Returns all the Register of an Event
+     * @param type $anEvent the event of the registrations
+     * @return \Message the registrations
+     */
+    public static function getRegistrationsByEvent($anEvent){
+        // Get database manipulator
+        global $crud;
+        
+        // SQL Request for getting all Persistants Registrations
+        $sql = "SELECT * FROM Registration WHERE EventNo". $anEvent->getNo() ." AND IsArchived = 0";
+        $data = $crud->getRows($sql);
+        
+        // If there is persistants Registrations
+        if($data){
+            $participants = array();
+            
+            // For each Persistant Registration, create an Object
+            foreach($data as $row){
+                $argsRegistration = array(
+                    'status'              => $row['Status'],
+                    'eventNo'             => $row['EventNo'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'registrationDate'    => $row['RegistrationDate'],
+                    'type'                => $row['Type'],
+                    'typeDescription'     => $row['TypeDescription'],
+                    'isArchived'          => $row['IsArchived']
+                );
+            
+                $participants[] = new Registration($argsRegistration);
+            } //foreach
+
+            // Create a message with all objects returned
+            $argsMessage = array(
+                'messageNumber' => 412,
+                'message'       => 'All Registration getted',
+                'status'        => true,
+                'content'       => $participants
+            );
+        } else {
+            // Create a message with no persistant object 
+            $argsMessage = array(
+                'messageNumber' => 413,
+                'message'       => 'No persistant Registration',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }
+        return new Message($argsMessage);
+    }
+    
     
     /**
      * Add a new Registration in Database
