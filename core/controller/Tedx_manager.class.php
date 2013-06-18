@@ -104,7 +104,7 @@ class Tedx_manager{
             $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
 
@@ -121,7 +121,7 @@ class Tedx_manager{
             $message = ASVisitor::changeProfil( $args );
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
     }//function
@@ -137,7 +137,7 @@ class Tedx_manager{
             $message = ASVisitor::changePassword( $args );
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
     }//function
@@ -148,12 +148,12 @@ class Tedx_manager{
      * @return type message
      */
     public function searchPersons($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "changePassword" );
+        $messageAccess = $tedx_manager->auth->isGranted( "searchPersons" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::searchPersons( $args );
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
     }// function
@@ -280,7 +280,7 @@ class Tedx_manager{
             $message = $this->stub->addKeywordsToAnEvent( $args );
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
     }//function
@@ -292,7 +292,7 @@ class Tedx_manager{
             $message = $this->stub->archiveKeyword( $args ); 
         }
         else {
-            $message = $hasAccess;
+            $message = $messageAccess;
         }
         return $message;
     }//function
