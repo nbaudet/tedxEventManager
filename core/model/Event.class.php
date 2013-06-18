@@ -28,7 +28,7 @@ class Event {
     
     /**
      * Event's description
-     * @var type boolean
+     * @var type String
      */
     private $description; 
     
@@ -61,6 +61,12 @@ class Event {
     
     
     /**
+     * Event's location Reference
+     * @var type String
+     */
+    private $locationName; 
+    
+    /**
      * Event's isArchived 
      * @var type boolean
      */
@@ -88,6 +94,13 @@ class Event {
         $this->endingDate = $array['endingDate'];
         $this->startingTime = $array['startingTime']; 
         $this->endingTime = $array['endingTime']; 
+        
+        // optionnel location name
+        if(isset($array['locationName']))
+             $this->locationName = $array['locationName']; 
+        else
+             $this->locationName = ''; 
+        
         $this->isArchived = $array['isArchived']; 
 
     
@@ -211,6 +224,22 @@ class Event {
     public function setEndingTime($endingTime) {
         $this->endingTime = $endingTime; 
     }//function
+    
+    /**
+     * get locationName
+     * @return type $locationName
+     */
+    public function getLocationName() {
+        return $this->locationName;
+    }// function
+    
+    /**
+     * set locationName
+     * @param type $newLocationName
+     */
+    public function setLocationName($newLocationName){
+        $this->locationName = $newLocationName;
+    }// function
     
     
     /**

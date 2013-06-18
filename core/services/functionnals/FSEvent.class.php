@@ -34,6 +34,7 @@ class FSEvent {
                 'startingTime'  => $data['StartingTime'],
                 'endingTime'    => $data['EndingTime'],
                 'description'   => $data['Description'],
+                'locationName'  => $data['LocationName'],
                 'isArchived'    => $data['IsArchived']
             );
             
@@ -81,6 +82,7 @@ class FSEvent {
                     'startingTime' => $row['StartingTime'],
                     'endingTime'   => $row['EndingTime'],
                     'description'  => $row['Description'],
+                    'locationName' => $data['LocationName'],
                     'isArchived'   => $row['IsArchived']
                 );
             
@@ -135,6 +137,7 @@ class FSEvent {
                 'endingDate'   => $data['EndingDate'],
                 'startingTime' => $data['StartingTime'],
                 'endingTime'   => $data['EndingTime'],
+                'locationName' => $data['LocationName'],
                 'isArchived'   => $data['IsArchived']
             );
             
@@ -206,6 +209,7 @@ class FSEvent {
                         'startingTime' => $row['StartingTime'],
                         'endingTime'   => $row['EndingTime'],
                         'description'  => $row['Description'],
+                        'locationName' => $data['LocationName'],
                         'isArchived'   => $row['IsArchived']
                     );
 
