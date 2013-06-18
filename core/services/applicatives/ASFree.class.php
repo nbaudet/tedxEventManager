@@ -11,6 +11,8 @@ require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMembership.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSOrganizer.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSlot.class.php');
 
 /**
  * Description of ASFree
@@ -199,6 +201,36 @@ class ASFree {
     public static function getOrganizers() {
         $organizers = FSOrganizer::getOrganizers();
         return $organizers;
+    }// function
+    
+    /**
+     * Get a Slot with its Id
+     * @param type $args
+     * @return type message
+     */
+    public static function getSlot($args) {
+        $aSlot = FSSlot::getSlot($args);
+        return $aSlot;
+    }// function
+    
+    /**
+     * Get Slots
+     * @param type $args
+     * @return type message
+     */
+    public static function getSlots() {
+        $slots = FSSlot::getSlots();
+        return $slots;
+    }// function
+    
+    /**
+     * Get SlotsByEvent
+     * @param type $event
+     * @return type message
+     */
+    public static function getSlotsByEvent($event) {
+        $slots = FSSlot::getSlotsByEvent($event);
+        return $slots;
     }// function
     
 }// class

@@ -385,6 +385,54 @@ class Tedx_manager{
         $messageSearchEvents = ASFree::searchEvent($args);
         return $messageSearchEvents;
     }// function
+    
+    /**
+     * Get an Organizer with its Id
+     * @param type $no
+     * @return type message
+     */
+    public function getOrganizer($no){
+        $messageGetOrganizer = ASFree::getOrganizer($no);
+        return $messageGetOrganizer;
+    }// function
+    /**
+     * Get Organizers
+     * 
+     * @return type message
+     */
+    public function getOrganizers(){
+        $messageGetOrganizers = ASFree::getOrganizers();
+        return $messageGetOrganizers;
+    }// function
+    
+    /**
+     * Get Slots
+     * 
+     * @return type message
+     */
+    public function getSlots(){
+        $messageGetSlots = ASFree::getSlots();
+        return $messageGetSlots;
+    }// function
+    
+    /**
+     * Get a Slot
+     * @param type $args
+     * @return type message
+     */
+    public function getSlot($args){
+        $messageGetSlot = ASFree::getSlot($args);
+        return $messageGetSlot;
+    }// function
+    /**
+     * Get a Slot(s) in an Event with the Event's Id
+     * @param type $args
+     * @return type message
+     */
+    public function getSlotsByEvent($event){
+        $messageGetSlotsByEvent = ASFree::getSlotsByEvent($event);
+        return $messageGetSlotsByEvent;
+    }// function
 
     
 }//class
