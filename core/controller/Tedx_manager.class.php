@@ -285,7 +285,7 @@ class Tedx_manager{
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = $this->stub->addKeywordsToAnEvent( $args );
+            $message = ASParticipant::addKeywordsToAnEvent( $args );
         }
         else {
             $message = $messageAccess;
@@ -297,7 +297,7 @@ class Tedx_manager{
     public function archiveKeyword( $args ) {
         $messageAccess = $tedx_manager->auth->isGranted( "archiveKeyword" );
         if( $messageAccess->getStatus() ) {
-            $message = $this->stub->archiveKeyword( $args ); 
+            $message = ASParticipant::archiveKeyword( $args ); 
         }
         else {
             $message = $messageAccess;
@@ -521,7 +521,23 @@ class Tedx_manager{
         return $messageGetSpeakersByEvent; 
     }//function 
 
-
+    /**
+     * get Keyword 
+     * @return type message
+     */
+    public function getKeyword($args) {
+        return ASParticipant::getKeyword($args);
+    }//function 
+    
+    //Show all Keywords of a Person
+    public function getKeywordsByPerson($aPerson) {
+        return ASParticipant::getKeywordsByPerson($aPerson); 
+    }//function
+    
+    //Show all Keywords of a Person for an Event
+    public static function getKeywordsByPersonForEvent($args) {
+        return ASParticipant::getKeywordsByPersonForEvent($args); 
+    }//function
     
     
 
@@ -537,8 +553,6 @@ class Tedx_manager{
         return $this->stub->registerToAnEvent( $args ); 
     }//function*/
     
-    
-
     
     public function addMotivationToAnEvent( $args ) {
         return $this->stub->addMovtivationToAnEvent( $args ); 
