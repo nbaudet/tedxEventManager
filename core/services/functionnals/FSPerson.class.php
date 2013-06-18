@@ -438,10 +438,10 @@ class FSPerson {
                 break;
             case 'speaker': // case speaker => join table participant
                 $sql .= " INNER JOIN Speaker AS TypePerson ON TypePerson.PersonNo = Person.No";
-
+                break;
             case 'organizer': // case speaker => join table participant
                 $sql .= " INNER JOIN Organizer AS TypePerson ON TypePerson.PersonNo = Person.No";
-
+                break;
             case 'all':
             default:
                 $sql .= " AS TypePerson";

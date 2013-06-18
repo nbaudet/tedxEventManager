@@ -25,13 +25,20 @@ var_dump(FSPerson::searchPersons($searchArgs));
 
 echo '<hr /><br /><h1>Recherche des speakers</h1>';
 $searchArgs = array(
-    'personType' => 'participant'
+    'personType' => 'speaker'
 );
 var_dump(FSPerson::searchPersons($searchArgs));
 
 echo '<hr /><br /><h1>Recherche des organizers</h1>';
 $searchArgs = array(
     'personType' => 'participant'
+);
+var_dump(FSPerson::searchPersons($searchArgs));
+
+echo '<hr /><br /><h1>Recherche des speaker et Name = \'K%\'</h1>';
+$searchArgs = array(
+    'personType' => 'speaker',
+    'where' => "Name LIKE 'K%'"
 );
 var_dump(FSPerson::searchPersons($searchArgs));
 ?>
