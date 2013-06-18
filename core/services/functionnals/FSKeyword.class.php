@@ -201,6 +201,99 @@ class FSKeyword {
         
     }
     
+     /**
+     * Functionnal Service addKeyword
+     * @param type $args the properties of a Keyword
+     * @return type $message anAddedKeyword
+     */
+    public static function addKeyword($args) {
+        $aValue = $args['value'];
+        $anEvent = $args['event'];
+        $aPerson = $args['person'];
+        $messageValidEvent = FSEvent::getEvent($anEvent->getNo());
+        if($messageValidEvent->getStatus()){
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidPerson = FSPerson::getPerson($aPerson->getNo());
+            if($messageValidPerson->getStatus()){
+                $aValidPerson = $messageValidPerson->getContent();
+                $argsKeyword = array('value' => $aValue, 'event' => $aValidEvent, 'person' => $aValidPerson);
+                $messageValidKeyword = self::getKeyword($argsKeyword);
+                if(!$messageValidKeyword->getStatus()){
+                    $message = self::createKeyword($argsKeyword);
+                }else{
+                    $message = $messageValidKeyword;
+                }
+            }else{
+                $message = $messageValidPerson;
+            }
+        }else{
+            $message = $messageValidEvent;
+        }   
+        return $message;
+    }
+    
+    private static function createKeyword($args){
+        // get database manipulator
+        global $crud;
+        $aValue = $args['value'];
+        $anEvent = $args['event'];
+        $aPerson = $args['person'];
+        $sql = "INSERT INTO Keyword (Value, EventNo, PersonNo) VALUES ('" . $aValue . "', " . $anEvent->getNo() . ", ". $aPerson->getNo() .")";
+        $crud->exec($sql);
+        $messageValidKeyword = self::getKeyword($args);
+        if($messageValidKeyword->getStatus()){
+            $aValidKeyword = $messageValidKeyword->getContent();
+             $argsMessage = array(
+                'messageNumber' => 427,
+                'message'       => 'The keyword is valid',
+                'status'        => true,
+                'content'       => $aValidKeyword
+            );
+        }else{
+            $argsMessage = array(
+                'messageNumber' => 428,
+                'message'       => 'The keyword is not valid',
+                'status'        => false,
+                'content'       => null
+            );
+        }
+        return new Message($argsMessage);
+
+    }
+    
+    /**
+     * Returns all the Events of the database
+     * @return A Message containing an array of Events
+     */
+    public static function countKeywordsByPersonForEvent($args){
+        global $crud;
+        $aPerson = $args['person'];
+        $anEvent = $args['event'];
+        
+        $sql = "SELECT count(*) AS nbKeywords FROM Keyword WHERE IsArchived = 0 AND EventNo = " . $anEvent->getNo() . " AND PersonNo = " . $aPerson->getNo();
+        $data = $crud->getRow($sql);
+        
+        $nbKeywords = $data['nbKeywords'];
+        if ($nbKeywords){
+            $argsMessage = array(
+                'messageNumber' => 426,
+                'message'       => 'Number of Keywords < 3',
+                'status'        => true,
+                'content'       => $nbKeywords
+            );
+            $message = new Message($argsMessage);
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 427,
+                'message'       => 'Number of Keywords > 3',
+                'status'        => false,
+                'content'       => $nbKeywords
+            );
+            $message = new Message($argsMessage);
+        }// else
+        return $message;
+    }// function
+    
     
 }
 

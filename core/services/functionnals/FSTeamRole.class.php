@@ -1,5 +1,6 @@
 <?php
 
+require_once(APP_DIR . '/core/model/TeamRole.class.php');
 
 /**
  * Description of FSTeamRole
@@ -103,10 +104,10 @@ class FSTeamRole {
     public static function addTeamRole($name){
 
         // Validate Inexistant TeamRole
-        $messageValidateTeamRole = FSTeamRole::addTeamRole($name);
+        $messageValidateTeamRole = FSTeamRole::getTeamRole($name);
         
         // Create new TeamRole 
-        if ($messageValidateTeamRole->getStatus() == FALSE){
+        if (!$messageValidateTeamRole->getStatus()){
             
             $messageCreateTeamRole = FSTeamRole::createTeamRole($name);
             $return = $messageCreateTeamRole;
@@ -128,7 +129,7 @@ class FSTeamRole {
         global $crud;
         
         $sql = "INSERT INTO TeamRole (Name) VALUES (
-            $name
+            '$name'
         )";
         
         $data = $crud->exec($sql);

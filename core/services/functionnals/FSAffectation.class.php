@@ -29,10 +29,10 @@ class FSAffectation{
         $organizer = $args['organizer'];
 
         $sql = "SELECT * FROM Affectation
-                WHERE TeamRole = " . $teamRole>getName(). " AND
+                WHERE TeamRoleName = '" . $teamRole->getName(). "' AND
                 OrganizerPersonNo = " . $organizer->getNo(). " AND
                 IsArchived = 0";
-
+        
         $data = $crud->getRow($sql);
         
         if($data){
@@ -113,7 +113,7 @@ class FSAffectation{
      * @param $args Parameters of an Affectation
      * @return a Message containing the new Affectation
      */
-    public static function addCoOrganization($args){
+    public static function addAffectation($args){
         
         $teamRole = $args['teamRole'];
         $organizer = $args['organizer'];
@@ -172,9 +172,9 @@ class FSAffectation{
             TeamRoleName, OrganizerPersonNo) VALUES (
             '".$teamRole->getName()."',
             ".$organizer->getNo()."
-        )";
+        );";
         $crud->exec($sql);
-        
+        echo $sql;
         // Validate Existant Affectation
         $argsAffectation = array(
             'teamRole' => $args['teamRole'],
@@ -192,7 +192,7 @@ class FSAffectation{
             );
             $return = new Message($argsMessage);
         }else{
-            // Generate Message - Participation not Added            
+            // Generate Message - Affectation not Added            
             $argsMessage = array(
                     'messageNumber' => 150,
                     'message'       => 'Error while inserting new Affectation',
@@ -209,7 +209,7 @@ class FSAffectation{
      * @param a Speaker
      * @return a Message conainting an array of Event
      */
-    public static function getEventsBySpeaker($speaker){   
+    /*public static function getEventsBySpeaker($speaker){   
         global $crud;
         
         $sql = "SELECT EventNo FROM CoOrganization 
@@ -246,13 +246,13 @@ class FSAffectation{
         }
         
         return $return;
-    } // END getEventBySpeaker
+    } // END getEventBySpeaker*/
      
      /** Returns All Speakers for an Event
      * @param an Event
      * @return a Message conainting an array of Speakers
      */
-    public static function getSpeakersByEvent($event){   
+    /*public static function getSpeakersByEvent($event){   
         global $crud;
         
         $sql = "SELECT SpeakerPersonNo FROM CoOrganization 
@@ -289,7 +289,7 @@ class FSAffectation{
         }
         
         return $return;
-    } // END getSpeakersByEvent
+    } // END getSpeakersByEvent*/
     
  }
     
