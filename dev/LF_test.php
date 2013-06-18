@@ -99,6 +99,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSCoOrganization.class.php');
 
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
@@ -170,16 +171,40 @@ $aPersonToSet = new Person( $argsPerson ) ;
 
 var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
 
-$event = FSEvent::getEvent(1)->getContent();
+//$event = FSEvent::getEvent(1)->getContent();
 
-$argsSlot = array (
+/*$argsSlot = array (
     'event'         => $event,
     'happeningDate' => '2000-02-02',
     'startingTime'  => '07:00:00',
     'endingTime'    => '08:00:00'
+);*/
+
+//var_dump(FSSlot::addSlot($argsSlot));
+
+$speaker = FSSpeaker::getSpeaker(1)->getContent();
+$event = FSEvent::getEvent(1)->getContent();
+
+$argsCoOrg = array (
+    'event'  => $event,
+    'speaker' => $speaker
 );
 
-var_dump(FSSlot::addSlot($argsSlot));
+var_dump($speaker);
+
+var_dump(FSCoOrganization::getCoOrganization($argsCoOrg));
+var_dump(FSCoOrganization::getCoOrganizations());
+
+
+
+$speaker2 =  FSSpeaker::getSpeaker(6)->getContent();
+
+$argsNew = array (
+    'event' => $event,
+    'speaker' => $speaker2
+);
+
+var_dump(FSCoOrganization::addCoOrganization($argsNew));
 
 ?>
 
