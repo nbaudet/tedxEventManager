@@ -28,20 +28,20 @@ class FSMotivation{
         
         // Get database manipulator
         global $crud;
+        $text = addslashes($args['Text']);
         
         // SQL request for getting a Motivation
-        $sql = "SELECT * FROM Motivation WHERE IsArchived = 0 AND Text = '". $args['Text'] ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'];
+        $sql = "SELECT * FROM Motivation WHERE IsArchived = 0 AND Text LIKE '". $text ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'];
         $data = $crud->getRow($sql);
-        
+        echo $data;
         // If a Motivation is Valid
         if($data){
             $argsMotivation = array(
                 'text'              => $data['Text'],
                 'eventNo'             => $data['EventNo'],
-                'participantPersonNo' => $data['ParticipantPersonNo'],
-                'isArchived'          => $data['IsArchived']
+                'participantPersonNo' => $data['ParticipantPersonNo']
             );
-            
+           
             // Get the message Existant Motivation with the object Motivation
             $motivation = new Motivation($argsMotivation);
             $argsMessage = array(
