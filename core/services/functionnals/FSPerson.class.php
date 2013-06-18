@@ -396,7 +396,112 @@ class FSPerson {
         $message = new Message($argsMessage);
         return $message;
     }
+    
+    /**
+     * Search message with args
+     * @param type $args
+     * @return type message     
+     */
+    public static function searchPersons($args){
+        // crud
+        global $crud;
+        
+        // return value
+        $message ;
+        
+        // if args are supplied
+        if( isset ($args['where']) ) 
+            $where  = $args['where'];
+        else
+            $where = '1=1';
+        // optional args
+        if(isset($args['orderBy'])) {
+            $orderBy  = 'ORDER BY '.$args['orderBy'];
+            if( isset( $args['orderByType'] ) )
+                $orderBy .= ' '.$args['orderByType'];
+        }// if
+        else
+            $orderBy = '';
 
-}
+        // optional typePerson
+        if(isset($args['personType']))
+            $personType = $args['personType'];
+        else
+            $personType = 'all';
+
+        $sql = "SELECT * FROM Person";
+
+        // Check each case for personType
+        switch($personType){
+            case 'participant': // case participant => join table participant
+                $sql .= " INNER JOIN Participant AS TypePerson ON TypePerson.PersonNo = Person.No ";
+                break;
+            case 'speaker': // case speaker => join table participant
+                $sql .= " INNER JOIN Speaker AS TypePerson ON TypePerson.PersonNo = Person.No";
+
+            case 'organizer': // case speaker => join table participant
+                $sql .= " INNER JOIN Organizer AS TypePerson ON TypePerson.PersonNo = Person.No";
+
+            case 'all':
+            default:
+                $sql .= " AS TypePerson";
+                break;
+        }// switch
+
+        // Ending SQL statement
+        $sql .= " WHERE TypePerson.IsArchived = 0 AND $where $orderBy";
+
+        echo '<h3>'.$sql.'</h3>';
+        // exec query
+        $data = $crud->getRows($sql);
+
+        // if query returned results
+        if($data) {
+
+            $persons = array();
+
+            // make object for each row
+            foreach($data as $row){
+                $argsPerson = array(
+                    'no'          => $row['No'],
+                    'name'        => $row['Name'],
+                    'firstname'   => $row['Firstname'],
+                    'dateOfBirth' => $row['DateOfBirth'],
+                    'address'     => $row['Address'],
+                    'city'        => $row['City'],
+                    'country'     => $row['Country'],
+                    'phoneNumber' => $row['PhoneNumber'],
+                    'email'       => $row['Email'],
+                    'description' => $row['Description'],
+                    'isArchived'  => $row['IsArchived']
+                );
+
+                $persons[] = new Person($argsPerson);
+            } //foreach
+
+
+            $argsMessage = array(
+                'messageNumber' => 502,
+                'message'       => 'Person Founds',
+                'status'        => true,
+                'content'       => $persons
+            );
+            $message = new Message($argsMessage);
+
+        }else {
+            $argsMessage = array(
+                'messageNumber' => 503,
+                'message'       => 'Person not found',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+        }// else
+        
+        // return message
+        return $message;
+    }// function
+
+}// class
 
 ?>

@@ -241,9 +241,21 @@ class ASVisitor {
             $aValidPerson->setDescription($argsToSet['description']);
         }
         return $aValidPerson;
-    }
+    }// function
+    
+    /**
+     * Search person with args
+     * @param type $args
+     * @return type message
+     */
+    public static function searchPersons($args){
+        
+        $messageSearchPerson = FSPerson::searchPersons($args);
+        return $messageSearchPerson;
+        
+    }// function
 
-}
+}// class
 
 // class
 ?>
