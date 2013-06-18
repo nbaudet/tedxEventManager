@@ -3,47 +3,47 @@
 
 
 /**
- * Position.class.php
+ * Place.class.php
  * 
  * Author : Guillaume Lehmann
  * Date : 05.06.2013
  * 
- * Description : define the class Position as definited in the model
+ * Description : define the class Place as definited in the model
  * 
  */
-class Position {
+class Place {
     
     
     /**
-     * Position's numero
+     * Place's numero
      * @var type int 
      */
     private $no; 
     
     
     /**
-     * Position's slotNo
+     * Place's slotNo
      * @var type int
      */
     private $slotNo; 
     
     
     /**
-     * Position's slotEventNo
+     * Place's slotEventNo
      * @var type int
      */
     private $slotEventNo; 
     
     
     /**
-     * Position's speakerPersonNo
+     * Place's speakerPersonNo
      * @var type int
      */
     private $speakerPersonNo; 
     
     
     /**
-     * Position's isArchived
+     * Place's isArchived
      * @var type boolean
      */
     private $isArchived; 
@@ -51,7 +51,7 @@ class Position {
     
     
     /**
-     * Constructs object Position
+     * Constructs object Place
      * 
      * @param type $array of parameters that correspond to the classes properties
      */

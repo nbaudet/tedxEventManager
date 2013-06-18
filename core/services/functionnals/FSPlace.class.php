@@ -5,7 +5,7 @@
  * 
  * Author Lauric F
  */
-
+require_once(APP_DIR . '/core/model/Place.class.php');
 
 
 class Place {
