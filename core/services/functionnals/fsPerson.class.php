@@ -20,7 +20,7 @@ class FSPerson {
 
         global $crud;
 
-        $sql = "SELECT * FROM Person WHERE No = $no";
+        $sql = "SELECT * FROM Person WHERE No = $no AND IsArchived = 0";
         $data = $crud->getRow($sql);
 
         if ($data) {
@@ -70,7 +70,7 @@ class FSPerson {
 
         global $crud;
 
-        $sql = "SELECT * FROM Person WHERE Email = '" . $email . "'";
+        $sql = "SELECT * FROM Person WHERE Email = '" . $email . "' AND IsArchived = 0";
         $data = $crud->getRow($sql);
 
         if ($data) {
@@ -115,7 +115,7 @@ class FSPerson {
     public static function getPersons() {
         global $crud;
 
-        $sql = "SELECT * FROM Person";
+        $sql = "SELECT * FROM Person WHERE IsArchived = 0";
         $data = $crud->getRows($sql);
 
         if ($data) {

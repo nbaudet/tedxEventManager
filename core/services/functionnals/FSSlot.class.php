@@ -27,7 +27,7 @@ class FSSlot {
         $event = $args['event'];
         $return = NULL;
         
-        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo();
+        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
         $data = $crud->getRow($sql);
         
         
@@ -71,7 +71,7 @@ class FSSlot {
     public static function getSlotsByEvent($event){
         global $crud;
         
-        $sql = "SELECT * FROM Slot WHERE EventNo = ". $event->getNo();
+        $sql = "SELECT * FROM Slot WHERE EventNo = ". $event->getNo() ." AND IsArchived = 0";
         $data = $crud->getRows($sql);
         
         if ($data){
@@ -122,6 +122,7 @@ class FSSlot {
         global $crud;
         
         $sql = "SELECT * FROM Slot WHERE IsArchived = 0;";
+
         $data = $crud->getRows($sql);
         
         if ($data){
