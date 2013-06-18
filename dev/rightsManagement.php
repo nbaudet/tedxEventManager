@@ -8,8 +8,9 @@
 require_once( '../tedx-config.php' );
 require_once( APP_DIR.'/core/services/functionnals/FSMember.class.php' );
 require_once( APP_DIR.'/core/services/functionnals/FSUnit.class.php' );
-require_once( APP_DIR.'/core/model/Member.class.php' );
-require_once( APP_DIR.'/core/model/Unit.class.php' );
+require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
+/*require_once( APP_DIR.'/core/model/Member.class.php' );
+require_once( APP_DIR.'/core/model/Unit.class.php' );*/
 
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
@@ -68,14 +69,15 @@ if( isset( $_REQUEST['action'] ) ) {
         break;
     
     case 'displayMember':
-        echo '<h1>Members\' units</h1>';
-        echo '<p><a href="?">Go back</a></p>';
+        echo '<p><a href="?action=seeMembersUnits">Return to members\' units</a><br />';
+        echo '<a href="?">Go back</a></p>';
         showMember();
         break;
     
     case 'updateMember':
         echo '<h1>Register the changes for a member</h1>';
-        echo '<p><a href="?">Go back</a></p>';
+        echo '<p><a href="?action=seeMembersUnits">Return to members\' units</a><br />';
+        echo '<a href="?">Go back</a></p>';
         updateMember();
         break;
     
@@ -141,7 +143,7 @@ function showMenu(){
 
 
 function showMembers( $members ) {
-    $tabOfAllUnits = getAllUnits();
+    $tabOfAllUnits = getAllUnitsAsString();
     
     // Construct the table to display
     echo '<table><tr>'.PHP_EOL;
@@ -180,12 +182,13 @@ function showMembers( $members ) {
 function showMember() {
     if( isset( $_REQUEST['memberID'] ) ) {
         $member = FSMember::getMember( $_REQUEST['memberID'] )->getContent();
-        
-        $tabOfAllUnits = getAllUnits();
-        
         $tabUnitsOfMember = getAllUnitsFromMember( $member );
         
-        echo '<form method="POST">
+        $tabOfAllUnits = getAllUnitsAsString();
+        
+        echo '<h1>Change <em>'.$member->getId().'</em>\'s units</h1>';
+        
+        echo '<form method="POST" action="">
             <input type="hidden" id="action" name="action" value="updateMember" />
             <input type="hidden" id="memberID" name="memberID" value="'.$member->getId().'" />'.PHP_EOL;
         
@@ -210,14 +213,72 @@ function showMember() {
 
 
 function updateMember() {
-    var_dump($_REQUEST);
+    
+    global $tedx_manager;
+    
+    $tabRequest = $_REQUEST;
+    $memberID = $tabRequest['memberID'];
+    unset($tabRequest['action']);
+    unset($tabRequest['memberID']);
+    $checkedUnits = $tabRequest;
+    
+    // Gets all the units a member is part of
+    $member = FSMember::getMember($memberID)->getContent();
+    $tabUnitsOfMember = getAllUnitsFromMember( $member );
+    
+    $tabOfAllUnits = getAllUnitsAsString();
+    
+    foreach( $tabOfAllUnits as $unit ) {
+        // If the member was already granted this access
+        if( in_array( $unit, $tabUnitsOfMember ) ) {
+            // If it was checked
+            if( isset( $checkedUnits[$unit] ) ) {
+                // do nothing
+                //echo $unit.' already granted<br />';
+            }
+            // Change this right
+            else {
+                // change the right
+                echo 'change the right for '.$unit.'<br />';
+                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $args = array(
+                    'member' => $member,
+                    'unit'   => $objectUnit
+                );
+                FSMembership::upsertMembership( $args );
+            }
+        }
+        
+        // If this access was not yet granted
+        else {
+            // If it was checked
+            if ( isset( $checkedUnits[$unit] ) ) {
+                // change this right
+                echo 'change the right for '.$unit.'<br />';
+                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $args = array(
+                    'member' => $member,
+                    'unit'   => $objectUnit
+                );
+                $message = FSMembership::upsertMembership( $args );
+                var_dump( $message );
+                echo 'prout';
+            }
+            else {
+                // do nothing
+                //echo $unit.' already not granted<br />';
+            }
+            
+        }
+    }
+    showMember();
 }
 
 /**
- * Get all the existing units and make an array
- * @return Mixed Array of all the units
+ * Get all the existing units and make an array with their names
+ * @return String Array of all the units' names
  */
-function getAllUnits() {
+function getAllUnitsAsString() {
     $units = FSUnit::getAllUnits()->getContent();
     $tabOfAllUnits = array();
     foreach ( $units as $unit) {
@@ -225,6 +286,15 @@ function getAllUnits() {
     }
     return $tabOfAllUnits;
 }
+
+/**
+ * Get all the existing Units
+ * @return Units Array with all the units
+ */
+// IS IT REALLY NEEDED ? ///////////////////////////////////////////////////////
+/*function getAllUnits() {
+    return FSUnit::getAllUnits();
+}*/
 
 /**
  * Get all the units of a member and make an array

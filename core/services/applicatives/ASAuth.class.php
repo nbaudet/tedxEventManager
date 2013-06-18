@@ -1,6 +1,7 @@
 <?php
 /**
- * Description of asAuth
+ * The Auth applicative service enables registered members to login to the site.
+ * The class also computes the rights and privileges to the application.
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
@@ -68,7 +69,7 @@ class ASAuth {
                 
                 // Easter Egg : Spécialement  pour toi, Gabor ! :)
                 if($member->getId() == 'gabor' ){
-                    echo '<img href="http://www.baudet.me/heig/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="100px" />';
+                    echo '<img src="../common/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="200px" />';
                 }// if
                 
             }// if
