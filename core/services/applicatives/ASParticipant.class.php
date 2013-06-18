@@ -39,11 +39,51 @@ class ASParticipant {
         $keywords = FSKeyword::getKeywordsByPerson($aPerson); 
         return $keywords; 
     }//function
-     //Show all Keywords of a Person for an Event
+    
+    //Show all Keywords of a Person for an Event
     public static function getKeywordsByPersonForEvent($args) {
         $keywords = FSKeyword::getKeywordsByPersonForEvent($args); 
         return $keywords; 
     }//function
+    
+    // Add Keyword To An Event For A Person
+    public static function addKeywordsToAnEvent($args) {
+    /*  -----------------------------------------------
+        $args = array(
+           'listOfValues' => array('values'),
+           'event'        => $anEvent,
+           'person'       => $aPerson
+        );
+        ----------------------------------------------- */
+        $listOfValues = $args['listOfValues'];
+        $anEvent = $args['event'];
+        $aPerson = $args['person'];
+        $i = 0; 
+        foreach($listOfValues as $value){
+            $messageNbKeywords = FSKeyword::countKeywordsByPersonForEvent(array('event' => $anEvent, 'person' => $aPerson));
+            if($messageNbKeywords->getStatus()){
+                $messageValidKeyword = FSKeyword::getKeyword(array('value'=> $value, 'event'=> $anEvent, 'person' => $aPerson));
+                if(!$messageValidKeyword->getStatus()){
+                    $messageAddKeyword = FSKeyword::addKeyword(array('value'=> $value, 'event'=> $anEvent, 'person' => $aPerson));
+                    $messages[$i] = $messageAddKeyword;
+                }else{
+                    $aValidKeyword = $messageValidKeyword->getContent();
+                    if($aValidKeyword->getIsArchived() == 1){
+                        $aValidKeyword->setIsArchived(0);
+                        $messageSetKeyword = FSKeyword::setKeyword($aValidKeyword);
+                        $messages[$i] = $messageSetKeyword;
+                    }else{
+                        // Message Keyword déjà existant. 
+                    }
+                }
+            }else{
+                $messages[$i] = $messageNbKeywords;
+            }
+            $i++;
+        }
+        return $messages; 
+    }//function
+    
 }
 
 ?>
