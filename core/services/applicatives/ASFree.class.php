@@ -155,6 +155,18 @@ class ASFree {
         return $events;
     }// function
     
+   //Find a Participant from the status
+    public static function getParticipant($args) {
+        $aParticipant = FSParticipant::getParticipant($args);
+        return $aParticipant;
+    }// function
+
+    // Show all Participants of an event
+    public static function getParticipants(){
+        $participants = FSParticipant::getParticipants();
+        return $participants;
+    }// function
+    
     //Find a Registration from the status, the participant, and the event
     public static function getRegistration($args) {
         $aRegistration = FSRegistration::getRegistration($args);
