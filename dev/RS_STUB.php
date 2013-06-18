@@ -17,22 +17,16 @@
         require_once('../core/model/Event.class.php ');
         require_once('../core/model/Participant.class.php ');
         require_once('../core/model/Message.class.php ');
+        require_once('../core/services/applicatives/ASEvent.class.php');
         require_once('../core/services/functionnals/FSEvent.class.php');
         require_once('../core/services/functionnals/FSSlot.class.php');
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
 
-
-
-        $args = array(
-            'ID' => 'nicolas', // int
-            'password' => 'test' // String
-            );
-            
-
-        $message = ASVisitor::changePassword($args);
+        $messageEvent = $tedx_manager->getEvent(1);
+        //$message = $tedx_manager->getRegistrationsByEvent($messageEvent->getContent());
         echo "<hr> Mon message final";
-        var_dump($message);
+        var_dump($messageEvent);
         ?>
     </body>
 </html>

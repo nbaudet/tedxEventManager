@@ -12,7 +12,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMembership.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSOrganizer.class.php');
-require_once(APP_DIR . '/core/services/functionnals/FSlot.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSSlot.class.php');
 
 /**
  * Description of ASFree
