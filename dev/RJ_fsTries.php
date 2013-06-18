@@ -4,6 +4,8 @@
 require_once('../tedx-config.php');
 require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 
 echo '<h1>Get Event</h1>';
 
@@ -29,7 +31,11 @@ if( $someEvents->getStatus())
 else
     echo 'Error! ' . $someEvents->getMessage();
     var_dump($someEvents);
-   
+    
+  //Récupère tous les events pour un speaker  
+    echo '<h1>Get Events by Speaker - FS</h1>';
+    $speaker = (FSSpeaker::getSpeaker(6)->getContent());
+    var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());
 
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');

@@ -1,5 +1,89 @@
 <?php
 
+
+
+
+
+ /**
+     * Returns All Event by Speaker
+     * @param a Speaker
+     * @return a Message conainting an array of Event
+     */
+    public static function getEventsBySpeaker($speaker){   
+        global $crud;
+        
+        $sql = "SELECT * FROM Event as E
+            INNER JOIN CoOrganization as CO ON E.No = CO.EventNO
+            INNER JOIN Speaker as S ON CO. SpeakerPersonNo = S.PersonNo
+            WHERE CO.SpeakerPersonNo = ". $speaker->getNo() ." 
+                AND E.IsArchived = 0
+                AND CO.IsArchived = 0
+                AND S.IsArchived = 0";
+        
+        $data = $crud->getRows($sql);
+        
+        if($data){
+            $events = array();
+            
+            foreach($data as $row){
+                $argsEvent = array(
+                    'no'            => $row['No'],
+                    'mainTopic'       => $row['MainTopic'],
+                    'description'    => $row['Description'],
+                    'startingDate' => $row['StartingDate'],
+                    'endingDate'  => $row['EndingDate'],
+                    'startingTime'    => $row['StartingTime'],
+                    'endingTime'    => $row['EndingTime'],
+                    'isArchived'    => $row['IsArchived'],
+                );
+                $events[] = new Event($argsEvent);
+            }//foreach
+            
+            $argsMessage = array(
+                'messageNumber' => 223,
+                'message'       => 'All Events for a Speaker selected',
+                'status'        => true,
+                'content'       => $events
+            );
+            
+            $return = new Message($argsMessage);
+            
+        }else{
+            $argsMessage = array(
+                'messageNumber' => 224,
+                'message'       => 'Error while SELECT * FROM Events WHERE ...',
+                'status'        => false,
+                'content'       => NULL
+            );
+            
+            $return = new Message($argsMessage);
+            
+        }
+        
+        return $return;
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.

@@ -6,6 +6,7 @@
  */
 
 require_once(APP_DIR . '/core/model/Event.class.php');
+require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
 
@@ -254,6 +255,8 @@ class FSEvent {
         // return message
         return $message;
     }// function
+    
+
     
 }// class
 
