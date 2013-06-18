@@ -62,7 +62,7 @@ class FSLocation{
     public function getLocations(){
         global $crud;
 
-        $sql = "SELECT * FROM Location";
+        $sql = "SELECT * FROM Location WHERE IsArchived = 0";
         $data = $crud->getRows($sql);
         
         if ($data){
