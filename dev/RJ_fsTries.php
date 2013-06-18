@@ -1,4 +1,7 @@
 <html>
+<head>
+<meta charset="UTF-8">
+</head>
     <body>
 <?php
 require_once('../tedx-config.php');
@@ -44,6 +47,7 @@ else
             'EventNo'   => 1,
             'ParticipantPersonNo'   => 5
     );
+    var_dump($args);
     var_dump(FSMotivation::getMotivation($args));
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');

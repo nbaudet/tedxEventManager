@@ -141,7 +141,7 @@ class FSCoOrganization{
                         // Create final message - Message CoOrganization added or not added.
                         $return = $messageCreateCoOrganization;
                     }else{
-                        // Generate Message - Valid Participation
+                        // Generate Message - Valid CoOrganization
                         $return = $messageValidCoOrganization;
                     }
  
