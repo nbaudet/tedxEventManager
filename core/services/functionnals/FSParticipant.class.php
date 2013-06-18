@@ -16,6 +16,7 @@ require_once('../core/services/functionnals/FSSlot.class.php');
 require_once('../core/services/functionnals/FSRegistration.class.php');
 require_once('../core/services/functionnals/FSParticipation.class.php');
 
+
 class FSParticipant{
     /**
      *Returns a Participant with the given No as Id

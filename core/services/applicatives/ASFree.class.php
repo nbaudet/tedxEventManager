@@ -245,6 +245,67 @@ class ASFree {
         return $slots;
     }// function
     
+    //Find a Location from the status, 
+    public static function getLocation($args) {
+        $aLocation = FSLocation::getLocation($args);
+        return $aLocation;
+    }// function
+
+    // Show all Locations of an event
+    public static function getLocations(){
+        $locations = FSLocation::getLocations; 
+        return $locations;
+    }// function
+    
+        //Find a Role from the status
+    public static function getRole($args) {
+        $aRole = FSRole::getRole($args);
+        return $aRole;
+    }// function
+
+    // Show all Roles of an event
+    public static function getRoles(){
+        $roles = FSRole::getRoles(); 
+        return $roles;
+    }// function
+    
+    //Find a TeamRole from the status
+    public static function getTeamRole($args) {
+        $aTeamRole = FSTeamRole::getTeamRole($args);
+        return $aTeamRole;
+    }// function
+
+    // Show all TeamRoles of an event
+    public static function getTeamRoles(){
+        $teamRoles = FSTeamRole::getTeamRoles();
+        return $teamRoles;
+    }// function
+       
+    //show a Person
+    public static function getPerson($no) {
+        $aPerson = FSPerson::getPerson($no); 
+        return $aPerson; 
+    }//function 
+    
+    //Show all Persons 
+    public static function getPersons() {
+        $persons = FSPerson::getPersons();  
+        return $persons; 
+    }//function 
+    
+    //Show a Unit
+    public static function getUnit($aNo) {
+        $aUnit = FSUnit::getUnit($aNo);
+        return $aUnit;    
+    }//function 
+    
+    //Show all Units
+    public static function getUnits() {
+        $units = FSUnit::getAllUnits(); 
+        return $units; 
+    }//function
+    
+    
 }// class
 
 ?>

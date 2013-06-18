@@ -33,7 +33,7 @@ class Keyword {
      * Keyword's participantPersonNo
      * @var type int participantPersonNo
      */
-    private $participantPersonNo; 
+    private $personNo; 
     
     
     /**
@@ -58,15 +58,10 @@ class Keyword {
         }//if
         $this->value = $array['value']; 
         $this->eventNo = $array['eventNo']; 
-        $this->participantPersonNo = $array['participantPersonNo']; 
+        $this->personNo = $array['personNo']; 
         $this->isArchived = $array['isArchived']; 
-        
- 
-        
+       
     }//construct
-    
-    
-    
     
     /**
      * get value
@@ -90,8 +85,8 @@ class Keyword {
      * get participantPersonNo
      * @return type int participantPersonNo
      */
-    public function getParticipantPersonNo() {
-        return $this->participantPersonNo; 
+    public function getPersonNo() {
+        return $this->personNo; 
     }//function
     
     
