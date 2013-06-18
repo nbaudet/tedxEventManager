@@ -61,26 +61,32 @@ if( isset( $_REQUEST['action'] ) ) {
     
     switch ( $_REQUEST['action'] ) {
     case 'seeMembersUnits':
-        echo '<h1>Set the members\' units</h1>';
+        echo '<h1>See the members\' units</h1>';
+        echo '<p><a href="?">Go back</a></p>';
         $members = FSMember::getMembers()->getContent();
         showMembers( $members );
         break;
     
     case 'displayMember':
         echo '<h1>Members\' units</h1>';
+        echo '<p><a href="?">Go back</a></p>';
         showMember();
         break;
     
     case 'updateMember':
         echo '<h1>Register the changes for a member</h1>';
+        echo '<p><a href="?">Go back</a></p>';
+        updateMember();
         break;
     
     case 'seeUnitsAccesses':
         echo '<h1>See the units\' accesses</h1>';
+        echo '<p><a href="?">Go back</a></p>';
         break;
     
     case 'updateUnit':
         echo '<h1>Register the changes for a unit</h1>';
+        echo '<p><a href="?">Go back</a></p>';
         break;
     
     case 'loginForm':
@@ -134,20 +140,13 @@ function showMenu(){
 
 
 function showMembers( $members ) {
-    // Get all the existing units and make an array
-    $units = FSUnit::getAllUnits()->getContent();
-    $tabOfAllUnits = array();
-    foreach ( $units as $unit) {
-        $tabOfAllUnits[] = $unit->getName();
-    }
+    $tabOfAllUnits = getAllUnits();
     
     // Construct the table to display
-    echo '<p>Note : when checked, it means the member is in this unit.</p>';
-    echo '<p><a href="?">Go back</a></p>';
     echo '<table><tr>'.PHP_EOL;
     echo '<th>Login\Units</th>';
-    foreach($units as $unit){
-        echo '<th>'.$unit->getName().'</th>';
+    foreach($tabOfAllUnits as $unit){
+        echo '<th>'.$unit.'</th>';
     }
     echo '<th>Update</th></tr>'.PHP_EOL;
     
@@ -156,13 +155,7 @@ function showMembers( $members ) {
         
         echo '<tr style="background-color: '. ($lineColor++%2 == 0 ? 'lightgray' : 'whitesmoke') .';">'.PHP_EOL;
         
-        //echo '<input type="hidden" id="memberId" value="'.$member->getId().'" /><tr>'.PHP_EOL;
-        // Get all the units of a member and make an array
-        $unitsOfMember = FSUnit::getAllUnitsFromMember( $member )->getContent();
-        $tabUnitsOfMember = array();
-        foreach($unitsOfMember as $unit){
-            $tabUnitsOfMember[] = $unit->getName();
-        }
+        $tabUnitsOfMember = getAllUnitsFromMember( $member );
         
         echo '<td>'.$member->getID().'</td>';
         foreach ( $tabOfAllUnits as $unit ) {
@@ -179,15 +172,72 @@ function showMembers( $members ) {
     echo '</table>'.PHP_EOL;
 }
 
-
+/**
+ * Show the Units of a Member in a form, so you can choose which one the member
+ * is going to be part of.
+ */
 function showMember() {
     if( isset( $_REQUEST['memberID'] ) ) {
-        $member = FSMember::getMember($_REQUEST['memberID']);
-        var_dump($member);
+        $member = FSMember::getMember( $_REQUEST['memberID'] )->getContent();
+        
+        $tabOfAllUnits = getAllUnits();
+        
+        $tabUnitsOfMember = getAllUnitsFromMember( $member );
+        
+        
+        echo '<form method="POST">
+            <input type="hidden" id="action" name="action" value="updateMember" />
+            <input type="hidden" id="memberID" name="memberID" value="'.$member->getId().'" />'.PHP_EOL;
+        
+        foreach ( $tabOfAllUnits as $unit ) {
+            if( in_array( $unit, $tabUnitsOfMember ) ) {
+                echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" checked />';
+            }
+            else {
+                echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" />';
+            }
+            echo '<label for="'.$unit.'">'.$unit.'</label>'.PHP_EOL;
+            echo '<br />'.PHP_EOL;
+        }
+        
+        echo '<input type="submit" value="Change rights" />
+            </form>';
     }
     else {
         echo 'Error: no member set.';
     }
+}
+
+
+function updateMember() {
+    
+}
+
+/**
+ * Get all the existing units and make an array
+ * @return Mixed Array of all the units
+ */
+function getAllUnits() {
+    $units = FSUnit::getAllUnits()->getContent();
+    $tabOfAllUnits = array();
+    foreach ( $units as $unit) {
+        $tabOfAllUnits[] = $unit->getName();
+    }
+    return $tabOfAllUnits;
+}
+
+/**
+ * Get all the units of a member and make an array
+ * @param Member The member to get the units from.
+ * @return Mixed An array with units
+ */
+function getAllUnitsFromMember( $member ) {
+    $unitsOfMember = FSUnit::getAllUnitsFromMember( $member )->getContent();
+    $tabUnitsOfMember = array();
+    foreach($unitsOfMember as $unit){
+        $tabUnitsOfMember[] = $unit->getName();
+    }
+    return $tabUnitsOfMember;
 }
 
 ?>
