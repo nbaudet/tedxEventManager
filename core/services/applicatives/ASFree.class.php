@@ -253,7 +253,7 @@ class ASFree {
 
     // Show all Locations of an event
     public static function getLocations(){
-        $locations = FSLocation::getLocations();
+        $locations = FSLocation::getLocations; 
         return $locations;
     }// function
     
@@ -265,7 +265,7 @@ class ASFree {
 
     // Show all Roles of an event
     public static function getRoles(){
-        $roles = FSRole::getRoles();
+        $roles = FSRole::getRoles(); 
         return $roles;
     }// function
     
@@ -280,6 +280,32 @@ class ASFree {
         $teamRoles = FSTeamRole::getTeamRoles();
         return $teamRoles;
     }// function
+       
+    //show a Person
+    public static function getPerson($no) {
+        $aPerson = FSPerson::getPerson($no); 
+        return $aPerson; 
+    }//function 
+    
+    //Show all Persons 
+    public static function getPersons() {
+        $persons = FSPerson::getPersons();  
+        return $persons; 
+    }//function 
+    
+    //Show a Unit
+    public static function getUnit($aNo) {
+        $aUnit = FSUnit::getUnit($aNo);
+        return $aUnit;    
+    }//function 
+    
+    //Show all Units
+    public static function getUnits() {
+        $units = FSUnit::getAllUnits(); 
+        return $units; 
+    }//function
+    
+    
 }// class
 
 ?>

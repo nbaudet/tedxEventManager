@@ -519,6 +519,47 @@ class Tedx_manager{
         $messageGetTeamRoles = ASFree::getTeamRoles(); 
         return $messageGetTeamRoles; 
     }//function 
+    
+    
+    /**
+     * get a Person 
+     * @param type $no
+     * @return type message
+     */
+    public function getPerson($no) {
+        $messageGetPerson = ASFree::getPerson($no); 
+        return $messageGetPerson; 
+    }//function 
+    
+    
+    /**
+     * get Persons 
+     * @return type message
+     */
+    public function getPersons() {
+        $messageGetPersons = ASFree::getPersons(); 
+        return $messageGetPersons; 
+    }//function 
+    
+    
+    /**
+     * get Unit
+     * @return type message
+     */
+    public function getUnit() {
+        $messageGetUnit = ASFree::getUnit($aNo); 
+        return $messageGetUnit;    
+    }//function 
+    
+    
+    /**
+     * get Units 
+     * @return type message
+     */
+    public function getUnits() {
+        $messageGetUnits = ASFree::getUnits();
+        return $messageGetUnit; 
+    }//function 
 
     
 }//class
