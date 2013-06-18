@@ -424,6 +424,8 @@ class Tedx_manager{
         $messageGetSlot = ASFree::getSlot($args);
         return $messageGetSlot;
     }// function
+    
+    
     /**
      * Get a Slot(s) in an Event with the Event's Id
      * @param type $args
@@ -433,6 +435,90 @@ class Tedx_manager{
         $messageGetSlotsByEvent = ASFree::getSlotsByEvent($event);
         return $messageGetSlotsByEvent;
     }// function
+    
+    
+    /**
+     * get a Participant
+     * @param type $args
+     * @return type message
+     */
+    public function getParticipant($args) {
+        $messageGetParticipant = ASFree::getParticipant($args); 
+        return $messageGetParticipant; 
+    }//function
+    
+    
+    /**
+     * Get Participants
+     * @return type message
+     */
+    public function getParticipants() {
+        $messageGetParticipants = ASFree::getParticipants(); 
+        return $messageGetParticipants; 
+    }//function
+    
+    
+    /**
+     * get a Location
+     * @param type $args
+     * @return type message
+     */
+    public function getLocation($args) {
+        $messageGetLocation = ASFree::getLocation($args); 
+        return $messageGetLocation; 
+    }//function 
+    
+    
+    /**
+     * Get Locations
+     * @return type message
+     */
+    public function getLocations() {
+        $messageGetLocations = ASFree::getLocations(); 
+        return $messageGetLocations; 
+    }//function 
+    
+    
+    /**
+     * get a Role
+     * @param type $args
+     * @return type message
+     */
+    public function getRole($args) {
+        $messageGetRole = ASFree::getRole(args); 
+        return $messageGetRole; 
+    }//function 
+    
+    
+    /**
+     * get Roles
+     * @return type message
+     */
+    public function getRoles() {
+        $messageGetRoles = ASFree::getRoles(); 
+        return $messageGetRoles; 
+    }//function 
+    
+    
+    /**
+     * get a TeamRole
+     * @param type $args
+     * @return type message
+     */
+    public function getTeamRole($args) {
+        $messageGetTeamRole = ASFree::getTeamRole($args); 
+        return $messageGetTeamRole; 
+    }//function 
+    
+    
+    /**
+     * get TeamRoles
+     * @return type message
+     */
+    public function getTeamRoles() {
+        $messageGetTeamRoles = ASFree::getTeamRoles(); 
+        return $messageGetTeamRoles; 
+    }//function 
 
     
 }//class
