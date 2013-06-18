@@ -162,6 +162,27 @@ class ASFree {
         $messageEvents = FSEvent::searchEvents($args);
         return $messageEvents;
     }// public 
+    
+    /**
+     * Get an Organizer with its Id
+     * @param type $args
+     * @return type message
+     */
+    public static function getOrganizer($no) {
+        $anOrganizer = FSOrganizer::getOrganizer($no);
+        return $anOrganizer;
+    }// function
+    
+    /**
+     * Get Organizers
+     * @param type $args
+     * @return type message
+     */
+    public static function getOrganizers() {
+        $organizers = FSOrganizer::getOrganizers();
+        return $organizers;
+    }// function
+    
 }// class
 
 ?>
