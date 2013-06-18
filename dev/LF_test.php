@@ -19,17 +19,13 @@ require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSCoOrganization.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSAffectation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
 
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
-$teamRole = FSTeamRole::getTeamRole("Accueil")->getContent();
-var_dump($teamRole);
-var_dump(FSAffectation::getAffectations());
-//var_dump(FSOrganizer::getOrganizers());
-$organizer = FSOrganizer::getOrganizer(4)->getContent();
-var_dump($organizer);
+var_dump(FSPlace::getPlaces());
 
 /*$argsAffec = array (
     'teamRole'  => $teamRole,
@@ -38,12 +34,7 @@ var_dump($organizer);
 
 //var_dump(FSAffectation::getAffectation($argsAffec));
 
-$argsAff = array (
-    'teamRole'  => $teamRole,
-    'organizer' => $organizer
-);
 
-var_dump(FSAffectation::addAffectation($argsAff));
 
 
 
