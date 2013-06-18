@@ -32,8 +32,8 @@ class ASAuth {
         // Get the member with the given arguments
         $message = FSMember::getMember( $args['id'] );
         // message to return
-        $messageReturn ;
-        
+        $messageReturn;
+
         // If the member was found in the database
         if ( $message->getStatus() ) {
             
@@ -45,6 +45,7 @@ class ASAuth {
                 $_SESSION['usr']    = $member->getId();
                 // get alls units from member
                 $messageUnits = $this->getAllUnitsFromMember( $member );
+                
                 // if message units 
                 if($messageUnits->getStatus()){
                     $_SESSION['units']  = $messageUnits->getContent();
@@ -219,10 +220,12 @@ class ASAuth {
     
     /**
      * Returns an array of accesses for a member, depending on his/her units
-     * @return Mixed 
+     * @param $units Mixed of objects units
+     * @return Mixed of 
      */
     private function getAllAccessesFromUnits( $units ) {
         $tabAccesses = array();
+        
         foreach( $units as $unit ) {
             $messageAccess = FSAccess::getAllAccessesFromUnit( $unit );
             $tabAccesses[] = $messageAccess->getContent();
