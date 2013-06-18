@@ -10,6 +10,8 @@ require_once(APP_DIR . '/core/model/Motivation.class.php');
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 
 /**
  * Description of FSMotivation
@@ -28,18 +30,18 @@ class FSMotivation{
         
         // Get database manipulator
         global $crud;
-        $text = addslashes($args['Text']);
         
         // SQL request for getting a Motivation
-        $sql = "SELECT * FROM Motivation WHERE IsArchived = 0 AND Text LIKE '". $text ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'];
+        $sql = "SELECT * FROM Motivation WHERE Text LIKE '". $args['Text'] ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'] . " AND IsArchived = 0;";
         $data = $crud->getRow($sql);
-        echo $data;
+
         // If a Motivation is Valid
         if($data){
             $argsMotivation = array(
                 'text'              => $data['Text'],
                 'eventNo'             => $data['EventNo'],
-                'participantPersonNo' => $data['ParticipantPersonNo']
+                'participantPersonNo' => $data['ParticipantPersonNo'],
+                'isArchived' => $data['IsArchived']
             );
            
             // Get the message Existant Motivation with the object Motivation
@@ -83,10 +85,10 @@ class FSMotivation{
             // For each Persistant Motivation, create an Object
             foreach($data as $row){
                 $argsMotivation = array(
-                    'text'              => $data['Text'],
-                    'eventNo'             => $data['EventNo'],
-                    'participantPersonNo' => $data['ParticipantPersonNo'],
-                    'isArchived'          => $data['IsArchived']
+                    'text'              => $row['Text'],
+                    'eventNo'             => $row['EventNo'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'isArchived'          => $row['IsArchived']
                 );
             
                 $motivations[] = new Motivation($argsMotivation);
@@ -95,7 +97,7 @@ class FSMotivation{
             // Create a message with all objects returned
             $argsMessage = array(
                 'messageNumber' => 225,
-                'message'       => 'All Motivation getted',
+                'message'       => 'All Motivation gotten',
                 'status'        => true,
                 'content'       => $motivations
             );
@@ -109,6 +111,142 @@ class FSMotivation{
             );
         }
         return new Message($argsMessage);
+    }
+    
+    /**
+     * Adds a new Motivation in Database
+     * @param type $args
+     * @return Message containing the created Slot
+     */
+    public static function addMotivation($args){
+        global $crud;
+        $return = null;
+        $event = $args['Event'];
+        $participant = $args['Participant'];
+        
+        // Validate Event
+        $aValidEvent = FSEvent::getEvent($event->getNo());
+        
+        // Validate Participant
+        $aValidParticipant = FSParticipant::getParticipant($participant->getNo());
+        
+        $aMotivation = array(
+            'Text'  => $args['Text'],
+            'EventNo'   =>  $event->getNo(),
+            'ParticipantPersonNo'   =>  $participant->getNo()
+        );
+        // Validate Motivation
+        $anInexistantMotivation = FSMotivation::getMotivation($aMotivation);
+        
+        if(($aValidEvent->getStatus()) && ($aValidParticipant->getStatus()) && !($anInexistantMotivation->getStatus())){
+           
+            // Create new Slot
+            $sql = "INSERT INTO `Motivation` (`Text`, `EventNo`, `ParticipantPersonNo`) VALUES (
+                '".$args['Text']."',
+                ".$event->getNo().", 
+                '".$participant->getNo()."'
+            );";
+            
+            if($crud->exec($sql) == 1){
+                      
+                // Get created Membership
+                $argsMotivation = array (
+                    'Text'  => $args['Text'],
+                    'EventNo'   =>  $event->getNo(),
+                    'ParticipantPersonNo'   =>  $participant->getNo()
+                );
+                
+                $messageCreatedMotivation = FSMotivation::getMotivation($argsMotivation);
+                
+                $argsMessage = array(
+                    'messageNumber' => 227,
+                    'message'       => 'New Motivation added !',
+                    'status'        => true,
+                    'content'       => $messageCreatedMotivation->getContent()
+                );
+                $return = new Message($argsMessage);
+                      
+            } else {
+                $argsMessage = array(
+                   'messageNumber' => 228,
+                   'message'       => 'Error while inserting new Motivation',
+                   'status'        => false,
+                   'content'       => NULL
+               );
+               $return = new Message($argsMessage);
+            } // END Create Motivation
+                    
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 229,
+                'message'       => 'No valid Event or Participant found',
+                'status'        => FALSE,
+                'content'       => null
+            );
+            
+            $return = new Message($argsMessage);            
+        }
+        
+        return $return;
+    } // END addSlot()
+    
+    /**
+     * Set new parameters to a Motivation
+     * @param Motivation $aMotivationToSet
+     * @return Message containing the set Motivation
+     */
+    public static function setMotivation($aMotivationToSet) {
+        global $crud;
+            $sql = "UPDATE  Motivation SET  
+                IsArchived = '" . $aMotivationToSet->getIsArchived() . "'
+                WHERE  Motivation.Text = '" . $aMotivationToSet->getText() . "'
+                 AND Motivation.EventNo = " . $aMotivationToSet->getEventNo() . "
+                 AND Motivation.ParticipantPersonNo = " . $aMotivationToSet->getParticipantPersonNo();
+ 
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM Motivation 
+                    WHERE Text = " . $aMotivationToSet->getText() . " 
+                        AND EventNo = " . $aMotivationToSet->getEventNo() . " 
+                            AND ParticipantPersonNo = " . $aMotivationToSet->getParticipantPersonNo() . "
+                                AND IsArchived = " . $aMotivationToSet->getIsArchived(); 
+                $data = $crud->getRow($sql);
+
+                $argsMotivation = array(
+                    'text' => $aMotivationToSet->getText(),
+                    'eventNo' => $aMotivationToSet->getEventNo(),
+                    'participantPersonNo' => $aMotivationToSet->getParticipantPersonNo(),
+                    'isArchived' => $aMotivationToSet->getIsArchived()
+                );
+ 
+                $aSetMotivation = new Motivation($argsMotivation);
+
+                $argsMessage = array(
+                    'messageNumber' => 230,
+                    'message' => 'Motivation set !',
+                    'status' => true,
+                    'content' => $aSetMotivation
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 231,
+                    'message' => 'Error while setting new Motivation',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
+        return $message;
+    }
+    
+    /**
+     * Archive a Motivation
+     * @param Keyword $aKeywordToSet
+     * @return Message containing the archived Keyword
+     */
+    public static function archiveMotivation($aMotivationToArchive) {
+        return self::setMotivation($aMotivationToArchive);
+        
     }
 }
 ?>

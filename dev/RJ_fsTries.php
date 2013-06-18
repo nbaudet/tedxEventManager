@@ -43,12 +43,41 @@ else
     
     echo '<h1>Motivation</h1>';
     $args =     array(
-            'Text'         => 'Je ne refais que rarement se que j\'ai réalisé hier.',
+            'Text'         => "Je ne refais que rarement se que%",
             'EventNo'   => 1,
             'ParticipantPersonNo'   => 5
     );
-    var_dump($args);
     var_dump(FSMotivation::getMotivation($args));
+    var_dump(FSMotivation::getMotivations());
+    
+    
+    
+    $event = FSEvent::getEvent(2)->getContent();
+    $participant = FSParticipant::getParticipant(29)->getContent();
+    $argsMotivation= array(
+            'Text'         => 'Take it MF!!',
+            'Event'   => $event,
+            'Participant'   => $participant
+        );
+var_dump(FSMotivation::addMotivation($argsMotivation));
+
+$argsSetMotivation= array(
+            'Text'         => 'Take it MF!!',
+            'EventNo'   => 2,
+            'ParticipantPersonNo'   => 29,
+            'IsArchived'    => 1
+        );
+$aMotivationToSet = FSMotivation::getMotivation($argsSetMotivation)->getContent();
+var_dump(FSMotivation::setMotivation($aMotivationToSet));
+
+$argsArchiveMotivation= array(
+            'Text'         => 'Take it MF!!',
+            'EventNo'   => 2,
+            'ParticipantPersonNo'   => 29,
+            'IsArchived'    => 1
+        );
+$aMotivationToArchive = FSMotivation::getMotivation($argsArchiveMotivation)->getContent();
+var_dump(FSMotivation::setMotivation($aMotivationToArchive));
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
