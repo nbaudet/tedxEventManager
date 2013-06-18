@@ -74,7 +74,7 @@ class FSRegistration {
         global $crud;
         
         // SQL Request for getting all Persistants Registrations
-        $sql = "SELECT * FROM Registration";
+        $sql = "SELECT * FROM Registration WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         // If there is persistants Registrations

@@ -75,7 +75,7 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
 
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
             Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.IsArchived
-            FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No";
+            FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         echo $sql;
         if ($data){

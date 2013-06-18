@@ -72,7 +72,7 @@ class FSParticipation{
 
         $sql = "SELECT * FROM Participation as PAON
             INNER JOIN Slot as S ON S.No = PAON.SlotNo and S.EventNo = PAON.SlotEventNo 
-            INNER JOIN Participant as PAT ON PAT.PersonNo = PAON.ParticipantPersonNo";
+            INNER JOIN Participant as PAT ON PAT.PersonNo = PAON.ParticipantPersonNo WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         if ($data){

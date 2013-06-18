@@ -121,7 +121,7 @@ class FSSlot {
     public static function getSlots(){
         global $crud;
         
-        $sql = "SELECT * FROM Slot";
+        $sql = "SELECT * FROM Slot WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         if ($data){

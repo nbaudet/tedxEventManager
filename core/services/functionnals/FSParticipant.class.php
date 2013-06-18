@@ -73,7 +73,7 @@ class FSParticipant{
     public static function getParticipants(){
         global $crud;
 
-        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No";
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address, Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Pa.IsArchived FROM Participant AS Pa INNER JOIN Person AS Pe ON Pa.PersonNo = Pe.No WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         if ($data){
