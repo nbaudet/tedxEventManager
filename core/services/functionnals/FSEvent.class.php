@@ -65,7 +65,7 @@ class FSEvent {
     public static function getEvents(){
         global $crud;
         
-        $sql = "SELECT * FROM Event";
+        $sql = "SELECT * FROM Event WHERE IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         if ($data){

@@ -183,7 +183,7 @@ class ASVisitor {
           'password' => '', // String
           );
          */
-        if (($argsToSet['password'] != '') and ($argsToSet['password'] != $aValidMember->getPassword())) {
+        if (($argsToSet['password'] != '') and (md5($argsToSet['password']) != md5($aValidMember->getPassword()))) {
             $aValidMember->setPassword($argsToSet['password']);
         }
 

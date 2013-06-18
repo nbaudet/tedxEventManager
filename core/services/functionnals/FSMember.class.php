@@ -319,7 +319,7 @@ class FSMember {
         global $crud;
 
         $messageValidMember = self::getMember($aMemberToSet->getId());
-
+        
         if ($messageValidMember->getStatus()) {
             $aValidMember = $messageValidMember->getContent();
             $sql = "UPDATE  Member SET  
