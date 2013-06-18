@@ -203,6 +203,93 @@ class FSCoOrganization{
         return $return;
     } // END createCoOrganization
     
+    
+    /** Returns All Event by Speaker
+     * @param a Speaker
+     * @return a Message conainting an array of Event
+     */
+    public static function getEventsBySpeaker($speaker){   
+        global $crud;
+        
+        $sql = "SELECT EventNo FROM CoOrganization 
+            WHERE SpeakerPersonNo = ".$speaker->getNo()." AND IsArchived = 0";
+        
+        $data = $crud->getRows($sql);
+        
+        if($data){
+            $events = array();
+            
+            foreach($data as $row){
+                $events[] = FSEvent::getEvent($row['EventNo'])->getContent();
+            }//foreach
+            
+            $argsMessage = array(
+                'messageNumber' => 139,
+                'message'       => 'All Events for a Speaker selected',
+                'status'        => true,
+                'content'       => $events
+            );
+            
+            $return = new Message($argsMessage);
+            
+        }else{
+            echo "argh";
+            $argsMessage = array(
+                'messageNumber' => 140,
+                'message'       => 'Error while SELECT * FROM Events WHERE ...',
+                'status'        => false,
+                'content'       => NULL
+            );
+            
+            $return = new Message($argsMessage);
+        }
+        
+        return $return;
+    } // END getEventBySpeaker
+     
+     /** Returns All Speakers for an Event
+     * @param an Event
+     * @return a Message conainting an array of Speakers
+     */
+    public static function getSpeakersByEvent($event){   
+        global $crud;
+        
+        $sql = "SELECT SpeakerPersonNo FROM CoOrganization 
+            WHERE EventNo = ".$event->getNo()." AND IsArchived = 0";
+        
+        $data = $crud->getRows($sql);
+        
+        if($data){
+            $speakers = array();
+            var_dump($data);
+            foreach($data as $row){
+                $speakers[] = FSSpeaker::getSpeaker($row['SpeakerPersonNo'])->getContent();
+            }//foreach
+            
+            $argsMessage = array(
+                'messageNumber' => 141,
+                'message'       => 'All Speakers for an Event selected',
+                'status'        => true,
+                'content'       => $speakers
+            );
+            
+            $return = new Message($argsMessage);
+            
+        }else{
+            echo "argh";
+            $argsMessage = array(
+                'messageNumber' => 142,
+                'message'       => 'Error while SELECT * FROM Events WHERE ...',
+                'status'        => false,
+                'content'       => NULL
+            );
+            
+            $return = new Message($argsMessage); 
+        }
+        
+        return $return;
+    } // END getSpeakersByEvent
+    
  }
     
 ?>
