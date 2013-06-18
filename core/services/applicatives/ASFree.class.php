@@ -6,7 +6,7 @@ require_once(APP_DIR . '/core/model/Member.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Unit.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
-require_once (APP_DIR . '/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMembership.class.php');
