@@ -143,6 +143,22 @@ class Tedx_manager{
     }//function
     
     /**
+     * Search persons with Args
+     * @param type $args
+     * @return type message
+     */
+    public function searchPersons($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changePassword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::searchPersons( $args );
+        }
+        else {
+            $message = $hasAccess;
+        }
+        return $message;
+    }// function
+    
+    /**
      * Enable an anonym user to login
      * @param String $login The user's login
      * @param String $password The user's password
@@ -496,6 +512,7 @@ class Tedx_manager{
         $messageGetSpeakersByEvent = ASFree::getSpeakersByEvent($args);
         return $messageGetSpeakersByEvent; 
     }//function 
+
 
     
     
