@@ -30,16 +30,16 @@ class FSTeamRole {
             $location = new TeamRole($argsTeamRole);
 
             $argsMessage = array(
-                'messageNumber'     => 201,
-                'message'           => 'Existant Location',
+                'messageNumber'     => 301,
+                'message'           => 'Existant TeamRole',
                 'status'            => true,
-                'content'           => $location
+                'content'           => $teamRole
             );
             $message = new Message($argsMessage);
             return $message;
         }else{
             $argsMessage = array(
-                'messageNumber'     => 202,
+                'messageNumber'     => 302,
                 'message'           => 'Inexistant TeamRole',
                 'status'            => false,
                 'content'           => NULL    
@@ -74,17 +74,17 @@ class FSTeamRole {
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 203,
+                'messageNumber' => 303,
                 'message'       => 'All TeamRoles selected',
                 'status'        => true,
-                'content'       => $locations
+                'content'       => $teamRoles
             );
             $message = new Message($argsMessage);
 
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 204,
+                'messageNumber' => 304,
                 'message'       => 'Error while SELECT * FROM TeamRole',
                 'status'        => false,
                 'content'       => NULL
