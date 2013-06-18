@@ -32,10 +32,12 @@ else
     echo 'Error! ' . $someEvents->getMessage();
     var_dump($someEvents);
     
-  //Récupère tous les events pour un speaker  
+  /*//Récupère tous les events pour un speaker  
     echo '<h1>Get Events by Speaker - FS</h1>';
     $speaker = (FSSpeaker::getSpeaker(6)->getContent());
-    var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());
+    var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());*/
+    
+    echo '<h1>Motivation</h1>';
 
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
