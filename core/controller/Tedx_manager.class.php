@@ -91,6 +91,14 @@ class Tedx_manager{
         return  ASFree::getRegistrationsByEvent( $anEvent );
     }//function
     
+    /**
+     * Applicatives services to get the Location from an Event
+     * @param type $event
+     * @return type message
+     */
+    public function getLocationFromEvent( $anEvent ){
+        return ASFree::getLocationFromEvent($anEvent);
+    }// function
     
     /**
      * Applicatives services to register a Visitor to an Event

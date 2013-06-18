@@ -329,6 +329,16 @@ class ASFree {
         return $speakers;
     }// function
     
+    /**
+     * get Location from an Event
+     * @param type $event
+     * @return type message
+     */
+    public static function getLocationFromEvent($event){
+        $messageGetLocationFromEvent = FSLocation::getLocationFromEvent($event);
+        return $messageGetLocationFromEvent;
+    }// function
+    
 }// class
 
 ?>
