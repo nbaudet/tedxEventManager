@@ -17,13 +17,21 @@ require_once(APP_DIR.'/core/services/functionnals/FSEvent.class.php');
 $messageEvent = FSEvent::getEvent(1);
 $anEvent = $messageEvent->getContent();
 
-$messageLocation = $tedx_manager->getLocationFromEvent($anEvent);
+$messageSlots = $tedx_manager->getSlotsFromEvent($anEvent);
 
-if($messageLocation->getStatus()) {
-    $aLocation = $messageLocation->getContent();           
-    echo "Address of the Event numero 1 is : ".$aLocation->getAddress();
-}
+if($messageSlots->getStatus()) {
+    // get the Slots from message
+    $slots = $messageSlots->getContent();
+    
+    // prepare a message
+    $stringToDisplay = "Here are the slots : ";
+    foreach($slots as $aSlot) {
+        $stringToDisplay .= " ".$aSlot->getNo()." ";
+    }//if
+    // display the slots number
+    echo $stringToDisplay;
+}// if
 else
-    echo "No location found";
+    echo "No Slots found";
 
 ?>

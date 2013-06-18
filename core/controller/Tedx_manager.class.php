@@ -373,7 +373,7 @@ class Tedx_manager{
      * @param type $args
      * @return type message
      */
-    public function getSlotsByEvent($event){
+    public function getSlotsFromEvent($event){
         $messageGetSlotsByEvent = ASFree::getSlotsByEvent($event);
         return $messageGetSlotsByEvent;
     }// function
