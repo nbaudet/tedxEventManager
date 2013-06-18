@@ -15,7 +15,7 @@ require_once(APP_DIR . '/core/model/Event.class.php');
 /**
  * Description of FSRegistration
  *
- * @author Rapou, el Nachos
+ * @author Rapou
  */
 class FSRegistration {
     /**
@@ -195,7 +195,7 @@ class FSRegistration {
                 $messageValidRegistration = self::getRegistration($argsRegistration);
                 if($messageValidRegistration->getStatus()== false){
                     // Insert the registration in persistants objects
-                    $messageCreateRegistration = self::createRegisatration($args);
+                    $messageCreateRegistration = self::createRegistration($args);
                     $finalMessage = $messageCreateRegistration;
                 }else{
                     

@@ -24,8 +24,9 @@
         require_once('../core/services/functionnals/FSParticipant.class.php');
 
         $aPerson = FSPerson::getPerson(1)->getContent();
-        
-        $message = FSKeyword::getKeywordsByPerson($aPerson);
+        $anEvent = FSEvent::getEvent(1)->getContent();
+        $args = array('person' => $aPerson, 'event' => $anEvent);
+        $message = FSKeyword::getKeywordsByPersonForEvent($args);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>

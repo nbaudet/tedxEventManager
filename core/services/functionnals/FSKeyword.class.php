@@ -82,7 +82,7 @@ class FSKeyword {
 
             $argsMessage = array(
                 'messageNumber' => 424,
-                'message'       => 'All Events selected',
+                'message'       => 'All Keywords of Person selected',
                 'status'        => true,
                 'content'       => $keywords
             );
@@ -102,6 +102,49 @@ class FSKeyword {
         }// else
     }// function
     
+    
+    public static function getKeywordsByPersonForEvent($args){
+        global $crud;
+        $aPerson = $args['person'];
+        $anEvent = $args['event'];
+        $sql = "SELECT * FROM Keyword WHERE PersonNo = ". $aPerson->getNo() ." AND EventNo = " . $anEvent->getNo() . " AND IsArchived = 0";
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $keywords = array();
+
+            foreach($data as $row){
+                $argsKeyword = array(
+                    'value'            => $row['Value'],
+                    'personNo'         => $row['PersonNo'],
+                    'eventNo'          => $row['EventNo'],
+                    'isArchived'          => $row['IsArchived']
+                );
+            
+                $keywords[] = new Keyword($argsKeyword);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 424,
+                'message'       => 'All Keywords of Person for Event selected',
+                'status'        => true,
+                'content'       => $keywords
+            );
+            $message = new Message($argsMessage);
+
+            return $message;
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 425,
+                'message'       => 'Error while SELECT * FROM Keyword WHERE IsArchived = 0',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+
+            return $message;
+        }// else
+    }// function
     
 }
 

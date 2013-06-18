@@ -329,7 +329,6 @@ class ASFree {
         return $speakers;
     }// function
     
-    
 }// class
 
 ?>

@@ -28,7 +28,22 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
  * @author rapou
  */
 class ASParticipant {
-    //put your code here
+    //Show a Keyword
+    public static function getKeyword($args) {
+        $aKeyword = FSUnit::getUnit($args);
+        return $aKeyword;    
+    }//function 
+    
+    //Show all Keywords of a Person
+    public static function getKeywordsByPerson($aPerson) {
+        $keywords = FSKeyword::getKeywordsByPerson($aPerson); 
+        return $keywords; 
+    }//function
+     //Show all Keywords of a Person for an Event
+    public static function getKeywordsByPersonForEvent($args) {
+        $keywords = FSKeyword::getKeywordsByPersonForEvent($args); 
+        return $keywords; 
+    }//function
 }
 
 ?>
