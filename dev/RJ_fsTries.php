@@ -6,6 +6,7 @@ require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
 echo '<h1>Get Event</h1>';
 
@@ -38,7 +39,12 @@ else
     var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());*/
     
     echo '<h1>Motivation</h1>';
-
+    $args =     array(
+            'Text'         => 'Je ne refais que rarement se que j\'ai réalisé hier.',
+            'EventNo'   => 1,
+            'ParticipantPersonNo'   => 5
+    );
+    var_dump(FSMotivation::getMotivation($args));
 
 /*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');

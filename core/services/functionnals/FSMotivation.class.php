@@ -30,7 +30,7 @@ class FSMotivation{
         global $crud;
         
         // SQL request for getting a Motivation
-        $sql = "SELECT * FROM Motivation WHERE IsArchived = 0 AND Text LIKE '". $args['text'] ."' AND EventNo = " . $args['event']->getNo() . " AND ParticipantPersonNo = " . $args['participant']->getNo();
+        $sql = "SELECT * FROM Motivation WHERE IsArchived = 0 AND Text = '". $args['Text'] ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'];
         $data = $crud->getRow($sql);
         
         // If a Motivation is Valid
