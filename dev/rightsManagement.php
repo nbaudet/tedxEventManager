@@ -39,9 +39,9 @@ if( $tedx_manager->isLogged() ) {
     }
     // Else : No sufficient rights
     else {
-        die("You don't have sufficient privileges to access this page.<br />
-            <a href=\"../index.php\">Back to home</a><br />
-            <a href=\"?action=logout\">Log out</a>");
+        die("<h2>You don't have sufficient privileges to access this page.</h2>
+            <p><a href=\"../index.php\">Back to home</a><br />
+            <a href=\"?action=logout\">Log out</a></p>");
     }
 }
 else {
@@ -128,6 +128,7 @@ function loginForm(){
 }
 
 function showMenu(){
+    //var_dump($_SESSION);
     echo '<h2>Welcome to the rights management page</h2>
     <p>Select one of the option to access the corresponding page</p>
     <ul>
@@ -184,7 +185,6 @@ function showMember() {
         
         $tabUnitsOfMember = getAllUnitsFromMember( $member );
         
-        
         echo '<form method="POST">
             <input type="hidden" id="action" name="action" value="updateMember" />
             <input type="hidden" id="memberID" name="memberID" value="'.$member->getId().'" />'.PHP_EOL;
@@ -210,7 +210,7 @@ function showMember() {
 
 
 function updateMember() {
-    
+    var_dump($_REQUEST);
 }
 
 /**

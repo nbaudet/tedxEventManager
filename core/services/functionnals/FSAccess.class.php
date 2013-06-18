@@ -20,15 +20,21 @@ class FSAccess {
      */
     public static function getAllAccessesFromUnit( $unit ) {
         global $crud;
-        
+
         // SQL Statement to get the accesses for a specified UNIT
-        $sql = "SELECT Access.Service FROM Unit
+        /*$sql = "SELECT Access.Service FROM Unit
             INNER JOIN Permission
             ON Unit.No = Permission.UnitNo
             INNER JOIN Access
             ON Permission.AccessNo = Access.No
             WHERE Unit.No = '" . $unit->getNo() . "'
-            AND Accesses.IsArchived = 0";
+            AND Accesses.IsArchived = 0";*/
+        $sql = "SELECT Access.Service FROM Unit
+            INNER JOIN Permission
+            ON Unit.No = Permission.UnitNo
+            INNER JOIN Access
+            ON Permission.AccessNo = Access.No
+            WHERE Unit.No = '" . $unit->getNo()."'";
         
         $data = $crud->getRows($sql);
         
