@@ -17,9 +17,35 @@ require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSCoOrganization.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSAffectation.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
+
+
+$teamRole = FSTeamRole::getTeamRole("Accueil")->getContent();
+var_dump($teamRole);
+var_dump(FSAffectation::getAffectations());
+//var_dump(FSOrganizer::getOrganizers());
+$organizer = FSOrganizer::getOrganizer(4)->getContent();
+var_dump($organizer);
+
+/*$argsAffec = array (
+    'teamRole'  => $teamRole,
+    'organizer' => $organizer
+);*/
+
+//var_dump(FSAffectation::getAffectation($argsAffec));
+
+$argsAff = array (
+    'teamRole'  => $teamRole,
+    'organizer' => $organizer
+);
+
+var_dump(FSAffectation::addAffectation($argsAff));
+
+
 
 
 //var_dump(FSPerson::getPerson(1));
@@ -99,32 +125,32 @@ var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
 
 //var_dump(FSSlot::addSlot($argsSlot));
 
-$speaker = FSSpeaker::getSpeaker(1)->getContent();
-$event = FSEvent::getEvent(1)->getContent();
+//$speaker = FSSpeaker::getSpeaker(1)->getContent();
+//$event = FSEvent::getEvent(1)->getContent();
 
-$argsCoOrg = array (
+/*$argsCoOrg = array (
     'event'  => $event,
     'speaker' => $speaker
-);
+);*/
 
 //var_dump($speaker);
 
-var_dump(FSCoOrganization::getCoOrganization($argsCoOrg));
+//var_dump(FSCoOrganization::getCoOrganization($argsCoOrg));
 //var_dump(FSCoOrganization::getCoOrganizations());
 
 
 
-$speaker2 =  FSSpeaker::getSpeaker(6)->getContent();
+//$speaker2 =  FSSpeaker::getSpeaker(6)->getContent();
 
-$argsNew = array (
+/*$argsNew = array (
     'event' => $event,
     'speaker' => $speaker2
-);
+);*/
 
 //var_dump(FSCoOrganization::addCoOrganization($argsNew));
 
-var_dump(FSCoOrganization::getEventsBySpeaker($speaker2));
-var_dump(FSCoOrganization::getSpeakersByEvent($event));
+//var_dump(FSCoOrganization::getEventsBySpeaker($speaker2));
+//var_dump(FSCoOrganization::getSpeakersByEvent($event));
 
 ?>
 
