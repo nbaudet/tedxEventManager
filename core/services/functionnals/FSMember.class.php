@@ -68,7 +68,9 @@ class FSMember {
         // get database manipulator
         global $crud;
 
-        $sql = "SELECT * FROM Member ORDER BY Member.ID";
+        $sql = "SELECT * FROM Member
+            WHERE Member.IsArchived = 0
+            ORDER BY Member.ID";
         $data = $crud->getRows($sql);
         // If $data, return content
         if ($data) {

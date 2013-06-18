@@ -27,7 +27,8 @@ class FSAccess {
             ON Unit.No = Permission.UnitNo
             INNER JOIN Access
             ON Permission.AccessNo = Access.No
-            WHERE Unit.No = '" . $unit->getNo() . "'";
+            WHERE Unit.No = '" . $unit->getNo() . "'
+            AND Accesses.IsArchived = 0";
         
         $data = $crud->getRows($sql);
         

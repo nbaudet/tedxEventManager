@@ -105,7 +105,8 @@ class FSUnit {
             ON Member.ID = Membership.MemberID
             INNER JOIN Unit
             ON Membership.UnitNo = Unit.No
-            WHERE Member.ID = '" . $member->getId() . "'";
+            WHERE Member.ID = '" . $member->getId() . "'
+            AND Unit.IsArchived = 0";
         // exec query
         $data = $crud->getRows($sql);
         

@@ -23,7 +23,9 @@ class FSMembership {
         
         global $crud;
         
-        $sql = "SELECT * FROM Membership WHERE MemberID = '".$member->getId()."' AND UnitNo = ".$unit->getNo();
+        $sql = "SELECT * FROM Membership
+            WHERE MemberID = '".$member->getId()."'
+            AND UnitNo = ".$unit->getNo();
         
         $data = $crud->getRow($sql);
         
@@ -63,7 +65,8 @@ class FSMembership {
     public static function getMemberships(){
         global $crud;
         
-        $sql = "SELECT * FROM Membership";
+        $sql = "SELECT * FROM Membership
+            WHERE Membership.IsArchived = 0";
         $data = $crud->getRows($sql);
         
         if ($data){
