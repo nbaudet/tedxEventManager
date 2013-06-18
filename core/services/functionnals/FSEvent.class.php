@@ -256,8 +256,6 @@ class FSEvent {
         return $message;
     }// function
     
-
-    
 }// class
 
 ?>

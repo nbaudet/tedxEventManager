@@ -560,6 +560,24 @@ class Tedx_manager{
         $messageGetUnits = ASFree::getUnits();
         return $messageGetUnit; 
     }//function 
+    
+    /**
+     * get Units 
+     * @return type message
+     */
+    public function getEventsBySpeaker($args) {
+        $messageGetEventsBySpeaker = ASFree::getEventsBySpeaker($args);
+        return $messageGetEventsBySpeaker; 
+    }//function 
+    
+    /**
+     * get Units 
+     * @return type message
+     */
+    public function getSpeakersByEvent($args) {
+        $messageGetSpeakersByEvent = ASFree::getSpeakersByEvent($args);
+        return $messageGetSpeakersByEvent; 
+    }//function 
 
     
 }//class

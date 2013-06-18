@@ -305,6 +305,26 @@ class ASFree {
         return $units; 
     }//function
     
+    /**
+     * Get Events By Speaker
+     * @param type $speaker
+     * @return type message
+     */
+    public static function getEventsBySpeaker($speaker) {
+        $events = FSCoOrganizer::getEventsBySpeaker($speaker);
+        return $events;
+    }// function
+    
+    /**
+     * Get Events By Speaker
+     * @param type $speaker
+     * @return type message
+     */
+    public static function getSpeakersByEvent($event) {
+        $speakers = FSCoOrganizer::getSpeakersByEvent($event);
+        return $speakers;
+    }// function
+    
     
 }// class
 
