@@ -176,7 +176,7 @@ class FSPerson {
         }
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . addslashes($args['name']) . "', '" . addslashes($args['firstname']) . "', '" . addslashes($args['dateOfBirth']) . "', '" . addslashes($args['address']) . "', '" . addslashes($args['city']) . "', '" . addslashes($args['country']) . "', '" . addslashes($args['phoneNumber']) . "', '" . addslashes($args['email']) . "', '" . $description . "')";
 
-        $messageFreeEmail = self::checkFreeEmail($args['email']);
+        $messageFreeEmail = self::checkFreeEmail(array('email' => $args['email']));
         if ($messageFreeEmail->getStatus()) {
             $aFreeEmail = $messageFreeEmail->getContent();
             if ($crud->exec($sql) == 1) {
@@ -232,7 +232,7 @@ class FSPerson {
      */
     public static function setPerson($aPersonToSet) {
         global $crud;
-        $messageFreeEmail = self::checkFreeEmail($aPersonToSet->getEmail(), $aPersonToSet->getNo());
+        $messageFreeEmail = self::checkFreeEmail(array('email' => $aPersonToSet->getEmail(), 'no' => $aPersonToSet->getNo()));
         if ($messageFreeEmail->getStatus()) {
             $aFreeEmail = $messageFreeEmail->getContent();
             $sql = "UPDATE  Person SET  
@@ -366,9 +366,11 @@ class FSPerson {
      * @param type $email
      * @return $Message the free email
      */
-    private static function checkFreeEmail($email, $no) {
+    private static function checkFreeEmail($args) {
+        $email = $args['email'];
+        if(isset($args['no'])){$no = $args['no'];}
         $messagePersonWithEmail = self::getPersonByEmail($email);
-        if ($messagePersonWithEmail->getStatus() == false) {
+        if (!$messagePersonWithEmail->getStatus()) {
             $argsMessage = array(
                 'messageNumber' => 421,
                 'message' => 'The email is free',

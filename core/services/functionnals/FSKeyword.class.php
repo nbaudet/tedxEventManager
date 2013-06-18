@@ -146,6 +146,62 @@ class FSKeyword {
         }// else
     }// function
     
+     /**
+     * Set new parameters to a Keyword
+     * @param Keyword $aKeywordToSet
+     * @return Message containing the setted Keyword
+     */
+    public static function setKeyword($aKeywordToSet) {
+        global $crud;
+            $sql = "UPDATE  Person SET  
+                IsArchived =    '" . $aKeywordToSet->getIsArchived() . "'
+                WHERE  Keyword.Value = " . $aKeywordToSet->getValue() . "'
+                AND Keyword.EventNo = " . $aKeywordToSet->getEventNo() . "'
+                AND Keyword.PersonNo = " . $aKeywordToSet->getPersonNo();
+
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM Keyword WHERE Value = " . $aKeywordToSet->getValue() . " AND EventNo = " . $aKeywordToSet->getEventNo() . " AND PersonNo = " . $aKeywordToSet->getPersonNo();
+                $data = $crud->getRow($sql);
+
+                $argsKeyword = array(
+                    'value' => $data['Value'],
+                    'eventNo' => $data['EventNo'],
+                    'personNo' => $data['PersonNo'],
+                    'isArchived' => $data['IsArchived'],
+                );
+ 
+                $aSettedKeyword = new Keyword($argsKeyword);
+
+                $argsMessage = array(
+                    'messageNumber' => 423,
+                    'message' => 'Keyword setted !',
+                    'status' => true,
+                    'content' => $aSettedKeyword
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 424,
+                    'message' => 'Error while setting new Keyword',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
+        return $message;
+    }
+    
+    /**
+     * Archive a Keyword
+     * @param Keyword $aKeywordToSet
+     * @return Message containing the archived Keyword
+     */
+    public static function archiveKeyword($aKeywordToArchive) {
+        return self::setKeyword($aKeywordToArchive);
+        
+    }
+    
+    
 }
 
 ?>
