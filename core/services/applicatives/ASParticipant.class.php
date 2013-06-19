@@ -21,6 +21,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSMotivation.class.php');
 
 /**
  * Description of ASParticipant
@@ -105,6 +106,16 @@ class ASParticipant {
         return $message;
         
     }//function
+    
+    /**
+     * Method addMotivationToAnEvent from SA Participant
+     * @param type $args 
+     * @return type 
+     */
+    public static function addMotivationToAnEvent($args){
+        $aMotivationForAnEvent = FSMotivation::addMotivation($args);
+        return $aMotivationForAnEvent;
+    }
 }
 
 ?>
