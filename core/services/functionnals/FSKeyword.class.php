@@ -39,7 +39,7 @@ class FSKeyword {
             $keyword = new Keyword($argsKeyword);
             
             $argsMessage = array(
-                'messageNumber' => 422,
+                'messageNumber' => 418,
                 'message'       => 'Existant Keyword',
                 'status'        => true,
                 'content'       => $keyword
@@ -47,7 +47,7 @@ class FSKeyword {
             $message = new Message($argsMessage);
         } else {
             $argsMessage = array(
-                'messageNumber' => 423,
+                'messageNumber' => 419,
                 'message'       => 'Inexistant Keyword',
                 'status'        => false,
                 'content'       => NULL
@@ -82,7 +82,7 @@ class FSKeyword {
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 424,
+                'messageNumber' => 420,
                 'message'       => 'All Keywords of Person selected',
                 'status'        => true,
                 'content'       => $keywords
@@ -92,7 +92,7 @@ class FSKeyword {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 425,
+                'messageNumber' => 421,
                 'message'       => 'Error while SELECT * FROM Keyword WHERE IsArchived = 0',
                 'status'        => false,
                 'content'       => NULL
@@ -126,7 +126,7 @@ class FSKeyword {
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 424,
+                'messageNumber' => 420,
                 'message'       => 'All Keywords of Person for Event selected',
                 'status'        => true,
                 'content'       => $keywords
@@ -136,7 +136,7 @@ class FSKeyword {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 425,
+                'messageNumber' => 421,
                 'message'       => 'Error while SELECT * FROM Keyword WHERE IsArchived = 0',
                 'status'        => false,
                 'content'       => NULL
@@ -176,7 +176,7 @@ class FSKeyword {
                 $aSettedKeyword = new Keyword($argsKeyword);
 
                 $argsMessage = array(
-                    'messageNumber' => 423,
+                    'messageNumber' => 422,
                     'message' => 'Keyword setted !',
                     'status' => true,
                     'content' => $aSettedKeyword
@@ -184,7 +184,7 @@ class FSKeyword {
                 $message = new Message($argsMessage);
             } else {
                 $argsMessage = array(
-                    'messageNumber' => 424,
+                    'messageNumber' => 423,
                     'message' => 'Error while setting new Keyword',
                     'status' => false,
                     'content' => NULL
@@ -247,14 +247,14 @@ class FSKeyword {
         if($messageValidKeyword->getStatus()){
             $aValidKeyword = $messageValidKeyword->getContent();
              $argsMessage = array(
-                'messageNumber' => 427,
+                'messageNumber' => 424,
                 'message'       => 'The keyword is added',
                 'status'        => true,
                 'content'       => $aValidKeyword
             );
         }else{
             $argsMessage = array(
-                'messageNumber' => 428,
+                'messageNumber' => 425,
                 'message'       => 'The keyword is not added',
                 'status'        => false,
                 'content'       => null
