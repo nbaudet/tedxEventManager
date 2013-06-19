@@ -199,7 +199,12 @@ class FSMembership {
         
     }// End addMembership
     
-    
+    /**
+     * Insert a membership, or if already existing, set it to archived.
+     * @global PDO Object $crud Database Manipulator
+     * @param Mixed $args An array with a member and a unit
+     * @return Message $message
+     */
     public static function upsertMembership ( $args ) {
         $member = $args['member'];
         $unit   = $args['unit'];
