@@ -318,7 +318,7 @@ class Tedx_manager{
      * @return type message
      */
     public function getRole($args) {
-        $messageGetRole = ASFree::getRole(args); 
+        $messageGetRole = ASFree::getRole($args); 
         return $messageGetRole; 
     }//function 
     
@@ -379,7 +379,7 @@ class Tedx_manager{
      * get Unit
      * @return type message
      */
-    public function getUnit() {
+    public function getUnit($no) {
         $messageGetUnit = ASFree::getUnit($aNo); 
         return $messageGetUnit;    
     }//function 
@@ -651,7 +651,16 @@ class Tedx_manager{
         return $this->stub->addEvent( $args ); 
     }//function
     
-    
+    public function archivedMotivationToAnEvent($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "archivedMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
     
 }//class
 

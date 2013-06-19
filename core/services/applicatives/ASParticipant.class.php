@@ -116,6 +116,16 @@ class ASParticipant {
         $aMotivationForAnEvent = FSMotivation::addMotivation($args);
         return $aMotivationForAnEvent;
     }
+    
+    /**
+     * Method archivedMotivationToAnEvent from SA Participant
+     * @param type $args 
+     * @return type 
+     */
+    public static function archivedMotivationToAnEvent($args){
+        $aMotivationToArchiveForAnEvent = FSMotivation::archiveMotivation($args);
+        return $aMotivationToArchiveForAnEvent;
+    }
 }
 
 ?>

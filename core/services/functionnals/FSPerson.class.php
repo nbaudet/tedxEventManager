@@ -372,7 +372,7 @@ class FSPerson {
         $messagePersonWithEmail = self::getPersonByEmail($email);
         if (!$messagePersonWithEmail->getStatus()) {
             $argsMessage = array(
-                'messageNumber' => 421,
+                'messageNumber' => 416,
                 'message' => 'The email is free',
                 'status' => true,
                 'content' => $email
@@ -381,14 +381,14 @@ class FSPerson {
             $aPersonWithEmail = $messagePersonWithEmail->getContent();
             if (isset($no) and $no == $aPersonWithEmail->getNo()) {
                 $argsMessage = array(
-                    'messageNumber' => 421,
+                    'messageNumber' => 416,
                     'message' => 'The email is free',
                     'status' => true,
                     'content' => $email
                 );
             } else {
                 $argsMessage = array(
-                    'messageNumber' => 422,
+                    'messageNumber' => 417,
                     'message' => 'The email is occuped',
                     'status' => false,
                     'content' => $aPersonWithEmail
