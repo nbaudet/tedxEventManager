@@ -65,10 +65,23 @@ class Talk {
         }//if
         $this->eventNo = $array['eventNo']; 
         $this->speakerPersonNo = $array['speakerPersonNo']; 
-        $this->videoTitle = $array['videoTitle']; 
-        $this->videoDescription = $array['videoDescription']; 
-        $this->videoURL = $array['videoURL']; 
         $this->isArchived = $array['isArchived']; 
+        
+        // Optionnel
+        if (isset ($array['videoTitle']) )
+            $this->videoTitle = $array['videoTitle']; 
+        else
+            $this->videoTitle = '';
+        
+        if (isset ($array['videoDescription']) )
+            $this->videoDescription = $array['videoDescription']; 
+        else
+            $this->videoDescription = '';
+        
+        if (isset ($array['videoURL']) )
+            $this->videoURL = $array['videoURL']; 
+        else
+            $this->videoURL = '';
         
     }//construct
     
