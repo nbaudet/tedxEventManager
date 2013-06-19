@@ -573,28 +573,58 @@ class Tedx_manager{
         };
         return $message;
     }//function
-
-
-     
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
-    
-    /*public function registerVisitor( $args ) {
-        return $this->stub->registerVisitor( $args ); 
-    }//function*/
     
     
-    /*public function registerToAnEvent( $args ) {
-        return $this->stub->registerToAnEvent( $args ); 
-    }//function*/
-    
-    
-    public function archiveMotivationToAnEvent( $args ) {
-        return $this->stub->archiveMotivationToAnEvent( $args ); 
+    public function archivedMotivationToAnEvent($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "archivedMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     
+     /*==========================================================================
+     * 
+     * ORGANIZER FUNCTIONS
+     * 
+     *========================================================================*/
+    
+    //Add a Speaker with a Member and his membership
     public function registerSpeaker( $args ) {
-        return $this->stub->registerSpeaker( $args ); 
+        return ASOrganizer::registerSpeaker($args); 
+    }//function
+     
+    //Add a Location
+    public function addLocation($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "addLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addLocation( $args ); 
+        }else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+     /*==========================================================================
+     * 
+     * ADMIN FUNCTIONS
+     * 
+     *========================================================================*/
+    
+    //Add a Speaker with a Member and his membership
+    public function registerOrganizer( $args ) {
+        return ASAdmin::registerOrganizer( $args ); 
+    }//function
+    
+    
+    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
+    
+    public function archiveMotivationToAnEvent( $args ) {
+        return $this->stub->archiveMotivationToAnEvent( $args ); 
     }//function
     
     
@@ -617,12 +647,6 @@ class Tedx_manager{
         return $this->stub->changeRegistrationStatus( $args ); 
     }//function
     
-    
-    public function registerOrganizer( $args ) {
-        return $this->stub->registerOrganizer( $args ); 
-    }//function
-    
-    
     public function addTeamRole( $args ) {
         return $this->stub->addTeamRole( $args ); 
     }//function
@@ -644,34 +668,6 @@ class Tedx_manager{
     
     public function addEvent( $args ) {
         return $this->stub->addEvent( $args ); 
-    }//function
-    
-    public function archivedMotivationToAnEvent($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "archivedMotivationToAnEvent" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }//function
-    
-    /*==========================================================================
-     * 
-     * ORGANIZER FUNCTIONS
-     * 
-     *========================================================================*/
-    
-    //Add a Location
-    public function addLocation($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "addLocation" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::addLocation( $args ); 
-        }else {
-            $message = $messageAccess;
-        }
-        return $message;
     }//function
     
 }//class

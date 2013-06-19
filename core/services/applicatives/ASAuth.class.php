@@ -55,7 +55,6 @@ class ASAuth {
                     return $messageUnits;
                 }// else
                 $_SESSION['access'] = $this->getAccessesFromUnits( $_SESSION['units'] );
-                //var_dump($_SESSION['units']);
                 
                 // Sets the OK message
                 $args = array(

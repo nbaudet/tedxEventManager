@@ -149,7 +149,7 @@ function showMembers( $members ) {
     
     // Construct the table to display
     echo '<table><tr>'.PHP_EOL;
-    echo '<th>Login\Units</th>';
+    echo '<th>Login\Unit</th>';
     foreach($tabOfAllUnits as $unit){
         echo '<th>'.$unit.'</th>';
     }
@@ -178,26 +178,25 @@ function showMembers( $members ) {
 }
 
 function showAccesses( $accesses ) {
-    $tabOfAllAccesses = FSAccess::getAccesses()->getContent();
-    var_dump($tabOfAllAccesses);
+    //$tabOfAllAccesses = FSAccess::getAccesses()->getContent();
     $tabOfAllUnits = getUnitsAsString();
     
     // Construct the table to display
     echo '<table><tr>'.PHP_EOL;
-    echo '<th>Login\Units</th>';
+    echo '<th>Access\Unit</th>';
     foreach($tabOfAllUnits as $unit){
         echo '<th>'.$unit.'</th>';
     }
     echo '<th>Update</th></tr>'.PHP_EOL;
     
     $lineColor = 0;
-    foreach( $tabOfAllAccesses as $access ) {
+    foreach( $accesses as $access ) {
         
         echo '<tr style="background-color: '. ($lineColor++%2 == 0 ? 'lightgray' : 'whitesmoke') .';">'.PHP_EOL;
         
         $tabUnitsOfAccess = getUnitsFromAccess( $access );
         
-        echo '<td>'.$member->getID().'</td>';
+        echo '<td>'.$access->getService().'</td>';
         foreach ( $tabOfAllUnits as $unit ) {
 
             if( in_array( $unit, $tabUnitsOfAccess ) ) {
@@ -207,7 +206,7 @@ function showAccesses( $accesses ) {
                 echo '<td style="text-align: center; color: darkgray;">&#10005;</td>';
             }
         }
-        echo '<td><a href="?action=displayMember&memberID='.$member->getID().'">Change rights</a></td></tr>'.PHP_EOL;
+        echo '<td><a href="?action=displayAccess&AccessNo='.$access->getNo().'">Change units</a></td></tr>'.PHP_EOL;
     }
     echo '</table>'.PHP_EOL;
 }
@@ -323,7 +322,7 @@ function getUnitsAsString() {
 }
 
 
-function getAccessesAsString() {
+/*function getAccessesAsString() {
     $accesses = FSAccess::getAccesses()->getContent();
     /*var_dump($accesses);
     $tabOfAllAccesses = array();
@@ -331,8 +330,8 @@ function getAccessesAsString() {
         $tabOfAllAccesses[] = $access->getNo();
     }*/
     //return $tabOfAllAccesses;
-    return $accesses;
-}
+    /*return $accesses;
+}*/
 
 /**
  * Get all the units of a member and make an array
@@ -355,7 +354,18 @@ function getUnitsFromMember( $member ) {
 }
 
 function getUnitsFromAccess( $access ) {
-    $unitsFromAccess = FSUnit::getUnitsFromAccess( $access );
+    $unitsFromAccess = FSUnit::getUnitsFromAccess( $access )->getContent();
+    $tabAccessesOfUnit = array();
+    
+    if( count( $unitsFromAccess ) > 0 ) {
+        foreach($unitsFromAccess as $unit){
+            $tabAccessesOfUnit[] = $unit->getName();
+        }
+    }
+    else {
+        $tabAccessesOfUnit[] = NULL;
+    }
+    return $tabAccessesOfUnit;
 }
 
 ?>

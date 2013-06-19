@@ -26,15 +26,116 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 /**
  * Description of ASOrganizer
  *
- * @author Robin de la forêt
+ * @author rapou
  */
 class ASOrganizer {
-    //put your code here
+    
+     /**
+     * Constructor of applicative service Organizer
+     */
+    public function __construct() {
+        // do nothing;
+    }
+    
     // Add Keyword To An Event For A Person
     public static function addLocation($args) {
         $aLocation = FSLocation::addLocation($args);
         return $aLocation;
     }
+    
+    /**
+     * Method registerSpeaker from SA Organizer
+     * @param type $args 
+     * @return type 
+     */
+    public static function registerSpeaker($args) {
+        /*
+          $argsPerson = array(
+          'name'         => '',
+          'firstname'    => '',
+          'dateOfBirth'  => '',
+          'address'      => '',
+          'city'         => '',
+          'country'      => '',
+          'phoneNumber'  => '',
+          'email'        => '',
+          'description'  => '',
+          'idmember'     => '',
+          'password'     => '',
+          );
+         */
+        // Arguments for adding a Person
+        $argsPerson = array(
+            'name' => $args['name'],
+            'firstname' => $args['firstname'],
+            'dateOfBirth' => $args['dateOfBirth'],
+            'address' => $args['address'],
+            'city' => $args['city'],
+            'country' => $args['country'],
+            'phoneNumber' => $args['phoneNumber'],
+            'email' => $args['email'],
+            'description' => $args['description']
+        );
+
+        // Add a Person
+        $messageAddedPerson = FSPerson::addPerson($argsPerson);
+        // If the Person is added, continue. 
+        if ($messageAddedPerson->getStatus()) {
+            $anAddedPerson = $messageAddedPerson->getContent();
+            $messageAddedSpeaker = FSSpeaker::addSpeaker($anAddedPerson);
+            if ($messageAddedSpeaker->getStatus()){
+                // Arguments for adding a Member
+                $argsMember = array(
+                    'id' => $args['idmember'],
+                    'password' => $args['password'],
+                    'person' => $anAddedPerson
+                );
+                // Add a Member
+                $messageAddedMember = FSMember::addMember($argsMember);
+                // If the Member is added, continue.
+                if ($messageAddedMember->getStatus()) {
+                    $anAddedMember = $messageAddedMember->getContent();
+                    // Get the Unit with the name 'Visitor' 
+                    $messageUnit = FSUnit::getUnitByName('Participant');
+                    $participantUnit = $messageUnit->getContent();
+                    // Arguments for adding a Membership
+                    $argsMembership = array(
+                        'member' => $anAddedMember,
+                        'unit' => $participantUnit
+                    );
+                    // Add a Membership
+                    $messageAddedMembership = FSMembership::addMembership($argsMembership);
+                    // If the Membership is added, generate the message OK
+                    if ($messageAddedMembership->getStatus()) {
+                        $anAddedMembership = $messageAddedMembership->getContent();
+                        $argsMessage = array(
+                            'messageNumber' => 428,
+                            'message' => 'Speaker registered',
+                            'status' => true,
+                            'content' => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
+                        );
+                        $aRegisteredSpeaker = new Message($argsMessage);
+                    } else {
+                        // Else give the error message about non-adding Membership
+                        $aRegisteredSpeaker = $messageAddedMembership;
+                    }
+                } else {
+                    // Else give the error message about non-adding Member
+                    $aRegisteredSpeaker = $messageAddedMember;
+                }
+            }else{
+                // Else give the error message about non-adding Member
+                $aRegisteredSpeaker = $messageAddedSpeaker;
+            }
+        } else {
+            // Else give the error message about non-adding Person
+            $aRegisteredSpeaker = $messageAddedPerson;
+        }
+        
+        // Return the message Visitor Registed or not Registred
+        return $aRegisteredSpeaker;
+    }
+    
 }
 
 ?>

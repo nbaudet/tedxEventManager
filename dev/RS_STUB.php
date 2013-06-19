@@ -13,6 +13,8 @@
         require_once('../tedx-config.php');
         require_once('../core/services/applicatives/ASFree.class.php');
         require_once('../core/services/applicatives/ASVisitor.class.php');
+        require_once('../core/services/applicatives/ASOrganizer.class.php');
+        require_once('../core/services/applicatives/ASAdmin.class.php');
         require_once('../core/model/Person.class.php ');
         require_once('../core/model/Event.class.php ');
         require_once('../core/model/Participant.class.php ');
@@ -22,20 +24,23 @@
         require_once('../core/services/functionnals/FSSlot.class.php');
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
+        
 
-        $listOfValues = array('Concentration', 'Orthographe', 'Japon');
-        $aPerson = FSPerson::getPerson(29)->getContent();
-        $anEvent = FSEvent::getEvent(2)->getContent();
+        $argsPerson = array(
+          'name'         => 'Jacques',
+          'firstname'    => 'Jean',
+          'dateOfBirth'  => '1987-03-16',
+          'address'      => 'Chemin de la gare 24',
+          'city'         => 'Lausanne',
+          'country'      => 'Suisse',
+          'phoneNumber'  => '+41756999888',
+          'email'        => 'jeanjacques@heig.ch',
+          'description'  => 'Doyen de COMEM+',
+          'idmember'     => 'jean',
+          'password'     => 'jacques'
+          );
         
-        $args = array(
-           'listOfValues' => $listOfValues,
-           //'value'        => 'Orthographe',
-           'event'        => $anEvent,
-           'person'       => $aPerson
-        );
-        
-        // $message = ASParticipant::archiveKeyword($args);
-        $message = ASParticipant::addKeywordsToAnEvent($args);
+        $message = ASAdmin::registerOrganizer($argsPerson);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>
