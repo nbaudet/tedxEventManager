@@ -56,7 +56,104 @@ class Tedx_manager{
         $this->stub   = new Stub();  //new object Stub 
     } // construct
     
-   /**
+    
+    /*==========================================================================
+     * 
+     * CHECK FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
+     * Check the type of a variable
+     * @param type $type
+     * @param type $variableToCheck
+     */
+    public function checkType($type, $variableToCheck){
+        switch ($type){
+            case "string" :
+                return is_string($variableToCheck);
+                break;
+            case "int" :
+                return is_int($variableToCheck);
+                break;
+            case "email" :
+                if (preg_match('/^[\S]+@[\S]+\.\D{2,4}$/', $variableToCheck)== 1){
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+        }
+    }//function
+    
+    
+    /*==========================================================================
+     * 
+     * AUTHENTICATION FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
+     * Checks if the user is granted to do an action or not
+     * @param String $action the action to execute
+     * @return Message "Missing action", "Access granted", or "Access restricted"
+     */
+    public function isGranted( $action ) {
+        return $this->asAuth->isGranted( $action );
+    } // function
+    
+    /**
+     * Returns if a user is logged or not.
+     * @return Boolean
+     */
+    public function isLogged() {
+        return $this->asAuth->isLogged();
+    } // function
+    
+    /**
+     * Enable an anonym user to login
+     * @param String $login The user's login
+     * @param String $password The user's password
+     * @return Message "User logged" or "Login failure"
+     */
+    public function login( $login, $password ){
+        if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
+            $loginArgs = array (
+                'id' => $login,
+                'password' => $password
+            );
+            $messageLogin = $this->asAuth->login( $loginArgs );
+        } else {
+            $messageArgs = array (
+                'messageNumber' => 004,
+                'message' => "Login or password is not a string",
+                'status' => FALSE
+            );
+            $messageLogin = new Message( $messageArgs );
+        } // else
+        return $messageLogin;
+    } // function
+    
+    /**
+     * Logs the current member out
+     * @return Message "User logged out" or "User already logged out"
+     */
+    public function logout() {
+        return $this->asAuth->logout();
+    } // function
+    
+    /**
+     * Returns the value of the currently logged user, or NULL
+     * @return String The current username
+     */
+    public function getUsername() {
+        return $this->asAuth->getUsername();
+    } // function
+    
+    /*==========================================================================
+     * 
+     * FREE ACCESS FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
      * Applicatives services to register a Visitor
      * @param type $args all the arguments of Person and Member
      * @return type Message Registered Visitor or Specifics messages about a problem.
@@ -99,212 +196,6 @@ class Tedx_manager{
     public function getLocationFromEvent( $anEvent ){
         return ASFree::getLocationFromEvent($anEvent);
     }// function
-    
-    /**
-     * Applicatives services to register a Visitor to an Event
-     * @param type $args the arguments needs about Slot, and Registration
-     * @return type Message registeredToAnEvent or Specifics messages about a problem.
-     */
-    public function registerToAnEvent($args) {
-
-        $messageAccess = $tedx_manager->auth->isGranted( "registerToAnEvent" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-
-    }//function
-    
-    /**
-     * Applicative service to change the Profil of a Person
-     * @param type $args the aruments and the ID of a Person
-     * @return type message
-     */
-    public function changeProfil( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "changeProfile" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::changeProfil( $args );
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }//function
-    
-    /**
-     * Applicative service to change the Password of a Member
-     * @param type $args the Password and the ID of a Member
-     * @return type message
-     */
-    public function changePassword( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "changePassword" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::changePassword( $args );
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }//function
-    
-    /**
-     * Search persons with Args
-     * @param type $args
-     * @return type message
-     */
-    public function searchPersons($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "searchPersons" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::searchPersons( $args );
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }// function
-    
-    /**
-     * Enable an anonym user to login
-     * @param String $login The user's login
-     * @param String $password The user's password
-     * @return Message "User logged" or "Login failure"
-     */
-    public function login( $login, $password ){
-        if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
-            $loginArgs = array (
-                'id' => $login,
-                'password' => $password
-            );
-            $messageLogin = $this->asAuth->login( $loginArgs );
-        } else {
-            $messageArgs = array (
-                'messageNumber' => 004,
-                'message' => "Login or password is not a string",
-                'status' => FALSE
-            );
-            $messageLogin = new Message( $messageArgs );
-        } // else
-        return $messageLogin;
-    } // function
-    
-    /**
-     * Logs the current member out
-     * @return Message "User logged out" or "User already logged out"
-     */
-    public function logout() {
-        return $this->asAuth->logout();
-    }
-    
-    /**
-     * Returns the value of the currently logged user, or NULL
-     * @return String The current username
-     */
-    public function getUsername() {
-        return $this->asAuth->getUsername();
-    }
-    
-    /**
-     * Returns the logged person as an object or NULL
-     * @return Message
-     */
-    public function getLoggedPerson() {
-        if( $this->asAuth->isLogged() ) {
-            // Message with logged person
-            $messageMember = FSMember::getMember( $this->getUsername() );
-            $member        = $messageMember->getContent();
-            $personNo      = $member->getPersonNo();
-            $messagePerson = FSPerson::getPerson($personNo);
-            $person = $messagePerson->getContent();
-            $messageArgs = array (
-                'messageNumber' => 021,
-                'message'       => "The logged person",
-                'status'        => TRUE,
-                'content'       => $person
-            );
-            $messagePersonLogged = new Message( $messageArgs );
-        }
-        else {
-            // Message not a logged person
-            $messageArgs = array (
-                'messageNumber' => 022,
-                'message'       => "No logged member",
-                'status'        => FALSE
-            );
-            $messagePersonLogged = new Message( $messageArgs );
-        }
-        return $messagePersonLogged;
-    }
-    
-    /**
-     * Checks if the user is granted to do an action or not
-     * @param String $action the action to execute
-     * @return Message "Missing action", "Access granted", or "Access restricted"
-     */
-    public function isGranted( $action ) {
-        return $this->asAuth->isGranted( $action );
-    }
-    
-    /**
-     * Returns if a user is logged or not.
-     * @return Boolean
-     */
-    public function isLogged() {
-        return $this->asAuth->isLogged();
-    }
-    
-    
-    
-    /**
-     * Check the type of a variable
-     * @param type $type
-     * @param type $variableToCheck
-     */
-    public function checkType($type, $variableToCheck){
-        switch ($type){
-            case "string" :
-                return is_string($variableToCheck);
-                break;
-            case "int" :
-                return is_int($variableToCheck);
-                break;
-            case "email" :
-                if (preg_match('/^[\S]+@[\S]+\.\D{2,4}$/', $variableToCheck)== 1){
-                    return true;
-                } else {
-                    return false;
-                }
-                break;
-        }
-    }//function
-    
-    
-    
-    public function addKeywordsToAnEvent( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::addKeywordsToAnEvent( $args );
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }//function
-    
-    
-    public function archiveKeyword( $args ) {
-        $messageAccess = $tedx_manager->auth->isGranted( "archiveKeyword" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::archiveKeyword( $args ); 
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }//function
-    
     
     public function getEvent( $args ) {
         //No check needed ->Free
@@ -520,6 +411,139 @@ class Tedx_manager{
         $messageGetSpeakersByEvent = ASFree::getSpeakersByEvent($args);
         return $messageGetSpeakersByEvent; 
     }//function 
+    
+    /*==========================================================================
+     * 
+     * VISITOR FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
+     * Applicatives services to register a Visitor to an Event
+     * @param type $args the arguments needs about Slot, and Registration
+     * @return type Message registeredToAnEvent or Specifics messages about a problem.
+     */
+    public function registerToAnEvent($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "registerToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    /**
+     * Applicative service to change the Profil of a Person
+     * @param type $args the aruments and the ID of a Person
+     * @return type message
+     */
+    public function changeProfil( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changeProfile" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::changeProfil( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    /**
+     * Applicative service to change the Password of a Member
+     * @param type $args the Password and the ID of a Member
+     * @return type message
+     */
+    public function changePassword( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "changePassword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::changePassword( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    /**
+     * Search persons with Args
+     * @param type $args
+     * @return type message
+     */
+    public function searchPersons($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "searchPersons" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASVisitor::searchPersons( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }// function
+    
+    /*==========================================================================
+     * 
+     * MEMBER FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
+     * Returns the logged person as an object or NULL
+     * @return Message
+     */
+    public function getLoggedPerson() {
+        if( $this->asAuth->isLogged() ) {
+            // Message with logged person
+            $messageMember = FSMember::getMember( $this->getUsername() );
+            $member        = $messageMember->getContent();
+            $personNo      = $member->getPersonNo();
+            $messagePerson = FSPerson::getPerson($personNo);
+            $person = $messagePerson->getContent();
+            $messageArgs = array (
+                'messageNumber' => 021,
+                'message'       => "The logged person",
+                'status'        => TRUE,
+                'content'       => $person
+            );
+            $messagePersonLogged = new Message( $messageArgs );
+        }
+        else {
+            // Message not a logged person
+            $messageArgs = array (
+                'messageNumber' => 022,
+                'message'       => "No logged member",
+                'status'        => FALSE
+            );
+            $messagePersonLogged = new Message( $messageArgs );
+        }
+        return $messagePersonLogged;
+    }// function
+    
+    /*==========================================================================
+     * 
+     * PARTICIPANT FUNCTIONS
+     * 
+     *========================================================================*/
+    public function addKeywordsToAnEvent( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "addKeywordsToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::addKeywordsToAnEvent( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    public function archiveKeyword( $args ) {
+        $messageAccess = $tedx_manager->auth->isGranted( "archiveKeyword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archiveKeyword( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
 
     /**
      * get Keyword 
