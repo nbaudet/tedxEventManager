@@ -23,21 +23,19 @@
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
 
-
-        $argsPerson = array(
-            'name' => 'Fouras',
-            'firstname' => 'Père',
-            'dateOfBirth' => '1901-04-27',
-            'address' => 'Avenue des Sports 20',
-            'city' => 'Fort Boyard',
-            'country' => 'France',
-            'phoneNumber' => '+41794449933',
-            'email' => 'fortBoyard@minitel.fr',
-            'description' => 'Maitre des enigmes',
-            'idmember'     => 'fouras',
-            'password'     => 'enigme',
+        $listOfValues = array('Concentration', 'Orthographe', 'Japon');
+        $aPerson = FSPerson::getPerson(29)->getContent();
+        $anEvent = FSEvent::getEvent(2)->getContent();
+        
+        $args = array(
+           'listOfValues' => $listOfValues,
+           //'value'        => 'Orthographe',
+           'event'        => $anEvent,
+           'person'       => $aPerson
         );
-        $message = $tedx_manager->registerVisitor($argsPerson);
+        
+        // $message = ASParticipant::archiveKeyword($args);
+        $message = ASParticipant::addKeywordsToAnEvent($args);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>

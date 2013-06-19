@@ -29,11 +29,12 @@ class FSEvent {
             $argsEvent = array(
                 'no'            => $data['No'],
                 'mainTopic'     => $data['MainTopic'],
+                'locationName'  => $data['LocationName'],
+                'description'   => $data['Description'],
                 'startingDate'  => $data['StartingDate'],
                 'endingDate'    => $data['EndingDate'],
                 'startingTime'  => $data['StartingTime'],
                 'endingTime'    => $data['EndingTime'],
-                'description'   => $data['Description'],
                 'isArchived'    => $data['IsArchived']
             );
             
@@ -74,14 +75,15 @@ class FSEvent {
 
             foreach($data as $row){
                 $argsEvent = array(
-                    'no'           => $row['No'],
-                    'mainTopic'    => $row['MainTopic'],
-                    'startingDate' => $row['StartingDate'],
-                    'endingDate'   => $row['EndingDate'],
-                    'startingTime' => $row['StartingTime'],
-                    'endingTime'   => $row['EndingTime'],
-                    'description'  => $row['Description'],
-                    'isArchived'   => $row['IsArchived']
+                    'no'            => $row['No'],
+                    'mainTopic'     => $row['MainTopic'],
+                    'locationName'  => $row['LocationName'],
+                    'description'   => $row['Description'],
+                    'startingDate'  => $row['StartingDate'],
+                    'endingDate'    => $row['EndingDate'],
+                    'startingTime'  => $row['StartingTime'],
+                    'endingTime'    => $row['EndingTime'],
+                    'isArchived'    => $row['IsArchived']
                 );
             
                 $events[] = new Event($argsEvent);
@@ -128,14 +130,15 @@ class FSEvent {
             
             $argsEvent = array(
 
-                'no'           =>$data['No'],
-                'mainTopic'    => $data['MainTopic'],
-                'description'  => $data['Description'],
-                'startingDate' => $data['StartingDate'],
-                'endingDate'   => $data['EndingDate'],
-                'startingTime' => $data['StartingTime'],
-                'endingTime'   => $data['EndingTime'],
-                'isArchived'   => $data['IsArchived']
+                'no'            => $data['No'],
+                'mainTopic'     => $data['MainTopic'],
+                'locationName'  => $data['LocationName'],
+                'description'   => $data['Description'],
+                'startingDate'  => $data['StartingDate'],
+                'endingDate'    => $data['EndingDate'],
+                'startingTime'  => $data['StartingTime'],
+                'endingTime'    => $data['EndingTime'],
+                'isArchived'    => $data['IsArchived']
             );
             
             $event = new Event($argsEvent);
@@ -176,15 +179,16 @@ class FSEvent {
         // if args are supplied
         if( isset ($args['where']) ) {
             $where  = $args['where'];
+            
             // optional args
             if(isset($args['orderBy'])) {
                 $orderBy  = 'ORDER BY '.$args['orderBy'];
                 if( isset( $args['orderByType'] ) )
                     $orderBy .= ' '.$args['orderByType'];
-            }// if
-            else
+                
+            }else{
                 $orderBy = '';
-            
+            };
             // SQL statement
             $sql = "SELECT * From Event WHERE $where AND isArchived = 0 $orderBy";
            
@@ -199,14 +203,15 @@ class FSEvent {
                 // make object for each row
                 foreach($data as $row){
                     $argsEvent = array(
-                        'no'           => $row['No'],
-                        'mainTopic'    => $row['MainTopic'],
-                        'startingDate' => $row['StartingDate'],
-                        'endingDate'   => $row['EndingDate'],
-                        'startingTime' => $row['StartingTime'],
-                        'endingTime'   => $row['EndingTime'],
-                        'description'  => $row['Description'],
-                        'isArchived'   => $row['IsArchived']
+                        'no'            => $row['No'],
+                        'mainTopic'     => $row['MainTopic'],
+                        'locationName'  => $row['LocationName'],
+                        'description'   => $row['Description'],
+                        'startingDate'  => $row['StartingDate'],
+                        'endingDate'    => $row['EndingDate'],
+                        'startingTime'  => $row['StartingTime'],
+                        'endingTime'    => $row['EndingTime'],
+                        'isArchived'    => $row['IsArchived']
                     );
 
                     $events[] = new Event($argsEvent);

@@ -91,8 +91,8 @@ class Motivation {
      * get participantPersonNo
      * @param type $participantPersonNo 
      */
-    public function getParticipantPersonNo($participantPersonNo) {
-        $this->participantPersonNo = $participantPersonNo; 
+    public function getParticipantPersonNo() {
+        return $this->participantPersonNo; 
     }//function
     
     

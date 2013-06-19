@@ -2,10 +2,10 @@
 require_once('../tedx-config.php');
 
 echo '<h2>Test de login</h2>';
-//$message = $tedx_manager->login( 'gabor', 'gabor' );
+$message = $tedx_manager->login( 'gabor', 'gabor' );
 //$message = $tedx_manager->login( 'Penelope', 'anitakevinlove' ); // Visitor
 //$message = $tedx_manager->login( 'Penelope', '1' ); // Wrong UserName
-$message = $tedx_manager->login( 'admin', 'admin' ); // Admin
+//$message = $tedx_manager->login( 'admin', 'admin' ); // Admin
 
 if( $tedx_manager->isLogged() ) {
     echo '<p><strong>Logg&eacute; en tant que : ' . $tedx_manager->getUsername().

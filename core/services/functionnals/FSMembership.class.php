@@ -200,6 +200,91 @@ class FSMembership {
     }// End addMembership
     
     
+    public static function upsertMembership ( $args ) {
+        $member = $args['member'];
+        $unit   = $args['unit'];
+        
+        global $crud;
+        
+        $message;
+        
+        $messageMembership = FSMembership::getMembership( $args );
+        
+        // If the membership was already existing
+        if( $messageMembership->getStatus() ) {
+            // If the membership was archived, we un-archived it
+            $membership = $messageMembership->getContent();
+            
+            if( $membership->getIsArchived() == 1 ) {
+                $sql = "UPDATE Membership
+                    SET
+                    IsArchived = '0'
+                    WHERE Membership.MemberID = '".$member->getID()."'
+                    AND Membership.UnitNo = '".$unit->getNo()."'";
+                
+                // If the udpate was successfull
+                if( $crud->exec($sql) == 1 ) {
+                    
+                    $aSettedMembership = FSMembership::getMembership( $args );
+                    
+                    $argsMessage = array(
+                        'messageNumber' => 023,
+                        'message' => 'Membership updated',
+                        'status' => true,
+                        'content' => $aSettedMembership
+                    );
+                    $message = new Message($argsMessage);
+                }
+                // Else : impossible to update membership
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 024,
+                        'message' => 'Error while updating membership',
+                        'status' => false
+                    );
+                    $message = new Message($argsMessage);
+                }
+            }
+            // Else : archive the membership
+            else {
+                $sql = "UPDATE Membership
+                SET
+                IsArchived = '1'
+                WHERE Membership.MemberID = '".$member->getID()."'
+                AND Membership.UnitNo = '".$unit->getNo()."'";
+                
+                // If the udpate was successfull
+                if( $crud->exec($sql) == 1 ) {
+                    
+                    $aSettedMembership = FSMembership::getMembership( $args );
+                    
+                    $argsMessage = array(
+                        'messageNumber' => 023,
+                        'message' => 'Membership updated',
+                        'status' => true,
+                        'content' => $aSettedMembership
+                    );
+                    $message = new Message($argsMessage);
+                }
+                // Else : impossible to update membership
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 024,
+                        'message' => 'Error while updating membership',
+                        'status' => false
+                    );
+                    $message = new Message($argsMessage);
+                }
+                
+            }
+        }
+        // Else : otherwise, we create it
+        else {
+            $message = FSMembership::addMembership( $args );
+        }
+        return $message;
+    }
+    
 }// class
 
 ?>

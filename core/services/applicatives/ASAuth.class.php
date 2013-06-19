@@ -1,6 +1,7 @@
 <?php
 /**
- * Description of asAuth
+ * The Auth applicative service enables registered members to login to the site.
+ * The class also computes the rights and privileges to the application.
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
@@ -44,7 +45,7 @@ class ASAuth {
                 // Sets the session variables
                 $_SESSION['usr']    = $member->getId();
                 // get alls units from member
-                $messageUnits = $this->getAllUnitsFromMember( $member );
+                $messageUnits = $this->getUnitsFromMember( $member );
                 
                 // if message units 
                 if($messageUnits->getStatus()){
@@ -53,7 +54,7 @@ class ASAuth {
                 else { // error send message untis
                     return $messageUnits;
                 }// else
-                $_SESSION['access'] = $this->getAllAccessesFromUnits( $_SESSION['units'] );
+                $_SESSION['access'] = $this->getAccessesFromUnits( $_SESSION['units'] );
                 //var_dump($_SESSION['units']);
                 
                 // Sets the OK message
@@ -68,7 +69,7 @@ class ASAuth {
                 
                 // Easter Egg : Spécialement  pour toi, Gabor ! :)
                 if($member->getId() == 'gabor' ){
-                    echo '<img href="http://www.baudet.me/heig/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="100px" />';
+                    echo '<img src="../common/gabor.jpg" title="Les jolies courbes des IT pour Gabor" height="200px" />';
                 }// if
                 
             }// if
@@ -204,8 +205,8 @@ class ASAuth {
      * Returns an array with all the units of a member
      * @return Mixed Array of Units for a member
      */
-    private function getAllUnitsFromMember( $member ) {
-        $units = FSUnit::getAllUnitsFromMember( $member );
+    private function getUnitsFromMember( $member ) {
+        $units = FSUnit::getUnitsFromMember( $member );
         return $units;
     }// function
     
@@ -223,16 +224,17 @@ class ASAuth {
      * @param $units Mixed of objects units
      * @return Mixed of 
      */
-    private function getAllAccessesFromUnits( $units ) {
+    private function getAccessesFromUnits( $units ) {
         $tabAccesses = array();
         
         foreach( $units as $unit ) {
-            $messageAccess = FSAccess::getAllAccessesFromUnit( $unit );
+            $messageAccess = FSAccess::getAccessesFromUnit( $unit );
             $tabAccesses[] = $messageAccess->getContent();
         }// foreach
         
         // Merge the two arrays
         $accesses = array();
+        //var_dump($tabAccesses);
         foreach( $tabAccesses as $extAccesses ) {
             foreach( $extAccesses as $intAccess ) {
                 $accesses[] = $intAccess;

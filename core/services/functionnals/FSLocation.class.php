@@ -166,6 +166,71 @@ class FSLocation{
         }// else   
     }// function
     
+    /**
+     * get Location linked to the event
+     * @param type $event
+     * @return type message
+     */
+    public static function getLocationFromEvent($event){
+        // object crud
+        global $crud; 
+        
+        // message to return
+        $message;
+        
+        // if args isn't null
+        if($event != null) {
+            $sql = "SELECT * FROM Location INNER JOIN Event ON Location.Name = Event.LocationName WHERE Event.LocationName = '".addslashes($event->getLocationName())."'";
+        
+            $data = $crud->getRow($sql);
+            
+            if( $data ) { // if found, constuct object & send message
+                
+                $argsLocation = array(
+                'name'          => $data['Name'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'direction'     => $data['Direction'],
+                'isArchived'    => $data['IsArchived']
+            );
+                // object Location
+                $location = new Location($argsLocation);
+                
+                // Sending message
+                $argsMessage = array(
+                        'messageNumber' => 201,
+                        'message'       => 'Existant Location',
+                        'status'        => true,
+                        'content'       => $location
+                );
+                $message = new Message($argsMessage);
+                
+            }// if
+            else {
+                 $argsMessage = array(
+                    'messageNumber' => 505,
+                    'message'       => 'No Location found',
+                    'status'        => false,
+                    'content'       => NULL
+                );
+                $message = new Message($argsMessage);
+            }// else
+        }// if
+        else { // error message
+            $argsMessage = array(
+                'messageNumber' => 504,
+                'message'       => 'Event is null',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+        }// else
+        
+        // return message
+        return $message;
+    }// function
+    
  }// class
     
 ?>

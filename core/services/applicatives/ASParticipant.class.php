@@ -21,6 +21,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSMotivation.class.php');
 
 /**
  * Description of ASParticipant
@@ -30,7 +31,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 class ASParticipant {
     //Show a Keyword
     public static function getKeyword($args) {
-        $aKeyword = FSUnit::getUnit($args);
+        $aKeyword = FSKeyword::getKeyword($args);
         return $aKeyword;    
     }//function 
     
@@ -73,7 +74,7 @@ class ASParticipant {
                         $messageSetKeyword = FSKeyword::setKeyword($aValidKeyword);
                         $messages[$i] = $messageSetKeyword;
                     }else{
-                        // Message Keyword déjà existant. 
+                        $messages[$i] = $messageValidKeyword;
                     }
                 }
             }else{
@@ -84,6 +85,37 @@ class ASParticipant {
         return $messages; 
     }//function
     
+    //Show all Keywords of a Person for an Event
+    public static function archiveKeyword($args) {
+        $value = $args['value'];
+        $anEvent = $args['event'];
+        $aPerson = $args['person'];
+        $messageValidKeyword = FSKeyword::getKeyword(array('value'=> $value, 'event'=> $anEvent, 'person' => $aPerson));
+        if($messageValidKeyword->getStatus()){
+            $aValidKeyword = $messageValidKeyword->getContent();
+            if(!$aValidKeyword->getIsArchived()){
+                $aValidKeyword->setIsArchived(1);
+                $messageSetKeyword = FSKeyword::setKeyword($aValidKeyword);
+                $message = $messageSetKeyword;
+            }else{
+                $message = $messageValidKeyword;
+            }
+        }else{
+            $message = $messageValidKeyword;
+        }
+        return $message;
+        
+    }//function
+    
+    /**
+     * Method addMotivationToAnEvent from SA Participant
+     * @param type $args 
+     * @return type 
+     */
+    public static function addMotivationToAnEvent($args){
+        $aMotivationForAnEvent = FSMotivation::addMotivation($args);
+        return $aMotivationForAnEvent;
+    }
 }
 
 ?>

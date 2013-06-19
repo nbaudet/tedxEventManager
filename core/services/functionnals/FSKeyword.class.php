@@ -25,14 +25,15 @@ class FSKeyword {
         
         global $crud;
         
-        $sql = "SELECT * FROM Keyword WHERE Value = " . $args['value'] . " AND EventNo = " . $args['event']->getNo() . " AND PersonNo = " . $args['person']->getNo();
+        $sql = "SELECT * FROM Keyword WHERE Value = '" . $args['value'] . "' AND EventNo = " . $args['event']->getNo() . " AND PersonNo = " . $args['person']->getNo();
         $data = $crud->getRow($sql);
         
         if($data){
             $argsKeyword = array(
                 'value'            => $data['Value'],
                 'personNo'         => $data['PersonNo'],
-                'eventNo'          => $data['EventNo']
+                'eventNo'          => $data['EventNo'],
+                'isArchived'       => $data['IsArchived']
             );
             
             $keyword = new Keyword($argsKeyword);
@@ -153,16 +154,18 @@ class FSKeyword {
      */
     public static function setKeyword($aKeywordToSet) {
         global $crud;
-            $sql = "UPDATE  Person SET  
-                IsArchived =    '" . $aKeywordToSet->getIsArchived() . "'
-                WHERE  Keyword.Value = " . $aKeywordToSet->getValue() . "'
-                AND Keyword.EventNo = " . $aKeywordToSet->getEventNo() . "'
+            $sql = "UPDATE  Keyword SET  
+                IsArchived =    " . $aKeywordToSet->getIsArchived() . "
+                WHERE  Keyword.Value = '" . $aKeywordToSet->getValue() . "'
+                AND Keyword.EventNo = " . $aKeywordToSet->getEventNo() . "
                 AND Keyword.PersonNo = " . $aKeywordToSet->getPersonNo();
 
-            if ($crud->exec($sql) == 1) {
-                $sql = "SELECT * FROM Keyword WHERE Value = " . $aKeywordToSet->getValue() . " AND EventNo = " . $aKeywordToSet->getEventNo() . " AND PersonNo = " . $aKeywordToSet->getPersonNo();
-                $data = $crud->getRow($sql);
+                            var_dump($sql);
 
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM Keyword WHERE Value = '" . $aKeywordToSet->getValue() . "' AND EventNo = " . $aKeywordToSet->getEventNo() . " AND PersonNo = " . $aKeywordToSet->getPersonNo();
+                $data = $crud->getRow($sql);
+                var_dump($data);
                 $argsKeyword = array(
                     'value' => $data['Value'],
                     'eventNo' => $data['EventNo'],
@@ -245,14 +248,14 @@ class FSKeyword {
             $aValidKeyword = $messageValidKeyword->getContent();
              $argsMessage = array(
                 'messageNumber' => 427,
-                'message'       => 'The keyword is valid',
+                'message'       => 'The keyword is added',
                 'status'        => true,
                 'content'       => $aValidKeyword
             );
         }else{
             $argsMessage = array(
                 'messageNumber' => 428,
-                'message'       => 'The keyword is not valid',
+                'message'       => 'The keyword is not added',
                 'status'        => false,
                 'content'       => null
             );
@@ -269,12 +272,11 @@ class FSKeyword {
         global $crud;
         $aPerson = $args['person'];
         $anEvent = $args['event'];
-        
         $sql = "SELECT count(*) AS nbKeywords FROM Keyword WHERE IsArchived = 0 AND EventNo = " . $anEvent->getNo() . " AND PersonNo = " . $aPerson->getNo();
         $data = $crud->getRow($sql);
         
         $nbKeywords = $data['nbKeywords'];
-        if ($nbKeywords){
+        if ($nbKeywords < 3){
             $argsMessage = array(
                 'messageNumber' => 426,
                 'message'       => 'Number of Keywords < 3',

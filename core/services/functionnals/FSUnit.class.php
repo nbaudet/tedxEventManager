@@ -97,16 +97,14 @@ class FSUnit {
      * @param Member $member The member we are getting the units for.
      * @return Message The Units for a member
      */
-    public static function getAllUnitsFromMember(Member $member) {
+    public static function getUnitsFromMember(Member $member) {
         global $crud;
         // SQL statement
-        $sql = "SELECT * FROM Member
-            INNER JOIN Membership
-            ON Member.ID = Membership.MemberID
+        $sql = "SELECT * FROM Membership
             INNER JOIN Unit
             ON Membership.UnitNo = Unit.No
-            WHERE Member.ID = '" . $member->getId() . "'
-            AND Unit.IsArchived = 0";
+            WHERE Membership.MemberID = '" . $member->getId() . "'
+            AND Membership.IsArchived = 0";
         // exec query
         $data = $crud->getRows($sql);
         
@@ -152,6 +150,59 @@ class FSUnit {
         return $message;
     }// function
     
+    
+    public static function getUnitsFromAccess( Access $access ) {
+        global $crud;
+        // SQL statement
+        $sql = "SELECT * FROM Permission
+            INNER JOIN Access
+            ON Permission.AccesNo = Access.No
+            WHERE Permission.AccessNo = '" . $access->getNo() . "'
+            AND Permission.IsArchived = 0";
+        // exec query
+        $data = $crud->getRows($sql);
+        
+        // If we got the units, we give them back to the caller
+        if( $data ) {
+            // list of units
+            $units = array();
+            
+            foreach( $data as $row ) {
+                $argsUnit = array(
+                    'no'            => $row['No'],
+                    'name'          => $row['Name'],
+                    'isArchived'    => $row['IsArchived'],
+                );
+
+                $aUnit = new Unit($argsUnit);
+                // put into array $units
+                $units[] = $aUnit;
+            }// foreach
+            
+            // message units found
+            $args = array(
+                'messageNumber' => 013,
+                'message'       => 'Units founds',
+                'status'        => true,
+                'content'       => $units
+            );
+            $message= new Message($args);
+            
+        }// if
+        //
+        else {
+            // message units not found
+            $args = array(
+                'messageNumber' => 014,
+                'message'       => 'Units not founds',
+                'status'        => false,
+                'content'       => null
+            );
+            $message= new Message($args);
+        }// else
+        
+        return $message;
+    }
     
     /**
      * A way to get all the units in the database.

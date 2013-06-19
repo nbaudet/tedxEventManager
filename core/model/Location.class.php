@@ -126,6 +126,23 @@ class Location {
         $this->city = $city; 
     }//function
     
+    /**
+     * get city
+     * @return type string city
+     */
+    public function getlocationName() {
+        return $this->locationName; 
+    }//function
+    
+    
+    /**
+     * set city
+     * @param type $city 
+     */
+    public function setLocationName($locationName) {
+        $this->locationName = $locationName; 
+    }//function
+    
     
     /**
      * get country
