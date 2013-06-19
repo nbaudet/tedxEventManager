@@ -25,7 +25,7 @@ require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
-var_dump(FSPlace::getPlaces());
+//var_dump(FSPlace::getPlaces());
 
 $argsPlace = array (
     'no'    => 2,
@@ -34,7 +34,23 @@ $argsPlace = array (
     'speakerPersonNo' => 6
 );
 
-var_dump(FSPlace::getPlace($argsPlace));
+var_dump($place = FSPlace::getPlace($argsPlace)->getContent());
+
+$event = FSEvent::getEvent(1)->getContent();
+
+$argsSlot = array (
+    'no'    => '1',
+    'event' => $event
+);
+
+$slot = FSSlot::getSlot($argsSlot)->getContent();
+
+//var_dump(FSPlace::getPlacesBySlot($slot));
+
+
+
+var_dump(FSSpeaker::getSpeakerByPlace($place));
+
 
 /*$argsAffec = array (
     'teamRole'  => $teamRole,

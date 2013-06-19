@@ -9,6 +9,7 @@
 require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
+require_once(APP_DIR . '/core/model/Place.class.php');
 
 class FSSpeaker{
     /**
@@ -175,7 +176,60 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
 
             return $message;
         }   
-    }
+    } // END addSpeaker
+    
+    public static function getSpeakerByPlace($place){
+        global $crud;
+        
+        $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
+Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Sp.PersonNo ,Sp.IsArchived 
+FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No 
+                WHERE Sp.IsArchived = 0 AND Pe.No IN (
+                                                SELECT SpeakerPersonNo FROM Place 
+                                                WHERE SlotNo =  ".$place->getSlotNo()." 
+                                                AND IsArchived = 0
+                                            );";
+        
+        $data = $crud->getRow($sql);
+
+        if($data){
+            $argsSpeaker = array(
+                'no'            => $data['No'],
+                'name'          => $data['Name'],
+                'firstname'     => $data['FirstName'],
+                'dateOfBirth'   => $data['DateOfBirth'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'phoneNumber'   => $data['PhoneNumber'],
+                'email'         => $data['Email'],
+                'description'   => $data['Description'],
+                'personNo'      => $data['PersonNo'],
+                'isArchived'    => $data['IsArchived']
+            );
+        
+            $speaker = new Speaker($argsSpeaker);
+
+            $argsMessage = array(
+                'messageNumber'     => 121,
+                'message'           => 'Existant Speaker',
+                'status'            => true,
+                'content'           => $speaker
+            );
+            $return = new Message($argsMessage);
+
+        }else{
+            $argsMessage = array(
+                'messageNumber'     => 122,
+                'message'           => 'Inexistant Speaker',
+                'status'            => false,
+                'content'           => NULL    
+            );
+            $return = new Message($argsMessage);
+
+        }
+        return $return;
+    } // END getSpeakerByPlace
     
  }
     

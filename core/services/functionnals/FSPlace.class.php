@@ -112,11 +112,10 @@ class FSPlace {
      * @param array $args
      * @return a Message containing the Places
      */
-    public static function getPlacesBySlot($args){
+    public static function getPlacesBySlot($slot){
         global $crud;
-        $slot = $args['slot'];
         
-        $sql = "SELECT * FROM Place WHERE SlotNo = ".$slot->getNo();
+        $sql = "SELECT * FROM Place WHERE IsArchived = 0 AND SlotNo = ".$slot->getNo();
         
         $data = $crud->getRows($sql);
         
