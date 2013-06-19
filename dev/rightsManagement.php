@@ -81,9 +81,11 @@ if( isset( $_REQUEST['action'] ) ) {
         updateMember();
         break;
     
-    case 'seeUnitsAccesses':
-        echo '<h1>See the units\' accesses</h1>';
+    case 'seeAccessesUnits':
+        echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
+        $accesses = FSAccess::getAccesses()->getContent();
+        showAccesses( $accesses );
         break;
     
     case 'updateUnit':
@@ -135,7 +137,7 @@ function showMenu(){
     <p>Select one of the option to access the corresponding page</p>
     <ul>
         <li><a href="?action=seeMembersUnits">See the members\' units</a></li>
-        <li><a href="?action=seeUnitsAccesses">See the units\' accesses</a></li>
+        <li><a href="?action=seeAccessesUnits">See the accesses\' units</a></li>
         <li><a href="?action=logout">Log out</a></li>
     </ul>
     ';
@@ -143,7 +145,7 @@ function showMenu(){
 
 
 function showMembers( $members ) {
-    $tabOfAllUnits = getAllUnitsAsString();
+    $tabOfAllUnits = getUnitsAsString();
     
     // Construct the table to display
     echo '<table><tr>'.PHP_EOL;
@@ -158,12 +160,47 @@ function showMembers( $members ) {
         
         echo '<tr style="background-color: '. ($lineColor++%2 == 0 ? 'lightgray' : 'whitesmoke') .';">'.PHP_EOL;
         
-        $tabUnitsOfMember = getAllUnitsFromMember( $member );
+        $tabUnitsOfMember = getUnitsFromMember( $member );
         
         echo '<td>'.$member->getID().'</td>';
         foreach ( $tabOfAllUnits as $unit ) {
 
             if( in_array( $unit, $tabUnitsOfMember ) ) {
+                echo '<td style="text-align: center;">&#10003;</td>';
+            }
+            else {
+                echo '<td style="text-align: center; color: darkgray;">&#10005;</td>';
+            }
+        }
+        echo '<td><a href="?action=displayMember&memberID='.$member->getID().'">Change rights</a></td></tr>'.PHP_EOL;
+    }
+    echo '</table>'.PHP_EOL;
+}
+
+function showAccesses( $accesses ) {
+    $tabOfAllAccesses = FSAccess::getAccesses()->getContent();
+    var_dump($tabOfAllAccesses);
+    $tabOfAllUnits = getUnitsAsString();
+    
+    // Construct the table to display
+    echo '<table><tr>'.PHP_EOL;
+    echo '<th>Login\Units</th>';
+    foreach($tabOfAllUnits as $unit){
+        echo '<th>'.$unit.'</th>';
+    }
+    echo '<th>Update</th></tr>'.PHP_EOL;
+    
+    $lineColor = 0;
+    foreach( $tabOfAllAccesses as $access ) {
+        
+        echo '<tr style="background-color: '. ($lineColor++%2 == 0 ? 'lightgray' : 'whitesmoke') .';">'.PHP_EOL;
+        
+        $tabUnitsOfAccess = getUnitsFromAccess( $access );
+        
+        echo '<td>'.$member->getID().'</td>';
+        foreach ( $tabOfAllUnits as $unit ) {
+
+            if( in_array( $unit, $tabUnitsOfAccess ) ) {
                 echo '<td style="text-align: center;">&#10003;</td>';
             }
             else {
@@ -182,9 +219,9 @@ function showMembers( $members ) {
 function showMember() {
     if( isset( $_REQUEST['memberID'] ) ) {
         $member = FSMember::getMember( $_REQUEST['memberID'] )->getContent();
-        $tabUnitsOfMember = getAllUnitsFromMember( $member );
+        $tabUnitsOfMember = getUnitsFromMember( $member );
         
-        $tabOfAllUnits = getAllUnitsAsString();
+        $tabOfAllUnits = getUnitsAsString();
         
         echo '<h1>Change <em>'.$member->getId().'</em>\'s units</h1>';
         
@@ -224,9 +261,9 @@ function updateMember() {
     
     // Gets all the units a member is part of
     $member = FSMember::getMember($memberID)->getContent();
-    $tabUnitsOfMember = getAllUnitsFromMember( $member );
+    $tabUnitsOfMember = getUnitsFromMember( $member );
     
-    $tabOfAllUnits = getAllUnitsAsString();
+    $tabOfAllUnits = getUnitsAsString();
     
     foreach( $tabOfAllUnits as $unit ) {
         // If the member was already granted this access
@@ -239,7 +276,7 @@ function updateMember() {
             // Change this right
             else {
                 // change the right
-                echo 'change the right for '.$unit.'<br />';
+                echo 'Successfully changed the membership to '.$unit.'<br />';
                 $objectUnit = FSUnit::getUnitByName($unit)->getContent();
                 $args = array(
                     'member' => $member,
@@ -254,15 +291,13 @@ function updateMember() {
             // If it was checked
             if ( isset( $checkedUnits[$unit] ) ) {
                 // change this right
-                echo 'change the right for '.$unit.'<br />';
+                echo 'Successfully changed the membership to '.$unit.'<br />';
                 $objectUnit = FSUnit::getUnitByName($unit)->getContent();
                 $args = array(
                     'member' => $member,
                     'unit'   => $objectUnit
                 );
                 $message = FSMembership::upsertMembership( $args );
-                var_dump( $message );
-                echo 'prout';
             }
             else {
                 // do nothing
@@ -278,7 +313,7 @@ function updateMember() {
  * Get all the existing units and make an array with their names
  * @return String Array of all the units' names
  */
-function getAllUnitsAsString() {
+function getUnitsAsString() {
     $units = FSUnit::getAllUnits()->getContent();
     $tabOfAllUnits = array();
     foreach ( $units as $unit) {
@@ -287,27 +322,40 @@ function getAllUnitsAsString() {
     return $tabOfAllUnits;
 }
 
-/**
- * Get all the existing Units
- * @return Units Array with all the units
- */
-// IS IT REALLY NEEDED ? ///////////////////////////////////////////////////////
-/*function getAllUnits() {
-    return FSUnit::getAllUnits();
-}*/
+
+function getAccessesAsString() {
+    $accesses = FSAccess::getAccesses()->getContent();
+    /*var_dump($accesses);
+    $tabOfAllAccesses = array();
+    foreach ( $accesses as $access) {
+        $tabOfAllAccesses[] = $access->getNo();
+    }*/
+    //return $tabOfAllAccesses;
+    return $accesses;
+}
 
 /**
  * Get all the units of a member and make an array
  * @param Member The member to get the units from.
  * @return Mixed An array with units
  */
-function getAllUnitsFromMember( $member ) {
-    $unitsOfMember = FSUnit::getAllUnitsFromMember( $member )->getContent();
+function getUnitsFromMember( $member ) {
+    $unitsOfMember = FSUnit::getUnitsFromMember( $member )->getContent();
     $tabUnitsOfMember = array();
-    foreach($unitsOfMember as $unit){
-        $tabUnitsOfMember[] = $unit->getName();
+    
+    if( count( $unitsOfMember ) > 0 ) {
+        foreach($unitsOfMember as $unit){
+            $tabUnitsOfMember[] = $unit->getName();
+        }
+    }
+    else {
+        $tabUnitsOfMember[] = NULL;
     }
     return $tabUnitsOfMember;
+}
+
+function getUnitsFromAccess( $access ) {
+    $unitsFromAccess = FSUnit::getUnitsFromAccess( $access );
 }
 
 ?>

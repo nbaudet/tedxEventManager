@@ -214,15 +214,13 @@ class FSMembership {
         if( $messageMembership->getStatus() ) {
             // If the membership was archived, we un-archived it
             $membership = $messageMembership->getContent();
-            var_dump($membership);
+            
             if( $membership->getIsArchived() == 1 ) {
                 $sql = "UPDATE Membership
                     SET
                     IsArchived = '0'
                     WHERE Membership.MemberID = '".$member->getID()."'
                     AND Membership.UnitNo = '".$unit->getNo()."'";
-                
-                //var_dump($sql);
                 
                 // If the udpate was successfull
                 if( $crud->exec($sql) == 1 ) {
@@ -284,7 +282,6 @@ class FSMembership {
         else {
             $message = FSMembership::addMembership( $args );
         }
-        var_dump($message);
         return $message;
     }
     
