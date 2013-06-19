@@ -14,6 +14,7 @@
         require_once('../core/services/applicatives/ASFree.class.php');
         require_once('../core/services/applicatives/ASVisitor.class.php');
         require_once('../core/services/applicatives/ASOrganizer.class.php');
+        require_once('../core/services/applicatives/ASAdmin.class.php');
         require_once('../core/model/Person.class.php ');
         require_once('../core/model/Event.class.php ');
         require_once('../core/model/Participant.class.php ');
@@ -26,20 +27,20 @@
         
 
         $argsPerson = array(
-          'name'         => 'Seydoux',
-          'firstname'    => 'JeanMarc',
-          'dateOfBirth'  => '1991-04-27',
-          'address'      => 'Chemin de la gare',
-          'city'         => 'Yverdon',
+          'name'         => 'Jacques',
+          'firstname'    => 'Jean',
+          'dateOfBirth'  => '1987-03-16',
+          'address'      => 'Chemin de la gare 24',
+          'city'         => 'Lausanne',
           'country'      => 'Suisse',
-          'phoneNumber'  => '+41799999888',
-          'email'        => 'jmseydoux@heig.ch',
+          'phoneNumber'  => '+41756999888',
+          'email'        => 'jeanjacques@heig.ch',
           'description'  => 'Doyen de COMEM+',
-          'idmember'     => 'seydoux',
-          'password'     => 'seydoux'
+          'idmember'     => 'jean',
+          'password'     => 'jacques'
           );
         
-        $message = ASOrganizer::registerSpeaker($argsPerson);
+        $message = ASAdmin::registerOrganizer($argsPerson);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>

@@ -593,7 +593,7 @@ class Tedx_manager{
      * 
      *========================================================================*/
     
-    //Add a Participant with a Member and his membership
+    //Add a Speaker with a Member and his membership
     public function registerSpeaker( $args ) {
         return ASOrganizer::registerSpeaker($args); 
     }//function
@@ -607,6 +607,17 @@ class Tedx_manager{
             $message = $messageAccess;
         }
         return $message;
+    }//function
+    
+     /*==========================================================================
+     * 
+     * ADMIN FUNCTIONS
+     * 
+     *========================================================================*/
+    
+    //Add a Speaker with a Member and his membership
+    public function registerOrganizer( $args ) {
+        return ASAdmin::registerOrganizer( $args ); 
     }//function
     
     
@@ -635,12 +646,6 @@ class Tedx_manager{
     public function changeRegistrationStatus( $args ) {
         return $this->stub->changeRegistrationStatus( $args ); 
     }//function
-    
-    
-    public function registerOrganizer( $args ) {
-        return $this->stub->registerOrganizer( $args ); 
-    }//function
-    
     
     public function addTeamRole( $args ) {
         return $this->stub->addTeamRole( $args ); 
