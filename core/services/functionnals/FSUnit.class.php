@@ -155,10 +155,14 @@ class FSUnit {
         global $crud;
         // SQL statement
         $sql = "SELECT * FROM Permission
+            INNER JOIN Unit
+            ON Permission.UnitNo = Unit.No
             INNER JOIN Access
-            ON Permission.AccesNo = Access.No
+            ON Access.No = Permission.AccessNo
             WHERE Permission.AccessNo = '" . $access->getNo() . "'
-            AND Permission.IsArchived = 0";
+            AND Permission.IsArchived = 0
+            ORDER BY Access.Service";
+
         // exec query
         $data = $crud->getRows($sql);
         
@@ -186,6 +190,7 @@ class FSUnit {
                 'status'        => true,
                 'content'       => $units
             );
+            //$units = 
             $message= new Message($args);
             
         }// if

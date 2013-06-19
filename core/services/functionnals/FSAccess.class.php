@@ -119,18 +119,28 @@ class FSAccess {
         $sql = "SELECT * FROM Access
             INNER JOIN Permission
             ON Access.No = Permission.AccessNo
-            AND Access.IsArchived = 0";
+            AND Access.IsArchived = 0
+            ORDER BY Access.Service";
         
         $data = $crud->getRows($sql);
-        
+
         // If we got the Accesses, we give them back to the caller
         if( $data ) {
-            
             $accesses = array();
             
             foreach( $data as $access ) {
-                /*$accesses[] = $access['Service'];*/
-                // Ici on fait des objets directement !
+                $argsAccess = array (
+                    'no'         => $access['No'],
+                    'service'    => $access['Service'],
+                    'type'       => $access['Type'],
+                    'isArchived' => $access['IsArchived']
+                );
+                $newAccess = new Access ( $argsAccess );
+                
+                // We only want unique values
+                if( !in_array ( $newAccess, $accesses ) ) {
+                    $accesses[] = $newAccess;
+                }
             }// foreach
             
             $args = array(
