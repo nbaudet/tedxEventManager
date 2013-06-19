@@ -5,11 +5,30 @@
     <body>
 <?php
 require_once('../tedx-config.php');
-require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
+//require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
-require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
-require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
-require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
+//require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+//require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
+//require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
+
+echo '<h1>Search Event</h1>';
+// Args Event : Search all events between 2014 and 2015
+$searchArgs = array(
+    'where'       => "StartingDate >= '2014-01-01'",
+    'orderByType' => 'LocationName'
+);
+// Search the events with args
+$messageSearchEvents = $tedx_manager->searchEvents($searchArgs);
+ 
+// test answer
+if($messageSearchEvents->getStatus()){
+    echo 'Some events found !';
+    echo '';
+    $firstEvent = $messageSearchEvents->getContent();
+    echo "First found event's topic : " . ($firstEvent[0]->getMainTopic());
+}else{
+    echo 'No event matched your criterias';
+}
 
 echo '<h1>Get Event</h1>';
 
