@@ -563,7 +563,17 @@ class Tedx_manager{
         return ASParticipant::getKeywordsByPersonForEvent($args); 
     }//function
     
-    
+    //Add a Motivation To An Event
+    public static function addMotivationToAnEvent($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "addMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::addMotivationToAnEvent($args); 
+        }else{
+            $message = $messageAccess;
+        };
+        return $message;
+    }//function
+
 
      
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
@@ -576,11 +586,6 @@ class Tedx_manager{
     /*public function registerToAnEvent( $args ) {
         return $this->stub->registerToAnEvent( $args ); 
     }//function*/
-    
-    
-    public function addMotivationToAnEvent( $args ) {
-        return $this->stub->addMovtivationToAnEvent( $args ); 
-    }//function
     
     
     public function archiveMotivationToAnEvent( $args ) {
