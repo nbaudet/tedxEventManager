@@ -16,7 +16,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
-require_once(APP_DIR .'/core/services/functionnals/FSCoOrganization.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSTalk.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSAffectation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
@@ -153,8 +153,8 @@ var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
 
 //var_dump($speaker);
 
-//var_dump(FSCoOrganization::getCoOrganization($argsCoOrg));
-//var_dump(FSCoOrganization::getCoOrganizations());
+//var_dump(FSTalk::getTalk($argsCoOrg));
+//var_dump(FSTalk::getTalks());
 
 
 
@@ -165,10 +165,10 @@ var_dump($messageSettedPerson = FSPerson::setPerson($aPersonToSet));*/
     'speaker' => $speaker2
 );*/
 
-//var_dump(FSCoOrganization::addCoOrganization($argsNew));
+//var_dump(FSTalk::addTalk($argsNew));
 
-//var_dump(FSCoOrganization::getEventsBySpeaker($speaker2));
-//var_dump(FSCoOrganization::getSpeakersByEvent($event));
+//var_dump(FSTalk::getEventsBySpeaker($speaker2));
+//var_dump(FSTalk::getSpeakersByEvent($event));
 
 ?>
 
