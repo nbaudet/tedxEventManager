@@ -13,6 +13,7 @@
         require_once('../tedx-config.php');
         require_once('../core/services/applicatives/ASFree.class.php');
         require_once('../core/services/applicatives/ASVisitor.class.php');
+        require_once('../core/services/applicatives/ASOrganizer.class.php');
         require_once('../core/model/Person.class.php ');
         require_once('../core/model/Event.class.php ');
         require_once('../core/model/Participant.class.php ');
@@ -22,20 +23,23 @@
         require_once('../core/services/functionnals/FSSlot.class.php');
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
+        
 
-        $listOfValues = array('Concentration', 'Orthographe', 'Japon');
-        $aPerson = FSPerson::getPerson(29)->getContent();
-        $anEvent = FSEvent::getEvent(2)->getContent();
+        $argsPerson = array(
+          'name'         => 'Seydoux',
+          'firstname'    => 'JeanMarc',
+          'dateOfBirth'  => '1991-04-27',
+          'address'      => 'Chemin de la gare',
+          'city'         => 'Yverdon',
+          'country'      => 'Suisse',
+          'phoneNumber'  => '+41799999888',
+          'email'        => 'jmseydoux@heig.ch',
+          'description'  => 'Doyen de COMEM+',
+          'idmember'     => 'seydoux',
+          'password'     => 'seydoux'
+          );
         
-        $args = array(
-           'listOfValues' => $listOfValues,
-           //'value'        => 'Orthographe',
-           'event'        => $anEvent,
-           'person'       => $aPerson
-        );
-        
-        // $message = ASParticipant::archiveKeyword($args);
-        $message = ASParticipant::addKeywordsToAnEvent($args);
+        $message = ASOrganizer::registerSpeaker($argsPerson);
         echo "<hr> Mon message final";
         var_dump($message);
         ?>
