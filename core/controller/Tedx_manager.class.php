@@ -651,7 +651,16 @@ class Tedx_manager{
         return $this->stub->addEvent( $args ); 
     }//function
     
-    
+    public function archivedMotivationToAnEvent($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "archivedMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
     
 }//class
 
