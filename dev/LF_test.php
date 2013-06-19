@@ -27,6 +27,15 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 var_dump(FSPlace::getPlaces());
 
+$argsPlace = array (
+    'no'    => 2,
+    'slotNo' => 2,
+    'slotEventNo'   => 2,
+    'speakerPersonNo' => 6
+);
+
+var_dump(FSPlace::getPlace($argsPlace));
+
 /*$argsAffec = array (
     'teamRole'  => $teamRole,
     'organizer' => $organizer
