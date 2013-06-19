@@ -26,7 +26,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 /**
  * Description of ASOrganizer
  *
- * @author rapou
+ * @author Robin de la forêt
  */
 class ASOrganizer {
     //put your code here

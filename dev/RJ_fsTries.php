@@ -11,6 +11,10 @@ require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
+
+//$crud->exec("UPDATE Event SET MainTopic = 'The future doesn\’t just happen' WHERE No = 1;");
+
+
 echo '<h1>Search Event</h1>';
 // Args Event : Search all events between 2014 and 2015
 $searchArgs = array(

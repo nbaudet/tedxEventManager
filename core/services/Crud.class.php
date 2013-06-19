@@ -70,7 +70,7 @@ class Crud {
         // try connecting to the database
         try {
             $this->dbh = new PDO('mysql:host='.$this->location.';dbname='.$this->name, $this->user, $this->password);
-   
+            $this->dbh -> exec("set names utf8");
         } catch (PDOException $e) { 
             print "DATABASE CONNECTION ERROR !: " . $e->getMessage() .'mysql:host='.$this->location.';dbname='.$this->name .' // USER : '.$this->user . ' PASSWORD : ' . $this->password;
             die();
