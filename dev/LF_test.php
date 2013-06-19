@@ -51,6 +51,8 @@ $slot = FSSlot::getSlot($argsSlot)->getContent();
 
 var_dump(FSSpeaker::getSpeakerByPlace($place));
 
+var_dump(FSPlace::getPlacesBySlot($slot));
+
 
 /*$argsAffec = array (
     'teamRole'  => $teamRole,

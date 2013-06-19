@@ -16,6 +16,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSPlace.class.php');
 
 
 /**
@@ -182,7 +183,7 @@ class ASFree {
         $registrations = FSRegistration::getRegistrations();
         return $registrations;
     }// function
-    //
+    
     // Show all Registration of an event
     public static function getRegistrationsByEvent($anEvent){
         $registrations = FSRegistration::getRegistrationsByEvent($anEvent);
@@ -339,6 +340,25 @@ class ASFree {
         return $messageGetLocationFromEvent;
     }// function
     
+    /**
+     * Returns the Speaker that talks at a given Place
+     * @param Place $place
+     * @return a Message containing the Speaker of a Place
+     */
+    public static function getSpeakerByPlace($place){
+        $messageGetSpeakerByPlace = FSSpeaker::getSpeakerByPlace($place);
+        return $messageGetSpeakerByPlace;
+    } // END getSpeakerByPlace
+    
+    /**
+     * Returns all the Places during a given Slot
+     * @param Slot
+     * @return a Message containing an array of Places
+     */
+    public static function getPlacesBySlot($slot){
+        $messageGetPlacesBySlot = FSPlace::getPlacesBySlot($slot);
+        return $messageGetPlacesBySlot;
+    } // END getPlacesBySlot
 }// class
 
 ?>

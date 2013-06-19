@@ -178,6 +178,11 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
         }   
     } // END addSpeaker
     
+    /**
+     * Returns the Speaker that talks at a given Place
+     * @param Place $place
+     * @return a Message containing the Speaker of a Place
+     */
     public static function getSpeakerByPlace($place){
         global $crud;
         
