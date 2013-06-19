@@ -620,6 +620,11 @@ class Tedx_manager{
         return ASAdmin::registerOrganizer( $args ); 
     }//function
     
+    // Add a team role
+    public function addTeamRole( $aName ) {
+        return ASAdmin::addTeamRole($aName); 
+    }//function
+    
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -645,10 +650,6 @@ class Tedx_manager{
     
     public function changeRegistrationStatus( $args ) {
         return $this->stub->changeRegistrationStatus( $args ); 
-    }//function
-    
-    public function addTeamRole( $args ) {
-        return $this->stub->addTeamRole( $args ); 
     }//function
     
     

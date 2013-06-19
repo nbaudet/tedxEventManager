@@ -122,6 +122,10 @@ class ASAdmin {
         // Return the message Visitor Registed or not Registred
         return $aRegisteredOrganizer;
     }
+    
+    public static function addTeamRole($aName) {
+        return FSTeamRole::addTeamRole($aName);   
+    }
 }
 
 ?>
