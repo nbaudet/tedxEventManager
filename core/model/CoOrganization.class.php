@@ -3,40 +3,40 @@
 
 
 /**
- * CoOrganization.class.php
+ * Talk.class.php
  * 
  * Author : Guillaume Lehmann
  * Date : 05.06.2013
  * 
- * Description : define the class CoOrganization as definited in the model
+ * Description : define the class Talk as definited in the model
  * 
  */
-class CoOrganization {
+class Talk {
     
     
     /**
-     * CoOrganization's no
+     * Talk's no
      * @var type int
      */
     private $eventNo; 
     
     
     /**
-     * CoOrganization's speakerPersonNo
+     * Talk's speakerPersonNo
      * @var type int 
      */
     private $speakerPersonNo; 
     
     
     /**
-     * CoOrganization's isArchived 
+     * Talk's isArchived 
      * @var type boolean
      */
     private $isArchived; 
     
     
     /**
-     * Constructs object CoOrganization
+     * Constructs object Talk
      * 
      * @param type $array of parameters that correspond to the classes properties
      */

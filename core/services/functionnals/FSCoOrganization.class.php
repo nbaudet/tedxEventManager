@@ -1,33 +1,33 @@
 <?php
 
 /**
- * Description of FSCoOrganization
+ * Description of FSTalk
  *
  * @author L'eau Rik
  */
 
-require_once(APP_DIR . '/core/model/CoOrganization.class.php');
+require_once(APP_DIR . '/core/model/Talk.class.php');
 require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 
-class FSCoOrganization{
+class FSTalk{
     /**
-     *Returns a CoOrganization with the given EventNo and SpeakerNo as Id
+     *Returns a Talk with the given EventNo and SpeakerNo as Id
      *@param int $personNo the id of the Speaker
      *@param int $eventNo the id of the Event
-     *@return a Message with an existant CoOrganization
+     *@return a Message with an existant Talk
      */
-    public static function getCoOrganization($args){
-        $coOrganization = NULL;
+    public static function getTalk($args){
+        $talk = NULL;
         global $crud;
         
         $event = $args['event'];
         $speaker = $args['speaker'];
 
-        $sql = "SELECT * FROM CoOrganization 
+        $sql = "SELECT * FROM Talk 
                 WHERE EventNo = " . $event->getNo(). " AND
                 SpeakerPersonNo = " . $speaker->getNo(). " AND
                 IsArchived = 0";
@@ -35,26 +35,26 @@ class FSCoOrganization{
         $data = $crud->getRow($sql);
         
         if($data){
-            $argsCoOrganization = array(
+            $argsTalk = array(
                 'eventNo'            => $data['EventNo'],
                 'speakerPersonNo'    => $data['SpeakerPersonNo'],
                 'isArchived'    => $data['IsArchived']
             );
         
-            $coOrganization = new CoOrganization($argsCoOrganization);
+            $talk = new Talk($argsTalk);
 
             $argsMessage = array(
                 'messageNumber'     => 133,
-                'message'           => 'Existant CoOrganization',
+                'message'           => 'Existant Talk',
                 'status'            => true,
-                'content'           => $coOrganization
+                'content'           => $talk
             );
             $return = new Message($argsMessage);
         }else{
             
             $argsMessage = array(
                 'messageNumber'     => 134,
-                'message'           => 'Inexistant CoOrganization',
+                'message'           => 'Inexistant Talk',
                 'status'            => false,
                 'content'           => NULL    
             );
@@ -64,41 +64,41 @@ class FSCoOrganization{
     }
 
     /**
-     * Returns all the CoOrganizations of the database
-     * @return A Message containing an array of CoOrganizations
+     * Returns all the Talks of the database
+     * @return A Message containing an array of Talks
      */
-    public static function getCoOrganizations(){
+    public static function getTalks(){
         global $crud;
 
-        $sql = "SELECT * FROM CoOrganization as CoOrg
+        $sql = "SELECT * FROM Talk as CoOrg
             INNER JOIN Event as E ON E.No = CoOrg.EventNo
             INNER JOIN Speaker as Sp ON Sp.PersonNo = CoOrg.SpeakerPersonNo WHERE CoOrg.IsArchived = 0;";
         $data = $crud->getRows($sql);
         
         if ($data){
-            $coOrganizations = array();
+            $talks = array();
 
             foreach($data as $row){
-                $argsCoOrganizations = array(
+                $argsTalks = array(
                     'eventNo'           => $row['EventNo'],
                     'speakerPersonNo'   => $row['SpeakerPersonNo'],
                     'isArchived'        => $row['IsArchived']
                   );
             
-                $coOrganizations[] = new CoOrganization($argsCoOrganizations);
+                $talks[] = new Talk($argsTalks);
             } //foreach
 
             $argsMessage = array(
                 'messageNumber' => 135,
                 'message'       => 'All CoOrganzations selected',
                 'status'        => true,
-                'content'       => $coOrganizations
+                'content'       => $talks
             );
             $return = new Message($argsMessage);
         } else {
             $argsMessage = array(
                 'messageNumber' => 136,
-                'message'       => 'Error while SELECT * FROM CoOrganizations',
+                'message'       => 'Error while SELECT * FROM Talks',
                 'status'        => false,
                 'content'       => NULL
             );
@@ -108,11 +108,11 @@ class FSCoOrganization{
     }
     
     /**
-     * Add a new CoOrganization in Database
-     * @param $args Parameters of a CoOrganization
-     * @return a Message containing the new CoOrganization
+     * Add a new Talk in Database
+     * @param $args Parameters of a Talk
+     * @return a Message containing the new Talk
      */
-    public static function addCoOrganization($args){
+    public static function addTalk($args){
         
         $event = $args['event'];
         $speaker = $args['speaker'];
@@ -129,20 +129,20 @@ class FSCoOrganization{
             if($messageValidEvent->getStatus()){
                 $aValidEvent = $messageValidEvent->getContent();
 
-                // Validate Inexistant CoOrganization
-                $argsCoOrganization = array(
+                // Validate Inexistant Talk
+                $argsTalk = array(
                     'event' => $aValidEvent,
                     'speaker' => $aValidSpeaker
                 );
                     
-                $messageValidCoOrganization = FSCoOrganization::getCoOrganization($argsCoOrganization);
-                if($messageValidCoOrganization->getStatus() == false){
-                     $messageCreateCoOrganization = self::createCoOrganization($argsCoOrganization);
-                        // Create final message - Message CoOrganization added or not added.
-                        $return = $messageCreateCoOrganization;
+                $messageValidTalk = FSTalk::getTalk($argsTalk);
+                if($messageValidTalk->getStatus() == false){
+                     $messageCreateTalk = self::createTalk($argsTalk);
+                        // Create final message - Message Talk added or not added.
+                        $return = $messageCreateTalk;
                     }else{
-                        // Generate Message - Valid CoOrganization
-                        $return = $messageValidCoOrganization;
+                        // Generate Message - Valid Talk
+                        $return = $messageValidTalk;
                     }
  
             }else{
@@ -158,50 +158,50 @@ class FSCoOrganization{
     
     
     /**
-     * Create a new CoOrganization in Database
+     * Create a new Talk in Database
      * @param type $args
-     * @return a Message containing the created CoOrganization
+     * @return a Message containing the created Talk
      */
-    private static function createCoOrganization($args){
+    private static function createTalk($args){
         global $crud;
         $event = $args['event'];
         $speaker = $args['speaker'];
         
-        $sql = "INSERT INTO CoOrganization (
+        $sql = "INSERT INTO Talk (
             EventNo, SpeakerPersonNo) VALUES (
             '".$event->getNo()."',
             '".$speaker->getNo()."'
         )";
         $crud->exec($sql);
         
-        // Validate Existant CoOrganization
-        $argsCoOrganization = array(
+        // Validate Existant Talk
+        $argsTalk = array(
             'event' => $args['event'],
             'speaker' => $args['speaker']
         );
-        $messageValidCoOrganization = self::getCoOrganization($argsCoOrganization);
-        if($messageValidCoOrganization->getStatus()){
-            $aValidCoOrganization = $messageValidCoOrganization->getContent();
-            // Generate message - Message CoOrganization added.
+        $messageValidTalk = self::getTalk($argsTalk);
+        if($messageValidTalk->getStatus()){
+            $aValidTalk = $messageValidTalk->getContent();
+            // Generate message - Message Talk added.
             $argsMessage = array(
                 'messageNumber' => 137,
-                'message'       => 'New CoOrganization added !',
+                'message'       => 'New Talk added !',
                 'status'        => true,
-                'content'       => $aValidCoOrganization
+                'content'       => $aValidTalk
             );
             $return = new Message($argsMessage);
         }else{
             // Generate Message - Participation not Added            
             $argsMessage = array(
                     'messageNumber' => 138,
-                    'message'       => 'Error while inserting new CoOrganization',
+                    'message'       => 'Error while inserting new Talk',
                     'status'        => false,
                     'content'       => NULL
                 );
             $return = new Message($argsMessage);
         }
         return $return;
-    } // END createCoOrganization
+    } // END createTalk
     
     
     /** Returns All Event by Speaker
@@ -211,7 +211,7 @@ class FSCoOrganization{
     public static function getEventsBySpeaker($speaker){   
         global $crud;
         
-        $sql = "SELECT EventNo FROM CoOrganization 
+        $sql = "SELECT EventNo FROM Talk 
             WHERE SpeakerPersonNo = ".$speaker->getNo()." AND IsArchived = 0";
         
         $data = $crud->getRows($sql);
@@ -254,7 +254,7 @@ class FSCoOrganization{
     public static function getSpeakersByEvent($event){   
         global $crud;
         
-        $sql = "SELECT SpeakerPersonNo FROM CoOrganization 
+        $sql = "SELECT SpeakerPersonNo FROM Talk 
             WHERE EventNo = ".$event->getNo()." AND IsArchived = 0";
         
         $data = $crud->getRows($sql);
