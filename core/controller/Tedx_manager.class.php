@@ -613,11 +613,6 @@ class Tedx_manager{
     }//function
     
     
-    public function addLocation( $args ) {
-        return $this->stub->addLocation( $args ); 
-    }//function
-    
-    
     public function changeRegistrationStatus( $args ) {
         return $this->stub->changeRegistrationStatus( $args ); 
     }//function
@@ -657,6 +652,23 @@ class Tedx_manager{
             $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
         }
         else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    /*==========================================================================
+     * 
+     * ORGANIZER FUNCTIONS
+     * 
+     *========================================================================*/
+    
+    //Add a Location
+    public function addLocation($args) {
+        $messageAccess = $tedx_manager->auth->isGranted( "addLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addLocation( $args ); 
+        }else {
             $message = $messageAccess;
         }
         return $message;

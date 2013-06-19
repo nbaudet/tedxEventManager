@@ -22,6 +22,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 
+
 /**
  * Description of ASOrganizer
  *
@@ -29,6 +30,11 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
  */
 class ASOrganizer {
     //put your code here
+    // Add Keyword To An Event For A Person
+    public static function addLocation($args) {
+        $aLocation = FSLocation::addLocation($args);
+        return $aLocation;
+    }
 }
 
 ?>
