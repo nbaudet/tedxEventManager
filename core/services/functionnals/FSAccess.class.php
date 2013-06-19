@@ -12,6 +12,49 @@ require_once(APP_DIR . '/core/model/Message.class.php');
 class FSAccess {
     
     /**
+     * Returns the access with the specified ID.
+     * /!\ Consider that it returns even archived Accesses! Be carefull.
+     * @global PDO Object $crud Database Manipulator
+     * @param int $accessNo The ID of the access we want
+     * @return Message Access found OR No access found
+     */
+    public static function getAccess( $accessNo ) {
+        global $crud;
+        
+        $sql = "SELECT * FROM Access
+            WHERE Access.No = '".$accessNo."'";
+        
+        $data = $crud->getRow( $sql );
+        
+        if( $data ) {
+            $argsAccess = array (
+                'no'         => $data['No'],
+                'service'    => $data['Service'],
+                'type'       => $data['Type'],
+                'isArchived' => $data['IsArchived']
+            );
+            $access = new Access( $argsAccess );
+            
+            $args = array(
+                'messageNumber' => 025,
+                'message'       => 'Access found',
+                'status'        => true,
+                'content'       => $access
+            );
+            $message= new Message( $args );
+        }
+        else {
+            $args = array(
+                'messageNumber' => 026,
+                'message'       => 'No access found',
+                'status'        => false
+            );
+            $message= new Message( $args );
+        }
+        return $message;
+    }
+    
+    /**
      * Returns all the accesses for a unit, or NULL of a unit doesn't have
      * any access
      * @global type $crud
@@ -166,6 +209,40 @@ class FSAccess {
         return $message;
     }// function
     
+    
+    /**
+     * Functionnal Service addAccess
+     * @param Access $AccessToAdd The Access to add
+     * @return Message $message anAddedAccess OR an Error
+     */
+    public static function upsertAccess( $AccessToAdd ) {
+        // get database manipulator
+        global $crud;
+
+        /**
+         * Validate Access
+         */
+        $noAccess = $AccessToAdd->getNo();
+        $messageAccess = FSAccess::getAccess($noAccess);
+        
+        // If the Access exists
+        if( $messageAccess->getStatus() ) {
+            $access = $messageAccess->getContent();
+            // If the access is NOT archived
+            if( $access->getIsArchived() == 0 ) {
+                // We update IT
+                
+            }
+            // Else: we 
+        }
+        // Else: Just add the access
+        else {
+            
+        }
+        
+        
+        return $message;
+    }// function
 } // class
 
 ?>

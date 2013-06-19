@@ -88,6 +88,14 @@ if( isset( $_REQUEST['action'] ) ) {
         showAccesses( $accesses );
         break;
     
+    case 'addAccess':
+        addAccess();
+        echo '<h1>See the accesses\' units</h1>';
+        echo '<p><a href="?">Go back</a></p>';
+        $accesses = FSAccess::getAccesses()->getContent();
+        showAccesses( $accesses );
+        break;
+    
     case 'updateUnit':
         echo '<h1>Register the changes for a unit</h1>';
         echo '<p><a href="?">Go back</a></p>';
@@ -178,6 +186,20 @@ function showMembers( $members ) {
 }
 
 function showAccesses( $accesses ) {
+    
+    // Echo a small for to add accesses to the application
+    echo '<form method="POST">
+            <fieldset style="width: 250px;">
+                <legend>Add a new Access</legend>
+                <input type="hidden" id="action" value="addAccess" />
+                <label for="service">Access name:</label>
+                <input type="text" id="service" name="service" /><br />
+                <input type="submit" value="Add Access" />
+            </fieldset>
+        </form>';
+
+
+
     //$tabOfAllAccesses = FSAccess::getAccesses()->getContent();
     $tabOfAllUnits = getUnitsAsString();
     
@@ -308,6 +330,13 @@ function updateMember() {
     showMember();
 }
 
+function addAccess() {
+    if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
+        
+        $messageAdd = FSAccess::Access($AccessToAdd);
+    }
+}
+
 /**
  * Get all the existing units and make an array with their names
  * @return String Array of all the units' names
@@ -320,18 +349,6 @@ function getUnitsAsString() {
     }
     return $tabOfAllUnits;
 }
-
-
-/*function getAccessesAsString() {
-    $accesses = FSAccess::getAccesses()->getContent();
-    /*var_dump($accesses);
-    $tabOfAllAccesses = array();
-    foreach ( $accesses as $access) {
-        $tabOfAllAccesses[] = $access->getNo();
-    }*/
-    //return $tabOfAllAccesses;
-    /*return $accesses;
-}*/
 
 /**
  * Get all the units of a member and make an array
