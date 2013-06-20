@@ -166,6 +166,53 @@ class FSRegistration {
         return new Message($argsMessage);
     }
     
+    public static function getRegistrationHistory($args){
+        // Get database manipulator
+        global $crud;
+        $aParticipant = $args['participant'];
+        $anEvent = $args['event'];
+        
+        // SQL Request for getting all Persistants Registrations
+        $sql = "SELECT * FROM Registration WHERE EventNo = ". $anEvent->getNo() ." AND ParticipantPersonNo = " . $aParticipant->getNo() . " ORDER BY RegistrationDate ASC";
+        $data = $crud->getRows($sql);
+        // If there is persistants Registrations
+        if($data){
+            $registrations = array();
+            
+            // For each Persistant Registration, create an Object
+            foreach($data as $row){
+                $argsRegistration = array(
+                    'status'              => $row['Status'],
+                    'eventNo'             => $row['EventNo'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'registrationDate'    => $row['RegistrationDate'],
+                    'type'                => $row['Type'],
+                    'typeDescription'     => $row['TypeDescription'],
+                    'isArchived'          => $row['IsArchived']
+                );
+            
+                $registrations[] = new Registration($argsRegistration);
+            } //foreach
+
+            // Create a message with all objects returned
+            $argsMessage = array(
+                'messageNumber' => 412,
+                'message'       => 'All Registration getted',
+                'status'        => true,
+                'content'       => $registrations
+            );
+        } else {
+            // Create a message with no persistant object 
+            $argsMessage = array(
+                'messageNumber' => 413,
+                'message'       => 'No persistant Registration',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }
+        return new Message($argsMessage);
+    }
+    
     
     /**
      * Add a new Registration in Database

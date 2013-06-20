@@ -191,7 +191,10 @@ class ASParticipant {
         return $message; 
     }//function
     
-    
+    // For getting the history of the registration of a Participant.
+    public static function getRegistrationHistory($args) {
+        return FSRegistration::getRegistrationHistory($args);
+    }
 }
 
 ?>

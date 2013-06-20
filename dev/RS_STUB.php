@@ -26,18 +26,16 @@
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
         
-        $event = FSEvent::getEvent(2)->getContent();
-        $organizer = FSOrganizer::getOrganizer(4)->getContent();
+        $event = FSEvent::getEvent(1)->getContent();
+        $participant = FSParticipant::getParticipant(5)->getContent();
         
         $args = array(
             'event' => $event,
-            'organizer' => $organizer,
-            'name' => 'Responsable décors'
+            'participant' => $participant,
         );
         
-        $aRoleToSet = FSRole::getRole($args)->getContent();
-        $aRoleToSet->setLevel(3);
-        $message = FSRole::setRole($aRoleToSet);
+        
+        $message = $tedx_manager->getRegistrationHistory($args);
         
         echo "<hr> Mon message final";
         var_dump($message);
