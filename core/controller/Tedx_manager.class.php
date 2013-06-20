@@ -639,6 +639,11 @@ class Tedx_manager{
         return ASParticipant::sendRegistration( $args ); 
     }//function
     
+    //Show the Registration history of a Person for an Event
+    public function getRegistrationHistory($args) {
+        return ASParticipant::getRegistrationHistory($args);
+    }//function
+    
     
      /*==========================================================================
      * 
