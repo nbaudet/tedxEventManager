@@ -670,6 +670,12 @@ class Tedx_manager{
         return ASAdmin::addTeamRole($aName); 
     }//function
     
+    // Affect a TeamRole with a Organizer
+    public function affectTeamRole( $args ) {
+        return ASAdmin::affectTeamRole( $args ); 
+    }//function
+    
+    // Add an Event
     public function addEvent( $args ) {
         return ASAdmin::addEvent( $args ); 
     }//function
@@ -683,12 +689,10 @@ class Tedx_manager{
         return $this->stub->addSpeakerToSlot( $args ); 
     }//function
     
-    
     public function changePositionOfSpeakerToEvent( $args ) {
         return $this->stub->changePositionOfSpeakerToEvent( $args ); 
     }//function
-    
-    
+        
     public function linkTeamRole( $args ) {
         return $this->stub->linkTeamRole( $args ); 
     }//function
@@ -696,7 +700,6 @@ class Tedx_manager{
     public function changeRoleLevel( $args ) {
         return $this->stub->changeRoleLevel( $args ); 
     }//function
-    
     
     public function addRole( $args ) {
         return $this->stub->addRole( $args ); 
