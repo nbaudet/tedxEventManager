@@ -37,7 +37,7 @@ class ASOrganizer {
         // do nothing;
     }
     
-    // Add Keyword To An Event For A Person
+    // Add a Location
     public static function addLocation($args) {
         $aLocation = FSLocation::addLocation($args);
         return $aLocation;

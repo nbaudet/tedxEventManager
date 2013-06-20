@@ -261,6 +261,65 @@ class FSEvent {
         return $message;
     }// function
     
+ /**
+     * Set new parameters to a Motivation
+     * @param Motivation $aMotivationToSet
+     * @return Message containing the set Motivation
+     */
+    public static function setEvent($anEventToSet) {
+        global $crud;
+        
+        
+        $sql = "UPDATE  Event SET  
+                MainTopic = '" . $anEventToSet->getMainTopic() . "',
+                LocationName = '" . $anEventToSet->getLocationName() . "',
+                Description = '" . $anEventToSet->getDescription() . "',
+                StartingDate = '" . $anEventToSet->getStartingDate() . "',
+                EndingDate = '" . $anEventToSet->getEndingDate() . "',
+                StartingTime = '" . $anEventToSet->getStartingTime() . "',
+                EndingTime = '" . $anEventToSet->getEndingTime() . "',
+                IsArchived = '" . $anEventToSet->getIsArchived() . "',
+                WHERE  Event.No = '" . $anEventToSet->getNo(); 
+       
+        if ($crud->exec($sql) == 1) {
+           $sql = "SELECT * FROM Event 
+                    WHERE No = " . $anEventToSet->getNo(); 
+           
+                $data = $crud->getRow($sql);
+
+                $argsMotivation = array(
+                    'no' => $anEventToSet->getNo(),
+                    'mainTopic' => $anEventToSet->getMainTopic(),
+                    'locationName' => $anEventToSet->getLocationName(),
+                    'description' => $anEventToSet->getDescription(),
+                    'startingDate' => $anEventToSet->getStartingDate(),
+                    'endingDate' => $anEventToSet->getEndingDate(),
+                    'startingTime' => $anEventToSet->getStartingTime(),
+                    'endingTime' => $anEventToSet->getEndingTime(),
+                    'isArchived' => $anEventToSet->getIsArchived()
+                );
+ 
+                $aSetEvent = new Event($argsMotivation);
+
+                $argsMessage = array(
+                    'messageNumber' => 232,
+                    'message' => 'Event set !',
+                    'status' => true,
+                    'content' => $aSetEvent
+                );
+                $message = new Message($argsMessage); 
+        }else{
+                $argsMessage = array(
+                    'messageNumber' => 233,
+                    'message' => 'Error while setting new Event',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+         }
+       return $message;
+    }
+    
 }// class
 
 ?>
