@@ -136,6 +136,17 @@ class ASOrganizer {
         return $aRegisteredSpeaker;
     }
     
+    /**
+     * Method change the Location of a Event
+     * @param type $args 
+     * @return type 
+     */
+    public static function changeEventLocation($args) {
+        $anEventToUpdate = new Event($args['event']);
+        $anEventToUpdate->setLocationName($args['locationName']);
+        $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
+        return $aChangedEventLocation;
+    }
 }
 
 ?>
