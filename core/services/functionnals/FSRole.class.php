@@ -171,7 +171,7 @@ class FSRole {
             $aCreatedRole = FSRole::getRole($args)->getContent();
             
             $argsMessage = array(
-                'messageNumber' => 167,
+                'messageNumber' => 165,
                 'message'       => 'New Role added !',
                 'status'        => true,
                 'content'       => $aCreatedRole
@@ -180,7 +180,7 @@ class FSRole {
 
         } else {
             $argsMessage = array(
-                'messageNumber' => 168,
+                'messageNumber' => 165,
                 'message'       => 'Error while inserting new Role',
                 'status'        => false,
                 'content'       => NULL
