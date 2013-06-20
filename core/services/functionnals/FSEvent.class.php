@@ -96,9 +96,8 @@ class FSEvent {
                 'status'        => true,
                 'content'       => $events
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
+            
         } else {
             $argsMessage = array(
                 'messageNumber' => 214,
@@ -106,16 +105,16 @@ class FSEvent {
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }// else
+        
+        return $return;
     }// function
     
     /**
      * Add a new Event in Database
      * @param $args Parameters of a Event
-     * @return a Message containing the new Event
+     * @return a Message containing the new Event and its Slots
      */
     public static function addEvent($args){
         $eventArgs = $args['event'];
@@ -126,31 +125,57 @@ class FSEvent {
         
         if ($messageCreateEvent->getStatus()){
             $aCreatedEvent = $messageCreateEvent->getContent();
-        }
-        
-        
-        
-        foreach($slotsArgs as $slot){
-            $argsSlot = array (
-                'event'                  => $aCreatedEvent,
-                'happeningDate'          => $slot['happeningDate'],
-                'startingTime'           => $slot['startingTime'],
-                'endingTime'             => $slot['endingDate'],
+                             
+            foreach($slotsArgs as $slot){
+                $argsSlot = array (
+                    'event'                  => $aCreatedEvent,
+                    'happeningDate'          => $slot['happeningDate'],
+                    'startingTime'           => $slot['startingTime'],
+                    'endingTime'             => $slot['endingTime'],
+                );
+
+                $messageCreateSlot = FSSlot::addSlot($argsSlot);
+
+                if($messageCreateSlot->getStatus()){
+                    $slots[] = $messageCreateSlot->getContent();
+                } else {
+                    $return = $messageCreateSlot;
+                }
+            } //foreach
+            
+            $contentArray = array ($aCreatedEvent, $slots);
+            
+            $argsMessage = array(
+                'messageNumber' => 161,
+                'message'       => 'New Event created !',
+                'status'        => true,
+                'content'       => $contentArray
             );
+            $return = new Message($argsMessage);
             
-            $aCreatedSlot = FSSlot::addSlot($argsSlot);
-            $slots[] = new Slot($aCreatedSlot->getContent());
-        } //foreach
-        
-        
-            
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 216,
+                'message'       => 'Error while inserting new Event',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+                    
     }// END addEvent
     
-    
+    /**
+     * Adds a new Event in Database
+     * @param array $args
+     * @return a Message containing the created Event
+     */
     public static function createEvent($args){
         global $crud;
         
-        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
+        if(isset($args['locationName'])){
+            $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
             StartingTime, EndingTime, LocationName) VALUES (
                 '".addslashes($args['mainTopic'])."',
                 '".addslashes($args['description'])."', 
@@ -159,7 +184,18 @@ class FSEvent {
                 '".$args['startingTime']."', 
                 '".$args['endingTime']."',
                 '".$args['locationName']."'
-        );";        
+        );"; 
+        } else {
+            $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
+                StartingTime, EndingTime) VALUES (
+                '".addslashes($args['mainTopic'])."',
+                '".addslashes($args['description'])."', 
+                '".$args['startingDate']."',
+                '".$args['endingDate']."', 
+                '".$args['startingTime']."', 
+                '".$args['endingTime']."'
+            );";     
+        }
         
         $createdEventId = $crud->insertReturnLastId($sql);
         

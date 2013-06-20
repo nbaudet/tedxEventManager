@@ -20,6 +20,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSTalk.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSAffectation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
+require_once(APP_DIR .'/core/services/applicatives/ASFree.class.php');
 
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
@@ -44,10 +45,7 @@ $argsCreateEvent = array(
     'startingTime'  => '09:00:00',
     'endingTime'    => '18:00:00',
     'description'   => 'Parce qu il le vaut bien',
-    'locationName'  => 'Un nom'
 );
-
-$event = null;
 
 $slot1 = array (
     'happeningDate'          => '2013-01-01',
@@ -69,8 +67,9 @@ $megaArgsAddEvent = array (
     'slots'   => $argsSlots // Liste de Slot sans référence à l'Event
 );
 
-$messageAddEvent = FSEvent::addEvent($megaArgsAddEvent);
+$messageAddEvent = ASAdmin::addEvent($megaArgsAddEvent);
 var_dump($messageAddEvent);
+var_dump($messageAddEvent->getContent());
 
 
 /*$event = FSEvent::getEvent(1)->getContent();
