@@ -635,6 +635,7 @@ class Tedx_manager{
         return $message;
     }//function
     
+<<<<<<< HEAD
 
     //Set an Event Location
     public function changeEventLocation($args) {
@@ -645,6 +646,10 @@ class Tedx_manager{
     public function addSlotToEvent( $args ) {
         return ASOrganizer::addSlotToEvent( $args ); 
         
+=======
+    public function addSlotToEvent( $args ) {
+        return ASOrganizer::addSlotToEvent( $args ); 
+>>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
     }//function
     
     /*==========================================================================
@@ -707,6 +712,7 @@ class Tedx_manager{
         
     public function linkTeamRole( $args ) {
         return $this->stub->linkTeamRole( $args ); 
+<<<<<<< HEAD
     }//function
     
     public function changeRoleLevel( $args ) {
@@ -882,6 +888,8 @@ class Tedx_manager{
      */
     public function registerVisitor( $args ) {
         return  ASFree::registerVisitor( $args );
+=======
+>>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
     }//function
     
     /**
@@ -893,6 +901,7 @@ class Tedx_manager{
         return  ASFree::getRegistration( $args );
     }//function
     
+<<<<<<< HEAD
      /**
      * Applicatives services to get all the Registration
      * @return type Message A tab of the registrations.
@@ -1426,6 +1435,8 @@ class Tedx_manager{
         return $this->stub->changeRoleLevel( $args ); 
     }//function
     
+=======
+>>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
 }//class
 
 
