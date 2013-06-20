@@ -20,12 +20,27 @@ require_once(APP_DIR .'/core/services/functionnals/FSTalk.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSAffectation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSRole.class.php');
 require_once(APP_DIR .'/core/services/applicatives/ASFree.class.php');
 
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
+var_dump(FSRole::getRoles());
+
+$event = FSEvent::getEvent(2)->getContent();
+$organizer = FSOrganizer::getOrganizer(4)->getContent();
+
+$argsGetRole = array (
+    'event'     => $event,
+    'organizer' => $organizer,
+    'name'      => 'Responsable sandwich',
+    'level'     => 5
+);
+
+
+var_dump(FSRole::addRole($argsGetRole));
 //var_dump(FSPlace::getPlaces());
 
 /*$argsPlace = array (
@@ -37,7 +52,7 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 //var_dump($place = FSPlace::getPlace($argsPlace)->getContent());
 
-
+/** -------------- TEST addEvent
 $argsCreateEvent = array(
     'mainTopic'     => 'Les chaussettes à Baudet',
     'startingDate'  => '2013-01-01',
@@ -70,7 +85,7 @@ $megaArgsAddEvent = array (
 $messageAddEvent = ASAdmin::addEvent($megaArgsAddEvent);
 var_dump($messageAddEvent);
 var_dump($messageAddEvent->getContent());
-
+----------------END TEST addEvent*/
 
 /*$event = FSEvent::getEvent(1)->getContent();
 
