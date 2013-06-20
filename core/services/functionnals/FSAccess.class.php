@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of FSAccess
+ * Manages the accesses to the API.
  *
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
@@ -10,6 +10,56 @@ require_once(APP_DIR . '/core/model/Access.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
 class FSAccess {
+    
+    /**
+     * Adds a new Access in Database
+     * @param Mixed $args Parameters of an Access
+     * @return Message a message containing the new Access
+     */
+    public static function addAccess( $args ) {
+        global $crud;
+
+        // Verify that the access doesn't exist in the database
+        $arrayExistingAccesses = FSAccess::getAccessesAsString()->getContent();
+        $accessExists = in_array( $args['Service'], $arrayExistingAccesses );
+
+        // If it exists, we send an error message
+        if( $accessExists ) {
+
+            $argsMessage = array(
+                'messageNumber' => 027,
+                'message'       => 'Already existing Access',
+                'status'        => FALSE
+            );
+            
+            $message = new Message($argsMessage);
+        }
+        // Else: we add the Access
+        else {
+            
+            $sql = "INSERT INTO `Access` (`Service` ,`Type`, `IsArchived`) VALUES (
+                        '".$args['Service']."', 
+                        '".$args['Type']."',
+                        '0'
+                    );";
+            
+            // If add was successfull
+            if( $crud->insertReturnLastId( $sql ) ) {
+            
+                $argsMessage = array(
+                    'messageNumber' => 028,
+                    'message'       => 'Access added',
+                    'status'        => TRUE,
+                    //'content'       => $anAddedAccess
+                );
+
+                $message = new Message($argsMessage);
+            }
+            // Else: Add was not successfull
+
+        }// else
+        return $message;
+    }// End addAccess
     
     /**
      * Returns the access with the specified ID.
@@ -160,9 +210,7 @@ class FSAccess {
         // SQL Statement to get the accesses for a specified UNIT
         // /!\ NEED IsArchived = 0 OTHERWISE PRIVILEGES DON'T WORK!
         $sql = "SELECT * FROM Access
-            INNER JOIN Permission
-            ON Access.No = Permission.AccessNo
-            AND Access.IsArchived = 0
+            WHERE Access.IsArchived = 0
             ORDER BY Access.Service";
         
         $data = $crud->getRows($sql);
@@ -211,33 +259,90 @@ class FSAccess {
     
     
     /**
-     * Functionnal Service addAccess
-     * @param Access $AccessToAdd The Access to add
+     * Functionnal Service setAccess
+     * @param Access $accessToSet The Access to update
      * @return Message $message anAddedAccess OR an Error
      */
-    public static function upsertAccess( $AccessToAdd ) {
+    public static function setAccess( $accessToSet ) {
         // get database manipulator
         global $crud;
 
-        /**
-         * Validate Access
-         */
-        $noAccess = $AccessToAdd->getNo();
+        // Check if an access with same No exists
+        $noAccess = $accessToSet->getNo();
         $messageAccess = FSAccess::getAccess($noAccess);
         
         // If the Access exists
         if( $messageAccess->getStatus() ) {
             $access = $messageAccess->getContent();
-            // If the access is NOT archived
-            if( $access->getIsArchived() == 0 ) {
-                // We update IT
+            // If the access was archived, we un-archive it
+            if( $access->getIsArchived() == 1 ) {
+                
+                $sql = "UPDATE Access SET
+                    `Service` = '".$accessToSet->getService()."',
+                    `Type` = '".$accessToSet->getType()."',
+                    `IsArchived` = '0'
+                    WHERE Access.No = '".$accessToSet->getNo()."'";
+                
+                // If it was successful
+                if( $crud->exec( $sql ) != 0 ) {
+                
+                    $args = array(
+                        'messageNumber' => 029,
+                        'message'       => 'Access successfully udpated',
+                        'status'        => true,
+                        'content'       => $anAccessToSet
+                    );
+                    $message= new Message( $args );
+                }
+                // Else: unarchiving unsuccessfull
+                else {
+                    $args = array(
+                        'messageNumber' => 030,
+                        'message'       => 'Problem while updating access',
+                        'status'        => false
+                    );
+                    $message= new Message( $args );
+                }
                 
             }
-            // Else: we 
+            // Else: archive the access
+            else {
+                $sql = "UPDATE Access SET
+                    `Service` = '".$accessToSet->getService()."',
+                    `Type` = '".$accessToSet->getType()."',
+                    `IsArchived` = '1'
+                    WHERE Access.No = '".$accessToSet->getNo()."'";
+                
+                // If it was successful
+                if( $crud->exec( $sql ) != 0 ) {
+                
+                    $args = array(
+                        'messageNumber' => 029,
+                        'message'       => 'Access successfully udpated',
+                        'status'        => true,
+                        'content'       => $anAccessToSet
+                    );
+                    $message= new Message( $args );
+                }
+                // Else: archiving unsucessfull
+                else {
+                    $args = array(
+                        'messageNumber' => 030,
+                        'message'       => 'Problem while updating access',
+                        'status'        => false
+                    );
+                    $message= new Message( $args );
+                }
+            }
         }
-        // Else: Just add the access
+        // Else: return an error
         else {
-            
+            $args = array(
+                'messageNumber' => 026,
+                'message'       => 'No access found',
+                'status'        => false
+            );
+            $message= new Message( $args );
         }
         
         

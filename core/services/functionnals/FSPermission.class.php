@@ -31,7 +31,7 @@ class FSPermission {
         
         if($data){
             $argsPermission = array(
-                'AccessNo'      => $data['AccessNo'],
+                'accessNo'      => $data['AccessNo'],
                 'unitNo'        => $data['UnitNo'],
                 'isArchived'    => $data['IsArchived']
             );
@@ -39,7 +39,7 @@ class FSPermission {
             $permission = new Permission($argsPermission);
             
             $argsMessage = array(
-                'messageNumber' => 107,
+                'messageNumber' => 031,
                 'message'       => 'Existing Permission',
                 'status'        => true,
                 'content'       => $permission
@@ -48,10 +48,9 @@ class FSPermission {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 108,
+                'messageNumber' => 032,
                 'message'       => 'Inexistant Permission',
-                'status'        => false,
-                'content'       => NULL
+                'status'        => false
             );
             $message = new Message($argsMessage);
             return $message;
@@ -74,16 +73,16 @@ class FSPermission {
 
             foreach($data as $row){
                 $argsPermission = array(
-                    'memberId'      => $row['MemberID'],
+                    'accessNo'      => $row['AccessNo'],
                     'unitNo'        => $row['UnitNo'],
                     'isArchived'    => $row['IsArchived'],
                 );
             
-                $permissions[] = new MemberShip($argsPermission);
+                $permissions[] = new Permission($argsPermission);
             } //foreach
 
             $argsMessage = array(
-                'messageNumber' => 109,
+                'messageNumber' => 033,
                 'message'       => 'All Permissions selected',
                 'status'        => true,
                 'content'       => $permissions
@@ -93,10 +92,9 @@ class FSPermission {
             return $message;
         } else {
             $argsMessage = array(
-                'messageNumber' => 110,
+                'messageNumber' => 034,
                 'message'       => 'Error while SELECT * FROM Permission',
-                'status'        => false,
-                'content'       => NULL
+                'status'        => false
             );
             $message = new Message($argsMessage);
 
@@ -111,28 +109,30 @@ class FSPermission {
      */
     public static function addPermission($args){
         global $crud;
-        $return = null;
-        $member = $args['member'];
+        
+        $access = $args['access'];
         $unit = $args['unit'];
 
-        // Validate Member
-        $aValidMember = FSMember::getMember($member->getId());
+        // Validate Access
+        $aValidAccess = FSAccess::getAccess($access->getNo());
         
-        if($aValidMember->getStatus()){
+        // If the Access exists
+        if($aValidAccess->getStatus()){
             
             // Validate Unit
             $aValidUnit = FSUnit::getUnit($unit->getNo());
             
+            // If the unit exists
             if ($aValidUnit->getStatus()){
                 
                 // Validate Permission
-                $anInexistantPermission = FSPermission::getPermission($args);
+                $anInexistantPermission = FSPermission::getPermission( $args );
                 
                 if(!$anInexistantPermission->getStatus()){
                     
                     // Create new Permission
-                    $sql = "INSERT INTO `Permission` (`MemberID` ,`UnitNo`) VALUES (
-                        '".$member->getId()."', 
+                    $sql = "INSERT INTO `Permission` (`AccessNo` ,`UnitNo`) VALUES (
+                        '".$access->getNo()."', 
                         '".$unit->getNo()."'
                     );";
                     
@@ -142,71 +142,144 @@ class FSPermission {
                         $aCreatedPermission = FSPermission::getPermission($args);
 
                         $argsMessage = array(
-                            'messageNumber' => 111,
-                            'message'       => 'New Permission added !',
+                            'messageNumber' => 035,
+                            'message'       => 'Permission added',
                             'status'        => true,
                             'content'       => $aCreatedPermission
                         );
-                        $return = new Message($argsMessage);
+                        $message = new Message($argsMessage);
                         
                         
                     } else {
                         $argsMessage = array(
-                            'messageNumber' => 112,
-                            'message'       => 'Error while inserting new Permission',
-                            'status'        => false,
-                            'content'       => NULL
+                            'messageNumber' => 036,
+                            'message'       => 'Error while adding Permission',
+                            'status'        => false
                         );
-                        $return = new Message($argsMessage);
+                        $message = new Message($argsMessage);
                     }// else
                     
-                } // End Create new Permission
+                }
+                // Else: Cannot add because already existing
                 else {
                     $argsMessage = array(
-                        'messageNumber' => 114,
-                        'message'       => 'Permission already existant !',
-                        'status'        => FALSE,
-                        'content'       => null
+                        'messageNumber' => 037,
+                        'message'       => 'Permission already exists',
+                        'status'        => false
                     );
 
-                $return = new Message($argsMessage);
+                $message = new Message($argsMessage);
                 }// else
                 
             } else {
                 $argsMessage = array(
                     'messageNumber' => 114,
                     'message'       => 'No matching Unit found',
-                    'status'        => FALSE,
-                    'content'       => null
+                    'status'        => false
                 );
             
-            $return = new Message($argsMessage);
+            $message = new Message($argsMessage);
             }// else
-            
+        // Else: The Access doesn't exist
         } else {
             $argsMessage = array(
-                'messageNumber' => 113,
-                'message'       => 'No matching Member found',
+                'messageNumber' => 038,
+                'message'       => 'No matching Access found',
                 'status'        => FALSE,
-                'content'       => null
             );
             
-            $return = new Message($argsMessage);
-            
+            $message = new Message($argsMessage);
         }// end
         
-        return $return;
-        
+        return $message;
     }// End addPermission
     
     
-    public static function setPermission( Member $access, Unit $unit ) {
-        $args = array(
-            'access' => $access,
-            'unit'   => $unit
-        );
+    public static function upsertPermission( $args ) {
+        $access = $args['access'];
+        $unit   = $args['unit'];
+        
+        global $crud;
+        
+        $message;
+        
         $messagePermission = FSPermission::getPermission( $args );
-        var_dump($messagePermission);
+        
+        // If the permission was already existing
+        if( $messagePermission->getStatus() ) {
+            
+            $permission = $messagePermission->getContent();
+            
+            // If the permission was archived, we un-archived it
+            if( $permission->getIsArchived() == 1 ) {
+                $sql = "UPDATE Permission
+                    SET
+                    IsArchived = '0'
+                    WHERE Permission.AccessNo = '".$access->getNo()."'
+                    AND Permission.UnitNo = '".$unit->getNo()."'";
+                
+                // If the udpate was successfull
+                if( $crud->exec($sql) == 1 ) {
+                    
+                    $aSettedPermission = FSPermission::getPermission( $args );
+                    
+                    $argsMessage = array(
+                        'messageNumber' => 039,
+                        'message' => 'Permission updated',
+                        'status' => true,
+                        'content' => $aSettedPermission
+                    );
+                    $message = new Message($argsMessage);
+                }
+                // Else : impossible to update permission
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 040,
+                        'message' => 'Error while updating permission',
+                        'status' => false
+                    );
+                    $message = new Message($argsMessage);
+                }
+            }
+            // Else : archive the permission
+            else {
+                $sql = "UPDATE Permission
+                SET
+                IsArchived = '1'
+                WHERE Permission.AccessNo = '".$access->getNo()."'
+                AND Permission.UnitNo = '".$unit->getNo()."'";
+                
+                // If the udpate was successfull
+                if( $crud->exec($sql) == 1 ) {
+                    
+                    $aSettedPermission = FSPermission::getPermission( $args );
+                    
+                    $argsMessage = array(
+                        'messageNumber' => 041,
+                        'message' => 'Permission updated',
+                        'status' => true,
+                        'content' => $aSettedPermission
+                    );
+                    $message = new Message($argsMessage);
+                }
+                // Else : impossible to update permission
+                else {
+                    $argsMessage = array(
+                        'messageNumber' => 040,
+                        'message' => 'Error while updating permission',
+                        'status' => false
+                    );
+                    $message = new Message($argsMessage);
+                }
+                
+            }
+        }
+        // Else : otherwise, we create it
+        else {
+            $message = FSPermission::addPermission( $args );
+        }
+        
+        return $messagePermission;
     }
     
     
