@@ -12,10 +12,10 @@ require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
 /*require_once( APP_DIR.'/core/model/Member.class.php' );
 require_once( APP_DIR.'/core/model/Unit.class.php' );*/
 
-/*echo '<h2>Session</h2>';
+echo '<h2>Session</h2>';
 var_dump($_SESSION);
 echo '<h2>Request</h2>';
-var_dump($_REQUEST);*/
+var_dump($_REQUEST);
 
 
 // Is the user logged ?

@@ -25,7 +25,9 @@ class FSMember {
         // get database manipulator
         global $crud;
 
-        $sql = "SELECT * FROM Member WHERE Member.ID = '" . $id . "'";
+        $sql = "SELECT * FROM Member
+            WHERE Member.ID = '" . $id . "'
+            ORDER BY Member.ID";
         $data = $crud->getRow($sql);
         // If $data, return content
         if ($data) {

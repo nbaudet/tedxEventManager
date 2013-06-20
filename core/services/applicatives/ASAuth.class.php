@@ -46,15 +46,21 @@ class ASAuth {
                 $_SESSION['usr']    = $member->getId();
                 // get alls units from member
                 $messageUnits = $this->getUnitsFromMember( $member );
+                $units = $messageUnits->getContent();
+                $tabOfUnits = array();
+                foreach ( $units as $unit) {
+                    $tabOfUnits[] = $unit->getName();
+                }
                 
                 // if message units 
                 if($messageUnits->getStatus()){
-                    $_SESSION['units']  = $messageUnits->getContent();
+                    //$_SESSION['units']  = $messageUnits->getContent();
+                    $_SESSION['units'] = $tabOfUnits;
                 }// if
                 else { // error send message untis
                     return $messageUnits;
                 }// else
-                $_SESSION['access'] = $this->getAccessesFromUnits( $_SESSION['units'] );
+                $_SESSION['access'] = $this->getAccessesFromUnits( $units );
                 
                 // Sets the OK message
                 $args = array(
@@ -244,6 +250,29 @@ class ASAuth {
 
         return $accesses;
     }// function
+    
+    /**
+     * Gets basic Units from a logged member
+     * @return Boolean TRUE or FALSE
+     */
+    public function isAdministrator() {
+        return in_array( 'Administrator', $_SESSION['units'] );
+    }
+    public function isValidator() {
+        return in_array( 'Validator', $_SESSION['units'] );
+    }
+    public function isOrganizer() {
+        return in_array( 'Organizer', $_SESSION['units'] );
+    }
+    public function isParticipant() {
+        return in_array( 'Participant', $_SESSION['units'] );
+    }
+    public function isVisitor() {
+        return in_array( 'Visitor', $_SESSION['units'] );
+    }
+    public function isSuperadmin() {
+        return in_array( 'Superadmin', $_SESSION['units'] );
+    }
 }// class
 
 ?>

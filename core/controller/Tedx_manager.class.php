@@ -148,6 +148,29 @@ class Tedx_manager{
         return $this->asAuth->getUsername();
     } // function
     
+    /**
+     * Gets basic Units from a logged member
+     * @return Boolean TRUE or FALSE
+     */
+    public function isAdministrator() {
+        return ($this->isLogged() && $this->asAuth->isAdministrator());
+    }
+    public function isValidator() {
+        return ($this->isLogged() && $this->asAuth->isValidator());
+    }
+    public function isOrganizer() {
+        return ($this->isLogged() && $this->asAuth->isOrganizer());
+    }
+    public function isParticipant() {
+        return ($this->isLogged() && $this->asAuth->isParticipant());
+    }
+    public function isVisitor() {
+        return ($this->isLogged() && $this->asAuth->isVisitor());
+    }
+    public function isSuperadmin() {
+        return ($this->isLogged() && $this->asAuth->isSuperadmin());
+    }
+    
     /*==========================================================================
      * 
      * FREE ACCESS FUNCTIONS
