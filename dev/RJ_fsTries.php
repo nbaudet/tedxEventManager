@@ -7,15 +7,29 @@
 require_once('../tedx-config.php');
 //require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
-//require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
+
+
+$aEventToSet = array(
+                    'no' => 2,
+                    'mainTopic' => 'The Tomorrow was yesterday',
+                    'description' => 'Description Event2',
+                    'locationName'  => 'L\'Usine',
+                    'startingDate' => '2013-12-18',
+                    'endingDate' => '2013-12-18',
+                    'startingTime' => '13:08:53',
+                    'endingTime' => '18:00:00',
+                    'isArchived' => 0
+                );
+var_dump(FSEvent::setEvent($aEventToSet));
 
 
 //$crud->exec("UPDATE Event SET MainTopic = 'The future doesn\’t just happen' WHERE No = 1;");
 
 
-echo '<h1>Search Event</h1>';
+/*echo '<h1>Search Event</h1>';
 // Args Event : Search all events between 2014 and 2015
 $searchArgs = array(
     'where'       => "StartingDate >= '2014-01-01'",
@@ -59,10 +73,10 @@ else
     echo 'Error! ' . $someEvents->getMessage();
     var_dump($someEvents);
     
-  /*//Récupère tous les events pour un speaker  
+  //Récupère tous les events pour un speaker  
     echo '<h1>Get Events by Speaker - FS</h1>';
     $speaker = (FSSpeaker::getSpeaker(6)->getContent());
-    var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());*/
+    var_dump(FSEvent::getEventsBySpeaker($speaker)->getContent());
     
     echo '<h1>Motivation</h1>';
     $args =     array(
@@ -102,7 +116,7 @@ $argsArchiveMotivation= array(
 $aMotivationToArchive = FSMotivation::getMotivation($argsArchiveMotivation)->getContent();
 var_dump(FSMotivation::setMotivation($aMotivationToArchive));
 
-/*require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 
