@@ -634,6 +634,10 @@ class Tedx_manager{
         return $message;
     }//function
     
+    public function addSlotToEvent( $args ) {
+        return ASOrganizer::addSlotToEvent( $args ); 
+    }//function
+    
     /*==========================================================================
      * 
      * VALIDATOR FUNCTIONS
@@ -666,6 +670,10 @@ class Tedx_manager{
         return ASAdmin::addTeamRole($aName); 
     }//function
     
+    public function addEvent( $args ) {
+        return ASAdmin::addEvent( $args ); 
+    }//function
+    
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -681,11 +689,6 @@ class Tedx_manager{
     }//function
     
     
-    public function addSlotToEvent( $args ) {
-        return $this->stub->addSlotToEvent( $args ); 
-    }//function
-    
-    
     public function linkTeamRole( $args ) {
         return $this->stub->linkTeamRole( $args ); 
     }//function
@@ -697,11 +700,6 @@ class Tedx_manager{
     
     public function addRole( $args ) {
         return $this->stub->addRole( $args ); 
-    }//function
-    
-    
-    public function addEvent( $args ) {
-        return $this->stub->addEvent( $args ); 
     }//function
     
 }//class

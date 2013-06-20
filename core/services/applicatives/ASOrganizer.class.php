@@ -147,6 +147,15 @@ class ASOrganizer {
         $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
         return $aChangedEventLocation;
     }
+    
+    /**
+     * Applicative service to add a slot to an event
+     * @param type $args, the event and the slot parameter.
+     * @return type message
+     */
+    public static function addSlotToEvent($args){
+        return FSSlot::addSlot($args);
+    }
 }
 
 ?>
