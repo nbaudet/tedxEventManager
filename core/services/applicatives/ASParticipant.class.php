@@ -190,6 +190,8 @@ class ASParticipant {
         }
         return $message; 
     }//function
+    
+    
 }
 
 ?>

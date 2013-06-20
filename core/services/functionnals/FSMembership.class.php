@@ -79,7 +79,7 @@ class FSMembership {
                     'isArchived'    => $row['IsArchived'],
                 );
             
-                $memberships[] = new MemberShip($argsMembership);
+                $memberships[] = new Membership($argsMembership);
             } //foreach
 
             $argsMessage = array(
@@ -217,9 +217,10 @@ class FSMembership {
         
         // If the membership was already existing
         if( $messageMembership->getStatus() ) {
-            // If the membership was archived, we un-archived it
+            
             $membership = $messageMembership->getContent();
             
+            // If the membership was archived, we un-archived it
             if( $membership->getIsArchived() == 1 ) {
                 $sql = "UPDATE Membership
                     SET

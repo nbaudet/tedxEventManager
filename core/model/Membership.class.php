@@ -11,7 +11,7 @@
  * Description : define the class MemberShip as definited in the model
  * 
  */
-class MemberShip {
+class Membership {
     
     
     /**
