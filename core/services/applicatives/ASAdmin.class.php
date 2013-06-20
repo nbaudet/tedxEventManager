@@ -142,6 +142,10 @@ class ASAdmin {
     public static function affectTeamRole($args){
         return FSAffectation::addAffectation($args);
     }
+    
+    public static function addRole($args){
+        return FSRole::addRole($args);
+    }
 }
 
 ?>
