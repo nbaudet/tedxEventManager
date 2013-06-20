@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 
 /*
@@ -27,31 +27,68 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 //var_dump(FSPlace::getPlaces());
 
-$argsPlace = array (
+/*$argsPlace = array (
     'no'    => 2,
     'slotNo' => 2,
     'slotEventNo'   => 2,
     'speakerPersonNo' => 6
+);*/
+
+//var_dump($place = FSPlace::getPlace($argsPlace)->getContent());
+
+
+$argsCreateEvent = array(
+    'mainTopic'     => 'Les chaussettes à Baudet',
+    'startingDate'  => '2013-01-01',
+    'endingDate'    => '2013-01-02',
+    'startingTime'  => '09:00:00',
+    'endingTime'    => '18:00:00',
+    'description'   => 'Parce qu il le vaut bien',
+    'locationName'  => 'Un nom'
 );
 
-var_dump($place = FSPlace::getPlace($argsPlace)->getContent());
+$event = null;
 
-$event = FSEvent::getEvent(1)->getContent();
+$slot1 = array (
+    'happeningDate'          => '2013-01-01',
+    'startingTime'           => '09:00:00',
+    'endingTime'             => '18:00:0',
+);
+
+$slot2 = array (
+    'happeningDate'          => '2013-01-02',
+    'startingTime'           => '09:00:00',
+    'endingTime'             => '18:00:0',
+);
+
+
+$argsSlots = array( $slot1, $slot2);
+
+$megaArgsAddEvent = array (
+    'event'   => $argsCreateEvent,
+    'slots'   => $argsSlots // Liste de Slot sans référence à l'Event
+);
+
+$messageAddEvent = FSEvent::addEvent($megaArgsAddEvent);
+var_dump($messageAddEvent);
+
+
+/*$event = FSEvent::getEvent(1)->getContent();
 
 $argsSlot = array (
     'no'    => '1',
     'event' => $event
 );
 
-$slot = FSSlot::getSlot($argsSlot)->getContent();
+$slot = FSSlot::getSlot($argsSlot)->getContent();*/
 
 //var_dump(FSPlace::getPlacesBySlot($slot));
 
 
 
-var_dump(FSSpeaker::getSpeakerByPlace($place));
+//var_dump(FSSpeaker::getSpeakerByPlace($place));
 
-var_dump(FSPlace::getPlacesBySlot($slot));
+//var_dump(FSPlace::getPlacesBySlot($slot));
 
 
 /*$argsAffec = array (
