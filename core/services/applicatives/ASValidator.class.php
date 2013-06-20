@@ -35,6 +35,50 @@ class ASValidator {
         // Nothing
     }
     
+    // Change the status of the current registration.
+    private static function changeRegistrationStatus($args) {
+        $currentRegistration = $args['currentRegistration'];
+        $newStatus = $args['newStatus'];
+        $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
+        if($messageValidEvent->getStatus()){
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidParticipant = FSParticipant::getParticipant($currentRegistration->getParticipantPersonNo());
+            if($messageValidParticipant->getStatus()){
+                $aValidParticipant = $messageValidParticipant->getContent();
+                $currentRegistration->setIsArchived(1);
+                $messageArchiveRegistration = FSRegistration::archiveRegistration($currentRegistration);
+                if($messageArchiveRegistration->getStatus()){
+                     $argsRegistration = array(
+                        'status'          => $newStatus, // String
+                        'type'            => $currentRegistration->getType(), // String
+                        'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
+                        'event'           => $aValidEvent, // object Event
+                        'participant'     => $aValidParticipant  // object Participant
+                    );
+                    $message = FSRegistration::addRegistration($argsRegistration);
+                }else{
+                    $message = $messageArchiveRegistration;
+                }
+            }else{
+                $message = $messageValidParticipant;
+            }
+        }else{
+            $message = $messageValidEvent;
+        }
+        return $message; 
+    }//function
+    
+    // 
+    public static function acceptRegistration($aRegistration) {
+        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Accepted');
+        return self::changeRegistrationStatus($args);
+    }
+    
+    //
+    public static function rejectRegistration($aRegistration) {
+        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Rejected');
+        return self::changeRegistrationStatus($args);
+    }
     
 }
 
