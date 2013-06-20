@@ -27,7 +27,7 @@ require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
-var_dump(FSRole::getRoles());
+//var_dump(FSRole::getRoles());
 
 $event = FSEvent::getEvent(2)->getContent();
 $organizer = FSOrganizer::getOrganizer(4)->getContent();
@@ -40,7 +40,7 @@ $argsGetRole = array (
 );
 
 
-var_dump(FSRole::addRole($argsGetRole));
+//var_dump(FSRole::addRole($argsGetRole));
 //var_dump(FSPlace::getPlaces());
 
 /*$argsPlace = array (

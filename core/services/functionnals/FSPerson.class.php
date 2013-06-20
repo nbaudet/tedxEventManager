@@ -389,7 +389,7 @@ class FSPerson {
             } else {
                 $argsMessage = array(
                     'messageNumber' => 417,
-                    'message' => 'The email is occuped',
+                    'message' => 'This email is already occupied -----> Super Jonas !',
                     'status' => false,
                     'content' => $aPersonWithEmail
                 );
