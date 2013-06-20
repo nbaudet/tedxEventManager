@@ -16,13 +16,14 @@ $aEventToSet = array(
                     'no' => 2,
                     'mainTopic' => 'The Tomorrow was yesterday',
                     'description' => 'Description Event2',
-                    'locationName'  => 'L\'Usine',
+                    'locationName' => 'Château Saint-Maire',
                     'startingDate' => '2013-12-18',
                     'endingDate' => '2013-12-18',
                     'startingTime' => '13:08:53',
                     'endingTime' => '18:00:00',
                     'isArchived' => 0
                 );
+$aEventToSet = new Event($aEventToSet);
 var_dump(FSEvent::setEvent($aEventToSet));
 
 
