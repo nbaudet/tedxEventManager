@@ -577,12 +577,12 @@ class Tedx_manager{
     }//function
     
     //Show all Keywords of a Person for an Event
-    public static function getKeywordsByPersonForEvent($args) {
+    public function getKeywordsByPersonForEvent($args) {
         return ASParticipant::getKeywordsByPersonForEvent($args); 
     }//function
     
     //Add a Motivation To An Event
-    public static function addMotivationToAnEvent($args) {
+    public function addMotivationToAnEvent($args) {
         $message = ASParticipant::addMotivationToAnEvent($args); 
         return $message;
     }//function
@@ -594,22 +594,27 @@ class Tedx_manager{
     }//function
     
     //Show a Motivation
-    public static function getMotivation($args) {
+    public function getMotivation($args) {
         $aMotivation = ASParticipant::getMotivation($args);
         return $aMotivation;    
     }//function 
     
     //Show all Motivations of a Person
-    public static function getMotivationsByParticipant($aParticipant) {
+    public function getMotivationsByParticipant($aParticipant) {
         $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
         return $motivations; 
     }//function
     
     //Show all Motivations of a Person for an Event
-    public static function getMotivationsByParticipantForEvent($args) {
+    public function getMotivationsByParticipantForEvent($args) {
         $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
         return $motivations; 
-    }//function    
+    }//function
+    
+    // Send a registration
+    public function sendRegistration( $args ) {
+        return ASParticipant::sendRegistration( $args ); 
+    }//function
     
     
      /*==========================================================================
@@ -627,6 +632,22 @@ class Tedx_manager{
     public function addLocation($args) {
         $message = ASOrganizer::addLocation( $args ); 
         return $message;
+    }//function
+    
+    /*==========================================================================
+     * 
+     * VALIDATOR FUNCTIONS
+     * 
+     *========================================================================*/
+    
+    // Accept a registration
+    public function acceptRegistration( $args ) {
+        return ASValidator::acceptRegistration( $args ); 
+    }//function
+    
+    // Reject a registration
+    public function rejectRegistration( $args ) {
+        return ASValidator::rejectRegistration( $args ); 
     }//function
     
      /*==========================================================================
@@ -662,11 +683,6 @@ class Tedx_manager{
     
     public function addSlotToEvent( $args ) {
         return $this->stub->addSlotToEvent( $args ); 
-    }//function
-    
-    
-    public function changeRegistrationStatus( $args ) {
-        return $this->stub->changeRegistrationStatus( $args ); 
     }//function
     
     

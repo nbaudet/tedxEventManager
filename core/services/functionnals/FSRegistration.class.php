@@ -324,6 +324,7 @@ class FSRegistration {
         return $message;
     }
     
+    // Archive the registration in parameter.
     public static function archiveRegistration($aRegistrationToArchive) {
         return self::setRegistration($aRegistrationToArchive);
     }
