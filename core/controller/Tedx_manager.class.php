@@ -413,12 +413,21 @@ class Tedx_manager{
     }//function 
     
     /**
-     * get Units 
+     * get Places by Slots given in args 
      * @return type message
      */
     public function getPlacesBySlot($slot) {
         $messageGetPlacesBySlot = ASFree::getPlacesBySlot($slot);
         return $messageGetPlacesBySlot; 
+    }//function 
+    
+    /**
+     * get Speakers by Place given in args 
+     * @return type message
+     */
+    public function getSpeakerByPlace($place) {
+        $messageGetSpeakerByPlace = ASFree::getSpeakerByPlace($place);
+        return $messageGetSpeakerByPlace; 
     }//function 
     
     /*==========================================================================
