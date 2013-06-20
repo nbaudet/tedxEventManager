@@ -582,8 +582,8 @@ class Tedx_manager{
     }//function 
     
     //Show all Motivations of a Person
-    public static function getMotivationsByParticipant($aPerson) {
-        $motivations = ASParticipant::getMotivationsByPerson($aPerson); 
+    public static function getMotivationsByParticipant($aParticipant) {
+        $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
         return $motivations; 
     }//function
     

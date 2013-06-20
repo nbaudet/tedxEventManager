@@ -73,7 +73,7 @@ class FSMotivation{
      * Returns all the Events of the database
      * @return A Message containing an array of Events
      */
-    public static function getMotivationsByPerson($aParticipant){
+    public static function getMotivationsByParticipant($aParticipant){
         global $crud;
         
         $sql = "SELECT * FROM Motivation WHERE ParticipantPersonNo = ". $aParticipant->getNo() ." AND IsArchived = 0";
@@ -113,7 +113,7 @@ class FSMotivation{
     }// function
     
     
-    public static function getMotivationsByPersonForEvent($args){
+    public static function getMotivationsByParticipantForEvent($args){
         global $crud;
         $aParticipant = $args['participant'];
         $anEvent = $args['event'];
@@ -153,9 +153,7 @@ class FSMotivation{
         }// else
         return $message;
     }// function
-    
-    
-    
+   
     
     /**
      * Returns all the Register of the database
