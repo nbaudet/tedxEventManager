@@ -142,7 +142,7 @@ class ASOrganizer {
      * @return type 
      */
     public static function changeEventLocation($args) {
-        $anEventToUpdate = new Event($args['event']);
+        $anEventToUpdate = ($args['event']);
         $anEventToUpdate->setLocationName($args['locationName']);
         $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
         return $aChangedEventLocation;

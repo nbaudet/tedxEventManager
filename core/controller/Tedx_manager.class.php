@@ -634,6 +634,12 @@ class Tedx_manager{
         return $message;
     }//function
     
+    //Set an Event Location
+    public function changeEventLocation($args) {
+        $message = ASOrganizer::changeEventLocation($args); 
+        return $message;
+    }//function
+    
     /*==========================================================================
      * 
      * VALIDATOR FUNCTIONS

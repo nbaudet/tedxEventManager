@@ -369,6 +369,7 @@ class FSEvent {
                         'content' => NULL
                     );
                     $message = new Message($argsMessage);
+                    return $message;
                 };
             } else {
                 $sql = "UPDATE  Event SET  
