@@ -412,6 +412,15 @@ class Tedx_manager{
         return $messageGetSpeakersByEvent; 
     }//function 
     
+    /**
+     * get Units 
+     * @return type message
+     */
+    public function getPlacesBySlot($slot) {
+        $messageGetPlacesBySlot = ASFree::getPlacesBySlot($slot);
+        return $messageGetPlacesBySlot; 
+    }//function 
+    
     /*==========================================================================
      * 
      * VISITOR FUNCTIONS
