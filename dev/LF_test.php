@@ -27,9 +27,15 @@ require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
+//$event = FSEvent::getEvent(2)->getContent();
+
+
+$organizer = FSOrganizer::getOrganizer(4)->getContent();
+var_dump(FSRole::getRolesByOrganizer($organizer));
+
 //var_dump(FSRole::getRoles());
 
-$event = FSEvent::getEvent(2)->getContent();
+/*$event = FSEvent::getEvent(2)->getContent();
 $organizer = FSOrganizer::getOrganizer(4)->getContent();
 
 $argsGetRole = array (
@@ -37,7 +43,7 @@ $argsGetRole = array (
     'organizer' => $organizer,
     'name'      => 'Responsable sandwich',
     'level'     => 5
-);
+);*/
 
 
 //var_dump(FSRole::addRole($argsGetRole));

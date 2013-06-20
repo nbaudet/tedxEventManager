@@ -359,6 +359,26 @@ class ASFree {
         $messageGetPlacesBySlot = FSPlace::getPlacesBySlot($slot);
         return $messageGetPlacesBySlot;
     } // END getPlacesBySlot
+    
+    /**
+     * Returns all the Roles of an Event
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public static function getRolesByEvent($event){
+        $messageGetRolesByEvent = FSRole::getRolesByEvent($event);
+        return $messageGetRolesByEvent;
+    }
+    
+    /**
+     * Returns all the Roles of an Organizer
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public static function getRolesByOrganizer($organizer){
+        $messageGetRolesByOrganizer = FSRole::getRolesByOrganizer($organizer);
+        return $messageGetRolesByOrganizer;
+    }
 }// class
 
 ?>

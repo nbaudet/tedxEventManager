@@ -209,6 +209,7 @@ class FSRole {
         return $return;
     } // END createRole
     
+    
     public static function setRole($aRoleToSet) {
         global $crud;
         $messageValidEvent = FSEvent::getEvent($aRoleToSet->getEventNo());
@@ -281,6 +282,102 @@ class FSRole {
     }
     
     
+
+    /**
+     * Returns all the Roles of an Event
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public static function getRolesByEvent($event){
+        global $crud;
+        
+        $sql = "SELECT * FROM Role WHERE IsArchived = 0 AND EventNo = ".$event->getNo();
+        
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $roles = array();
+
+            foreach($data as $row){
+                $argsRole = array (
+                    'name'              => $row['Name'],
+                    'eventNo'           => $row['EventNo'],
+                    'organizerPersonNo' => $row['OrganizerPersonNo'],
+                    'level'             => $row['Level'],
+                    'isArchived'        => $row['IsArchived'],
+                );
+            
+                $roles[] = new Role($argsRole);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 167,
+                'message'       => 'All Roles By Event selected',
+                'status'        => true,
+                'content'       => $roles
+            );
+            $return = new Message($argsMessage);
+            
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 168,
+                'message'       => 'Error while SELECT * FROM Role By Event',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+    }
+
+    /**
+     * Returns all the Roles of an Organizer
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public static function getRolesByOrganizer($organizer){
+        global $crud;
+        
+        $sql = "SELECT * FROM Role WHERE IsArchived = 0 AND OrganizerPersonNo = ".$organizer->getNo();
+        
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $roles = array();
+
+            foreach($data as $row){
+                $argsRole = array (
+                    'name'              => $row['Name'],
+                    'eventNo'           => $row['EventNo'],
+                    'organizerPersonNo' => $row['OrganizerPersonNo'],
+                    'level'             => $row['Level'],
+                    'isArchived'        => $row['IsArchived'],
+                );
+            
+                $roles[] = new Role($argsRole);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 169,
+                'message'       => 'All Roles By Organizer selected',
+                'status'        => true,
+                'content'       => $roles
+            );
+            $return = new Message($argsMessage);
+            
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 170,
+                'message'       => 'Error while SELECT * FROM Role By Organizer',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+    }
+    
+
 }
 
 ?>
