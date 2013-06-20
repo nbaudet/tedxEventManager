@@ -113,16 +113,16 @@ class ASParticipant {
     }//function 
     
     //Show all Motivations of a Person
-    public static function getMotivationsByPerson($aPerson) {
+    public static function getMotivationsByParticipant($aPerson) {
         $motivations = FSMotivation::getMotivationsByPerson($aPerson); 
         return $motivations; 
     }//function
     
     //Show all Motivations of a Person for an Event
-    public static function getMotivationByPersonForEvent($args) {
+    public static function getMotivationsByParticipantForEvent($args) {
         $motivations = FSMotivation::getMotivationsByPersonForEvent($args); 
         return $motivations; 
-    }//function    
+    }//function
     
     /**
      * Method addMotivationToAnEvent from SA Participant

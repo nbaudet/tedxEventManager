@@ -32,20 +32,23 @@ class FSMotivation{
         global $crud;
         
         // SQL request for getting a Motivation
-        $sql = "SELECT * FROM Motivation WHERE Text LIKE '". $args['Text'] ."' AND EventNo = " . $args['EventNo'] . " AND ParticipantPersonNo = " . $args['ParticipantPersonNo'] . " AND IsArchived = 0;";
+        $sql = "SELECT * FROM Motivation WHERE Text LIKE '". $args['text'] ."' AND EventNo = " . $args['event']->getNo() . " AND ParticipantPersonNo = " . $args['participant']->getNo() . " AND IsArchived = 0;";
         $data = $crud->getRow($sql);
 
         // If a Motivation is Valid
+        
+        var_dump($args);
         if($data){
             $argsMotivation = array(
                 'text'              => $data['Text'],
                 'eventNo'             => $data['EventNo'],
                 'participantPersonNo' => $data['ParticipantPersonNo'],
-                'isArchived' => $data['IsArchived']
+                'isArchived'            => $data['IsArchived']
             );
            
             // Get the message Existant Motivation with the object Motivation
             $motivation = new Motivation($argsMotivation);
+            
             $argsMessage = array(
                 'messageNumber'     => 223,
                 'message'           => 'Existant Motivation',
@@ -65,6 +68,94 @@ class FSMotivation{
         return new Message($argsMessage);
         
     }
+    
+    /**
+     * Returns all the Events of the database
+     * @return A Message containing an array of Events
+     */
+    public static function getMotivationsByPerson($aParticipant){
+        global $crud;
+        
+        $sql = "SELECT * FROM Motivation WHERE ParticipantPersonNo = ". $aParticipant->getNo() ." AND IsArchived = 0";
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $motivations = array();
+
+            foreach($data as $row){
+                $argsMotivation = array(
+                    'text'            => $row['Text'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'eventNo'          => $row['EventNo'],
+                    'isArchived'       => $row['IsArchived']
+                );
+                
+                $motivations[] = new Motivation($argsMotivation);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 432,
+                'message'       => 'All Motivation of Participant selected',
+                'status'        => true,
+                'content'       => $motivations
+            );
+            $message = new Message($argsMessage);
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 433,
+                'message'       => 'Error while SELECT * FROM Motivation WHERE IsArchived = 0',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+        }// else
+        return $message;
+    }// function
+    
+    
+    public static function getMotivationsByPersonForEvent($args){
+        global $crud;
+        $aParticipant = $args['participant'];
+        $anEvent = $args['event'];
+        $sql = "SELECT * FROM Motivation WHERE ParticipantPersonNo = ". $aParticipant->getNo() ." AND EventNo = " . $anEvent->getNo() . " AND IsArchived = 0";
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $motivations = array();
+
+            foreach($data as $row){
+                $argsMotivation = array(
+                    'text'            => $row['Text'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'eventNo'          => $row['EventNo'],
+                    'isArchived'       => $row['IsArchived']
+                );
+                
+                $motivations[] = new Motivation($argsMotivation);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 432,
+                'message'       => 'All Motivation of Participant selected',
+                'status'        => true,
+                'content'       => $motivations
+            );
+            $message = new Message($argsMessage);
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 433,
+                'message'       => 'Error while SELECT * FROM Motivation WHERE IsArchived = 0',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $message = new Message($argsMessage);
+
+        }// else
+        return $message;
+    }// function
+    
+    
+    
     
     /**
      * Returns all the Register of the database
@@ -246,7 +337,6 @@ class FSMotivation{
      */
     public static function archiveMotivation($aMotivationToArchive) {
         return self::setMotivation($aMotivationToArchive);
-        
     }
 }
 ?>

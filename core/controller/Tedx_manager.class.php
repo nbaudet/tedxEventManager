@@ -575,6 +575,24 @@ class Tedx_manager{
         return $message;
     }//function
     
+    //Show a Motivation
+    public static function getMotivation($args) {
+        $aMotivation = ASParticipant::getMotivation($args);
+        return $aMotivation;    
+    }//function 
+    
+    //Show all Motivations of a Person
+    public static function getMotivationsByParticipant($aPerson) {
+        $motivations = ASParticipant::getMotivationsByPerson($aPerson); 
+        return $motivations; 
+    }//function
+    
+    //Show all Motivations of a Person for an Event
+    public static function getMotivationsByParticipantForEvent($args) {
+        $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
+        return $motivations; 
+    }//function    
+    
     
      /*==========================================================================
      * 

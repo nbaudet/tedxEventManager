@@ -26,18 +26,26 @@
         require_once('../core/services/functionnals/FSParticipant.class.php');
         
         
-        $event = FSEvent::getEvent(2)->getContent();
-        $participant = FSParticipant::getParticipant(29)->getContent();
-        $status = 'Waiting';
+        $event = FSEvent::getEvent(1)->getContent();
+        $participant = FSParticipant::getParticipant(5)->getContent();
+        /*$status = 'Waiting';
         
         $args = array('event' => $event, 'participant' => $participant, 'status' => $status);
         $registration = FSRegistration::getRegistration($args)->getContent();
         $registration->setTypeDescription('Team Logistics - Light and sound');
         
         $message = FSRegistration::setRegistration($registration);
-        //$message = ASAdmin::registerOrganizer($argsPerson);
+        //$message = ASAdmin::registerOrganizer($argsPerson);*/
+        
+        $args = array(
+            'event' => $event , 
+            'participant' => $participant , 
+            'text' => "Tesssstttt"
+        );
+        
+        $motivation = FSMotivation::getMotivationsByPersonForEvent($args);
         echo "<hr> Mon message final";
-        var_dump($message);
+        var_dump($motivation);
         ?>
     </body>
 </html>
