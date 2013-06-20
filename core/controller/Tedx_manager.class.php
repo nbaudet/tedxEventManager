@@ -634,20 +634,16 @@ class Tedx_manager{
         return $message;
     }//function
     
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     //Set an Event Location
     public function changeEventLocation($args) {
         $message = ASOrganizer::changeEventLocation($args); 
         return $message;
-=======
+    }
+    
     public function addSlotToEvent( $args ) {
         return ASOrganizer::addSlotToEvent( $args ); 
->>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
-=======
-    public function addSlotToEvent( $args ) {
-        return ASOrganizer::addSlotToEvent( $args ); 
->>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
+        
     }//function
     
     /*==========================================================================
