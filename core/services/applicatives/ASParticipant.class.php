@@ -103,8 +103,25 @@ class ASParticipant {
         }else{
             $message = $messageValidKeyword;
         }
-        return $message;
-        
+        return $message; 
+    }//function
+    
+    //Show a Motivation
+    public static function getMotivation($args) {
+        $aMotivation = FSMotivation::getMotivation($args);
+        return $aMotivation;    
+    }//function 
+    
+    //Show all Motivations of a Person
+    public static function getMotivationsByParticipant($aPerson) {
+        $motivations = FSMotivation::getMotivationsByPerson($aPerson); 
+        return $motivations; 
+    }//function
+    
+    //Show all Motivations of a Person for an Event
+    public static function getMotivationsByParticipantForEvent($args) {
+        $motivations = FSMotivation::getMotivationsByPersonForEvent($args); 
+        return $motivations; 
     }//function
     
     /**
@@ -118,13 +135,28 @@ class ASParticipant {
     }
     
     /**
-     * Method archivedMotivationToAnEvent from SA Participant
+     * Method archiveMotivationToAnEvent from SA Participant
      * @param type $args 
      * @return type 
      */
-    public static function archivedMotivationToAnEvent($args){
-        $aMotivationToArchiveForAnEvent = FSMotivation::archiveMotivation($args);
-        return $aMotivationToArchiveForAnEvent;
+    public static function archiveMotivationToAnEvent($args){
+        $aText = $args['text'];
+        $anEvent = $args['event'];
+        $aParticipant = $args['participant'];
+        $messageValidMotivation = FSMotivation::getMotivation(array('text'=> $aText, 'event'=> $anEvent, 'participant' => $aParticipant));
+        if($messageValidMotivation->getStatus()){
+            $aValidMotivation = $messageValidMotivation->getContent();
+            if(!$aValidMotivation->getIsArchived()){
+                $aValidMotivation->setIsArchived(1);
+                $messageSetMotivation = FSKeyword::setKeyword($aValidMotivation);
+                $message = $messageSetMotivation;
+            }else{
+                $message = $messageValidMotivation;
+            }
+        }else{
+            $message = $messageValidMotivation;
+        }
+        return $message;
     }
 }
 

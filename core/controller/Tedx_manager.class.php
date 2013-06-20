@@ -565,26 +565,33 @@ class Tedx_manager{
     
     //Add a Motivation To An Event
     public static function addMotivationToAnEvent($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "addMotivationToAnEvent" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::addMotivationToAnEvent($args); 
-        }else{
-            $message = $messageAccess;
-        };
+        $message = ASParticipant::addMotivationToAnEvent($args); 
         return $message;
     }//function
     
     
-    public function archivedMotivationToAnEvent($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "archivedMotivationToAnEvent" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::archivedMotivationToAnEvent( $args ); 
-        }
-        else {
-            $message = $messageAccess;
-        }
+    public function archiveMotivationToAnEvent($args) {
+        $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
         return $message;
     }//function
+    
+    //Show a Motivation
+    public static function getMotivation($args) {
+        $aMotivation = ASParticipant::getMotivation($args);
+        return $aMotivation;    
+    }//function 
+    
+    //Show all Motivations of a Person
+    public static function getMotivationsByParticipant($aParticipant) {
+        $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
+        return $motivations; 
+    }//function
+    
+    //Show all Motivations of a Person for an Event
+    public static function getMotivationsByParticipantForEvent($args) {
+        $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
+        return $motivations; 
+    }//function    
     
     
      /*==========================================================================
@@ -600,12 +607,7 @@ class Tedx_manager{
      
     //Add a Location
     public function addLocation($args) {
-        $messageAccess = $tedx_manager->auth->isGranted( "addLocation" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::addLocation( $args ); 
-        }else {
-            $message = $messageAccess;
-        }
+        $message = ASOrganizer::addLocation( $args ); 
         return $message;
     }//function
     
@@ -628,9 +630,6 @@ class Tedx_manager{
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
-    public function archiveMotivationToAnEvent( $args ) {
-        return $this->stub->archiveMotivationToAnEvent( $args ); 
-    }//function
     
     
     public function addSpeakerToSlot( $args ) {

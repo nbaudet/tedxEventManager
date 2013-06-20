@@ -15,7 +15,7 @@ class FSLocation{
      *@param string $name the id of the Location
      *@return a Mesage with an existant Location
      */
-    public function getLocation($name){
+    public static function getLocation($name){
         $location = NULL;
         
         global $crud;
@@ -59,7 +59,7 @@ class FSLocation{
      * Returns all the Locations of the database
      * @return A Message containing an array of Locations
      */
-    public function getLocations(){
+    public static function getLocations(){
         global $crud;
 
         $sql = "SELECT * FROM Location WHERE IsArchived = 0";
@@ -109,7 +109,7 @@ class FSLocation{
      * @param $args Parameters of a Location
      * @return a Message containing the new Location
      */
-    public function addLocation($args){
+    public static function addLocation($args){
         global $crud;
         
         /*

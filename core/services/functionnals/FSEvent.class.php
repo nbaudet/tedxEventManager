@@ -9,7 +9,7 @@ require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Location.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSLocation.class.php');
-
+require_once(APP_DIR . '/core/model/Slot.class.php');
 
 class FSEvent {
     /**
@@ -117,19 +117,58 @@ class FSEvent {
      * @return a Message containing the new Event
      */
     public static function addEvent($args){
+        $eventArgs = $args['event'];
+        $slotsArgs = $args['slots'];
+        $slots = array();
+        
+        $messageCreateEvent = FSEvent::createEvent($eventArgs);
+        
+        if ($messageCreateEvent->getStatus()){
+            $aCreatedEvent = $messageCreateEvent->getContent();
+        }
+        
+        
+        
+        foreach($slotsArgs as $slot){
+            $argsSlot = array (
+                'event'                  => $aCreatedEvent,
+                'happeningDate'          => $slot['happeningDate'],
+                'startingTime'           => $slot['startingTime'],
+                'endingTime'             => $slot['endingDate'],
+            );
+            
+            $aCreatedSlot = FSSlot::addSlot($argsSlot);
+            $slots[] = new Slot($aCreatedSlot->getContent());
+        } //foreach
+        
+        
+            
+    }// END addEvent
+    
+    
+    public static function createEvent($args){
         global $crud;
         
-
-        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate, StartingTime, EndingTime) VALUES ('".addslashes($args['mainTopic'])."', '".addslashes($args['description'])."', '".$args['startingDate']."', '".$args['endingDate']."', '".$args['startingTime']."', '".$args['endingTime']."');";
-
+        $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
+            StartingTime, EndingTime, LocationName) VALUES (
+                '".addslashes($args['mainTopic'])."',
+                '".addslashes($args['description'])."', 
+                '".$args['startingDate']."',
+                '".$args['endingDate']."', 
+                '".$args['startingTime']."', 
+                '".$args['endingTime']."',
+                '".$args['locationName']."'
+        );";        
         
-        if($crud->exec($sql) == 1){
+        $createdEventId = $crud->insertReturnLastId($sql);
+        
+        if($createdEventId){
             
-            $sql = "SELECT * FROM Event ORDER BY No DESC LIMIT 0,1;";
-            $data = $crud->exec($sql);
-            
-            $argsEvent = array(
+            $sql = "SELECT * FROM Event WHERE No = $createdEventId";
 
+            $data = $crud->getRow($sql);
+     
+            $argsEvent = array(
                 'no'            => $data['No'],
                 'mainTopic'     => $data['MainTopic'],
                 'locationName'  => $data['LocationName'],
@@ -138,6 +177,7 @@ class FSEvent {
                 'endingDate'    => $data['EndingDate'],
                 'startingTime'  => $data['StartingTime'],
                 'endingTime'    => $data['EndingTime'],
+                'locationName'  => $data['LocationName'],
                 'isArchived'    => $data['IsArchived']
             );
             
@@ -149,8 +189,8 @@ class FSEvent {
                 'status'        => true,
                 'content'       => $event
             );
-            $message = new Message($argsMessage);
-            return $message;
+            $return = new Message($argsMessage);
+
         } else {
             $argsMessage = array(
                 'messageNumber' => 216,
@@ -158,12 +198,10 @@ class FSEvent {
                 'status'        => false,
                 'content'       => NULL
             );
-            $message = new Message($argsMessage);
-
-            return $message;
+            $return = new Message($argsMessage);
         }// else
-        
-    }// function
+        return $return;
+    } // END createEvent
     
     /**
      * Search events with args

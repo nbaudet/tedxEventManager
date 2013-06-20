@@ -25,24 +25,27 @@
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
         
-
-        $argsPerson = array(
-          'name'         => 'Jacques',
-          'firstname'    => 'Jean',
-          'dateOfBirth'  => '1987-03-16',
-          'address'      => 'Chemin de la gare 24',
-          'city'         => 'Lausanne',
-          'country'      => 'Suisse',
-          'phoneNumber'  => '+41756999888',
-          'email'        => 'jeanjacques@heig.ch',
-          'description'  => 'Doyen de COMEM+',
-          'idmember'     => 'jean',
-          'password'     => 'jacques'
-          );
         
-        $message = ASAdmin::registerOrganizer($argsPerson);
+        $event = FSEvent::getEvent(1)->getContent();
+        $participant = FSParticipant::getParticipant(5)->getContent();
+        /*$status = 'Waiting';
+        
+        $args = array('event' => $event, 'participant' => $participant, 'status' => $status);
+        $registration = FSRegistration::getRegistration($args)->getContent();
+        $registration->setTypeDescription('Team Logistics - Light and sound');
+        
+        $message = FSRegistration::setRegistration($registration);
+        //$message = ASAdmin::registerOrganizer($argsPerson);*/
+        
+        $args = array(
+            'event' => $event , 
+            'participant' => $participant , 
+            'text' => "Tesssstttt"
+        );
+        
+        $motivation = FSMotivation::getMotivationsByPersonForEvent($args);
         echo "<hr> Mon message final";
-        var_dump($message);
+        var_dump($motivation);
         ?>
     </body>
 </html>

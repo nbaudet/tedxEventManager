@@ -28,7 +28,14 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
  * @author rapou
  */
 class ASValidator {
-    //put your code here
+    /**
+     * The constructor that does nothing
+     */
+    public function __construct() {
+        // Nothing
+    }
+    
+    
 }
 
 ?>

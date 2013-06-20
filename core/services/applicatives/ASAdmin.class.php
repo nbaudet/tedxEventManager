@@ -45,6 +45,8 @@ class ASAdmin {
           'city'         => '',
           'country'      => '',
           'phoneNumber'  => '',
+          'idmember'     => '',
+          'password'     => '',
           'email'        => '',
           'description'  => '',
           'idmember'     => '',
@@ -121,6 +123,16 @@ class ASAdmin {
         
         // Return the message Visitor Registed or not Registred
         return $aRegisteredOrganizer;
+    } // END registerOrganizer
+    
+    /**
+     * Adds a new Event with its Slots
+     * @param array $args
+     * @return a Message containing the added Event and the Slots
+     */
+    public static function addEvent($args){
+        $messageAddEvent = FSEvent::addEvent($args);
+        return $messageAddEvent;
     }
     
     public static function addTeamRole($aName) {
