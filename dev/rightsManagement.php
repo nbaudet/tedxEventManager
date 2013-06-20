@@ -88,12 +88,25 @@ if( isset( $_REQUEST['action'] ) ) {
         showAccesses( $accesses );
         break;
     
+    case 'displayAccess':
+        echo '<p><a href="?action=seeAccessesUnits">Return to accesses\' units</a><br />';
+        echo '<a href="?">Go back</a></p>';
+        showAccess();
+        break;
+    
     case 'addAccess':
         addAccess();
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
         $accesses = FSAccess::getAccesses()->getContent();
         showAccesses( $accesses );
+        break;
+    
+    case 'updateAccess':
+        echo '<h1>Register the changes for an access</h1>';
+        echo '<p><a href="?action=seeAccessesUnits">Return to accesses\' units</a><br />';
+        echo '<a href="?">Go back</a></p>';
+        updateAccess();
         break;
     
     case 'updateUnit':
@@ -270,6 +283,41 @@ function showMember() {
 }
 
 
+/**
+ * Show the Units of an Access and enables to choose which ones are linked or not.
+ */
+function showAccess() {
+    if( isset( $_REQUEST['AccessNo'] ) ) {
+        $access = FSAccess::getAccess( $_REQUEST['AccessNo'] )->getContent();
+        $tabUnitsOfAccess = getUnitsFromAccess( $access );
+        
+        $tabOfAllUnits = getUnitsAsString();
+        
+        echo '<h1>Change <em>'.$access->getService().'</em>\'s units</h1>';
+        
+        echo '<form method="POST" action="">
+            <input type="hidden" id="action" name="action" value="updateAccess" />
+            <input type="hidden" id="memberID" name="memberID" value="'.$access->getNo().'" />'.PHP_EOL;
+        
+        foreach ( $tabOfAllUnits as $unit ) {
+            if( in_array( $unit, $tabUnitsOfAccess ) ) {
+                echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" checked />';
+            }
+            else {
+                echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" />';
+            }
+            echo '<label for="'.$unit.'">'.$unit.'</label>'.PHP_EOL;
+            echo '<br />'.PHP_EOL;
+        }
+        
+        echo '<input type="submit" value="Change Units" />
+            </form>';
+    }
+    else {
+        echo 'Error: no Access set.';
+    }
+}
+
 function updateMember() {
     
     global $tedx_manager;
@@ -330,11 +378,74 @@ function updateMember() {
     showMember();
 }
 
+function updateAccess() {
+    
+    global $tedx_manager;
+    
+    $tabRequest = $_REQUEST;
+    $accessNo = $tabRequest['AccessNo'];
+    unset($tabRequest['action']);
+    unset($tabRequest['AccessNo']);
+    $checkedUnits = $tabRequest;
+    
+    // Gets all the units a member is part of
+    $access = FSAccess::getAccess($accessNo)->getContent();
+    $tabUnitsOfAccess = getUnitsFromAccess( $access );
+    
+    $tabOfAllUnits = getUnitsAsString();
+    
+    foreach( $tabOfAllUnits as $unit ) {
+        // If the access was already a privilege for this unit
+        if( in_array( $unit, $tabUnitsOfAccess ) ) {
+            // If it was checked
+            if( isset( $checkedUnits[$unit] ) ) {
+                // do nothing
+                //echo $unit.' already granted<br />';
+            }
+            // Change this right
+            else {
+                // change the right
+                echo 'Successfully changed the access to '.$unit.'<br />';
+                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $args = array(
+                    'access' => $access,
+                    'unit'   => $objectUnit
+                );
+                FSPermission::upsertPermission( $args );
+            }
+        }
+        
+        // If this access was not yet granted
+        else {
+            // If it was checked
+            if ( isset( $checkedUnits[$unit] ) ) {
+                // change this right
+                echo 'Successfully changed the Permission to '.$unit.'<br />';
+                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $args = array(
+                    'access' => $access,
+                    'unit'   => $objectUnit
+                );
+                $message = FSPermission::upsertPermission( $args );
+            }
+            else {
+                // do nothing
+                //echo $unit.' already not granted<br />';
+            }
+            
+        }
+    }
+    showAccess();
+}
+
 function addAccess() {
     if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
-        
-        $messageAdd = FSAccess::Access($AccessToAdd);
+        $messageAdd = FSAccess::addAccess($AccessToAdd);
     }
+    else {
+        
+    }
+    return $messageAdd;
 }
 
 /**
