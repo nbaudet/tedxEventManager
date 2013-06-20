@@ -6,17 +6,16 @@
  * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
  */
 require_once( '../tedx-config.php' );
-require_once( APP_DIR.'/core/services/functionnals/FSMember.class.php' );
-require_once( APP_DIR.'/core/services/functionnals/FSUnit.class.php' );
-require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
-/*require_once( APP_DIR.'/core/model/Member.class.php' );
-require_once( APP_DIR.'/core/model/Unit.class.php' );*/
 
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
 echo '<h2>Request</h2>';
 var_dump($_REQUEST);*/
 
+// Is the user trying to log out ?
+if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'logout' ) {
+    $tedx_manager->logout();
+}
 
 // Is the user logged ?
 // yes -> Does he have sufficient rights ?
@@ -25,12 +24,6 @@ var_dump($_REQUEST);*/
 // no  -> Is he trying to login ?
 //        yes -> try to login
 //        no  -> show him login form
-
-// Is the user trying to log out ?
-if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'logout' ) {
-    $tedx_manager->logout();
-}
-
 if( $tedx_manager->isLogged() ) {
     //echo 'user logged<br />';
     $message = $tedx_manager->isGranted( "manageRights" );

@@ -634,10 +634,15 @@ class Tedx_manager{
         return $message;
     }//function
     
+<<<<<<< HEAD
     //Set an Event Location
     public function changeEventLocation($args) {
         $message = ASOrganizer::changeEventLocation($args); 
         return $message;
+=======
+    public function addSlotToEvent( $args ) {
+        return ASOrganizer::addSlotToEvent( $args ); 
+>>>>>>> 0509d8342fce733632e453a632d63fd9364c908d
     }//function
     
     /*==========================================================================
@@ -672,6 +677,19 @@ class Tedx_manager{
         return ASAdmin::addTeamRole($aName); 
     }//function
     
+    // Affect a TeamRole with a Organizer
+    public function affectTeamRole( $args ) {
+        return ASAdmin::affectTeamRole( $args ); 
+    }//function
+    
+    // Add an Event
+    public function addEvent( $args ) {
+        return ASAdmin::addEvent( $args ); 
+    }//function
+    
+    public function addRole( $args ) {
+        return ASAdmin::addRole( $args ); 
+    }//function
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -681,33 +699,16 @@ class Tedx_manager{
         return $this->stub->addSpeakerToSlot( $args ); 
     }//function
     
-    
     public function changePositionOfSpeakerToEvent( $args ) {
         return $this->stub->changePositionOfSpeakerToEvent( $args ); 
     }//function
-    
-    
-    public function addSlotToEvent( $args ) {
-        return $this->stub->addSlotToEvent( $args ); 
-    }//function
-    
-    
+        
     public function linkTeamRole( $args ) {
         return $this->stub->linkTeamRole( $args ); 
     }//function
     
     public function changeRoleLevel( $args ) {
         return $this->stub->changeRoleLevel( $args ); 
-    }//function
-    
-    
-    public function addRole( $args ) {
-        return $this->stub->addRole( $args ); 
-    }//function
-    
-    
-    public function addEvent( $args ) {
-        return $this->stub->addEvent( $args ); 
     }//function
     
 }//class
