@@ -691,6 +691,10 @@ class Tedx_manager{
         return ASAdmin::addRole( $args ); 
     }//function
     
+    public function changeRoleLevel( $args ) {
+        return ASAdmin::changeRoleLevel($args); 
+    }//function
+    
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
     
@@ -706,11 +710,6 @@ class Tedx_manager{
     public function linkTeamRole( $args ) {
         return $this->stub->linkTeamRole( $args ); 
     }//function
-    
-    public function changeRoleLevel( $args ) {
-        return $this->stub->changeRoleLevel( $args ); 
-    }//function
-    
 }//class
 
 

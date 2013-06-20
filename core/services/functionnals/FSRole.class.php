@@ -111,37 +111,56 @@ class FSRole {
      * @return a Message containing the new Role
      */
     public static function addRole($args){
+        $anEvent = $args['event'];
+        $anOrganizer = $args['organizer'];
+        $aName = $args['name'];
+        $aLevel = $args['level'];
         
-        // Validate non existing Role
-        $messageValidateRole = FSRole::getRole($args);
-        
-        if(!$messageValidateRole->getStatus()){
-            $messageCreateRole = FSRole::createRole($args);
-            
-            if($messageCreateRole->getStatus()){
-                $aCreatedRole = $messageCreateRole->getContent();
-                
-                $argsMessage = array(
-                    'messageNumber' => 165,
-                    'message'       => 'New Role created !',
-                    'status'        => true,
-                    'content'       => $aCreatedRole
+        $messageValidEvent = FSEvent::getEvent($anEvent->getNo());
+        if($messageValidEvent->getStatus()){
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidOrganizer = FSOrganizer::getOrganizer($anOrganizer->getNo());
+            if($messageValidOrganizer->getStatus()){
+                $aValidOrganizer = $messageValidOrganizer->getContent();
+                $argsRole = array(
+                    'event' => $aValidEvent,
+                    'organizer' => $aValidOrganizer,
+                    'name' => $aName,
+                    'level' => $aLevel
                 );
-                $return = new Message($argsMessage);
-            
-            } else {
-                $argsMessage = array(
-                    'messageNumber' => 166,
-                    'message'       => 'Error while inserting new Role',
-                    'status'        => false,
-                    'content'       => NULL
-                );
-                $return = new Message($argsMessage);
+                // Validate non existing Role
+                $messageValidateRole = FSRole::getRole($argsRole);
+                if(!$messageValidateRole->getStatus()){
+                    $messageCreateRole = FSRole::createRole($argsRole);
+                    if($messageCreateRole->getStatus()){
+                        $aCreatedRole = $messageCreateRole->getContent();
+
+                        $argsMessage = array(
+                            'messageNumber' => 165,
+                            'message'       => 'New Role created !',
+                            'status'        => true,
+                            'content'       => $aCreatedRole
+                        );
+                        $return = new Message($argsMessage);
+
+                    } else {
+                        $argsMessage = array(
+                            'messageNumber' => 166,
+                            'message'       => 'Error while inserting new Role',
+                            'status'        => false,
+                            'content'       => NULL
+                        );
+                        $return = new Message($argsMessage);
+                    }
+                } else {
+                    $return = $messageValidateRole;
+                }   
+            }else{
+                $return = $messageValidOrganizer;
             }
-            
-        } else {
-            $return = $messageValidateRole;
-        }       
+        }else{
+            $return = $messageValidEvent;
+        }
             
         return $return;                            
     }// END addRole
@@ -180,7 +199,7 @@ class FSRole {
 
         } else {
             $argsMessage = array(
-                'messageNumber' => 165,
+                'messageNumber' => 166,
                 'message'       => 'Error while inserting new Role',
                 'status'        => false,
                 'content'       => NULL
@@ -189,6 +208,78 @@ class FSRole {
         }// else
         return $return;
     } // END createRole
+    
+    public static function setRole($aRoleToSet) {
+        global $crud;
+        $messageValidEvent = FSEvent::getEvent($aRoleToSet->getEventNo());
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidOrganizer = FSOrganizer::getOrganizer($aRoleToSet->getOrganizerPersonNo());
+            if ($messageValidOrganizer->getStatus()){
+                $aValidOrganizer = $messageValidOrganizer->getContent();
+                $argsRole = array(
+                    'event' => $aValidEvent,
+                    'organizer' => $aValidOrganizer,
+                    'name' => $aRoleToSet->getName()
+                );
+                $messageValidRole = FSRole::getRole($argsRole);
+                if($messageValidRole->getStatus()){
+                    $aValidRole = $messageValidRole->getContent();
+                        
+                    $sql = "UPDATE  Role SET  
+                        Level =   " . $aRoleToSet->getLevel() . ",
+                        IsArchived =    '" . $aRoleToSet->getIsArchived() . "'
+                        WHERE  Role.Name = '" . $aValidRole->getName() . "' 
+                        AND Role.EventNo = " . $aValidEvent->getNo() . "
+                        AND Role.OrganizerPersonNo = " .  $aValidOrganizer->getNo();
+
+                    if ($crud->exec($sql) == 1) {
+                        $sql = "SELECT * FROM Role 
+                        WHERE Role.Name = " . $aValidRole->getName() . "' 
+                        AND Role.EventNo = " . $aValidEvent->getNo() . "
+                        AND Role.OrganizerPersonNo = " .  $aValidOrganizer->getNo();
+                        
+                        $data = $crud->getRow($sql);
+
+                        $argsRole = array(
+                            'name' => $data['Name'],
+                            'organizerPersonNo' => $data['OrganizerPersonNo'],
+                            'eventNo' => $data['EventNo'],
+                            'level' => $data['Level'],
+                            'isArchived' => $data['IsArchived']
+                        );
+
+                        $aSetRole = new Role($argsRole);
+
+                        $argsMessage = array(
+                            'messageNumber' => 434,
+                            'message' => 'Role set !',
+                            'status' => true,
+                            'content' => $aSetRole
+                        );
+                        $message = new Message($argsMessage); 
+                    } else {
+                        $argsMessage = array(
+                            'messageNumber' => 435,
+                            'message' => 'Error while setting Role',
+                            'status' => false,
+                            'content' => NULL
+                        );
+                        $message = new Message($argsMessage);
+                    }
+                }else{
+                    $message = $messageValidRole;
+                }
+            }else{
+                $message = $messageValidOrganizer;
+            } 
+        } else {
+            $message = $messageValidEvent;
+        }
+        return $message;
+    
+    }
+    
     
 }
 

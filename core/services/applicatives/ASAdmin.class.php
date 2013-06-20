@@ -135,16 +135,27 @@ class ASAdmin {
         return $messageAddEvent;
     }
     
+    // Add a Team Role
     public static function addTeamRole($aName) {
         return FSTeamRole::addTeamRole($aName);   
     }
     
+    // Affect a team role to an Organizer
     public static function affectTeamRole($args){
         return FSAffectation::addAffectation($args);
     }
     
+    // Add the role
     public static function addRole($args){
         return FSRole::addRole($args);
+    }
+    
+    // Change de level of the Role
+    public static function changeRoleLevel($args){
+        $newLevel = $args['level'];
+        $aRoleToSet = $args['role'];
+        $aRoleToSet->setLevel($newLevel);
+        return FSRole::setRole($aRoleToSet);
     }
 }
 
