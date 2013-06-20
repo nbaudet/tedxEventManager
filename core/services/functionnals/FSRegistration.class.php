@@ -245,6 +245,85 @@ class FSRegistration {
         $finalMessage = new Message($argsMessage);
         return $finalMessage;
     }
+    
+    
+     /**
+     * Set new parameters to a Registration
+     * @param Registration $aRegistrationToSet
+     * @return Message containing the setted Registration
+     */
+    public static function setRegistration($aRegistrationToSet) {
+        global $crud;
+        $messageValidEvent = FSEvent::getEvent($aRegistrationToSet->getEventNo());
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidParticipant = FSParticipant::getParticipant($aRegistrationToSet->getParticipantPersonNo());
+            if ($messageValidParticipant->getStatus()){
+                $aValidParticipant = $messageValidParticipant->getContent();
+                $argsRegistration = array('event' => $aValidEvent, 'participant' => $aValidParticipant, 'status' => $aRegistrationToSet->getStatus());
+                $messageValidRegistration = self::getRegistration($argsRegistration);
+                if($messageValidRegistration->getStatus()){
+                    $aValidRegistration = $messageValidRegistration->getContent();
+                    $sql = "UPDATE  Registration SET  
+                        Type = '" . $aRegistrationToSet->getType() . "',
+                        TypeDescription = '" . $aRegistrationToSet->getTypeDescription() . "',
+                        IsArchived = '" . $aRegistrationToSet->getIsArchived() . "'
+                        WHERE Registration.Status = '" . $aValidRegistration->getStatus() . "'
+                        AND Registration.ParticipantPersonNo = " . $aValidParticipant->getNo() . "
+                        AND Registration.EventNo = " . $aValidEvent->getNo();
+
+                    if ($crud->exec($sql) == 1) {
+                        $sql = "SELECT * FROM Registration
+                        WHERE Registration.Status = '" . $aValidRegistration->getStatus() . "'
+                        AND Registration.ParticipantPersonNo = " . $aValidParticipant->getNo() . "
+                        AND Registration.EventNo = " . $aValidEvent->getNo();
+                        
+                        $data = $crud->getRow($sql);
+
+                        $argsRegistration = array(
+                            'status'              => $data['Status'],
+                            'eventNo'             => $data['EventNo'],
+                            'participantPersonNo' => $data['ParticipantPersonNo'],
+                            'registrationDate'    => $data['RegistrationDate'],
+                            'type'                => $data['Type'],
+                            'typeDescription'     => $data['TypeDescription'],
+                            'isArchived'          => $data['IsArchived']
+                        );
+
+                        $aSettedRegistration = new Registration($argsRegistration);
+
+                        $argsMessage = array(
+                            'messageNumber' => 430,
+                            'message' => 'Registration setted !',
+                            'status' => true,
+                            'content' => $aSettedRegistration
+                        );
+                        $message = new Message($argsMessage);
+                    } else {
+                        $argsMessage = array(
+                            'messageNumber' => 431,
+                            'message' => 'Error while setting Registration',
+                            'status' => false,
+                            'content' => NULL
+                        );
+                        $message = new Message($argsMessage);
+                    }
+                }else{
+                    // Inexistant registration
+                    $message = $messageValidRegistration;
+                }
+            }else{
+                // Inexistant Participant
+                $message = $messageValidParticipant;
+            }
+        } else {
+            // Inexistant Event
+            $message = $messageValidEvent;
+        }
+        return $message;
+    }
+    
+    
 }
 
 ?>
