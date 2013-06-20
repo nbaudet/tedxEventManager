@@ -158,6 +158,38 @@ class ASParticipant {
         }
         return $message;
     }
+    
+    // A participant send the registration to a Validator
+    public static function sendRegistration($currentRegistration) {
+        $newStatus = 'Sent';
+        $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
+        if($messageValidEvent->getStatus()){
+            $aValidEvent = $messageValidEvent->getContent();
+            $messageValidParticipant = FSParticipant::getParticipant($currentRegistration->getParticipantPersonNo());
+            if($messageValidParticipant->getStatus()){
+                $aValidParticipant = $messageValidParticipant->getContent();
+                $currentRegistration->setIsArchived(1);
+                $messageArchiveRegistration = FSRegistration::archiveRegistration($currentRegistration);
+                if($messageArchiveRegistration->getStatus()){
+                     $argsRegistration = array(
+                        'status'          => $newStatus, // String
+                        'type'            => $currentRegistration->getType(), // String
+                        'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
+                        'event'           => $aValidEvent, // object Event
+                        'participant'     => $aValidParticipant  // object Participant
+                    );
+                    $message = FSRegistration::addRegistration($argsRegistration);
+                }else{
+                    $message = $messageArchiveRegistration;
+                }
+            }else{
+                $message = $messageValidParticipant;
+            }
+        }else{
+            $message = $messageValidEvent;
+        }
+        return $message; 
+    }//function
 }
 
 ?>

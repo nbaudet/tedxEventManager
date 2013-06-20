@@ -74,7 +74,7 @@ class ASVisitor {
             $aValidParticipant = $messageValidParticipant->getContent();
             // add registration
             $argsRegistration = array(
-                'status' => 'Waiting', // String
+                'status' => 'Pending', // String
                 'type' => $aType, // String
                 'typeDescription' => $aTypeDescription, // Optionel - String
                 'event' => $anEvent, // object Event
@@ -113,7 +113,7 @@ class ASVisitor {
                     );
                     $finalMessage = new Message($argsMessage);
                 } else {
-                    $finalMessage = $messagesAddedParticipations;
+                    $finalMessage = $messagesAddedParticipation;
                 }
             } else {
                 $finalMessage = $messageAddedRegistration; // Registration failed

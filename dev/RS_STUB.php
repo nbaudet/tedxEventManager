@@ -14,6 +14,7 @@
         require_once('../core/services/applicatives/ASFree.class.php');
         require_once('../core/services/applicatives/ASVisitor.class.php');
         require_once('../core/services/applicatives/ASOrganizer.class.php');
+        require_once('../core/services/applicatives/ASValidator.class.php');
         require_once('../core/services/applicatives/ASAdmin.class.php');
         require_once('../core/model/Person.class.php ');
         require_once('../core/model/Event.class.php ');
@@ -28,24 +29,17 @@
         
         $event = FSEvent::getEvent(1)->getContent();
         $participant = FSParticipant::getParticipant(5)->getContent();
-        /*$status = 'Waiting';
+        $status = 'Waiting';
         
-        $args = array('event' => $event, 'participant' => $participant, 'status' => $status);
-        $registration = FSRegistration::getRegistration($args)->getContent();
-        $registration->setTypeDescription('Team Logistics - Light and sound');
+        $argsRegistration = array('event' => $event, 'participant' => $participant, 'status' => $status);
+        $registration = FSRegistration::getRegistration($argsRegistration)->getContent();
+
+        $args = array('currentRegistration' => $registration, 'newStatus' => 'Accepted');
+        $message = ASValidator::changeRegistrationStatus($args);
         
-        $message = FSRegistration::setRegistration($registration);
-        //$message = ASAdmin::registerOrganizer($argsPerson);*/
         
-        $args = array(
-            'event' => $event , 
-            'participant' => $participant , 
-            'text' => "Tesssstttt"
-        );
-        
-        $motivation = FSMotivation::getMotivationsByPersonForEvent($args);
         echo "<hr> Mon message final";
-        var_dump($motivation);
+        var_dump($message);
         ?>
     </body>
 </html>
