@@ -88,7 +88,11 @@ if( isset( $_REQUEST['action'] ) ) {
         break;
     
     case 'addAccess':
-        addAccess();
+        if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
+            $accessToAdd['Service'] = $_REQUEST['service'];
+            $messageAdd = ASRightsManagement::addAccess( $accessToAdd );
+            //var_dump($messageAdd);
+        }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
         $accesses = FSAccess::getAccesses()->getContent();
@@ -193,20 +197,17 @@ function showMembers( $members ) {
 
 function showAccesses( $accesses ) {
     
-    // Echo a small for to add accesses to the application
+    // Echo a form to add accesses to the application
     echo '<form method="POST">
             <fieldset style="width: 250px;">
                 <legend>Add a new Access</legend>
-                <input type="hidden" id="action" value="addAccess" />
+                <input type="hidden" name="action" value="addAccess" />
                 <label for="service">Access name:</label>
                 <input type="text" id="service" name="service" /><br />
                 <input type="submit" value="Add Access" />
             </fieldset>
         </form>';
 
-
-
-    //$tabOfAllAccesses = FSAccess::getAccesses()->getContent();
     $tabOfAllUnits = getUnitsAsString();
     
     // Construct the table to display
@@ -371,6 +372,10 @@ function updateMember() {
     showMember();
 }
 
+/**
+ * 
+ * @global Tedx_manager $tedx_manager
+ */
 function updateAccess() {
     
     global $tedx_manager;
@@ -386,6 +391,9 @@ function updateAccess() {
     $tabUnitsOfAccess = getUnitsFromAccess( $access );
     
     $tabOfAllUnits = getUnitsAsString();
+    // Order the array to have superadmin at beginning
+    array_splice( $tabOfAllUnits, 0, 0, $tabOfAllUnits[5] );
+    unset($tabOfAllUnits[6]);
     
     foreach( $tabOfAllUnits as $unit ) {
         // If the access was already a privilege for this unit
@@ -399,7 +407,7 @@ function updateAccess() {
             else {
                 // change the right
                 echo 'Successfully changed the access to '.$unit.'<br />';
-                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $objectUnit = FSUnit::getUnitByName( $unit )->getContent();
                 $args = array(
                     'access' => $access,
                     'unit'   => $objectUnit
@@ -414,7 +422,7 @@ function updateAccess() {
             if ( isset( $checkedUnits[$unit] ) ) {
                 // change this right
                 echo 'Successfully changed the Permission to '.$unit.'<br />';
-                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $objectUnit = FSUnit::getUnitByName( $unit )->getContent();
                 $args = array(
                     'access' => $access,
                     'unit'   => $objectUnit
@@ -431,16 +439,6 @@ function updateAccess() {
     showAccess();
 }
 
-function addAccess() {
-    if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
-        $messageAdd = FSAccess::addAccess($AccessToAdd);
-    }
-    else {
-        
-    }
-    return $messageAdd;
-}
-
 /**
  * Get all the existing units and make an array with their names
  * @return String Array of all the units' names
@@ -451,6 +449,9 @@ function getUnitsAsString() {
     foreach ( $units as $unit) {
         $tabOfAllUnits[] = $unit->getName();
     }
+    // Order the array to have superadmin at beginning
+    array_splice( $tabOfAllUnits, 0, 0, $tabOfAllUnits[5] );
+    unset($tabOfAllUnits[6]);
     return $tabOfAllUnits;
 }
 

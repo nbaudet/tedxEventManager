@@ -14,6 +14,11 @@ require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
 
 class ASRightsManagement {
     
+    
+    public static function addAccess( $accessToAdd ) {
+        $accessToAdd['Type'] = 'Full';
+        return FSAccess::addAccess( $accessToAdd );
+    }
 }
 
 ?>
