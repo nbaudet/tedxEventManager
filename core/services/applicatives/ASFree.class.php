@@ -57,6 +57,12 @@ class ASFree {
         /**
          * Arguments for adding a Person
          */
+        if(!isset($args['description']) || $args['description'] == ''){
+            $description = '';
+        } else {
+            $description = $args['description'];
+        }
+        
         $argsPerson = array(
             'name' => $args['name'],
             'firstname' => $args['firstname'],
@@ -66,7 +72,7 @@ class ASFree {
             'country' => $args['country'],
             'phoneNumber' => $args['phoneNumber'],
             'email' => $args['email'],
-            'description' => $args['description']
+            'description' => $description
         );
 
         /**
