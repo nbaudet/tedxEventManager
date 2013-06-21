@@ -120,9 +120,9 @@ class ASParticipant {
     
     //Show all Motivations of a Person for an Event
     public static function getMotivationsByParticipantForEvent($args) {
-        $motivations = FSMotivation::getMotivationsByPersonForEvent($args); 
-        return $motivations; 
+        return FSMotivation::getMotivationsByParticipantForEvent($args); 
     }//function
+    
     
     /**
      * Method addMotivationToAnEvent from SA Participant

@@ -14,6 +14,7 @@
  * Require all Applicative Services
  */
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASRightsManagement.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
@@ -212,6 +213,15 @@ class Tedx_manager{
     }//function
     
     /**
+     * Returns all the Register of a Participant
+     * @param $aParticipant 
+     * @return a Message containing the registrations
+     */
+    public function getRegistrationsByParticipant($participant){
+        return ASFree::getRegistrationsByParticipant($participant);
+    }
+    
+    /**
      * Applicatives services to get the Location from an Event
      * @param type $event
      * @return type message
@@ -251,6 +261,7 @@ class Tedx_manager{
         $messageGetOrganizer = ASFree::getOrganizer($no);
         return $messageGetOrganizer;
     }// function
+    
     /**
      * Get Organizers
      * 
@@ -313,6 +324,14 @@ class Tedx_manager{
         return $messageGetParticipants; 
     }//function
     
+        /**
+     * Returns all the Participants of a Slot
+     * @param type $slot
+     * @return a Message containing an array of Participants
+     */
+    public function getParticipantsBySlot($slot){
+        return ASFree::getParticipantsBySlot($slot);
+    }
     
     /**
      * get a Location
@@ -354,6 +373,26 @@ class Tedx_manager{
         $messageGetRoles = ASFree::getRoles(); 
         return $messageGetRoles; 
     }//function 
+    
+    /**
+     * Returns all the Roles of an Event
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public function getRolesByEvent($event){
+        $messageGetRolesByEvent = ASFree::getRolesByEvent($event);
+        return $messageGetRolesByEvent;
+    }
+    
+    /**
+     * Returns all the Roles of an Organizer
+     * @param Event $event
+     * @return a Message containing an array of Roles
+     */
+    public function getRolesByOrganizer($organizer){
+        $messageGetRolesByOrganizer = ASFree::getRolesByOrganizer($organizer);
+        return $messageGetRolesByOrganizer;
+    }
     
     
     /**
@@ -464,7 +503,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-        $messageAccess = $this->asAuth->isGranted( "registerToAnEvent" );
+        $messageAccess = $this->isGranted( "registerToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
         }
@@ -480,7 +519,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changeProfil( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "changeProfile" );
+        $messageAccess = $this->isGranted( "changeProfil" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changeProfil( $args );
         }
@@ -496,7 +535,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changePassword( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "changePassword" );
+        $messageAccess = $this->isGranted( "changePassword" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changePassword( $args );
         }
@@ -512,7 +551,7 @@ class Tedx_manager{
      * @return type message
      */
     public function searchPersons($args) {
-        $messageAccess = $this->asAuth->isGranted( "searchPersons" );
+        $messageAccess = $this->isGranted( "searchPersons" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::searchPersons( $args );
         }
@@ -532,7 +571,7 @@ class Tedx_manager{
      * @return Message
      */
     public function getLoggedPerson() {
-        if( $this->asAuth->isLogged() ) {
+        if( $this->isLogged() ) {
             // Message with logged person
             $messageMember = FSMember::getMember( $this->getUsername() );
             $member        = $messageMember->getContent();
@@ -565,7 +604,7 @@ class Tedx_manager{
      * 
      *========================================================================*/
     public function addKeywordsToAnEvent( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "addKeywordsToAnEvent" );
+        $messageAccess = $this->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASParticipant::addKeywordsToAnEvent( $args );
         }
@@ -576,7 +615,7 @@ class Tedx_manager{
     }//function
     
     public function archiveKeyword( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "archiveKeyword" );
+        $messageAccess = $this->isGranted( "archiveKeyword" );
         if( $messageAccess->getStatus() ) {
             $message = ASParticipant::archiveKeyword( $args ); 
         }
@@ -591,61 +630,126 @@ class Tedx_manager{
      * @return type message
      */
     public function getKeyword($args) {
-        return ASParticipant::getKeyword($args);
+        $messageAccess = $this->isGranted( "getKeyword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeyword($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function 
     
     //Show all Keywords of a Person
     public function getKeywordsByPerson($aPerson) {
-        return ASParticipant::getKeywordsByPerson($aPerson); 
+        $messageAccess = $this->isGranted( "getKeywordsByPerson" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeywordsByPerson($aPerson); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show all Keywords of a Person for an Event
     public function getKeywordsByPersonForEvent($args) {
-        return ASParticipant::getKeywordsByPersonForEvent($args); 
+        $messageAccess = $this->isGranted( "getKeywordsByPersonForEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeywordsByPersonForEvent($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Add a Motivation To An Event
     public function addMotivationToAnEvent($args) {
-        $message = ASParticipant::addMotivationToAnEvent($args); 
+        $messageAccess = $this->isGranted( "addMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::addMotivationToAnEvent($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     
     public function archiveMotivationToAnEvent($args) {
-        $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
+        $messageAccess = $this->isGranted( "archiveMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     //Show a Motivation
     public function getMotivation($args) {
-        $aMotivation = ASParticipant::getMotivation($args);
-        return $aMotivation;    
+        $messageAccess = $this->isGranted( "getMotivation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivation($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function 
     
     //Show all Motivations of a Person
     public function getMotivationsByParticipant($aParticipant) {
-        $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
-        return $motivations; 
+        $messageAccess = $this->isGranted( "getMotivationsByParticipant" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPerson($aParticipant); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show all Motivations of a Person for an Event
-    public function getMotivationsByParticipantForEvent($args) {
-        $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
-        return $motivations; 
+    public function getMotivationsByParticipantForEvent( $args ) {
+        $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPersonForEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Send a registration
     public function sendRegistration( $args ) {
-        return ASParticipant::sendRegistration( $args ); 
+        $messageAccess = $this->isGranted( "sendRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::sendRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show the Registration history of a Person for an Event
-    public function getRegistrationHistory($args) {
-        return ASParticipant::getRegistrationHistory($args);
+    public function getRegistrationHistory( $args ) {
+        $messageAccess = $this->isGranted( "getRegistrationHistory" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getRegistrationHistory( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     
-     /*==========================================================================
+    /*==========================================================================
      * 
      * ORGANIZER FUNCTIONS
      * 
@@ -653,24 +757,49 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerSpeaker( $args ) {
-        return ASOrganizer::registerSpeaker($args); 
+        $messageAccess = $this->isGranted( "registerSpeaker" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::registerSpeaker( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
      
     //Add a Location
     public function addLocation($args) {
-        $message = ASOrganizer::addLocation( $args ); 
+        $messageAccess = $this->isGranted( "addLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     //Set an Event Location
     public function changeEventLocation($args) {
-        $message = ASOrganizer::changeEventLocation($args); 
+        $messageAccess = $this->isGranted( "changeEventLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeEventLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }
     
     public function addSlotToEvent( $args ) {
-        return ASOrganizer::addSlotToEvent( $args ); 
-
+        $messageAccess = $this->isGranted( "addSlotToEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addSlotToEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     /*==========================================================================
@@ -681,15 +810,29 @@ class Tedx_manager{
     
     // Accept a registration
     public function acceptRegistration( $args ) {
-        return ASValidator::acceptRegistration( $args ); 
+        $messageAccess = $this->isGranted( "acceptRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::acceptRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Reject a registration
     public function rejectRegistration( $args ) {
-        return ASValidator::rejectRegistration( $args ); 
+        $messageAccess = $this->isGranted( "rejectRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::rejectRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
-     /*==========================================================================
+    /*==========================================================================
      * 
      * ADMIN FUNCTIONS
      * 
@@ -697,31 +840,87 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerOrganizer( $args ) {
-        return ASAdmin::registerOrganizer( $args ); 
+        $messageAccess = $this->isGranted( "registerOrganizer" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::registerOrganizer( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add a team role
     public function addTeamRole( $aName ) {
-        return ASAdmin::addTeamRole($aName); 
+        $messageAccess = $this->isGranted( "addTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addTeamRole($aName);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Affect a TeamRole with a Organizer
     public function affectTeamRole( $args ) {
-        return ASAdmin::affectTeamRole( $args ); 
+        $messageAccess = $this->isGranted( "affectTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::affectTeamRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add an Event
     public function addEvent( $args ) {
-        return ASAdmin::addEvent( $args ); 
+        $messageAccess = $this->isGranted( "addEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addEvent( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     public function addRole( $args ) {
-        return ASAdmin::addRole( $args ); 
+        $messageAccess = $this->isGranted( "addRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
+    // Change the level of a role
     public function changeRoleLevel( $args ) {
-        return ASAdmin::changeRoleLevel($args); 
+        $messageAccess = $this->isGranted( "changeRoleLevel" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::changeRoleLevel($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
+    
+    public function linkTeamRole( $args ) {
+        $messageAccess = $this->isGranted( "linkTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::linkTeamRole($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message; 
+    }//function
+    
+    
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
@@ -735,9 +934,6 @@ class Tedx_manager{
         return $this->stub->changePositionOfSpeakerToEvent( $args ); 
     }//function
         
-    public function linkTeamRole( $args ) {
-        return $this->stub->linkTeamRole( $args ); 
-    }//function
 }//class
 
 

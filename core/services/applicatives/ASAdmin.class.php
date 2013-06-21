@@ -157,6 +157,12 @@ class ASAdmin {
         $aRoleToSet->setLevel($newLevel);
         return FSRole::setRole($aRoleToSet);
     }
+    
+    // Link a TeamRole IsMember Of to a TeamRole
+    public static function linkTeamRole($args){
+        $aLinkedTeamRole = FSTeamRole::setTeamRole($args);
+        return $aLinkedTeamRole;
+    }
 }
 
 ?>

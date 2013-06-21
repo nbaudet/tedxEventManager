@@ -14,6 +14,31 @@ require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
 
 class ASRightsManagement {
     
+    /**
+     * Adds an access to the existant accesses
+     * @param Mixed $accessToAdd An array with the line "Service".
+     * @return Message a Message
+     */
+    public static function addAccess( $accessToAdd ) {
+        $accessToAdd['Type'] = 'Full';
+        return FSAccess::addAccess( $accessToAdd );
+    }
+    
+    /**
+     * 
+     * @param Access $accessToDelete
+     * @return Message a Message
+     */
+    public static function deleteAccess( $accessToDelete ) {
+        $messageAccess = FSAccess::getAccess( $accessToDelete->getNo() );
+        if( $messageAccess->getStatus() ) {
+            
+        }
+        else {
+            
+        }
+        return $message;
+    }
 }
 
 ?>

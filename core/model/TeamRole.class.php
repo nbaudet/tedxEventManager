@@ -43,7 +43,7 @@ class TeamRole {
      * @param type $array of parameters that correspond to the classes properties
      */
     public function __construct($array = null){
-        
+
         if(!is_array($array)) {
             throw new Exception('No parameters');
                        
@@ -67,6 +67,13 @@ class TeamRole {
         return $this->name; 
     }//function
     
+    /**
+     * set name
+     * @param type $name
+     */
+    public function setName($name) {
+        $this->name = $name; 
+    }//function
     
     /**
      * get isMemberOf

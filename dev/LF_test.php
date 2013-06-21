@@ -27,11 +27,66 @@ require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
+
+$event = FSEvent::getEvent(2)->getContent();
+
+$argsSlot = array (
+    'no'    => '2',
+    'event' => $event
+);
+
+$slot = FSSlot::getSlot($argsSlot)->getContent();
+
+//var_dump(FSParticipation::getParticipantsBySlot($slot));
+
+var_dump($b = $tedx_manager->getParticipantsBySlot($slot));
+
+
+
+
+/*$speaker = FSSpeaker::getSpeaker(6)->getContent();
+var_dump($speaker);
+
+$event = FSEvent::getEvent(2)->getContent();
+
+$argsSlot = array (
+    'no'    => '2',
+    'event' => $event
+);
+
+$slot = FSSlot::getSlot($argsSlot)->getContent();
+
+var_dump($slot);
+
+$argsPlace = array (
+    'no'    => 2,
+    'slot'  => $slot,
+    'speaker' => $speaker
+);
+
+$aPlace = FSPlace::getPlace($argsPlace)->getContent();
+
+var_dump($aPlace);*/
+
+
+
+
+/*$slot = FSSlot::getSlot($argsSlot)->getContent();
+$speaker = FSSpeaker::getSpeaker(24)->getContent();
+
+$argsPlaceToCreate = array (
+    'no'    => 4,
+    'slot'  => $slot,
+    'speaker' => $speaker
+);*/
+
+//var_dump($messageCreatedPlace = FSPlace::addPlace($argsPlaceToCreate));
+
+
 //$event = FSEvent::getEvent(2)->getContent();
 
-
-$organizer = FSOrganizer::getOrganizer(4)->getContent();
-var_dump(FSRole::getRolesByOrganizer($organizer));
+//$organizer = FSOrganizer::getOrganizer(4)->getContent();
+//var_dump(FSRole::getRolesByOrganizer($organizer));
 
 //var_dump(FSRole::getRoles());
 

@@ -110,6 +110,43 @@ class FSParticipation{
     }
     
     /**
+     * Returns all the Participants of a Slot
+     * @param type $slot
+     * @return a Message containing an array of Participants
+     */
+    public static function getParticipantsBySlot($slot){
+        global $crud;
+        $sql = "SELECT ParticipantPersonNo FROM Participation WHERE IsArchived = 0 AND SlotNo = " . $slot->getNo();
+        
+        $data = $crud->getRows($sql);
+        
+        if($data){
+            $participants = array();
+            
+            foreach($data as $row){
+                $participants[] = FSParticipant::getParticipant($row['ParticipantPersonNo'])->getContent();
+            }
+            
+            $argsMessage = array(
+                'messageNumber' => 178,
+                'message'       => 'All Participants for a Slot selected',
+                'status'        => true,
+                'content'       => $participants
+            );
+            $return = new Message($argsMessage);
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 179,
+                'message'       => 'Error while SELECT * FROM Participant',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+    }
+    
+    /**
      * Add a new Participation in Database
      * @param $args Parameters of a Participation
      * @return a Message containing the new Participation

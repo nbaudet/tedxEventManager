@@ -5,26 +5,59 @@
     <body>
 <?php
 require_once('../tedx-config.php');
-//require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
+require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
+$aParticipant = $tedx_manager->getParticipant(42)->getContent();
+$anEvent = $tedx_manager->getEvent(1)->getContent();
 
+$args = array(
+        'participant' => $aParticipant,
+        'event'  => $anEvent
+        );
+$listOfMotivations= $tedx_manager->getMotivationsByParticipantForEvent($args);
+// Message
+if( $listOfMotivations->getStatus())
+    echo 'Congrats! ' . $listOfMotivations->getMessage();
+else
+    echo 'Error! ' . $listOfMotivations->getMessage();
+
+
+
+echo '</br>';
+// Object Event
+/*$anEvent = FSEvent::getEvent(41)->getContent();
+ 
+//get Registration from the Event
+$messageGetRegistrationsByEvent = $tedx_manager->getRegistrationsByEvent($anEvent);
+if($messageGetRegistrationsByEvent->getStatus()){
+    echo 'registrations Founds';
+}else{
+    echo 'no registrations founds';
+};*/
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
     
+$aTeamRole = $tedx_manager->getTeamRole('Accueil')->getContent();
+$aTeamRoleIsMemberOf = $tedx_manager->getTeamRole('Superman')->getContent();
+
 $aTeamRoleToGetLink = array(
-            'name'         => 'Superman',
-            'isMemberOf'   => 'Accueil',
-            'isArchived'    => 0
-        );
+    'teamRole'  =>  $aTeamRole,
+    'teamRoleIsMemberOf'    =>  $aTeamRoleIsMemberOf
+);
 
 //$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
-        
-var_dump(FSTeamRole::setTeamRole($aTeamRoleToGetLink));
+
+$aLinkedTeamRole = $tedx_manager->linkTeamRole($aTeamRoleToGetLink);
+// Message
+if( $aLinkedTeamRole->getStatus())
+    echo 'Congrats! ' . $aLinkedTeamRole->getMessage();
+else
+    echo 'Error! ' . $aLinkedTeamRole->getMessage();
 
 /*$anEventToChange = $tedx_manager->getEvent(28)->getContent();
 $aNewLocationName = 'Château -Maire';

@@ -88,7 +88,21 @@ if( isset( $_REQUEST['action'] ) ) {
         break;
     
     case 'addAccess':
-        addAccess();
+        if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
+            $accessToAdd['Service'] = $_REQUEST['service'];
+            $messageAdd = ASRightsManagement::addAccess( $accessToAdd );
+        }
+        echo '<h1>See the accesses\' units</h1>';
+        echo '<p><a href="?">Go back</a></p>';
+        $accesses = FSAccess::getAccesses()->getContent();
+        showAccesses( $accesses );
+        break;
+        
+    case 'deleteAccess':
+        if( isset( $_REQUEST['service'] ) && $_REQUEST['service'] != '' ) {
+            $accessToDelete['Service'] = $_REQUEST['service'];
+            $messageAdd = ASRightsManagement::deleteAccess( $accessToDelete );
+        }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
         $accesses = FSAccess::getAccesses()->getContent();
@@ -114,10 +128,10 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'login':
         $message = $tedx_manager->login( $_REQUEST['id'], $_REQUEST['password'] );
         if( $message->getStatus() ) {
-            header( "Location: rightsManagement.php" );
+            header( "Location: rightsManagement_RS.php" );
         }
         else {
-            header( "Location: rightsManagement.php?try=fail" );
+            header( "Location: rightsManagement_RS.php?try=fail" );
         }
         break;
     
@@ -193,20 +207,31 @@ function showMembers( $members ) {
 
 function showAccesses( $accesses ) {
     
-    // Echo a small for to add accesses to the application
-    echo '<form method="POST">
+    // Echo a form to add/delete accesses to the application
+    echo '<div style="float: right; background-color: lightgray; margin-right: 30px; padding: 10px;">';
+    echo '<form method="POST" style="margin-bottom: 0px;">
             <fieldset style="width: 250px;">
                 <legend>Add a new Access</legend>
-                <input type="hidden" id="action" value="addAccess" />
+                <input type="hidden" name="action" value="addAccess" />
                 <label for="service">Access name:</label>
                 <input type="text" id="service" name="service" /><br />
                 <input type="submit" value="Add Access" />
             </fieldset>
         </form>';
+    
+    echo '<form method="POST" style="margin-bottom: 0px; margin-top: 10px;">
+            <fieldset style="width: 250px;">
+                <legend>Delete an Access</legend>
+                <p><em>Please type exactly the name of the access you want to delete.<br />
+                <strong>Warning:</strong> this action cannot be canceled!</em></p>
+                <input type="hidden" name="action" value="deleteAccess" />
+                <label for="service">Access name:</label>
+                <input type="text" id="service" name="service" /><br />
+                <input type="submit" value="Delete Access" />
+            </fieldset>
+        </form>';
+    echo '</div>';
 
-
-
-    //$tabOfAllAccesses = FSAccess::getAccesses()->getContent();
     $tabOfAllUnits = getUnitsAsString();
     
     // Construct the table to display
@@ -371,6 +396,10 @@ function updateMember() {
     showMember();
 }
 
+/**
+ * 
+ * @global Tedx_manager $tedx_manager
+ */
 function updateAccess() {
     
     global $tedx_manager;
@@ -386,6 +415,9 @@ function updateAccess() {
     $tabUnitsOfAccess = getUnitsFromAccess( $access );
     
     $tabOfAllUnits = getUnitsAsString();
+    // Order the array to have superadmin at beginning
+    array_splice( $tabOfAllUnits, 0, 0, $tabOfAllUnits[5] );
+    unset($tabOfAllUnits[6]);
     
     foreach( $tabOfAllUnits as $unit ) {
         // If the access was already a privilege for this unit
@@ -399,7 +431,7 @@ function updateAccess() {
             else {
                 // change the right
                 echo 'Successfully changed the access to '.$unit.'<br />';
-                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $objectUnit = FSUnit::getUnitByName( $unit )->getContent();
                 $args = array(
                     'access' => $access,
                     'unit'   => $objectUnit
@@ -414,7 +446,7 @@ function updateAccess() {
             if ( isset( $checkedUnits[$unit] ) ) {
                 // change this right
                 echo 'Successfully changed the Permission to '.$unit.'<br />';
-                $objectUnit = FSUnit::getUnitByName($unit)->getContent();
+                $objectUnit = FSUnit::getUnitByName( $unit )->getContent();
                 $args = array(
                     'access' => $access,
                     'unit'   => $objectUnit
@@ -431,16 +463,6 @@ function updateAccess() {
     showAccess();
 }
 
-function addAccess() {
-    if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
-        $messageAdd = FSAccess::addAccess($AccessToAdd);
-    }
-    else {
-        
-    }
-    return $messageAdd;
-}
-
 /**
  * Get all the existing units and make an array with their names
  * @return String Array of all the units' names
@@ -451,6 +473,9 @@ function getUnitsAsString() {
     foreach ( $units as $unit) {
         $tabOfAllUnits[] = $unit->getName();
     }
+    // Order the array to have superadmin at beginning
+    array_splice( $tabOfAllUnits, 0, 0, $tabOfAllUnits[5] );
+    unset($tabOfAllUnits[6]);
     return $tabOfAllUnits;
 }
 

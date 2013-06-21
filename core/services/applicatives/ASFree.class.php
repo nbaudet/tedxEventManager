@@ -57,6 +57,12 @@ class ASFree {
         /**
          * Arguments for adding a Person
          */
+        if(!isset($args['description']) || $args['description'] == ''){
+            $description = '';
+        } else {
+            $description = $args['description'];
+        }
+        
         $argsPerson = array(
             'name' => $args['name'],
             'firstname' => $args['firstname'],
@@ -66,7 +72,7 @@ class ASFree {
             'country' => $args['country'],
             'phoneNumber' => $args['phoneNumber'],
             'email' => $args['email'],
-            'description' => $args['description']
+            'description' => $description
         );
 
         /**
@@ -258,7 +264,7 @@ class ASFree {
 
     // Show all Locations of an event
     public static function getLocations(){
-        $locations = FSLocation::getLocations;  
+        $locations = FSLocation::getLocations();  
         return $locations;
     }// function
     
@@ -379,6 +385,27 @@ class ASFree {
         $messageGetRolesByOrganizer = FSRole::getRolesByOrganizer($organizer);
         return $messageGetRolesByOrganizer;
     }
+    
+    /**
+     * Returns all the Register of a Participant
+     * @param $aParticipant 
+     * @return a Message containing the registrations
+     */
+    public static function getRegistrationsByParticipant($participant){
+        $messageGetRegistrationByParticipant = FSRegistration::getRegistrationsByParticipant($participant);
+        return $messageGetRegistrationByParticipant;
+    }
+    
+    /**
+     * Returns all the Participants of a Slot
+     * @param type $slot
+     * @return a Message containing an array of Participants
+     */
+    public static function getParticipantsBySlot($slot){
+        $messageGetParticipantsBySlot = FSParticipation::getParticipantsBySlot($slot);
+        return $messageGetParticipantsBySlot;
+    }
+    
 }// class
 
 ?>
