@@ -16,11 +16,13 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
     
+$aTeamRole = FSTeamRole('Accueil')->getContent();
+$aTeamRoleIsMemberOf = FSTeamRole('Superman')->getContent();
+
 $aTeamRoleToGetLink = array(
-            'name'         => 'Superman',
-            'isMemberOf'   => 'Accueil',
-            'isArchived'    => 0
-        );
+    'teamRole'  =>  $aTeamRole,
+    'teamRoleIsMemberOf'    =>  $aTeamRoleIsMemberOf
+);
 
 //$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
         
