@@ -792,8 +792,14 @@ class Tedx_manager{
     }
     
     public function addSlotToEvent( $args ) {
-        return ASOrganizer::addSlotToEvent( $args ); 
-
+        $messageAccess = $this->isGranted( "addSlotToEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addSlotToEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     /*==========================================================================
@@ -804,12 +810,26 @@ class Tedx_manager{
     
     // Accept a registration
     public function acceptRegistration( $args ) {
-        return ASValidator::acceptRegistration( $args ); 
+        $messageAccess = $this->isGranted( "acceptRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::acceptRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Reject a registration
     public function rejectRegistration( $args ) {
-        return ASValidator::rejectRegistration( $args ); 
+        $messageAccess = $this->isGranted( "rejectRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::rejectRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     /*==========================================================================
@@ -820,34 +840,84 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerOrganizer( $args ) {
-        return ASAdmin::registerOrganizer( $args ); 
+        $messageAccess = $this->isGranted( "registerOrganizer" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::registerOrganizer( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add a team role
     public function addTeamRole( $aName ) {
-        return ASAdmin::addTeamRole($aName); 
+        $messageAccess = $this->isGranted( "addTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addTeamRole($aName);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Affect a TeamRole with a Organizer
     public function affectTeamRole( $args ) {
-        return ASAdmin::affectTeamRole( $args ); 
+        $messageAccess = $this->isGranted( "affectTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::affectTeamRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add an Event
     public function addEvent( $args ) {
-        return ASAdmin::addEvent( $args ); 
+        $messageAccess = $this->isGranted( "addEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addEvent( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     public function addRole( $args ) {
-        return ASAdmin::addRole( $args ); 
+        $messageAccess = $this->isGranted( "addRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
+    // Change the level of a role
     public function changeRoleLevel( $args ) {
-        return ASAdmin::changeRoleLevel($args); 
+        $messageAccess = $this->isGranted( "changeRoleLevel" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::changeRoleLevel($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     public function linkTeamRole( $args ) {
-        return ASAdmin::linkTeamRole($args); 
+        $messageAccess = $this->isGranted( "linkTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::linkTeamRole($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message; 
     }//function
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------

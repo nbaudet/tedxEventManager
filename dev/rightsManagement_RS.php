@@ -91,7 +91,17 @@ if( isset( $_REQUEST['action'] ) ) {
         if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
             $accessToAdd['Service'] = $_REQUEST['service'];
             $messageAdd = ASRightsManagement::addAccess( $accessToAdd );
-            //var_dump($messageAdd);
+        }
+        echo '<h1>See the accesses\' units</h1>';
+        echo '<p><a href="?">Go back</a></p>';
+        $accesses = FSAccess::getAccesses()->getContent();
+        showAccesses( $accesses );
+        break;
+        
+    case 'deleteAccess':
+        if( isset( $_REQUEST['service'] ) && $_REQUEST['service'] != '' ) {
+            $accessToDelete['Service'] = $_REQUEST['service'];
+            $messageAdd = ASRightsManagement::deleteAccess( $accessToDelete );
         }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
@@ -118,10 +128,10 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'login':
         $message = $tedx_manager->login( $_REQUEST['id'], $_REQUEST['password'] );
         if( $message->getStatus() ) {
-            header( "Location: rightsManagement.php" );
+            header( "Location: rightsManagement_RS.php" );
         }
         else {
-            header( "Location: rightsManagement.php?try=fail" );
+            header( "Location: rightsManagement_RS.php?try=fail" );
         }
         break;
     
@@ -197,8 +207,9 @@ function showMembers( $members ) {
 
 function showAccesses( $accesses ) {
     
-    // Echo a form to add accesses to the application
-    echo '<form method="POST">
+    // Echo a form to add/delete accesses to the application
+    echo '<div style="float: right; background-color: lightgray; margin-right: 30px; padding: 10px;">';
+    echo '<form method="POST" style="margin-bottom: 0px;">
             <fieldset style="width: 250px;">
                 <legend>Add a new Access</legend>
                 <input type="hidden" name="action" value="addAccess" />
@@ -207,6 +218,19 @@ function showAccesses( $accesses ) {
                 <input type="submit" value="Add Access" />
             </fieldset>
         </form>';
+    
+    echo '<form method="POST" style="margin-bottom: 0px; margin-top: 10px;">
+            <fieldset style="width: 250px;">
+                <legend>Delete an Access</legend>
+                <p><em>Please type exactly the name of the access you want to delete.<br />
+                <strong>Warning:</strong> this action cannot be canceled!</em></p>
+                <input type="hidden" name="action" value="deleteAccess" />
+                <label for="service">Access name:</label>
+                <input type="text" id="service" name="service" /><br />
+                <input type="submit" value="Delete Access" />
+            </fieldset>
+        </form>';
+    echo '</div>';
 
     $tabOfAllUnits = getUnitsAsString();
     
