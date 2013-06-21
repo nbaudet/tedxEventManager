@@ -753,6 +753,10 @@ class Tedx_manager{
         return ASAdmin::changeRoleLevel($args); 
     }//function
     
+    public function linkTeamRole( $args ) {
+        return ASAdmin::linkTeamRole($args); 
+    }//function
+    
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
     
@@ -765,9 +769,6 @@ class Tedx_manager{
         return $this->stub->changePositionOfSpeakerToEvent( $args ); 
     }//function
         
-    public function linkTeamRole( $args ) {
-        return $this->stub->linkTeamRole( $args ); 
-    }//function
 }//class
 
 

@@ -27,8 +27,8 @@ if($messageGetRegistrationsByEvent->getStatus()){
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
     
-$aTeamRole = FSTeamRole('Accueil')->getContent();
-$aTeamRoleIsMemberOf = FSTeamRole('Superman')->getContent();
+$aTeamRole = $tedx_manager->getTeamRole('Accueil')->getContent();
+$aTeamRoleIsMemberOf = $tedx_manager->getTeamRole('Superman')->getContent();
 
 $aTeamRoleToGetLink = array(
     'teamRole'  =>  $aTeamRole,
