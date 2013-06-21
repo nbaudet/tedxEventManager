@@ -14,6 +14,7 @@
  * Require all Applicative Services
  */
 require_once(APP_DIR.'/core/services/applicatives/ASAuth.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASRightsManagement.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASVisitor.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
@@ -645,7 +646,7 @@ class Tedx_manager{
     }//function
     
     
-     /*==========================================================================
+    /*==========================================================================
      * 
      * ORGANIZER FUNCTIONS
      * 
@@ -689,7 +690,7 @@ class Tedx_manager{
         return ASValidator::rejectRegistration( $args ); 
     }//function
     
-     /*==========================================================================
+    /*==========================================================================
      * 
      * ADMIN FUNCTIONS
      * 
