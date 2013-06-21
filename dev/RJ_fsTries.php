@@ -12,8 +12,23 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
+$aParticipant = $tedx_manager->getParticipant(42)->getContent();
+$anEvent = $tedx_manager->getEvent(1)->getContent();
+
+$args = array(
+        'participant' => $aParticipant,
+        'event'  => $anEvent
+        );
+$listOfMotivations= $tedx_manager->getMotivationsByParticipantForEvent($args);
+// Message
+if( $listOfMotivations->getStatus())
+    echo 'Congrats! ' . $listOfMotivations->getMessage();
+else
+    echo 'Error! ' . $listOfMotivations->getMessage();
 
 
+
+echo '</br>';
 // Object Event
 /*$anEvent = FSEvent::getEvent(41)->getContent();
  

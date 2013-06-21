@@ -708,8 +708,7 @@ class Tedx_manager{
     
     //Show all Motivations of a Person for an Event
     public function getMotivationsByParticipantForEvent($args) {
-        $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
-        return $motivations; 
+        return ASParticipant::getMotivationsByParticipantForEvent($args);
     }//function
     
     // Send a registration
@@ -804,6 +803,8 @@ class Tedx_manager{
     public function linkTeamRole( $args ) {
         return ASAdmin::linkTeamRole($args); 
     }//function
+    
+    
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     

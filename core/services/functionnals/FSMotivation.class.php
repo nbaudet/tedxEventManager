@@ -115,42 +115,91 @@ class FSMotivation{
     
     public static function getMotivationsByParticipantForEvent($args){
         global $crud;
-        $aParticipant = $args['participant'];
-        $anEvent = $args['event'];
-        $sql = "SELECT * FROM Motivation WHERE ParticipantPersonNo = ". $aParticipant->getNo() ." AND EventNo = " . $anEvent->getNo() . " AND IsArchived = 0";
-        $data = $crud->getRows($sql);
         
-        if ($data){
-            $motivations = array();
+        $aParticipant = ($args['participant']);
+        $anEvent = ($args['event']);
+        
+        //If Participant contains something
+        if(isset($aParticipant)){
+            $aValidParticipant = FSParticipant::getParticipant($aParticipant->getNo()); 
+            //If Valid Participant
+            if($aValidParticipant->getStatus()){
+                //If Event contains something
+                if(isset($anEvent)){
+                    $aValidEvent = FSEvent::getEvent($anEvent->getNo());
+                    //If Valid Event
+                    if($aValidEvent->getStatus()){
+                        //SQL query
+                        $sql = "SELECT * FROM Motivation WHERE ParticipantPersonNo = ". $aParticipant->getNo() ." AND EventNo = " . $anEvent->getNo() . " AND IsArchived = 0";
+                        $data = $crud->getRows($sql);
 
-            foreach($data as $row){
-                $argsMotivation = array(
-                    'text'            => $row['Text'],
-                    'participantPersonNo' => $row['ParticipantPersonNo'],
-                    'eventNo'          => $row['EventNo'],
-                    'isArchived'       => $row['IsArchived']
-                );
-                
-                $motivations[] = new Motivation($argsMotivation);
-            } //foreach
+                        if ($data){
+                            $motivations = array();
 
+                            foreach($data as $row){
+                                $argsMotivation = array(
+                                    'text'            => $row['Text'],
+                                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                                    'eventNo'          => $row['EventNo'],
+                                    'isArchived'       => $row['IsArchived']
+                                );
+
+                                $motivations[] = new Motivation($argsMotivation);
+                            } //foreach
+
+                            $argsMessage = array(
+                                'messageNumber' => 432,
+                                'message'       => 'All Motivation of Participant selected',
+                                'status'        => true,
+                                'content'       => $motivations
+                            );
+                            $message = new Message($argsMessage);
+                        } else {
+                            $argsMessage = array(
+                                'messageNumber' => 433,
+                                'message'       => 'Error while SELECT * FROM Motivation WHERE IsArchived = 0 or Empty results',
+                                'status'        => false,
+                                'content'       => NULL
+                            );
+                            $message = new Message($argsMessage);
+
+                        }//End Query
+                    }else{
+                        $argsMessage = array(
+                                'messageNumber' => 240,
+                                'message'       => 'Inexistant Event',
+                                'status'        => false,
+                                'content'       => null
+                            );
+                            $message = new Message($argsMessage);
+                    }
+                }else{
+                    $argsMessage = array(
+                                'messageNumber' => 240,
+                                'message'       => 'Inexistant Event',
+                                'status'        => false,
+                                'content'       => null
+                            );
+                            $message = new Message($argsMessage);
+                }//End Valid Event
+            }else{
+                $argsMessage = array(
+                                'messageNumber' => 241,
+                                'message'       => 'Inexistant Participant',
+                                'status'        => false,
+                                'content'       => null
+                            );
+                            $message = new Message($argsMessage);
+            }
+        }else{
             $argsMessage = array(
-                'messageNumber' => 432,
-                'message'       => 'All Motivation of Participant selected',
-                'status'        => true,
-                'content'       => $motivations
-            );
-            $message = new Message($argsMessage);
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 433,
-                'message'       => 'Error while SELECT * FROM Motivation WHERE IsArchived = 0',
-                'status'        => false,
-                'content'       => NULL
-            );
-            $message = new Message($argsMessage);
-
-        }// else
+                                'messageNumber' => 241,
+                                'message'       => 'Inexistant Participant',
+                                'status'        => false,
+                                'content'       => null
+                            );
+                            $message = new Message($argsMessage);
+        }//End Valid Participant
         return $message;
     }// function
    
