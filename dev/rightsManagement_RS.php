@@ -90,7 +90,7 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'addAccess':
         if( isset( $_REQUEST['service'] )  && $_REQUEST['service'] != '' ) {
             $accessToAdd['Service'] = $_REQUEST['service'];
-            $messageAdd = ASRightsManagement::addAccess( $accessToAdd );
+            $messageAdd = $tedx_manager->addAccess( $accessToAdd );
         }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
@@ -101,7 +101,7 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'deleteAccess':
         if( isset( $_REQUEST['Service'] ) && $_REQUEST['Service'] != '' ) {
             $accessToDelete['Service'] = $_REQUEST['Service'];
-            $messageDelete = ASRightsManagement::deleteAccess( $accessToDelete );
+            $messageDelete = $tedx_manager->deleteAccess( $accessToDelete );
         }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';

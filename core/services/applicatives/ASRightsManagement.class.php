@@ -47,6 +47,8 @@ class ASRightsManagement {
         }
         return $message;
     }
+    
+    //public static function getAccess
 }
 
 ?>

@@ -957,6 +957,46 @@ class Tedx_manager{
     }//function
     
     
+    /*==========================================================================
+     * 
+     * RIGHTS MANAGEMENT FUNCTIONS
+     * 
+     *========================================================================*/
+    /**
+     * Adds an access to the database
+     * @param Mixed $args Array containing 'Service', the name of the service to
+     *        add.
+     * @return Message a Message
+     */
+    public function addAccess( $args ) {
+        $messageAccess = $this->isGranted( "manageRights" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASRightsManagement::addAccess( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+    
+    /**
+     * Deletes completely an access and its Permission from the database
+     * @param Mixed $args Array containing 'Service', the name of the service to
+     *        delete.
+     * @return Message a Message
+     */
+    public function deleteAccess( $args ) {
+        $messageAccess = $this->isGranted( "manageRights" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASRightsManagement::deleteAccess( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+    
+    
     
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
