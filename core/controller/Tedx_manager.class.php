@@ -519,7 +519,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changeProfil( $args ) {
-        $messageAccess = $this->isGranted( "changeProfile" );
+        $messageAccess = $this->isGranted( "changeProfil" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changeProfil( $args );
         }
@@ -702,24 +702,50 @@ class Tedx_manager{
     
     //Show all Motivations of a Person
     public function getMotivationsByParticipant($aParticipant) {
-        $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
-        return $motivations; 
+        $messageAccess = $this->isGranted( "getMotivationsByParticipant" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPerson($aParticipant); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show all Motivations of a Person for an Event
     public function getMotivationsByParticipantForEvent($args) {
-        $motivations = ASParticipant::getMotivationsByPersonForEvent($args); 
-        return $motivations; 
+        $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPersonForEvent($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Send a registration
     public function sendRegistration( $args ) {
-        return ASParticipant::sendRegistration( $args ); 
+        $messageAccess = $this->isGranted( "sendRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::sendRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show the Registration history of a Person for an Event
     public function getRegistrationHistory($args) {
-        return ASParticipant::getRegistrationHistory($args);
+        $messageAccess = $this->isGranted( "getRegistrationHistory" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getRegistrationHistory($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     
@@ -731,12 +757,25 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerSpeaker( $args ) {
-        return ASOrganizer::registerSpeaker($args); 
+        $messageAccess = $this->isGranted( "registerSpeaker" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::registerSpeaker($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
      
     //Add a Location
     public function addLocation($args) {
-        $message = ASOrganizer::addLocation( $args ); 
+        $messageAccess = $this->isGranted( "addLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
