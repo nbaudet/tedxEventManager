@@ -217,7 +217,7 @@ class Tedx_manager{
      * @param $aParticipant 
      * @return a Message containing the registrations
      */
-    public static function getRegistrationsByParticipant($participant){
+    public function getRegistrationsByParticipant($participant){
         return ASFree::getRegistrationsByParticipant($participant);
     }
     
@@ -261,6 +261,7 @@ class Tedx_manager{
         $messageGetOrganizer = ASFree::getOrganizer($no);
         return $messageGetOrganizer;
     }// function
+    
     /**
      * Get Organizers
      * 
@@ -323,6 +324,14 @@ class Tedx_manager{
         return $messageGetParticipants; 
     }//function
     
+        /**
+     * Returns all the Participants of a Slot
+     * @param type $slot
+     * @return a Message containing an array of Participants
+     */
+    public function getParticipantsBySlot($slot){
+        return ASFree::getParticipantsBySlot($slot);
+    }
     
     /**
      * get a Location
@@ -370,7 +379,7 @@ class Tedx_manager{
      * @param Event $event
      * @return a Message containing an array of Roles
      */
-    public static function getRolesByEvent($event){
+    public function getRolesByEvent($event){
         $messageGetRolesByEvent = ASFree::getRolesByEvent($event);
         return $messageGetRolesByEvent;
     }
@@ -380,7 +389,7 @@ class Tedx_manager{
      * @param Event $event
      * @return a Message containing an array of Roles
      */
-    public static function getRolesByOrganizer($organizer){
+    public function getRolesByOrganizer($organizer){
         $messageGetRolesByOrganizer = ASFree::getRolesByOrganizer($organizer);
         return $messageGetRolesByOrganizer;
     }
