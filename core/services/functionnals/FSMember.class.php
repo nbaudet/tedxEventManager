@@ -27,6 +27,7 @@ class FSMember {
 
         $sql = "SELECT * FROM Member
             WHERE Member.ID = '" . $id . "'
+            AND IsArchived = 0
             ORDER BY Member.ID";
         $data = $crud->getRow($sql);
         // If $data, return content
