@@ -166,25 +166,24 @@ class FSTeamRole {
      * Set new parameters to a TeamRole
      * @param Motivation $aTeamRoleToSet
      * @return Message containing the set TeamRole */
-    public static function setTeamRole($aTeamRoleToSet) {
+    public static function setTeamRole($args) {
         global $crud;
         
-        $aTeamRole = new TeamRole($aTeamRoleToSet['teamRole']);
-        $aTeamRoleIsMemberOf = new TeamRole($aTeamRoleToSet['teamRoleIsMemberOf']);
+        $aTeamRole = ($args['teamRole']);
+        $aTeamRoleIsMemberOf = ($args['teamRoleIsMemberOf']);
         
-        $aValideTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getName());
-        $aValideIsMemberOfTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getIsMemberOf());
-        var_dump($aValideIsMemberOfTeamRole);
+        $aValideTeamRole = FSTeamRole::getTeamRole($aTeamRole->getName());
+        $aValideIsMemberOfTeamRole = FSTeamRole::getTeamRole($aTeamRoleIsMemberOf->getIsMemberOf());
         //If Event valide
         if ($aValideTeamRole->getStatus()) {
             //If there is a Location Name given
-            if (($aTeamRoleToSet->getIsMemberOf())) {
+            if (($aTeamRoleIsMemberOf->getIsMemberOf())) {
                 //If this Location is valide
                 if ($aValideIsMemberOfTeamRole->getStatus()) {
                     $sql = "UPDATE  TeamRole SET  
-                     IsMemberOf = '" . addslashes($aTeamRoleToSet->getIsMemberOf()) . "',
-                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
-                     WHERE  TeamRole.Name = '" . $aTeamRoleToSet->getName() . "'";
+                     IsMemberOf = '" . addslashes($aTeamRoleIsMemberOf->getIsMemberOf()) . "',
+                     IsArchived = " . $aTeamRoleIsMemberOf->getIsArchived() . "
+                     WHERE  TeamRole.Name = '" . $aTeamRole->getName() . "'";
                 } else {
                     $argsMessage = array(
                         'messageNumber' => 236,
@@ -197,20 +196,20 @@ class FSTeamRole {
                 };
             } else {
                 $sql = "UPDATE  TeamRole SET
-                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
-                     WHERE  TeamRole.Name = '" . $aTeamRoleToSet->getName() . "'";
+                     IsArchived = " . $aTeamRoleIsMemberOf->getIsArchived() . "
+                     WHERE  TeamRole.Name = '" . $aTeamRole->getName() . "'";
             }
             //If query OK
             if ($crud->exec($sql) == 1) {
                 $sql = "SELECT * FROM TeamRole
-                         WHERE Name = '" . $aTeamRoleToSet->getName() . "'";
+                         WHERE Name = '" . $aTeamRole->getName() . "'";
                 
                 $data = $crud->getRow($sql);
                 
                     $argsTeamRole = array(
-                        'name' => $aTeamRoleToSet->getName(),
-                        'isMemberOf' => $aTeamRoleToSet->getIsMemberOf(),
-                        'isArchived' => $aTeamRoleToSet->getIsArchived()
+                        'name' => $aTeamRole->getName(),
+                        'isMemberOf' => $aTeamRole->getIsMemberOf(),
+                        'isArchived' => $aTeamRole->getIsArchived()
                     );
                
 

@@ -36,8 +36,13 @@ $aTeamRoleToGetLink = array(
 );
 
 //$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
-        
-var_dump(FSTeamRole::setTeamRole($aTeamRoleToGetLink));
+
+$aLinkedTeamRole = $tedx_manager->linkTeamRole($aTeamRoleToGetLink);
+// Message
+if( $aLinkedTeamRole->getStatus())
+    echo 'Congrats! ' . $aLinkedTeamRole->getMessage();
+else
+    echo 'Error! ' . $aLinkedTeamRole->getMessage();
 
 /*$anEventToChange = $tedx_manager->getEvent(28)->getContent();
 $aNewLocationName = 'Château -Maire';
