@@ -162,10 +162,16 @@ class FSRegistration {
                 'status'        => false,
                 'content'       => NULL
             );
-        }
+        }// else
         return new Message($argsMessage);
-    }
+    }// function
     
+    /**
+     * Get Registration Historys by Event & Participant
+     * @global type $crud
+     * @param type $args anEvent & aParticipant
+     * @return \Message
+     */
     public static function getRegistrationHistory($args){
         // Get database manipulator
         global $crud;
