@@ -379,6 +379,17 @@ class ASFree {
         $messageGetRolesByOrganizer = FSRole::getRolesByOrganizer($organizer);
         return $messageGetRolesByOrganizer;
     }
+    
+    /**
+     * Returns all the Register of a Participant
+     * @param $aParticipant 
+     * @return a Message containing the registrations
+     */
+    public static function getRegistrationsByParticipant($participant){
+        $messageGetRegistrationByParticipant = FSRegistration::getRegistrationsByParticipant($participant);
+        return $messageGetRegistrationByParticipant;
+    }
+    
 }// class
 
 ?>

@@ -26,7 +26,19 @@ require_once(APP_DIR .'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
-$speaker = FSSpeaker::getSpeaker(6)->getContent();
+
+
+$participant = FSParticipant::getParticipant(5)->getContent();
+var_dump($participant);
+
+var_dump($regs = FSRegistration::getRegistrationsByParticipant($participant));
+
+
+
+
+
+
+/*$speaker = FSSpeaker::getSpeaker(6)->getContent();
 var_dump($speaker);
 
 $event = FSEvent::getEvent(2)->getContent();
@@ -48,19 +60,22 @@ $argsPlace = array (
 
 $aPlace = FSPlace::getPlace($argsPlace)->getContent();
 
-var_dump($aPlace);
+var_dump($aPlace);*/
 
 
-$speaker2 = FSSpeaker::getSpeaker(24)->getContent();
+
+
+/*$slot = FSSlot::getSlot($argsSlot)->getContent();
+$speaker = FSSpeaker::getSpeaker(24)->getContent();
 
 $argsPlaceToCreate = array (
     'no'    => 4,
     'slot'  => $slot,
-    'speaker' => $speaker2
-);
+    'speaker' => $speaker
+);*/
 
-$messageCreatedPlace = FSPlace::addPlace($argsPlaceToCreate);
-var_dump($messageCreatedPlace);
+//var_dump($messageCreatedPlace = FSPlace::addPlace($argsPlaceToCreate));
+
 
 //$event = FSEvent::getEvent(2)->getContent();
 

@@ -166,6 +166,57 @@ class FSRegistration {
         return new Message($argsMessage);
     }
     
+    /**
+     * Returns all the Register of a Participant
+     * @param $aParticipant 
+     * @return a Message containing the registrations
+     */
+    public static function getRegistrationsByParticipant($participant){
+        // Get database manipulator
+        global $crud;
+        
+        // SQL Request for getting all Persistants Registrations
+        $sql = "SELECT * FROM Registration WHERE ParticipantPersonNo = ". $participant->getNo() ." AND IsArchived = 0";
+        $data = $crud->getRows($sql);
+        
+        // If there is persistants Registrations
+        if($data){
+            $registrations = array();
+            
+            // For each Persistant Registration, create an Object
+            foreach($data as $row){
+                $argsRegistration = array(
+                    'status'              => $row['Status'],
+                    'eventNo'             => $row['EventNo'],
+                    'participantPersonNo' => $row['ParticipantPersonNo'],
+                    'registrationDate'    => $row['RegistrationDate'],
+                    'type'                => $row['Type'],
+                    'typeDescription'     => $row['TypeDescription'],
+                    'isArchived'          => $row['IsArchived']
+                );
+            
+                $registrations[] = new Registration($argsRegistration);
+            } //foreach
+
+            // Create a message with all objects returned
+            $argsMessage = array(
+                'messageNumber' => 174,
+                'message'       => 'All Registrations selected',
+                'status'        => true,
+                'content'       => $registrations
+            );
+        } else {
+            // Create a message with no persistant object 
+            $argsMessage = array(
+                'messageNumber' => 175,
+                'message'       => 'Error while SELECT * FROM Registration by Participant',
+                'status'        => false,
+                'content'       => NULL
+            );
+        }
+        return new Message($argsMessage);
+    }
+    
     public static function getRegistrationHistory($args){
         // Get database manipulator
         global $crud;
