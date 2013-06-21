@@ -716,7 +716,7 @@ class Tedx_manager{
     public function getMotivationsByParticipantForEvent( $args ) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getMotivationsByPersonForEvent( $args ); 
+            $message = ASParticipant::getMotivationsByParticipantForEvent( $args ); 
         }
         else {
             $message = $messageAccess;

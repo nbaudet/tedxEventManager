@@ -11,9 +11,9 @@ require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
-
+    $tedx_manager->login("admin", "admin");
 $aParticipant = $tedx_manager->getParticipant(42)->getContent();
-$anEvent = $tedx_manager->getEvent(1)->getContent();
+$anEvent = $tedx_manager->getEvent(41)->getContent();
 
 $args = array(
         'participant' => $aParticipant,
@@ -41,7 +41,7 @@ if($messageGetRegistrationsByEvent->getStatus()){
 };*/
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
-    
+
 $aTeamRole = $tedx_manager->getTeamRole('Accueil')->getContent();
 $aTeamRoleIsMemberOf = $tedx_manager->getTeamRole('Superman')->getContent();
 
