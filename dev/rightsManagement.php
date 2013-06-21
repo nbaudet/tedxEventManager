@@ -12,10 +12,12 @@ require_once( APP_DIR.'/core/services/functionnals/FSPermission.class.php' );
 /*require_once( APP_DIR.'/core/model/Member.class.php' );
 require_once( APP_DIR.'/core/model/Unit.class.php' );*/
 
-echo '<h2>Session</h2>';
+/*echo '<h2>Session</h2>';
 var_dump($_SESSION);
 echo '<h2>Request</h2>';
-var_dump($_REQUEST);
+var_dump($_REQUEST);*/
+
+echo '<h1 style="color: red;">SVP Utiliser <a href="rightsManagement_RS.php">la nouvelle page</a> pour faire des modifs !</h1>';
 
 
 // Is the user logged ?

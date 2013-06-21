@@ -105,6 +105,49 @@ class FSAccess {
     }
     
     /**
+     * Returns the access with this service name, or an error.
+     * @global PDO Object $crud
+     * @param Mixed $args an array with a 'Service' line setted with the name
+     *        of a service
+     * @return Message a Message
+     */
+    public static function getAccessByservice( $args ) {
+        global $crud;
+        
+        $sql = "SELECT * FROM Access
+            WHERE Access.Service = '".$args['Service']."'";
+        
+        $data = $crud->getRow( $sql );
+        
+        if( $data ) {
+            $argsAccess = array (
+                'no'         => $data['No'],
+                'service'    => $data['Service'],
+                'type'       => $data['Type'],
+                'isArchived' => $data['IsArchived']
+            );
+            $access = new Access( $argsAccess );
+            
+            $args = array(
+                'messageNumber' => 025,
+                'message'       => 'Access found',
+                'status'        => true,
+                'content'       => $access
+            );
+            $message= new Message( $args );
+        }
+        else {
+            $args = array(
+                'messageNumber' => 026,
+                'message'       => 'No access found',
+                'status'        => false
+            );
+            $message= new Message( $args );
+        }
+        return $message;
+    }
+    
+    /**
      * Returns all the accesses for a unit, or NULL of a unit doesn't have
      * any access
      * @global type $crud
@@ -348,6 +391,53 @@ class FSAccess {
         
         return $message;
     }// function
+    
+    public static function deleteAccess( $accessToDelete ) {
+        
+        global $crud;
+        
+        // Delete the Permission
+        $sql = "DELETE FROM Permission
+            WHERE Permission.AccessNo = '".$accessToDelete->getNo()."'";
+        
+        // If Memberships were deleted
+        if( $crud->exec( $sql ) != 0 ) {
+            
+            // Delete Access
+            $sql = "DELETE FROM Access
+            WHERE Access.No = '".$accessToDelete->getNo()."'";
+            
+            // If delete Access was OK
+            if( $crud->exec( $sql ) != 0 ) {
+
+                $args = array(
+                    'messageNumber' => 042,
+                    'message'       => 'Access and Permissions deleted',
+                    'status'        => true
+                );
+                $message= new Message( $args );
+            }
+            // Else: delete Access was not OK
+            else {
+                $args = array(
+                    'messageNumber' => 043,
+                    'message'       => 'Permissions deleted but not Access',
+                    'status'        => false
+                );
+                $message= new Message( $args );
+            }
+        }
+        // Else: the permission couldn't be deleted
+        else {
+            $args = array(
+                'messageNumber' => 044,
+                'message'       => 'Error while deleting Permissions of Access',
+                'status'        => false
+            );
+            $message= new Message( $args );
+        }
+        return $message;
+    }
 } // class
 
 ?>

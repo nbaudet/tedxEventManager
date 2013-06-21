@@ -99,9 +99,9 @@ if( isset( $_REQUEST['action'] ) ) {
         break;
         
     case 'deleteAccess':
-        if( isset( $_REQUEST['service'] ) && $_REQUEST['service'] != '' ) {
-            $accessToDelete['Service'] = $_REQUEST['service'];
-            $messageAdd = ASRightsManagement::deleteAccess( $accessToDelete );
+        if( isset( $_REQUEST['Service'] ) && $_REQUEST['Service'] != '' ) {
+            $accessToDelete['Service'] = $_REQUEST['Service'];
+            $messageDelete = ASRightsManagement::deleteAccess( $accessToDelete );
         }
         echo '<h1>See the accesses\' units</h1>';
         echo '<p><a href="?">Go back</a></p>';
@@ -208,25 +208,31 @@ function showMembers( $members ) {
 function showAccesses( $accesses ) {
     
     // Echo a form to add/delete accesses to the application
-    echo '<div style="float: right; background-color: lightgray; margin-right: 30px; padding: 10px;">';
+    echo '<div style="float: right;
+        background-color: lightgray;
+        margin-right: 30px;
+        padding: 10px;
+        border-radius: 3px;
+        border-bottom: 1px solid gray;
+        border-right: 1px solid gray;">';
     echo '<form method="POST" style="margin-bottom: 0px;">
             <fieldset style="width: 250px;">
                 <legend>Add a new Access</legend>
                 <input type="hidden" name="action" value="addAccess" />
-                <label for="service">Access name:</label>
-                <input type="text" id="service" name="service" /><br />
+                <label for="serviceToAdd">Access name:</label>
+                <input type="text" id="serviceToAdd" name="service" /><br />
                 <input type="submit" value="Add Access" />
             </fieldset>
         </form>';
     
-    echo '<form method="POST" style="margin-bottom: 0px; margin-top: 10px;">
+    echo '<form method="POST" style="margin-bottom: 0px; margin-top: 20px;">
             <fieldset style="width: 250px;">
                 <legend>Delete an Access</legend>
                 <p><em>Please type exactly the name of the access you want to delete.<br />
                 <strong>Warning:</strong> this action cannot be canceled!</em></p>
                 <input type="hidden" name="action" value="deleteAccess" />
-                <label for="service">Access name:</label>
-                <input type="text" id="service" name="service" /><br />
+                <label for="serviceToDelete">Access name:</label>
+                <input type="text" id="serviceToDelete" name="Service" /><br />
                 <input type="submit" value="Delete Access" />
             </fieldset>
         </form>';

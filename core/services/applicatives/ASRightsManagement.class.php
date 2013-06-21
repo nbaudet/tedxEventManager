@@ -26,16 +26,24 @@ class ASRightsManagement {
     
     /**
      * 
-     * @param Access $accessToDelete
+     * @param Mixed $accessToDelete
      * @return Message a Message
      */
     public static function deleteAccess( $accessToDelete ) {
-        $messageAccess = FSAccess::getAccess( $accessToDelete->getNo() );
+        $messageAccess = FSAccess::getAccessByService( $accessToDelete );
+        // If the accessToDelete exists, we delete it
         if( $messageAccess->getStatus() ) {
-            
+            $accessToDelete = $messageAccess->getContent();
+            $message = FSAccess::deleteAccess( $accessToDelete );
         }
+        // Else: returns an error message
         else {
-            
+            $args = array(
+                'messageNumber' => 038,
+                'message' => 'No matching Access found',
+                'status' => false
+            );
+            $message = new Message( $args );
         }
         return $message;
     }
