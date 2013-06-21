@@ -465,7 +465,7 @@ class Tedx_manager{
      * @return type Message registeredToAnEvent or Specifics messages about a problem.
      */
     public function registerToAnEvent($args) {
-        $messageAccess = $this->asAuth->isGranted( "registerToAnEvent" );
+        $messageAccess = $this->isGranted( "registerToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
         }
@@ -481,7 +481,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changeProfil( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "changeProfile" );
+        $messageAccess = $this->isGranted( "changeProfile" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changeProfil( $args );
         }
@@ -497,7 +497,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changePassword( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "changePassword" );
+        $messageAccess = $this->isGranted( "changePassword" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changePassword( $args );
         }
@@ -513,7 +513,7 @@ class Tedx_manager{
      * @return type message
      */
     public function searchPersons($args) {
-        $messageAccess = $this->asAuth->isGranted( "searchPersons" );
+        $messageAccess = $this->isGranted( "searchPersons" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::searchPersons( $args );
         }
@@ -533,7 +533,7 @@ class Tedx_manager{
      * @return Message
      */
     public function getLoggedPerson() {
-        if( $this->asAuth->isLogged() ) {
+        if( $this->isLogged() ) {
             // Message with logged person
             $messageMember = FSMember::getMember( $this->getUsername() );
             $member        = $messageMember->getContent();
@@ -566,7 +566,7 @@ class Tedx_manager{
      * 
      *========================================================================*/
     public function addKeywordsToAnEvent( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "addKeywordsToAnEvent" );
+        $messageAccess = $this->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
             $message = ASParticipant::addKeywordsToAnEvent( $args );
         }
@@ -577,7 +577,7 @@ class Tedx_manager{
     }//function
     
     public function archiveKeyword( $args ) {
-        $messageAccess = $this->asAuth->isGranted( "archiveKeyword" );
+        $messageAccess = $this->isGranted( "archiveKeyword" );
         if( $messageAccess->getStatus() ) {
             $message = ASParticipant::archiveKeyword( $args ); 
         }
