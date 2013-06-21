@@ -140,7 +140,7 @@ class FSParticipant{
             );
         ----------------------------------------------------------------------- */
         // Validate Existant Person
-        $messageValidPerson = FSPerson::getPerson($args['person']);
+        $messageValidPerson = FSPerson::getPerson($args['person']->getNo());
         if($messageValidPerson->getStatus()){
             // Generate the Person aValidPerson
             $aValidPerson = $messageValidPerson->getContent();

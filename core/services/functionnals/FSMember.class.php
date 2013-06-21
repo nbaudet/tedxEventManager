@@ -106,6 +106,48 @@ class FSMember {
         $message = new Message($argsMessage);
         return $message;
     }
+    
+    /**
+     * Initializes and returns a Message with all the members in the database,
+     * otherwise, returns NULL.
+     * @return a Message with an array of Members or NULL
+     */
+    public static function getMemberByPerson($aPerson) {
+        // get database manipulator
+        global $crud;
+
+        $sql = "SELECT * FROM Member
+                WHERE Member.PersonNo = " . $aPerson->getNo();
+        $data = $crud->getRow($sql);
+        // If $data, return content
+        if ($data) {
+            // Fills the array of members to return
+            $argsMember = array(
+                'id' => $data['ID'],
+                'password' => $data['Password'],
+                'personNo' => $data['PersonNo'],
+                'isArchived' => $data['IsArchived']
+            );
+            $aValidMember = new Member($argsMember);
+            $argsMessage = array(
+                'messageNumber' => 409,
+                'message' => 'The Member is valid',
+                'status' => true,
+                'content' => $aValidMember
+            );
+        } else {
+            // Send Message Inexistant Member
+            $argsMessage = array(
+                'messageNumber' => 408,
+                'message' => 'The Member is inexistant',
+                'status' => false,
+                'content' => NULL
+            );
+        }
+        // Return message
+        $message = new Message($argsMessage);
+        return $message;
+    }
 
     /**
      * Functionnal Service addMember

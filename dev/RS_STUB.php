@@ -26,16 +26,18 @@
         require_once('../core/services/functionnals/FSRegistration.class.php');
         require_once('../core/services/functionnals/FSParticipant.class.php');
         
-        $event = FSEvent::getEvent(1)->getContent();
-        $participant = FSParticipant::getParticipant(5)->getContent();
-        
+        $aPerson = FSPerson::getPerson(4)->getContent();
+        $anEvent = FSEvent::getEvent(1)->getContent();
         $args = array(
-            'event' => $event,
-            'participant' => $participant,
-        );
+               'person' => $aPerson, // object Person
+               'event' => $anEvent, // object Event
+               'type' => 'Presse', // String
+               'typedescription' => 'Redacteur chez Journal de Cossonay' // String
+           ); 
+        
+        $message = ASVisitor::registerToAnEvent($args);
         
         
-        $message = $tedx_manager->getRegistrationHistory($args);
         
         echo "<hr> Mon message final";
         var_dump($message);

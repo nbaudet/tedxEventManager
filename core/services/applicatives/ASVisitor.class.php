@@ -119,15 +119,28 @@ class ASVisitor {
                 $finalMessage = $messageAddedRegistration; // Registration failed
             } // else
         } else {
-            $argsParticipant = array(
-                'person' => $aPerson,
-                'event' => $anEvent,
-                'slots' => $listOfSlots,
-                'registrationType' => $aType,
-                'registrationTypeDescription' => $aTypeDescription,
+            echo "asclksna";
+            $messageUnit = FSUnit::getUnitByName('Participant');
+            $participantUnit = $messageUnit->getContent();
+            $aMember = FSMember::getMemberByPerson($aPerson)->getContent();
+            $argsMembership = array(
+                'member' => $aMember,
+                'unit' => $participantUnit
             );
-            // add registration
-            $finalMessage = FSParticipant::addParticipant($argsParticipant);
+            $messageAddedMembership = FSMembership::addMembership($argsMembership);
+            if($messageAddedMembership->getStatus()){
+                $argsParticipant = array(
+                    'person' => $aPerson,
+                    'event' => $anEvent,
+                    'slots' => $listOfSlots,
+                    'registrationType' => $aType,
+                    'registrationTypeDescription' => $aTypeDescription,
+                );
+                // add registration
+                $finalMessage = FSParticipant::addParticipant($argsParticipant);
+            }else{
+                 $finalMessage = $messageAddedMembership;
+            }
         } // else
         return $finalMessage;
     }
