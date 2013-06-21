@@ -713,10 +713,10 @@ class Tedx_manager{
     }//function
     
     //Show all Motivations of a Person for an Event
-    public function getMotivationsByParticipantForEvent($args) {
+    public function getMotivationsByParticipantForEvent( $args ) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getMotivationsByPersonForEvent($args); 
+            $message = ASParticipant::getMotivationsByPersonForEvent( $args ); 
         }
         else {
             $message = $messageAccess;
@@ -737,10 +737,10 @@ class Tedx_manager{
     }//function
     
     //Show the Registration history of a Person for an Event
-    public function getRegistrationHistory($args) {
+    public function getRegistrationHistory( $args ) {
         $messageAccess = $this->isGranted( "getRegistrationHistory" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getRegistrationHistory($args);
+            $message = ASParticipant::getRegistrationHistory( $args );
         }
         else {
             $message = $messageAccess;
@@ -759,7 +759,7 @@ class Tedx_manager{
     public function registerSpeaker( $args ) {
         $messageAccess = $this->isGranted( "registerSpeaker" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::registerSpeaker($args); 
+            $message = ASOrganizer::registerSpeaker( $args ); 
         }
         else {
             $message = $messageAccess;
@@ -781,7 +781,13 @@ class Tedx_manager{
     
     //Set an Event Location
     public function changeEventLocation($args) {
-        $message = ASOrganizer::changeEventLocation($args); 
+        $messageAccess = $this->isGranted( "changeEventLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeEventLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }
     
