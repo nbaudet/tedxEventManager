@@ -168,8 +168,10 @@ class FSTeamRole {
      * @return Message containing the set TeamRole */
     public static function setTeamRole($aTeamRoleToSet) {
         global $crud;
-
-        $aTeamRoleToSet = new TeamRole($aTeamRoleToSet);
+        
+        $aTeamRole = new TeamRole($aTeamRoleToSet['teamRole']);
+        $aTeamRoleIsMemberOf = new TeamRole($aTeamRoleToSet['teamRoleIsMemberOf']);
+        
         $aValideTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getName());
         $aValideIsMemberOfTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getIsMemberOf());
         var_dump($aValideIsMemberOfTeamRole);

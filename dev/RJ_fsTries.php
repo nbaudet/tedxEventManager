@@ -13,14 +13,28 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
 
+
+// Object Event
+$anEvent = 41;
+ 
+//get Registration from the Event
+$messageGetRegistrationsByEvent = $tedx_manager->getRegistrationsByEvents($anEvent);
+ 
+if($messageGetRegistrationsByEvent->getStatus()){
+    echo 'registrations Founds';
+}else{
+    echo 'no registrations founds';
+};
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
     
+$aTeamRole = FSTeamRole('Accueil')->getContent();
+$aTeamRoleIsMemberOf = FSTeamRole('Superman')->getContent();
+
 $aTeamRoleToGetLink = array(
-            'name'         => 'Superman',
-            'isMemberOf'   => 'Accueil',
-            'isArchived'    => 0
-        );
+    'teamRole'  =>  $aTeamRole,
+    'teamRoleIsMemberOf'    =>  $aTeamRoleIsMemberOf
+);
 
 //$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
         
