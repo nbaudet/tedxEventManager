@@ -390,6 +390,16 @@ class ASFree {
         return $messageGetRegistrationByParticipant;
     }
     
+    /**
+     * Returns all the Participants of a Slot
+     * @param type $slot
+     * @return a Message containing an array of Participants
+     */
+    public static function getParticipantsBySlot($slot){
+        $messageGetParticipantsBySlot = FSParticipation::getParticipantsBySlot($slot);
+        return $messageGetParticipantsBySlot;
+    }
+    
 }// class
 
 ?>
