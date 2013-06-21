@@ -434,7 +434,6 @@ class FSEvent {
                 $message = new Message($argsMessage);
             }//End query ok  
         } else {
-            echo 'A non valid event?';
             $argsMessage = array(
                 'messageNumber' => 235,
                 'message' => 'Inexistant Event',

@@ -162,6 +162,86 @@ class FSTeamRole {
         }
     } // END createTeamRole
     
+    /**
+     * Set new parameters to a TeamRole
+     * @param Motivation $aTeamRoleToSet
+     * @return Message containing the set TeamRole */
+    public static function setTeamRole($aTeamRoleToSet) {
+        global $crud;
+
+        $aTeamRoleToSet = new TeamRole($aTeamRoleToSet);
+        $aValideTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getName());
+        $aValideIsMemberOfTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getIsMemberOf());
+        var_dump($aValideIsMemberOfTeamRole);
+        //If Event valide
+        if ($aValideTeamRole->getStatus()) {
+            //If there is a Location Name given
+            if (($aTeamRoleToSet->getIsMemberOf())) {
+                //If this Location is valide
+                if ($aValideIsMemberOfTeamRole->getStatus()) {
+                    $sql = "UPDATE  TeamRole SET  
+                     IsMemberOf = '" . addslashes($aTeamRoleToSet->getIsMemberOf()) . "',
+                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
+                     WHERE  TeamRole.Name = '" . $aTeamRoleToSet->getName() . "'";
+                } else {
+                    $argsMessage = array(
+                        'messageNumber' => 236,
+                        'message' => 'Inexistant TeamRole for Is Member Of',
+                        'status' => false,
+                        'content' => NULL
+                    );
+                    $message = new Message($argsMessage);
+                    return $message;
+                };
+            } else {
+                $sql = "UPDATE  TeamRole SET
+                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
+                     WHERE  TeamRole.Name = '" . $aTeamRoleToSet->getName() . "'";
+            }
+            //If query OK
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM TeamRole
+                         WHERE Name = '" . $aTeamRoleToSet->getName() . "'";
+                
+                $data = $crud->getRow($sql);
+                
+                    $argsTeamRole = array(
+                        'name' => $aTeamRoleToSet->getName(),
+                        'isMemberOf' => $aTeamRoleToSet->getIsMemberOf(),
+                        'isArchived' => $aTeamRoleToSet->getIsArchived()
+                    );
+               
+
+                $aSetTeamRole = new TeamRole($argsTeamRole);
+
+                $argsMessage = array(
+                    'messageNumber' => 237,
+                    'message' => 'TeamRole set !',
+                    'status' => true,
+                    'content' => $aSetTeamRole
+                );
+                $message = new Message($argsMessage);
+            } else {
+                echo $sql;
+                $argsMessage = array(
+                    'messageNumber' => 238,
+                    'message' => 'Error while setting new TeamRole',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }//End query ok  
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 239,
+                'message' => 'Inexistant TeamRole',
+                'status' => false,
+                'content' => NULL
+            );
+            $message = new Message($argsMessage);
+        }//End Event valide
+        return $message;
+    }//End Set TeamRole
 }
 
 ?>

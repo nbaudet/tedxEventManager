@@ -8,26 +8,25 @@ require_once('../tedx-config.php');
 //require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
 
-/*$aEventToSet = array(
-                    'no' => 2,
-                    'mainTopic' => 'The Tomorrow was yesterday',
-                    'description' => 'Description Event2',
-                    'locationName' => 'Château Saint-Maire',
-                    'startingDate' => '2013-12-18',
-                    'endingDate' => '2013-12-18',
-                    'startingTime' => '13:08:53',
-                    'endingTime' => '18:00:00',
-                    'isArchived' => 0
-                );
-$aEventToSet = new Event($aEventToSet);
-var_dump(FSEvent::setEvent($aEventToSet));*/
+//$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
+//$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
+    
+$aTeamRoleToGetLink = array(
+            'name'         => 'Superman',
+            'isMemberOf'   => 'Accueil',
+            'isArchived'    => 0
+        );
 
+//$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
+        
+var_dump(FSTeamRole::setTeamRole($aTeamRoleToGetLink));
 
-$anEventToChange = $tedx_manager->getEvent(28)->getContent();
+/*$anEventToChange = $tedx_manager->getEvent(28)->getContent();
 $aNewLocationName = 'Château -Maire';
 $args = array(
         'event' => $anEventToChange,
@@ -38,7 +37,7 @@ $aChangedLocationEvent = $tedx_manager->changeEventLocation($args);
 if( $aChangedLocationEvent->getStatus())
     echo 'Congrats! ' . $aChangedLocationEvent->getMessage();
 else
-    echo 'Error! ' . $aChangedLocationEvent->getMessage();
+    echo 'Error! ' . $aChangedLocationEvent->getMessage();*/
 
 
 //$crud->exec("UPDATE Event SET MainTopic = 'The future doesn\’t just happen' WHERE No = 1;");
