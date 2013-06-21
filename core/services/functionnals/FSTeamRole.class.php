@@ -162,6 +162,87 @@ class FSTeamRole {
         }
     } // END createTeamRole
     
+    /**
+     * Set new parameters to a Motivation
+     * @param Motivation $aMotivationToSet
+     * @return Message containing the set Motivation */
+    public static function setTeamRole($aTeamRoleToSet) {
+        global $crud;
+var_dump($aTeamRoleToSet);
+        $aTeamRoleToSet = new TeamRole($aTeamRoleToSet);
+        var_dump($aTeamRoleToSet);
+        $aValideTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getName());
+        $aValideIsMemberOfTeamRole = FSTeamRole::getTeamRole($aTeamRoleToSet->getIsMemberOf()->getName());
+        //If Event valide
+        if ($aValideTeamRole->getStatus()) {
+            //If there is a Location Name given
+            if (($aTeamRoleToSet->getIsMemberOf())) {
+                //If this Location is valide
+                if ($aValideIsMemberOfTeamRole->getStatus()) {
+                    $sql = "UPDATE  Event SET  
+                     IsMemberOf = '" . addslashes($aTeamRoleToSet->getIsMemberOf()) . "',
+                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
+                     WHERE  TeamRole.Name = " . $aTeamRoleToSet->getName();
+                } else {
+                    $argsMessage = array(
+                        'messageNumber' => 234,
+                        'message' => 'Inexistant TeamRole for Is Member Of',
+                        'status' => false,
+                        'content' => NULL
+                    );
+                    $message = new Message($argsMessage);
+                    return $message;
+                };
+            } else {
+                $sql = "UPDATE  Event SET
+                     IsArchived = " . $aTeamRoleToSet->getIsArchived() . "
+                     WHERE  TeamRole.Name = " . $aTeamRoleToSet->getName();
+            }
+
+            //If query OK
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM TeamRole 
+                         WHERE Name = " . $aTeamRoleToSet->getName();
+
+                $data = $crud->getRow($sql);
+
+                
+                    $argsTeamRole = array(
+                        'name' => $anEventToSet->getName(),
+                        'isMemberOf' => $anEventToSet->getIsMemberOf(),
+                        'isArchived' => $anEventToSet->getIsArchived()
+                    );
+               
+
+                $aSetTeamRole = new Event($argsTeamRole);
+
+                $argsMessage = array(
+                    'messageNumber' => 232,
+                    'message' => 'TeamRole set !',
+                    'status' => true,
+                    'content' => $aSetTeamRole
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 233,
+                    'message' => 'Error while setting new Event',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }//End query ok  
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 235,
+                'message' => 'Inexistant TeamRole',
+                'status' => false,
+                'content' => NULL
+            );
+            $message = new Message($argsMessage);
+        }//End Event valide
+        return $message;
+    }//End Set TeamRole
 }
 
 ?>
