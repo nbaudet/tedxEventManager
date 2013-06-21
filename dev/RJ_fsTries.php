@@ -5,7 +5,7 @@
     <body>
 <?php
 require_once('../tedx-config.php');
-//require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
+require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
@@ -15,16 +15,15 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 
 
 // Object Event
-$anEvent = 41;
+/*$anEvent = FSEvent::getEvent(41)->getContent();
  
 //get Registration from the Event
-$messageGetRegistrationsByEvent = $tedx_manager->getRegistrationsByEvents($anEvent);
- 
+$messageGetRegistrationsByEvent = $tedx_manager->getRegistrationsByEvent($anEvent);
 if($messageGetRegistrationsByEvent->getStatus()){
     echo 'registrations Founds';
 }else{
     echo 'no registrations founds';
-};
+};*/
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
     
