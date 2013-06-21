@@ -332,7 +332,7 @@ class ASFree {
      * @return type message
      */
     public static function getSpeakersByEvent($event) {
-        $speakers = FSCoOrganizer::getSpeakersByEvent($event);
+        $speakers = FSTalk::getSpeakersByEvent($event);
         return $speakers;
     }// function
     
