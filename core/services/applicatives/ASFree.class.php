@@ -258,7 +258,7 @@ class ASFree {
 
     // Show all Locations of an event
     public static function getLocations(){
-        $locations = FSLocation::getLocations;  
+        $locations = FSLocation::getLocations();  
         return $locations;
     }// function
     

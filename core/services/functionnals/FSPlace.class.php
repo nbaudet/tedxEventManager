@@ -20,12 +20,11 @@ class FSPlace {
         global $crud;
         
         $no = $args['no'];
-        $slotNo = $args['slotNo'];
-        $slotEventNo = $args['slotEventNo'];
-        $speakerPersonNo = $args['speakerPersonNo'];
+        $slot = $args['slot'];
+        $speaker = $args['speaker'];
         
-        $sql = "SELECT * FROM Place WHERE No = $no AND SlotNo = $slotNo AND 
-        SlotEventNo = $slotEventNo AND SpeakerPersonNo = $speakerPersonNo AND IsArchived = 0";
+        $sql = "SELECT * FROM Place WHERE No = $no AND SlotNo = ".$slot->getNo()." AND 
+        SlotEventNo = ".$slot->getEventNo()." AND SpeakerPersonNo = ".$speaker->getNo()." AND IsArchived = 0";
         
         $data = $crud->getRow($sql);
         
@@ -153,5 +152,108 @@ class FSPlace {
         }
         return $return;
     } // END     
+    
+    
+    /**
+     * Adds a new Place in database
+     * @param array of args
+     * @return a Message containing the created Place
+     */
+    public static function addPlace($args){
+        $slot = $args['slot'];
+        $speaker = $args['speaker'];
+        $no = $args['no'];
+        
+        // Validate Speaker
+        $messageValidateSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
+        
+        if($messageValidateSpeaker->getStatus()){
+      echo "Valid speaker !";
+            // Validate Slot
+            $event = FSEvent::getEvent($slot->getEventNo())->getContent();
+
+            $argsGetSlot = array (
+                'no'    => '2',
+                'event' => $event
+            );
+            $messageValidateSlot = FSSlot::getSlot($argsGetSlot);
+            
+            if($messageValidateSlot->getStatus()){
+         echo "Valid Slot !";
+                // Validate non existing Place
+                $messageValidatePlace = FSPlace::getPlace($args);
+                
+                if(!$messageValidatePlace->getStatus()){
+           echo "Invalid Place";
+                    // Create new Place
+                    $messageCreatePlace = FSPlace::createPlace($args);
+                    
+                    $return = $messageCreatePlace;
+                } else {
+                    $argsMessage = array(
+                        'messageNumber'     => 173,
+                        'message'           => 'Existant Place !',
+                        'status'            => false,
+                        'content'           => null
+                    );
+                    $return = new Message($argsMessage);
+                }
+            } else {
+                $return = $messageValidateSlot;
+            }
+        } else {
+            $return = $messageValidateSpeaker;
+        }
+        
+        return $return;
+        
+    }
+    
+    /**
+     * Adds a new Place in database
+     * @param array of args
+     * @return a Message containing the created Place
+     */
+    public static function createPlace($args){
+        global $crud;
+        $slot = $args['slot'];
+        $speaker = $args['speaker'];
+        $no = $args['no'];
+        
+        $sql = "INSERT INTO Place (No, SlotNo, SlotEventNo, SpeakerPersonNo) VALUES (
+            $no,
+            ".$slot->getNo().",
+            ".$slot->getEventNo().",
+            ".$speaker->getNo()."            
+        );";
+        
+        $createdPlaceId = $crud->insertReturnLastId($sql);
+        
+        if($createdPlaceId){
+            $messageCreatedPlace = FSPlace::getPlace($args);
+            
+            if($messageCreatedPlace->getStatus()){
+                $createdPlace = $messageCreatedPlace->getContent();
+                $argsMessage = array(
+                    'messageNumber'     => 171,
+                    'message'           => 'New Place created !',
+                    'status'            => true,
+                    'content'           => $createdPlace
+                );
+                $return = new Message($argsMessage);
+            
+            } 
+            
+        } else {
+                $argsMessage = array(
+                    'messageNumber'     => 172,
+                    'message'           => 'Error while inserting new Place',
+                    'status'            => false,
+                    'content'           => null
+                );
+                $return = new Message($argsMessage);
+        }
+        return $return;        
+    }
 }
 ?>
