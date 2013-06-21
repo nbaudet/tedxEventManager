@@ -453,7 +453,6 @@ class FSPerson {
         // Ending SQL statement
         $sql .= " WHERE TypePerson.IsArchived = 0 AND $where $orderBy";
 
-        echo '<h3>'.$sql.'</h3>';
         // exec query
         $data = $crud->getRows($sql);
 
