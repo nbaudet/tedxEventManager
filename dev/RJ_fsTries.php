@@ -13,8 +13,49 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
    $tedx_manager->login("admin", "admin");
+   
+   
+   
+   echo '<h1>Speakers</h1>';
+   
+   $someSpeakers = $tedx_manager->getSpeakers();
+    // Message
+    if( $someSpeakers->getStatus())
+        echo 'Congrats! ' . $someSpeakers->getMessage();
+    else
+        echo 'Error! ' . $someSpeakers->getMessage();
+   
+   echo '<h1>Talks</h1>';
+   
+   $someTalks = $tedx_manager->getTalks();
+    // Message
+    if( $someTalks->getStatus())
+        echo 'Congrats! ' . $someTalks->getMessage();
+    else
+        echo 'Error! ' . $someTalks->getMessage();
+    
+    echo '<h1>A Talk</h1>';
+    
+    $anEvent = $tedx_manager->getEvent(1)->getContent();
+    $aSpeaker = $tedx_manager->getSpeaker(1)->getContent();
+    
+    $args = array (
+        'event'     =>  $anEvent,
+        'speaker'    => $aSpeaker
+    );
+    
+    $aTalk = $tedx_manager->getTalk( $args );
+    
+    // Message
+    if( $aTalk->getStatus())
+        echo 'Congrats! ' . $aTalk->getMessage();
+    else
+        echo 'Error! ' . $aTalk->getMessage();
+    
+    
+    
    // Args RegisterVisitor
-$args = array(
+/*$args = array(
     'name'        => 'kjhzfhgc', // String
     'firstname'   => 'kjzfc',   // String
     'dateOfBirth' => '1988-12-12', // Date

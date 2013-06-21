@@ -38,6 +38,9 @@ class FSTalk{
             $argsTalk = array(
                 'eventNo'            => $data['EventNo'],
                 'speakerPersonNo'    => $data['SpeakerPersonNo'],
+                'videoTitle'    => $data['VideoTitle'],
+                'videoDescription'    => $data['VideoDescription'],
+                'videoURL'    => $data['VideoURL'],
                 'isArchived'    => $data['IsArchived']
             );
         
@@ -80,9 +83,12 @@ class FSTalk{
 
             foreach($data as $row){
                 $argsTalks = array(
-                    'eventNo'           => $row['EventNo'],
-                    'speakerPersonNo'   => $row['SpeakerPersonNo'],
-                    'isArchived'        => $row['IsArchived']
+                    'eventNo'            => $row['EventNo'],
+                    'speakerPersonNo'    => $row['SpeakerPersonNo'],
+                    'videoTitle'    => $row['VideoTitle'],
+                    'videoDescription'    => $row['VideoDescription'],
+                    'videoURL'    => $row['VideoURL'],
+                    'isArchived'    => $row['IsArchived']
                   );
             
                 $talks[] = new Talk($argsTalks);
@@ -90,7 +96,7 @@ class FSTalk{
 
             $argsMessage = array(
                 'messageNumber' => 135,
-                'message'       => 'All CoOrganzations selected',
+                'message'       => 'All Talks selected',
                 'status'        => true,
                 'content'       => $talks
             );
@@ -98,7 +104,7 @@ class FSTalk{
         } else {
             $argsMessage = array(
                 'messageNumber' => 136,
-                'message'       => 'Error while SELECT * FROM Talks',
+                'message'       => 'Error while SELECT * FROM Talk',
                 'status'        => false,
                 'content'       => NULL
             );

@@ -17,6 +17,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPlace.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSTalk.class.php');
 
 
 /**
@@ -494,6 +495,38 @@ class ASFree {
         $messageGetParticipantsBySlot = FSParticipation::getParticipantsBySlot($slot);
         return $messageGetParticipantsBySlot;
     }
+    
+    /**
+     * Returns all the Talks
+     * @param type
+     * @return a Message containing an array of Talks
+     */
+    public static function getTalks(){
+        $messageTalks = FSTalk::getTalks();
+        return $messageTalks;
+    }
+    
+    /**
+     * Returns a talk with its Id
+     * @param type
+     * @return a Message containing an array of Talks
+     */
+    public static function getTalk($args){
+        $messageTalk = FSTalk::getTalk($args);
+        return $messageTalk;
+    }
+    
+    //show a Speaker
+    public static function getSpeaker($no) {
+        $aSpeaker = FSSpeaker::getSpeaker($no); 
+        return $aSpeaker; 
+    }//function 
+    
+    //Show all Speakers 
+    public static function getSpeakers() {
+        $speakers = FSSpeaker::getSpeakers();  
+        return $speakers; 
+    }//function 
     
 }// class
 

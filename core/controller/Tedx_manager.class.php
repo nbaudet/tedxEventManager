@@ -492,6 +492,42 @@ class Tedx_manager{
         return $messageGetSpeakerByPlace; 
     }//function 
     
+    /**
+     * get a Speaker with its Id
+     * @return type message
+     */
+    public function getSpeaker($args) {
+        $messageSpeaker = ASFree::getSpeaker($args);
+        return $messageSpeaker; 
+    }//function 
+    
+    /**
+     * get all Talks
+     * @return type message
+     */
+    public function getSpeakers() {
+        $messageSpeakers = ASFree::getSpeakers();
+        return $messageSpeakers; 
+    }//function 
+    
+    /**
+     * get a Talk with its Id
+     * @return type message
+     */
+    public function getTalk($args) {
+        $messageTalk = ASFree::getTalk($args);
+        return $messageTalk; 
+    }//function 
+    
+    /**
+     * get all Talks
+     * @return type message
+     */
+    public function getTalks() {
+        $messageTalks = ASFree::getTalks();
+        return $messageTalks; 
+    }//function 
+    
     /*==========================================================================
      * 
      * VISITOR FUNCTIONS
