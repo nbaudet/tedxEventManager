@@ -621,35 +621,74 @@ class Tedx_manager{
      * @return type message
      */
     public function getKeyword($args) {
-        return ASParticipant::getKeyword($args);
+        $messageAccess = $this->isGranted( "getKeyword" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeyword($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function 
     
     //Show all Keywords of a Person
     public function getKeywordsByPerson($aPerson) {
-        return ASParticipant::getKeywordsByPerson($aPerson); 
+        $messageAccess = $this->isGranted( "getKeywordsByPerson" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeywordsByPerson($aPerson); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show all Keywords of a Person for an Event
     public function getKeywordsByPersonForEvent($args) {
-        return ASParticipant::getKeywordsByPersonForEvent($args); 
+        $messageAccess = $this->isGranted( "getKeywordsByPersonForEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getKeywordsByPersonForEvent($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Add a Motivation To An Event
     public function addMotivationToAnEvent($args) {
-        $message = ASParticipant::addMotivationToAnEvent($args); 
+        $messageAccess = $this->isGranted( "addMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::addMotivationToAnEvent($args); 
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     
     public function archiveMotivationToAnEvent($args) {
-        $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
+        $messageAccess = $this->isGranted( "archiveMotivationToAnEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     //Show a Motivation
     public function getMotivation($args) {
-        $aMotivation = ASParticipant::getMotivation($args);
-        return $aMotivation;    
+        $messageAccess = $this->isGranted( "getMotivation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivation($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function 
     
     //Show all Motivations of a Person
