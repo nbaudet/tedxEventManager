@@ -248,7 +248,7 @@ class ASVisitor {
             $aValidPerson->setEmail($argsToSet['email']);
         }
 
-        if(($argsToSet['description'] == '') OR (!isset($argsToSet['description']))){
+        if( !isset($argsToSet['description']) or $argsToSet['description'] == '' ){
             $aValidPerson->setDescription(NULL);
         }else{
             if (($argsToSet['description'] != $aValidPerson->getDescription())) {
