@@ -26,43 +26,85 @@ class FSTalk{
         
         $event = $args['event'];
         $speaker = $args['speaker'];
+         
+        if(isset($event)){
+            $aValideEvent = FSEvent::getEvent($event->getNo());
+              if($aValideEvent){
+                  if(isset($speaker)){
+                      $aValidSpeaker = FSSpeaker::getSpeaker($event->getNo());
+                        if($aValidSpeaker){
+                            $sql = "SELECT * FROM Talk 
+                                    WHERE EventNo = " . $event->getNo(). " AND
+                                    SpeakerPersonNo = " . $speaker->getNo(). " AND
+                                    IsArchived = 0";
 
-        $sql = "SELECT * FROM Talk 
-                WHERE EventNo = " . $event->getNo(). " AND
-                SpeakerPersonNo = " . $speaker->getNo(). " AND
-                IsArchived = 0";
+                            $data = $crud->getRow($sql);
 
-        $data = $crud->getRow($sql);
-        
-        if($data){
-            $argsTalk = array(
-                'eventNo'            => $data['EventNo'],
-                'speakerPersonNo'    => $data['SpeakerPersonNo'],
-                'videoTitle'    => $data['VideoTitle'],
-                'videoDescription'    => $data['VideoDescription'],
-                'videoURL'    => $data['VideoURL'],
-                'isArchived'    => $data['IsArchived']
-            );
-        
-            $talk = new Talk($argsTalk);
+                            if($data){
+                                $argsTalk = array(
+                                    'eventNo'            => $data['EventNo'],
+                                    'speakerPersonNo'    => $data['SpeakerPersonNo'],
+                                    'videoTitle'    => $data['VideoTitle'],
+                                    'videoDescription'    => $data['VideoDescription'],
+                                    'videoURL'    => $data['VideoURL'],
+                                    'isArchived'    => $data['IsArchived']
+                                );
 
-            $argsMessage = array(
-                'messageNumber'     => 133,
-                'message'           => 'Existant Talk',
-                'status'            => true,
-                'content'           => $talk
-            );
-            $return = new Message($argsMessage);
+                                $talk = new Talk($argsTalk);
+
+                                $argsMessage = array(
+                                    'messageNumber'     => 133,
+                                    'message'           => 'Existant Talk',
+                                    'status'            => true,
+                                    'content'           => $talk
+                                );
+                                $return = new Message($argsMessage);
+                            }else{
+                                $argsMessage = array(
+                                    'messageNumber'     => 134,
+                                    'message'           => 'Inexistant Talk',
+                                    'status'            => false,
+                                    'content'           => NULL    
+                                );
+                                $return = new Message($argsMessage);
+			    }
+                        }else{
+                            $argsMessage = array(
+                                'messageNumber'     => 134,
+                                'message'           => 'Not Valid Speaker',
+                                'status'            => false,
+                                'content'           => NULL    
+                            );
+                            $return = new Message($argsMessage);
+                        }
+                    }else{
+                       $argsMessage = array(
+                                'messageNumber'     => 134,
+                                'message'           => 'Inexistant Speaker',
+                                'status'            => false,
+                                'content'           => NULL    
+                            );
+                            $return = new Message($argsMessage);
+                    }
+            }else{
+               $argsMessage = array(
+                            'messageNumber'     => 134,
+                            'message'           => 'Not Valid Event',
+                            'status'            => false,
+                            'content'           => NULL    
+                        );
+                        $return = new Message($argsMessage);
+            }
         }else{
-            
             $argsMessage = array(
-                'messageNumber'     => 134,
-                'message'           => 'Inexistant Talk',
-                'status'            => false,
-                'content'           => NULL    
-            );
-            $return = new Message($argsMessage);
+                        'messageNumber'     => 134,
+                        'message'           => 'Inexistant Event',
+                        'status'            => false,
+                        'content'           => NULL    
+                    );
+                    $return = new Message($argsMessage);
         }
+
         return $return;
     }
 

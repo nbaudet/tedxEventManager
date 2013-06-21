@@ -36,7 +36,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
     
     echo '<h1>A Talk</h1>';
     
-    $anEvent = $tedx_manager->getEvent(1)->getContent();
+    $anEvent = $tedx_manager->getEvent(2)->getContent();
     $aSpeaker = $tedx_manager->getSpeaker(1)->getContent();
     
     $args = array (

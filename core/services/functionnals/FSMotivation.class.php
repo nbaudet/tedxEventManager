@@ -36,8 +36,6 @@ class FSMotivation{
         $data = $crud->getRow($sql);
 
         // If a Motivation is Valid
-        
-        var_dump($args);
         if($data){
             $argsMotivation = array(
                 'text'              => $data['Text'],
