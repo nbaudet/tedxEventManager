@@ -11,8 +11,31 @@ require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
-    $tedx_manager->login("admin", "admin");
-$aParticipant = $tedx_manager->getParticipant(42)->getContent();
+
+   $tedx_manager->login("admin", "admin");
+   // Args RegisterVisitor
+$args = array(
+    'name'        => 'kjhzfhgc', // String
+    'firstname'   => 'kjzfc',   // String
+    'dateOfBirth' => '1988-12-12', // Date
+    'address'     => '487 rue de la djh', // String
+    'city'        => 'Springfield', // String
+    'country'     => 'Banff', // String
+    'phoneNumber' => '+33627846354', // String
+    'email'       => 'hs@sjdk.com', // String
+    'description' => '', // String
+    'idmember'    => 'f', // String
+    'password'    => '' // String encrypt to MD5
+);
+// Register the Visitor
+$aRegisteredVisitor = $tedx_manager->registerVisitor( $args );
+ 
+// Message
+if( $aRegisteredVisitor->getStatus())
+    echo 'Congrats! ' . $aRegisteredVisitor->getMessage();
+else
+    echo 'Error! ' . $aRegisteredVisitor->getMessage();
+/* $aParticipant = $tedx_manager->getParticipant(42)->getContent();
 $anEvent = $tedx_manager->getEvent(41)->getContent();
 
 $args = array(
@@ -28,7 +51,7 @@ else
 
 
 
-echo '</br>';
+echo '</br>';*/
 // Object Event
 /*$anEvent = FSEvent::getEvent(41)->getContent();
  
@@ -42,7 +65,7 @@ if($messageGetRegistrationsByEvent->getStatus()){
 //$aTeamRoleToGetLink = FSTeamRole::getTeamRole('Accueil');
 //$aTeamRoleToLinkIsMemberOf = FSTeamRole::getTeamRole('Superman');
 
-$aTeamRole = $tedx_manager->getTeamRole('Accueil')->getContent();
+/*$aTeamRole = $tedx_manager->getTeamRole('Accueil')->getContent();
 $aTeamRoleIsMemberOf = $tedx_manager->getTeamRole('Superman')->getContent();
 
 $aTeamRoleToGetLink = array(
@@ -50,9 +73,8 @@ $aTeamRoleToGetLink = array(
     'teamRoleIsMemberOf'    =>  $aTeamRoleIsMemberOf
 );
 
-//$aTeamRoleToGetLink = new TeamRole($aTeamRoleToGetLink);
-
 $aLinkedTeamRole = $tedx_manager->linkTeamRole($aTeamRoleToGetLink);
+
 // Message
 if( $aLinkedTeamRole->getStatus())
     echo 'Congrats! ' . $aLinkedTeamRole->getMessage();

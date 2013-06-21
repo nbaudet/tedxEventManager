@@ -39,21 +39,9 @@ class ASFree {
      * @return type 
      */
     public static function registerVisitor($args) {
-        /*
-          $argsPerson = array(
-          'name'         => '',
-          'firstname'    => '',
-          'dateOfBirth'  => '',
-          'address'      => '',
-          'city'         => '',
-          'country'      => '',
-          'phoneNumber'  => '',
-          'email'        => '',
-          'description'  => '',
-          'idmember'     => '',
-          'password'     => '',
-          );
-         */
+        
+        $emptyField = null;
+        
         /**
          * Arguments for adding a Person
          */
@@ -62,95 +50,196 @@ class ASFree {
         } else {
             $description = $args['description'];
         }
+        //Check all fields filled
+        if(!isset($args['name']) || $args['name'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['name'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['firstname']) || $args['firstname'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['firstname'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['dateOfBirth']) || $args['dateOfBirth'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['dateOfBirth'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['address']) || $args['address'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['address'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['city']) || $args['city'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['city'];
+        }
+        /*--------------------------------------------------------------------*/
+         if(!isset($args['country']) || $args['country'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['country'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['phoneNumber']) || $args['phoneNumber'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['phoneNumber'];
+        }
+        /*--------------------------------------------------------------------*/
+        if(!isset($args['email']) || $args['email'] == ''){
+            $argsMessage = array(
+                        'messageNumber' => 666,
+                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'status' => false,
+                        'content' => null
+                    );
+            $emptyField = new Message($argsMessage);
+        } else {
+            $name = $args['email'];
+        }
+        /*--------------------------------------------------------------------*/
         
-        $argsPerson = array(
-            'name' => $args['name'],
-            'firstname' => $args['firstname'],
-            'dateOfBirth' => $args['dateOfBirth'],
-            'address' => $args['address'],
-            'city' => $args['city'],
-            'country' => $args['country'],
-            'phoneNumber' => $args['phoneNumber'],
-            'email' => $args['email'],
-            'description' => $description
-        );
-
-        /**
-         * Add a Person
-         */
-        $messageAddedPerson = FSPerson::addPerson($argsPerson);
-        /**
-         * If the Person is added, continue. 
-         */
-        if ($messageAddedPerson->getStatus()) {
-            $anAddedPerson = $messageAddedPerson->getContent();
-            /**
-             * Arguments for adding a Member
-             */
-            $argsMember = array(
-                'id' => $args['idmember'],
-                'password' => $args['password'],
-                'person' => $anAddedPerson
+        if($emptyField == null){
+            $argsPerson = array(
+                'name' => $args['name'],
+                'firstname' => $args['firstname'],
+                'dateOfBirth' => $args['dateOfBirth'],
+                'address' => $args['address'],
+                'city' => $args['city'],
+                'country' => $args['country'],
+                'phoneNumber' => $args['phoneNumber'],
+                'email' => $args['email'],
+                'description' => $description
             );
+
             /**
-             * Add a Member
+             * Add a Person
              */
-            $messageAddedMember = FSMember::addMember($argsMember);
+            $messageAddedPerson = FSPerson::addPerson($argsPerson);
             /**
-             * If the Member is added, continue.
+             * If the Person is added, continue. 
              */
-            if ($messageAddedMember->getStatus()) {
-                $anAddedMember = $messageAddedMember->getContent();
+            if ($messageAddedPerson->getStatus()) {
+                $anAddedPerson = $messageAddedPerson->getContent();
                 /**
-                 * Get the Unit with the name 'Visitor' 
+                 * Arguments for adding a Member
                  */
-                $messageUnit = FSUnit::getUnitByName('Visitor');
-                $visitorUnit = $messageUnit->getContent();
-                /**
-                 * Arguments for adding a Membership
-                 */
-                $argsMembership = array(
-                    'member' => $anAddedMember,
-                    'unit' => $visitorUnit
+                $argsMember = array(
+                    'id' => $args['idmember'],
+                    'password' => $args['password'],
+                    'person' => $anAddedPerson
                 );
                 /**
-                 * Add a Membership
+                 * Add a Member
                  */
-                $messageAddedMembership = FSMembership::addMembership($argsMembership);
+                $messageAddedMember = FSMember::addMember($argsMember);
                 /**
-                 * If the Membership is added, generate the message OK
+                 * If the Member is added, continue.
                  */
-                if ($messageAddedMembership->getStatus()) {
-                    $anAddedMembership = $messageAddedMembership->getContent();
-                    $argsMessage = array(
-                        'messageNumber' => 402,
-                        'message' => 'Visitor registered',
-                        'status' => true,
-                        'content' => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
+                if ($messageAddedMember->getStatus()) {
+                    $anAddedMember = $messageAddedMember->getContent();
+                    /**
+                     * Get the Unit with the name 'Visitor' 
+                     */
+                    $messageUnit = FSUnit::getUnitByName('Visitor');
+                    $visitorUnit = $messageUnit->getContent();
+                    /**
+                     * Arguments for adding a Membership
+                     */
+                    $argsMembership = array(
+                        'member' => $anAddedMember,
+                        'unit' => $visitorUnit
                     );
-                    $aRegisteredVisitor = new Message($argsMessage);
+                    /**
+                     * Add a Membership
+                     */
+                    $messageAddedMembership = FSMembership::addMembership($argsMembership);
+                    /**
+                     * If the Membership is added, generate the message OK
+                     */
+                    if ($messageAddedMembership->getStatus()) {
+                        $anAddedMembership = $messageAddedMembership->getContent();
+                        $argsMessage = array(
+                            'messageNumber' => 402,
+                            'message' => 'Visitor registered',
+                            'status' => true,
+                            'content' => array('anAddedPerson' => $anAddedPerson, 'anAddedMember' => $anAddedMember, 'anAddedMembership' => $anAddedMembership)
+                        );
+                        $aRegisteredVisitor = new Message($argsMessage);
+                    } else {
+                        /**
+                         * Else give the error message about non-adding Membership
+                         */
+                        $aRegisteredVisitor = $messageAddedMembership;
+                    }
                 } else {
                     /**
-                     * Else give the error message about non-adding Membership
+                     * Else give the error message about non-adding Member
                      */
-                    $aRegisteredVisitor = $messageAddedMembership;
+                    $aRegisteredVisitor = $messageAddedMember;
                 }
             } else {
                 /**
-                 * Else give the error message about non-adding Member
+                 * Else give the error message about non-adding Person
                  */
-                $aRegisteredVisitor = $messageAddedMember;
+                $aRegisteredVisitor = $messageAddedPerson;
             }
-        } else {
             /**
-             * Else give the error message about non-adding Person
+             * Return the message Visitor Registed or not Registred
              */
-            $aRegisteredVisitor = $messageAddedPerson;
-        }
-        /**
-         * Return the message Visitor Registed or not Registred
-         */
-        return $aRegisteredVisitor;
+            return $aRegisteredVisitor;
+        }else{
+            return $emptyField;
+        };
     }
 
     // function
