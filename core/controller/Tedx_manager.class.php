@@ -519,7 +519,7 @@ class Tedx_manager{
      * @return type message
      */
     public function changeProfil( $args ) {
-        $messageAccess = $this->isGranted( "changeProfile" );
+        $messageAccess = $this->isGranted( "changeProfil" );
         if( $messageAccess->getStatus() ) {
             $message = ASVisitor::changeProfil( $args );
         }
@@ -702,23 +702,50 @@ class Tedx_manager{
     
     //Show all Motivations of a Person
     public function getMotivationsByParticipant($aParticipant) {
-        $motivations = ASParticipant::getMotivationsByPerson($aParticipant); 
-        return $motivations; 
+        $messageAccess = $this->isGranted( "getMotivationsByParticipant" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPerson($aParticipant); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show all Motivations of a Person for an Event
-    public function getMotivationsByParticipantForEvent($args) {
-        return ASParticipant::getMotivationsByParticipantForEvent($args);
+    public function getMotivationsByParticipantForEvent( $args ) {
+        $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getMotivationsByPersonForEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Send a registration
     public function sendRegistration( $args ) {
-        return ASParticipant::sendRegistration( $args ); 
+        $messageAccess = $this->isGranted( "sendRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::sendRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     //Show the Registration history of a Person for an Event
-    public function getRegistrationHistory($args) {
-        return ASParticipant::getRegistrationHistory($args);
+    public function getRegistrationHistory( $args ) {
+        $messageAccess = $this->isGranted( "getRegistrationHistory" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASParticipant::getRegistrationHistory( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     
@@ -730,24 +757,49 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerSpeaker( $args ) {
-        return ASOrganizer::registerSpeaker($args); 
+        $messageAccess = $this->isGranted( "registerSpeaker" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::registerSpeaker( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
      
     //Add a Location
     public function addLocation($args) {
-        $message = ASOrganizer::addLocation( $args ); 
+        $messageAccess = $this->isGranted( "addLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }//function
     
     //Set an Event Location
     public function changeEventLocation($args) {
-        $message = ASOrganizer::changeEventLocation($args); 
+        $messageAccess = $this->isGranted( "changeEventLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeEventLocation( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
         return $message;
     }
     
     public function addSlotToEvent( $args ) {
-        return ASOrganizer::addSlotToEvent( $args ); 
-
+        $messageAccess = $this->isGranted( "addSlotToEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addSlotToEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     /*==========================================================================
@@ -758,12 +810,26 @@ class Tedx_manager{
     
     // Accept a registration
     public function acceptRegistration( $args ) {
-        return ASValidator::acceptRegistration( $args ); 
+        $messageAccess = $this->isGranted( "acceptRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::acceptRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Reject a registration
     public function rejectRegistration( $args ) {
-        return ASValidator::rejectRegistration( $args ); 
+        $messageAccess = $this->isGranted( "rejectRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::rejectRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     /*==========================================================================
@@ -774,34 +840,84 @@ class Tedx_manager{
     
     //Add a Speaker with a Member and his membership
     public function registerOrganizer( $args ) {
-        return ASAdmin::registerOrganizer( $args ); 
+        $messageAccess = $this->isGranted( "registerOrganizer" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::registerOrganizer( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add a team role
     public function addTeamRole( $aName ) {
-        return ASAdmin::addTeamRole($aName); 
+        $messageAccess = $this->isGranted( "addTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addTeamRole($aName);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Affect a TeamRole with a Organizer
     public function affectTeamRole( $args ) {
-        return ASAdmin::affectTeamRole( $args ); 
+        $messageAccess = $this->isGranted( "affectTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::affectTeamRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     // Add an Event
     public function addEvent( $args ) {
-        return ASAdmin::addEvent( $args ); 
+        $messageAccess = $this->isGranted( "addEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addEvent( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     public function addRole( $args ) {
-        return ASAdmin::addRole( $args ); 
+        $messageAccess = $this->isGranted( "addRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::addRole( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
+    // Change the level of a role
     public function changeRoleLevel( $args ) {
-        return ASAdmin::changeRoleLevel($args); 
+        $messageAccess = $this->isGranted( "changeRoleLevel" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::changeRoleLevel($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
     }//function
     
     public function linkTeamRole( $args ) {
-        return ASAdmin::linkTeamRole($args); 
+        $messageAccess = $this->isGranted( "linkTeamRole" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASAdmin::linkTeamRole($args);
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message; 
     }//function
     
     
