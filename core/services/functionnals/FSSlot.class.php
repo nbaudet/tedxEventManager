@@ -2,6 +2,7 @@
 require_once(APP_DIR . '/core/model/Slot.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 
 /**
  * Description of FSSlot
@@ -27,39 +28,62 @@ class FSSlot {
         $event = $args['event'];
         $return = NULL;
         
-        $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
-        $data = $crud->getRow($sql);
+        //If Event not empty
+        if(isset($event)){
+                      $aValideEvent = FSEvent::getEvent($event->getNo());
+                        //If Valid Event
+                        if($aValideEvent){
         
-        
-        if($data){
-            $argsSlot = array(
-                'no'            => $data['No'],
-                'eventNo'       => $data['EventNo'],
-                'happeningDate' => $data['HappeningDate'],
-                'startingTime'  => $data['StartingTime'],
-                'endingTime'    => $data['EndingTime'],
-                'isArchived'    => $data['IsArchived'],
-            );
-            
-            $slot = new Slot($argsSlot);
-            
-            $argsMessage = array(
-                'messageNumber' => 115,
-                'message'       => 'Existant Slot',
-                'status'        => true,
-                'content'       => $slot
-            );
-            $return = new Message($argsMessage);
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 116,
-                'message'       => 'Inexistant Slot',
-                'status'        => false,
-                'content'       => NULL
-            );
-            $return = new Message($argsMessage);
-        }
-        
+                                    $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
+                                    $data = $crud->getRow($sql);
+
+                                    if($data){
+                                        $argsSlot = array(
+                                            'no'            => $data['No'],
+                                            'eventNo'       => $data['EventNo'],
+                                            'happeningDate' => $data['HappeningDate'],
+                                            'startingTime'  => $data['StartingTime'],
+                                            'endingTime'    => $data['EndingTime'],
+                                            'isArchived'    => $data['IsArchived'],
+                                        );
+
+                                        $slot = new Slot($argsSlot);
+
+                                        $argsMessage = array(
+                                            'messageNumber' => 115,
+                                            'message'       => 'Existant Slot',
+                                            'status'        => true,
+                                            'content'       => $slot
+                                        );
+                                        $return = new Message($argsMessage);
+                                    } else {
+                                        $argsMessage = array(
+                                            'messageNumber' => 116,
+                                            'message'       => 'Inexistant Slot',
+                                            'status'        => false,
+                                            'content'       => NULL
+                                        );
+                                        $return = new Message($argsMessage);
+                                    }
+                               }else{
+                                        $argsMessage = array(
+                                             'messageNumber'     => 134,
+                                             'message'           => 'Not Valid Event',
+                                             'status'            => false,
+                                             'content'           => NULL    
+                                         );
+                                         $return = new Message($argsMessage);
+                                }
+                      }else{
+                            $argsMessage = array(
+                                'messageNumber'     => 134,
+                                'message'           => 'Inexistant Event',
+                                'status'            => false,
+                                'content'           => NULL    
+                            );
+                            $return = new Message($argsMessage);
+                        }
+
         return $return;
     }
     

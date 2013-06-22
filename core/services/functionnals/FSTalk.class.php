@@ -31,7 +31,7 @@ class FSTalk{
             $aValideEvent = FSEvent::getEvent($event->getNo());
               if($aValideEvent){
                   if(isset($speaker)){
-                      $aValidSpeaker = FSSpeaker::getSpeaker($event->getNo());
+                      $aValidSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
                         if($aValidSpeaker){
                             $sql = "SELECT * FROM Talk 
                                     WHERE EventNo = " . $event->getNo(). " AND

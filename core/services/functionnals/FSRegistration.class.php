@@ -29,38 +29,83 @@ class FSRegistration {
         // Get database manipulator
         global $crud;
         
-        // SQL request for getting a Registration
-        $sql = "SELECT * FROM Registration WHERE Status LIKE '". $args['status'] ."' AND EventNo = " . $args['event']->getNo() . " AND ParticipantPersonNo = " . $args['participant']->getNo();
-        $data = $crud->getRow($sql);
+        $event = $args['event'];
+        $participant = $args['participant'];
+         
+        if(isset($event)){
+            $aValideEvent = FSEvent::getEvent($event->getNo());
+              if($aValideEvent){
+                  if(isset($participant)){
+                      $aValidParticipant = FSParticipant::getParticipant($participant->getNo());
+                        if($aValidParticipant){
+                                                    // SQL request for getting a Registration
+                                                    $sql = "SELECT * FROM Registration WHERE Status LIKE '". $args['status'] ."' AND EventNo = " . $args['event']->getNo() . " AND ParticipantPersonNo = " . $args['participant']->getNo();
+                                                    $data = $crud->getRow($sql);
 
-        // If a Registration is Valid
-        if($data){
-            $argsRegistration = array(
-                'status'              => $data['Status'],
-                'eventNo'             => $data['EventNo'],
-                'participantPersonNo' => $data['ParticipantPersonNo'],
-                'registrationDate'    => $data['RegistrationDate'],
-                'type'                => $data['Type'],
-                'typeDescription'     => $data['TypeDescription'],
-                'isArchived'          => $data['IsArchived']
-            );
-            
-            // Get the message Existant Registration with the object Registration
-            $registration = new Registration($argsRegistration);
-            $argsMessage = array(
-                'messageNumber'     => 410,
-                'message'           => 'Existant Registration',
-                'status'            => true,
-                'content'           => $registration
-            );
+                                                    // If a Registration is Valid
+                                                    if($data){
+                                                        $argsRegistration = array(
+                                                            'status'              => $data['Status'],
+                                                            'eventNo'             => $data['EventNo'],
+                                                            'participantPersonNo' => $data['ParticipantPersonNo'],
+                                                            'registrationDate'    => $data['RegistrationDate'],
+                                                            'type'                => $data['Type'],
+                                                            'typeDescription'     => $data['TypeDescription'],
+                                                            'isArchived'          => $data['IsArchived']
+                                                        );
+
+                                                        // Get the message Existant Registration with the object Registration
+                                                        $registration = new Registration($argsRegistration);
+                                                        $argsMessage = array(
+                                                            'messageNumber'     => 410,
+                                                            'message'           => 'Existant Registration',
+                                                            'status'            => true,
+                                                            'content'           => $registration
+                                                        );
+                                                    }else{
+                                                        // Get the message Inexistant Registration
+                                                        $argsMessage = array(
+                                                            'messageNumber'     => 411,
+                                                            'message'           => 'Inexistant Registration',
+                                                            'status'            => false,
+                                                            'content'           => NULL    
+                                                        );
+                                                    }
+                                             }else{
+                            $argsMessage = array(
+                                'messageNumber'     => 411,
+                                'message'           => 'Not Valid Participant',
+                                'status'            => false,
+                                'content'           => NULL    
+                            );
+                            $return = new Message($argsMessage);
+                        }
+                    }else{
+                       $argsMessage = array(
+                                'messageNumber'     => 411,
+                                'message'           => 'Inexistant Participant',
+                                'status'            => false,
+                                'content'           => NULL    
+                            );
+                            $return = new Message($argsMessage);
+                    }
+            }else{
+               $argsMessage = array(
+                            'messageNumber'     => 411,
+                            'message'           => 'Not Valid Event',
+                            'status'            => false,
+                            'content'           => NULL    
+                        );
+                        $return = new Message($argsMessage);
+            }
         }else{
-            // Get the message Inexistant Registration
             $argsMessage = array(
-                'messageNumber'     => 411,
-                'message'           => 'Inexistant Registration',
-                'status'            => false,
-                'content'           => NULL    
-            );
+                        'messageNumber'     => 134,
+                        'message'           => 'Inexistant Event',
+                        'status'            => false,
+                        'content'           => NULL    
+                    );
+                    $return = new Message($argsMessage);
         }
         return new Message($argsMessage);
     }

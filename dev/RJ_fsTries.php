@@ -9,14 +9,28 @@ require_once(APP_DIR.'/core/controller/Tedx_manager.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
    $tedx_manager->login("admin", "admin");
    
+$anEvent = $tedx_manager->getEvent(1)->getContent();
+$aParticipant = $tedx_manager->getParticipant(5)->getContent();
    
+$args = array(
+    'status'               => 'f',
+    'event'              => $anEvent,
+    'participant'  => $aParticipant
+);
+$aRegistration = $tedx_manager->getRegistration($args);
+// Message
+if( $aRegistration->getStatus())
+    echo 'Congrats! ' . $aRegistration->getMessage();
+else
+    echo 'Error! ' . $aRegistration->getMessage();
    
-   echo '<h1>Speakers</h1>';
+   /*echo '<h1>Speakers</h1>';
    
    $someSpeakers = $tedx_manager->getSpeakers();
     // Message
