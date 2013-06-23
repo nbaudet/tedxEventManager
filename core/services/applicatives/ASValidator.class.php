@@ -39,7 +39,6 @@ class ASValidator {
     private static function changeRegistrationStatus($args) {
         $currentRegistration = $args['currentRegistration'];
         $newStatus = $args['newStatus'];
-        var_dump($currentRegistration);
         //If event not empty
         if(isset($currentRegistration['event'])){
                         $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
