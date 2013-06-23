@@ -39,32 +39,54 @@ class ASValidator {
     private static function changeRegistrationStatus($args) {
         $currentRegistration = $args['currentRegistration'];
         $newStatus = $args['newStatus'];
-        $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
-        if($messageValidEvent->getStatus()){
-            $aValidEvent = $messageValidEvent->getContent();
-            $messageValidParticipant = FSParticipant::getParticipant($currentRegistration->getParticipantPersonNo());
-            if($messageValidParticipant->getStatus()){
-                $aValidParticipant = $messageValidParticipant->getContent();
-                $currentRegistration->setIsArchived(1);
-                $messageArchiveRegistration = FSRegistration::archiveRegistration($currentRegistration);
-                if($messageArchiveRegistration->getStatus()){
-                     $argsRegistration = array(
-                        'status'          => $newStatus, // String
-                        'type'            => $currentRegistration->getType(), // String
-                        'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
-                        'event'           => $aValidEvent, // object Event
-                        'participant'     => $aValidParticipant  // object Participant
-                    );
-                    $message = FSRegistration::addRegistration($argsRegistration);
+        var_dump($currentRegistration);
+        //If event not empty
+        if(isset($currentRegistration['event'])){
+                        $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
+                        if($messageValidEvent->getStatus()){
+                            $aValidEvent = $messageValidEvent->getContent();
+                                if(isset($currentRegistration['participant'])){
+                                        $messageValidParticipant = FSParticipant::getParticipant($currentRegistration->getParticipantPersonNo());
+                                        if($messageValidParticipant->getStatus()){
+                                            $aValidParticipant = $messageValidParticipant->getContent();
+                                            $currentRegistration->setIsArchived(1);
+                                            $messageArchiveRegistration = FSRegistration::archiveRegistration($currentRegistration);
+                                            if($messageArchiveRegistration->getStatus()){
+                                                 $argsRegistration = array(
+                                                    'status'          => $newStatus, // String
+                                                    'type'            => $currentRegistration->getType(), // String
+                                                    'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
+                                                    'event'           => $aValidEvent, // object Event
+                                                    'participant'     => $aValidParticipant  // object Participant
+                                                );
+                                                $message = FSRegistration::addRegistration($argsRegistration);
+                                            }else{
+                                                $message = $messageArchiveRegistration;
+                                            }
+                                        }else{
+                                            $message = $messageValidParticipant;
+                                        }
+                                }else{
+                                    $argsMessage = array(
+                                        'messageNumber'     => 208,
+                                        'message'           => 'Inexistant Participant',
+                                        'status'            => false,
+                                        'content'           => NULL 
+                                    );
+                                    $message= new Message($argsMessage);
+                                }
+                        }else{
+                            $message = $messageValidEvent;
+                        }
                 }else{
-                    $message = $messageArchiveRegistration;
+                    $argsMessage = array(
+                        'messageNumber'     => 212,
+                        'message'           => 'Inexistant Event',
+                        'status'            => false,
+                        'content'           => null
+                    );
+                    $message= new Message($argsMessage);
                 }
-            }else{
-                $message = $messageValidParticipant;
-            }
-        }else{
-            $message = $messageValidEvent;
-        }
         return $message; 
     }//function
     

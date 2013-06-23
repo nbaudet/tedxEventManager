@@ -21,44 +21,56 @@ class FSEvent {
         $event = NULL;
 
         global $crud;
+        
+        if(isset($no)){
+        
+                                $sql = "SELECT * FROM Event WHERE No = $no";
+                                $data = $crud->getRow($sql);
 
-        $sql = "SELECT * FROM Event WHERE No = $no";
-        $data = $crud->getRow($sql);
+                                if ($data) {
+                                    $argsEvent = array(
+                                        'no' => $data['No'],
+                                        'mainTopic' => $data['MainTopic'],
+                                        'locationName' => $data['LocationName'],
+                                        'description' => $data['Description'],
+                                        'startingDate' => $data['StartingDate'],
+                                        'endingDate' => $data['EndingDate'],
+                                        'startingTime' => $data['StartingTime'],
+                                        'endingTime' => $data['EndingTime'],
+                                        'isArchived' => $data['IsArchived']
+                                    );
 
-        if ($data) {
-            $argsEvent = array(
-                'no' => $data['No'],
-                'mainTopic' => $data['MainTopic'],
-                'locationName' => $data['LocationName'],
-                'description' => $data['Description'],
-                'startingDate' => $data['StartingDate'],
-                'endingDate' => $data['EndingDate'],
-                'startingTime' => $data['StartingTime'],
-                'endingTime' => $data['EndingTime'],
-                'isArchived' => $data['IsArchived']
-            );
+                                    $event = new Event($argsEvent);
 
-            $event = new Event($argsEvent);
-
-            $argsMessage = array(
-                'messageNumber' => 211,
-                'message' => 'Existant Event',
-                'status' => true,
-                'content' => $event
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 212,
-                'message' => 'Inexistant Event',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        } // else
-    }
+                                    $argsMessage = array(
+                                        'messageNumber' => 211,
+                                        'message' => 'Existant Event',
+                                        'status' => true,
+                                        'content' => $event
+                                    );
+                                    $message = new Message($argsMessage);
+                                    return $message;
+                                } else {
+                                    $argsMessage = array(
+                                        'messageNumber' => 212,
+                                        'message' => 'Inexistant Event',
+                                        'status' => false,
+                                        'content' => NULL
+                                    );
+                                    $message = new Message($argsMessage);
+                                    
+                                } // else
+                    }else{
+                        $argsMessage = array(
+                            'messageNumber' => 212,
+                            'message' => 'Inexistant Event',
+                            'status' => false,
+                            'content' => NULL
+                        );
+                        $message = new Message($argsMessage);
+                    }
+                return $message;
+         }
 
 // function
 

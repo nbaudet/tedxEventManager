@@ -14,22 +14,18 @@ require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
    $tedx_manager->login("admin", "admin");
+ 
+$anEvent = $tedx_manager->getEvent(1)->getContent(); 
+$aParticipant = $tedx_manager->getParticipant(400)->getContent(); 
    
-$anEvent = $tedx_manager->getEvent(1)->getContent();
-$aParticipant = $tedx_manager->getParticipant(5)->getContent();
-   
-$args = array(
-    'status'               => 'f',
-    'event'              => $anEvent,
-    'participant'  => $aParticipant
-);
-$aRegistration = $tedx_manager->getRegistration($args);
+$aWaitingRegistration = $tedx_manager->getRegistration(array('status' =>'Waiting', 'event' => $anEvent, 'participant' => $aParticipant))->getContent();
+$anAcceptedRegistration= $tedx_manager->acceptRegistration($aWaitingRegistration);
 // Message
-if( $aRegistration->getStatus())
-    echo 'Congrats! ' . $aRegistration->getMessage();
+if( $anAcceptedRegistration->getStatus() == 1 )
+    echo 'Congrats! ' . $anAcceptedRegistration->getMessage();
 else
-    echo 'Error! ' . $aRegistration->getMessage();
-   
+    echo 'Error! ' . $anAcceptedRegistration->getMessage();
+
    /*echo '<h1>Speakers</h1>';
    
    $someSpeakers = $tedx_manager->getSpeakers();
