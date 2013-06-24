@@ -171,6 +171,58 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
         return $return;
     }
     
+    /**
+     * Sets a Person as Organizer (if not already Organizer)
+     * @param Person $person
+     * @return a Message containing the created Organizer
+     */
+    public static function setPersonAsOrganizer($person){
+        global $crud;
+        
+        // Validate Person
+        $messageValidatePerson = FSPerson::getPerson($person->getNo());
+        // Validate non existing Organizer
+        $messageValidateOrganizer = FSOrganizer::getOrganizer($person->getNo());
+        
+        // If validPerson
+        if($messageValidatePerson->getStatus()){
+            // If non existing Organizer
+            if(!$messageValidateOrganizer->getStatus()){
+                $sql = "INSERT INTO Organizer (
+                    PersonNo) VALUES (
+                        '".$person->getNo()."'
+                );";
+                
+                if($crud->exec($sql) == 1){   
+                    $aCreatedOrganizer = FSOrganizer::getOrganizer($person->getNo())->getContent();
+
+                    $argsMessage = array(
+                        'messageNumber' => 129,
+                        'message'       => 'New Organizer added !',
+                        'status'        => true,
+                        'content'       => $aCreatedOrganizer
+                    );
+
+                    $return = new Message($argsMessage);
+                } else {
+                    $argsMessage = array(
+                        'messageNumber' => 130,
+                        'message'       => 'Error while inserting new Organizer',
+                        'status'        => false,
+                        'content'       => NULL
+                    );
+                    $return = new Message($argsMessage);
+                }   
+                
+            } else {
+                $return = $messageValidateOrganizer;
+            }
+        } else {
+            $return = $messageValidatePerson;
+        }
+        return $return;
+    }
+    
  }
     
 ?>
