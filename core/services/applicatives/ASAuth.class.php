@@ -30,8 +30,16 @@ class ASAuth {
      * @return aLoggedMember or NULL
      */
     public function login( $args ) {
-        // Get the member with the given arguments
-        $message = FSMember::getMember( $args['id'] );
+        /* If we receive an email (if 'id' contains '@'), get the member by the
+         * person's id. */
+        if ( strpos( $args['id'], '@') !== false) {
+            $message = FSMember::getMemberByPersonEmail( $args['id'] );
+        }
+        // Else: get the member with the given arguments
+        else {
+            $message = FSMember::getMember( $args['id'] );
+        }
+        
         // message to return
         $messageReturn;
 

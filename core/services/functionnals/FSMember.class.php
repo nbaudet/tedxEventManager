@@ -149,6 +149,51 @@ class FSMember {
         $message = new Message($argsMessage);
         return $message;
     }
+    
+    /**
+     * Returns a Message with a member, if the email given was found in the
+     * Person table, or NULL.
+     * @return a Message with a Member or NULL
+     */
+    public static function getMemberByPersonEmail ( $email ) {
+        // get database manipulator
+        global $crud;
+
+        $sql = "SELECT * FROM Member
+            JOIN Person
+            ON Member.PersonNo = Person.No
+            WHERE Person.Email = '" . $email ."'
+            AND Member.IsArchived = 0";
+        $data = $crud->getRow($sql);
+        // If $data, return content
+        if ($data) {
+            // Send Message Valid Member
+            $argsMember = array(
+                'id' => $data['ID'],
+                'password' => $data['Password'],
+                'personNo' => $data['PersonNo'],
+                'isArchived' => $data['IsArchived']
+            );
+            $aValidMember = new Member($argsMember);
+            $argsMessage = array(
+                'messageNumber' => 409,
+                'message' => 'The Member is valid',
+                'status' => true,
+                'content' => $aValidMember
+            );
+        } else {
+            // Send Message Inexistant Member
+            $argsMessage = array(
+                'messageNumber' => 408,
+                'message' => 'The Member is inexistant',
+                'status' => false,
+                'content' => NULL
+            );
+        }
+        // Return message
+        $message = new Message($argsMessage);
+        return $message;
+    }
 
     /**
      * Functionnal Service addMember
