@@ -28,9 +28,17 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
 
-$organizer = $tedx_manager->getOrganizer(4)->getContent();
-var_dump($tedx_manager->getTeamRolesByOrganizer($organizer));
-var_dump(FSAffectation::getTeamRolesByOrganizer($organizer));
+$person = $tedx_manager->getPerson(6)->getContent();
+var_dump($person);
+
+var_dump($tedx_manager->getOrganizers()->getContent());
+
+var_dump($tedx_manager->setPersonAsOrganizer($person));
+
+
+//$organizer = $tedx_manager->getOrganizer(4)->getContent();
+//var_dump($tedx_manager->getTeamRolesByOrganizer($organizer));
+
 
 
 

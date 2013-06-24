@@ -10,21 +10,12 @@ require_once(APP_DIR.'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
-//require_once(APP_DIR .'/core/services/functionnals/FSSpeaker.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
    $tedx_manager->login("admin", "admin");
  
-$anEvent = $tedx_manager->getEvent(1)->getContent(); 
-$aParticipant = $tedx_manager->getParticipant(400)->getContent(); 
-   
-$aWaitingRegistration = $tedx_manager->getRegistration(array('status' =>'Waiting', 'event' => $anEvent, 'participant' => $aParticipant))->getContent();
-$anAcceptedRegistration= $tedx_manager->acceptRegistration($aWaitingRegistration);
-// Message
-if( $anAcceptedRegistration->getStatus() == 1 )
-    echo 'Congrats! ' . $anAcceptedRegistration->getMessage();
-else
-    echo 'Error! ' . $anAcceptedRegistration->getMessage();
+
 
    /*echo '<h1>Speakers</h1>';
    

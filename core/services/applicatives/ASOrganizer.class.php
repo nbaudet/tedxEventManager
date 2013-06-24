@@ -219,6 +219,115 @@ class ASOrganizer {
        return $message;
     }
     
+    /**
+     * Applicative service to change a place of a Speaker to an Event
+     * @param type $args.
+     * @return type message
+     */
+    public static function changePositionOfSpeakerToEvent($args){
+        $speaker = $args['speaker'];
+        $position = $args['position'];
+        $event = $args['event'];
+        $slot = $args['slot'];
+        
+        //If a non empty speaker
+        if(isset($speaker)){
+            $aValidSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
+                if($aValidSpeaker){
+                    //If a non empty event
+                    if(isset($event)){
+                        $aValidEvent = FSEvent::getEvent($event->getNo());
+                            if($aValidEvent){
+                                //If a non empty slot
+                                if(isset($slot)){
+                                    $aValidSlot = FSSlot::getSlot($slot->getNo());
+                                        //If a valid speaker
+                                        if($aValidSlot){
+                                            //If a empty position or a non existant position
+                                            if((empty($position))||(FSPosition::getPosition($position->getNo()) == FALSE)){   
+                                                $newPlace = array(
+                                                    'slot'  =>  $aValidSlot->getContent(),
+                                                    'speaker'   =>  $aValidSpeaker->getContent(),
+                                                    'no'    =>  $aValidSlot->getContent()
+                                                );
+                                                $aPlaceAdded = FSPlace::addPlace($newPlace);
+                                                $argsMessage = array(
+                                                    'messageNumber'     => 000,
+                                                    'message'           => 'A place changed',
+                                                    'status'            => true,
+                                                    'content'           => $aPlaceAdded
+                                                );
+                                                $return = new Message($argsMessage);
+                                            }else{
+                                                //If position is not archived
+                                                if($position->getIsArchived()->getContent() == 0){
+                                                    $aPlaceArchived = FSPlace::setPlace($args);
+                                                    $argsMessage = array(
+                                                        'messageNumber'     => 000,
+                                                        'message'           => 'A place archived',
+                                                        'status'            => true,
+                                                        'content'           => $aPlaceArchived
+                                                    );
+                                                    $return = new Message($argsMessage);
+                                                }
+                                            }
+                                        }else{
+                                            $argsMessage = array(
+                                                'messageNumber'     => 000,
+                                                'message'           => 'Inexistant slot',
+                                                'status'            => false,
+                                                'content'           => null
+                                            );
+                                            $return = new Message($argsMessage);
+                                        }
+                                }else{
+                                    $argsMessage = array(
+                                        'messageNumber'     => 000,
+                                        'message'           => 'Empty slot',
+                                        'status'            => false,
+                                        'content'           => null
+                                    );
+                        $return = new Message($argsMessage);
+                                }
+                            }else{
+                                $argsMessage = array(
+                                    'messageNumber'     => 000,
+                                    'message'           => 'Inexistant event',
+                                    'status'            => false,
+                                    'content'           => null
+                                );
+                                $return = new Message($argsMessage);
+                            }
+                    }else{
+                        $argsMessage = array(
+                            'messageNumber'     => 000,
+                            'message'           => 'Empty event',
+                            'status'            => false,
+                            'content'           => null
+                        );
+                        $return = new Message($argsMessage);
+                    } 
+                }else{
+                    $argsMessage = array(
+                        'messageNumber'     => 000,
+                        'message'           => 'Inexistant speaker',
+                        'status'            => false,
+                        'content'           => null
+                    );
+                    $return = new Message($argsMessage);
+                }
+        }else{
+            $argsMessage = array(
+                'messageNumber'     => 000,
+                'message'           => 'Empty speaker',
+                'status'            => false,
+                'content'           => null
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+    }
+    
 }
 
 ?>

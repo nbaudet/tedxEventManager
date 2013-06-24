@@ -126,6 +126,16 @@ class ASAdmin {
     } // END registerOrganizer
     
     /**
+     * Sets a Person as Organizer (if not already Organizer)
+     * @param Person $person
+     * @return a Message containing the created Organizer
+     */
+    public static function setPersonAsOrganizer($person){
+        $messageSetPersonAsOrganizer = FSOrganizer::setPersonAsOrganizer($person);
+        return $messageSetPersonAsOrganizer;
+    }
+    
+    /**
      * Adds a new Event with its Slots
      * @param array $args
      * @return a Message containing the added Event and the Slots

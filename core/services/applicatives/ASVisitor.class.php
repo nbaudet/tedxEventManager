@@ -264,9 +264,7 @@ class ASVisitor {
         if( !isset($argsToSet['description']) or $argsToSet['description'] == '' ){
             $aValidPerson->setDescription(NULL);
         }else{
-            if (($argsToSet['description'] != $aValidPerson->getDescription())) {
-                $aValidPerson->setDescription($argsToSet['description']);
-            }
+            $aValidPerson->setDescription($argsToSet['description']);
         }
         return $aValidPerson;
     }// function

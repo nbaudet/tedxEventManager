@@ -931,6 +931,12 @@ class Tedx_manager{
         return $message;
     }//function
     
+    // Sets an existing Person as Organizer
+    public function setPersonAsOrganizer($person){
+        $messageSetPersonAsOrganizer = FSOrganizer::setPersonAsOrganizer($person);
+        return $messageSetPersonAsOrganizer;
+    }
+    
     // Add a team role
     public function addTeamRole( $aName ) {
         $messageAccess = $this->isGranted( "addTeamRole" );

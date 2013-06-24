@@ -168,23 +168,21 @@ class FSPlace {
         $messageValidateSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
         
         if($messageValidateSpeaker->getStatus()){
-      echo "Valid speaker !";
+
             // Validate Slot
             $event = FSEvent::getEvent($slot->getEventNo())->getContent();
 
             $argsGetSlot = array (
-                'no'    => '2',
+                'no'    => $no,
                 'event' => $event
             );
             $messageValidateSlot = FSSlot::getSlot($argsGetSlot);
             
             if($messageValidateSlot->getStatus()){
-         echo "Valid Slot !";
                 // Validate non existing Place
                 $messageValidatePlace = FSPlace::getPlace($args);
                 
                 if(!$messageValidatePlace->getStatus()){
-           echo "Invalid Place";
                     // Create new Place
                     $messageCreatePlace = FSPlace::createPlace($args);
                     
@@ -254,6 +252,57 @@ class FSPlace {
                 $return = new Message($argsMessage);
         }
         return $return;        
+    }
+    
+    /**
+     * Set Place
+     * @param array of args
+     * @return a Message containing the created Place
+     */
+    public static function setPlace($aPlaceToSet){
+        global $crud;
+            $sql = "UPDATE  Place SET  
+                IsArchived = " . $aPlaceToSet->getIsArchived() . "
+                WHERE  Place.No = " . $aPlaceToSet->getNo() . "
+                 AND Place.SlotNo = " . $aPlaceToSet->getSlotNo() . "
+                 AND Place.SlotEventNo = " . $aPlaceToSet->getSlotEventNo() . "
+                 AND Place.SpeakerPersonNo = " . $aPlaceToSet->getSpeakerPersonNo();
+ 
+            if ($crud->exec($sql) == 1) {
+                $sql = "SELECT * FROM Place 
+                    WHERE  Place.No = " . $aPlaceToSet->getNo() . "
+                 AND Place.SlotNo = " . $aPlaceToSet->getSlotNo() . "
+                 AND Place.SlotEventNo = " . $aPlaceToSet->getSlotEventNo() . "
+                 AND Place.SpeakerPersonNo = " . $aPlaceToSet->getSpeakerPersonNo(). "
+                 AND Place.IsArchived = " . $aPlaceToSet->getIsArchived();
+                $data = $crud->getRow($sql);
+
+                $argsPlace = array(
+                    'text' => $aPlaceToSet->getText(),
+                    'eventNo' => $aPlaceToSet->getEventNo(),
+                    'participantPersonNo' => $aPlaceToSet->getParticipantPersonNo(),
+                    'isArchived' => $aPlaceToSet->getIsArchived()
+                );
+ 
+                $aSetPlace = new Place($argsPlace);
+
+                $argsMessage = array(
+                    'messageNumber' => 000,
+                    'message' => 'Place set !',
+                    'status' => true,
+                    'content' => $aSetPlace
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 000,
+                    'message' => 'Error while setting new Place',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
+        return $message;
     }
 }
 ?>
