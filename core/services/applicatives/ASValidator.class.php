@@ -40,7 +40,7 @@ class ASValidator {
         $currentRegistration = $args['currentRegistration'];
         $newStatus = $args['newStatus'];
         //If event not empty
-        if(isset($currentRegistration['event'])){
+        if(isset($currentRegistration->getEvent())){
                         $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
                         if($messageValidEvent->getStatus()){
                             $aValidEvent = $messageValidEvent->getContent();
