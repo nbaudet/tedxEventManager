@@ -19,9 +19,9 @@ require_once(APP_DIR . '/core/model/Event.class.php');
 class FSRegistration {
 
     /**
-     * Returns the Register of the database with the 
-     * @param type $args the ID of Registration
-     * @return A Message containing the Registration getted
+     * Returns the Register of the database with the
+     * @param Mixed $args the ID of Registration
+     * @return Message A Message containing the Registration getted
      */
     public static function getRegistration($args) {
         $registration = NULL;

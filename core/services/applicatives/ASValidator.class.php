@@ -42,32 +42,56 @@ class ASValidator {
         $newStatus = $args['newStatus'];
 
         $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
+        // Validate Event
         if ($messageValidEvent->getStatus()) {
             $aValidEvent = $messageValidEvent->getContent();
             $messageValidParticipant = FSParticipant::getParticipant($currentRegistration->getParticipantPersonNo());
+            // Validate Participant
             if ($messageValidParticipant->getStatus()) {
                 $aValidParticipant = $messageValidParticipant->getContent();
                 $currentRegistration->setIsArchived(1);
                 $messageArchiveRegistration = FSRegistration::archiveRegistration($currentRegistration);
+                // If Registration was archived successfully
                 if ($messageArchiveRegistration->getStatus()) {
-                    $argsRegistration = array(
-                        'status' => $newStatus, // String
-                        'type' => $currentRegistration->getType(), // String
-                        'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
-                        'event' => $aValidEvent, // object Event
-                        'participant' => $aValidParticipant  // object Participant
+                    /* If a Registration with similar Status, Participant and
+                     * Event already exists, update its IsArchived to 0, other-
+                     * wise, add a new Registration */
+                    $newRegistration = $currentRegistration;
+                    $newRegistration->setIsArchived(0);
+                    $newRegistration->setStatus( $newStatus );
+                    $argsPreexistingRegistration = array (
+                        'event'        => $aValidEvent,
+                        'participant'  => $aValidParticipant,
+                        'registration' => $newRegistration,
+                        'status'       => $newStatus
                     );
-                    $message = FSRegistration::addRegistration($argsRegistration);
+                    $messagePreExistingRegistration = FSRegistration::getRegistration($argsPreexistingRegistration);
+                    if( $messagePreExistingRegistration->getStatus() ) {
+                        $message = FSRegistration::setRegistration($newRegistration);
+                    }
+                    // Else: just add the Registration
+                    else {
+                        $argsRegistration = array(
+                            'status'          => $newStatus, // String
+                            'type'            => $currentRegistration->getType(), // String
+                            'typeDescription' => $currentRegistration->getTypeDescription(), // Optionel - String
+                            'event'           => $aValidEvent, // object Event
+                            'participant'     => $aValidParticipant  // object Participant
+                        );
+                        $message = FSRegistration::addRegistration($argsRegistration);
+                    }
+                // Else: Error while archiving
                 } else {
                     $message = $messageArchiveRegistration;
                 }
+            // Else: Invalid participant
             } else {
                 $message = $messageValidParticipant;
             }
+        // Else: Invalid Event
         } else {
             $message = $messageValidEvent;
         }
-
         return $message;
     }
 
@@ -89,8 +113,8 @@ class ASValidator {
      * @param Registration $registration a Registration
      * @return Message a message with the registration or null.
      */
-    public static function cancelRegistration( $registration ) {
-        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Pending');
+    public static function cancelRegistration( $aRegistration ) {
+        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Sent');
         return self::changeRegistrationStatus($args);
     }
 

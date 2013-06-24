@@ -100,6 +100,16 @@ class Registration {
         return $this->status; 
     }//function
     
+    /**
+     * set a new status.
+     * Needed in ASValidator, to unarchive a Registration
+     * @param String $newStatus the new Status
+     * @return Boolean If the new status could be setted
+     */
+    public function setStatus( $newStatus ) {
+        return $this->status = $newStatus;
+    }
+    
     
     /**
      * get eventNo
