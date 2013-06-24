@@ -158,14 +158,18 @@ class ASOrganizer {
     }
     
     /**
-     * Applicative service to add a slot to an event
-     * @param type $args, the speaker and the slot parameter.
+     * Applicative service to add a Speaker to a Slot (Place and Talk)
+     * @param type $args, the speaker, the slot, and the parameter of the Place and the Talk of speaker in event.
      * @return type message
      */
     public static function addSpeakerToSlot($args){
        $aNo = $args['no'];
        $aSlot = $args['slot'];
        $aSpeaker = $args['speaker'];
+       $videoTitle = $args['videoTitle'];
+       $videoDescription = $args['videoDescription'];
+       $videoURL = $args['videoURL'];
+       
        $messageValidEvent = FSEvent::getEvent($aSlot->getEventNo());
        if($messageValidEvent->getStatus()){
            $aValidEvent = $messageValidEvent->getContent();
@@ -186,7 +190,20 @@ class ASOrganizer {
                    );
                    $messageValidPlace = FSPlace::getPlace($argsPlace);
                    if(!$messageValidPlace->getStatus()){
-                       
+                       $messageAddedPlace = FSPlace::addPlace($argsPlace);
+                       if($messageAddedPlace->getStatus()){
+                           $argsTalk = array(
+                               'event' => $aValidEvent,
+                               'speaker' => $aValidSpeaker,
+                               'videoTitle' => $videoTitle,
+                               'videoDescription' => $videoDescription,
+                               'videoURL' => $videoURL
+                           );
+                           $messageAddedTalk = FSTalk::addTalk($argsTalk);
+                           $message = $messageAddedTalk;
+                       }else{
+                           $message = $messageAddedPlace;
+                       }
                    }else{
                        $message = $messageValidPlace;
                    }

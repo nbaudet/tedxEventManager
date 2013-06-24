@@ -213,6 +213,9 @@ class FSTalk{
         
         $event = $args['event'];
         $speaker = $args['speaker'];
+        $videoTitle = $args['videoTitle'];
+        $videoDescription = $args['videoDescription'];
+        $videoURL = $args['videoURL'];
         
         // Validate Existant Speaker
         $messageValidSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
@@ -229,7 +232,10 @@ class FSTalk{
                 // Validate Inexistant Talk
                 $argsTalk = array(
                     'event' => $aValidEvent,
-                    'speaker' => $aValidSpeaker
+                    'speaker' => $aValidSpeaker,
+                    'videoTitle' => $videoTitle,
+                    'videoDescription' => $videoDescription,
+                    'videoURL' => $videoURL
                 );
                     
                 $messageValidTalk = FSTalk::getTalk($argsTalk);
@@ -263,12 +269,17 @@ class FSTalk{
         global $crud;
         $event = $args['event'];
         $speaker = $args['speaker'];
+        $videoTitle = $args['videoTitle'];
+        $videoDescription = $args['videoDescription'];
+        $videoURL = $args['videoURL'];
         
         $sql = "INSERT INTO Talk (
-            EventNo, SpeakerPersonNo) VALUES (
-            '".$event->getNo()."',
-            '".$speaker->getNo()."'
-        )";
+            EventNo, SpeakerPersonNo, VideoTitle, VideoDescription, VideoURL) VALUES (
+            ".$event->getNo().",
+            ".$speaker->getNo().",
+            '".$videoTitle."',
+            '".$videoDescription."',
+            '".$videoURL."')";
         $crud->exec($sql);
         
         // Validate Existant Talk
