@@ -11,29 +11,14 @@
          * and open the template in the editor.
          */
         require_once('../tedx-config.php');
-        require_once('../core/services/applicatives/ASFree.class.php');
-        require_once('../core/services/applicatives/ASVisitor.class.php');
-        require_once('../core/services/applicatives/ASOrganizer.class.php');
-        require_once('../core/services/applicatives/ASValidator.class.php');
-        require_once('../core/services/applicatives/ASAdmin.class.php');
-        require_once('../core/model/Person.class.php ');
-        require_once('../core/model/Event.class.php ');
-        require_once('../core/model/Participant.class.php ');
-        require_once('../core/model/Message.class.php ');
-        require_once('../core/services/functionnals/FSEvent.class.php');
-        require_once('../core/services/functionnals/FSKeyword.class.php');
-        require_once('../core/services/functionnals/FSSlot.class.php');
-        require_once('../core/services/functionnals/FSRegistration.class.php');
-        require_once('../core/services/functionnals/FSParticipant.class.php');
         
-        $aParticipant = FSParticipant::getParticipant(4)->getContent();
-        $anEvent = FSEvent::getEvent(1)->getContent();
-        $args = array(
-               'participant' => $aParticipant, // object Person
-               'event' => $anEvent, // object Event
-           ); 
+        $aSpeaker = $tedx_manager->getSpeaker(6)->getContent();
         
-        $message = $tedx_manager->getLastRegistration($args);
+        $login = $tedx_manager->login('admin', 'admin');
+        
+      
+        
+        $message = $tedx_manager->getTalksBySpeaker($aSpeaker);
         
         
         

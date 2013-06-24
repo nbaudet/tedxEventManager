@@ -528,6 +528,15 @@ class Tedx_manager{
         return $messageTalks; 
     }//function 
     
+    /**
+     * get all Talks of a Speaker
+     * @return type message
+     */
+    public function getTalksBySpeaker($aSpeaker) {
+        $messageTalks = ASFree::getTalksBySpeaker($aSpeaker);
+        return $messageTalks; 
+    }//function 
+    
     /*==========================================================================
      * 
      * VISITOR FUNCTIONS

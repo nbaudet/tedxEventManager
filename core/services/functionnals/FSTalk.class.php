@@ -155,6 +155,55 @@ class FSTalk{
         return $return;
     }
     
+    
+    /**
+     * Returns all the Talks of a Speaker
+     * @return A Message containing an array of Talks
+     */
+    public static function getTalksBySpeaker($aSpeaker){
+        global $crud;
+
+        $sql = "SELECT * FROM Talk as T
+            INNER JOIN Event as E ON E.No = T.EventNo
+            INNER JOIN Speaker as Sp ON Sp.PersonNo = T.SpeakerPersonNo 
+            WHERE T.IsArchived = 0 AND T.SpeakerPersonNo = ". $aSpeaker->getNo() . ";";
+        $data = $crud->getRows($sql);
+        
+        if ($data){
+            $talks = array();
+
+            foreach($data as $row){
+                $argsTalks = array(
+                    'eventNo'            => $row['EventNo'],
+                    'speakerPersonNo'    => $row['SpeakerPersonNo'],
+                    'videoTitle'    => $row['VideoTitle'],
+                    'videoDescription'    => $row['VideoDescription'],
+                    'videoURL'    => $row['VideoURL'],
+                    'isArchived'    => $row['IsArchived']
+                  );
+            
+                $talks[] = new Talk($argsTalks);
+            } //foreach
+
+            $argsMessage = array(
+                'messageNumber' => 135,
+                'message'       => 'All Talks selected',
+                'status'        => true,
+                'content'       => $talks
+            );
+            $return = new Message($argsMessage);
+        } else {
+            $argsMessage = array(
+                'messageNumber' => 136,
+                'message'       => 'Error while SELECT * FROM Talk',
+                'status'        => false,
+                'content'       => NULL
+            );
+            $return = new Message($argsMessage);
+        }
+        return $return;
+    }
+    
     /**
      * Add a new Talk in Database
      * @param $args Parameters of a Talk

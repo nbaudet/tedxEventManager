@@ -528,6 +528,11 @@ class ASFree {
         return $speakers; 
     }//function 
     
+    //Show all Talks of a Speaker 
+    public static function getTalksBySpeaker($aSpeaker) {
+        return FSTalk::getTalksBySpeaker($aSpeaker);  
+    }//function 
+    
 }// class
 
 ?>
