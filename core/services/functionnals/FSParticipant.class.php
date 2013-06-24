@@ -18,6 +18,8 @@ require_once('../core/services/functionnals/FSParticipation.class.php');
 
 
 class FSParticipant{
+   
+    
     /**
      *Returns a Participant with the given No as Id
      *@param string $personNo the id of the Participant

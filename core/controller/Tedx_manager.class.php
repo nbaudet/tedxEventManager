@@ -639,6 +639,16 @@ class Tedx_manager{
      * PARTICIPANT FUNCTIONS
      * 
      *========================================================================*/
+    
+    /**
+     *Returns the last Registration For a Participant To An event
+     *@param array $args The participant and the event
+     *@return a Message with an existant Registration
+     */
+    public function getLastRegistration($args){
+       return ASParticipant::getLastRegistration($args);
+   }
+    
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $this->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {

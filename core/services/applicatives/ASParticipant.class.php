@@ -47,6 +47,15 @@ class ASParticipant {
         return $keywords; 
     }//function
     
+    /**
+     *Returns the last Registration For a Participant To An event
+     *@param array $args The participant and the event
+     *@return a Message with an existant Registration
+     */
+    public static function getLastRegistration($args){
+       return FSRegistration::getLastRegistration($args);
+   }
+    
     // Add Keyword To An Event For A Person
     public static function addKeywordsToAnEvent($args) {
     /*  -----------------------------------------------
