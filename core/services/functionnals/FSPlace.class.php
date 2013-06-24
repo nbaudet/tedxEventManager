@@ -278,9 +278,10 @@ class FSPlace {
                 $data = $crud->getRow($sql);
 
                 $argsPlace = array(
-                    'text' => $aPlaceToSet->getText(),
-                    'eventNo' => $aPlaceToSet->getEventNo(),
-                    'participantPersonNo' => $aPlaceToSet->getParticipantPersonNo(),
+                    'no' => $aPlaceToSet->getNo(),
+                    'slotNo' => $aPlaceToSet->getSlotNo(),
+                    'slotEventNo' => $aPlaceToSet->getSlotEventNo(),
+                    'speakerPersonNo' => $aPlaceToSet->getSpeakerPersonNo(),
                     'isArchived' => $aPlaceToSet->getIsArchived()
                 );
  
