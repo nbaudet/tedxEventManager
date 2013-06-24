@@ -1,5 +1,6 @@
 <?php
 
+require_once(APP_DIR . '/core/services/functionnals/FSAffectation.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSKeyword.class.php');

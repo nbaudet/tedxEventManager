@@ -12,13 +12,12 @@
          */
         require_once('../tedx-config.php');
         
-        $aSpeaker = $tedx_manager->getSpeaker(6)->getContent();
         
         $login = $tedx_manager->login('admin', 'admin');
         
-      
+        $organizer = $tedx_manager->getOrganizer(4)->getContent();
+        $message = $tedx_manager->getRolesByOrganizer($organizer);
         
-        $message = $tedx_manager->getTalksBySpeaker($aSpeaker);
         
         
         

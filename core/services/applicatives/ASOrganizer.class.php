@@ -156,6 +156,52 @@ class ASOrganizer {
     public static function addSlotToEvent($args){
         return FSSlot::addSlot($args);
     }
+    
+    /**
+     * Applicative service to add a slot to an event
+     * @param type $args, the speaker and the slot parameter.
+     * @return type message
+     */
+    public static function addSpeakerToSlot($args){
+       $aNo = $args['no'];
+       $aSlot = $args['slot'];
+       $aSpeaker = $args['speaker'];
+       $messageValidEvent = FSEvent::getEvent($aSlot->getEventNo());
+       if($messageValidEvent->getStatus()){
+           $aValidEvent = $messageValidEvent->getContent();
+           $argsSlot = array(
+               'event' => $aValidEvent,
+               'no' => $aSlot->getNo()
+           );
+           $messageValidSlot = FSSlot::getSlot($argsSlot);
+           if($messageValidSlot->getStatus()){
+               $aValidSlot = $messageValidSlot->getContent();
+               $messageValidSpeaker = FSSpeaker::getSpeaker($aSpeaker->getNo());
+               if($messageValidSpeaker->getStatus()){
+                   $aValidSpeaker = $messageValidSpeaker->getContent();
+                   $argsPlace = array(
+                       'speaker' => $aValidSpeaker,
+                       'slot' => $aValidSlot,
+                       'no' => $aNo
+                   );
+                   $messageValidPlace = FSPlace::getPlace($argsPlace);
+                   if(!$messageValidPlace->getStatus()){
+                       
+                   }else{
+                       $message = $messageValidPlace;
+                   }
+               }else{
+                   $message = $messageValidSpeaker;
+               }
+           }else{
+               $message = $messageValidSlot;
+           }
+       }else{
+           $message = $messageValidEvent;
+       }
+       return $message;
+    }
+    
 }
 
 ?>
