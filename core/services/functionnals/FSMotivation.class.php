@@ -257,8 +257,8 @@ class FSMotivation{
     public static function addMotivation($args){
         global $crud;
         $return = null;
-        $event = $args['Event'];
-        $participant = $args['Participant'];
+        $event = $args['event'];
+        $participant = $args['participant'];
         
         // Validate Event
         $aValidEvent = FSEvent::getEvent($event->getNo());
@@ -267,9 +267,9 @@ class FSMotivation{
         $aValidParticipant = FSParticipant::getParticipant($participant->getNo());
         
         $aMotivation = array(
-            'Text'  => $args['Text'],
-            'EventNo'   =>  $event->getNo(),
-            'ParticipantPersonNo'   =>  $participant->getNo()
+            'text'  => $args['text'],
+            'eventNo'   =>  $event->getNo(),
+            'participantPersonNo'   =>  $participant->getNo()
         );
         // Validate Motivation
         $anInexistantMotivation = FSMotivation::getMotivation($aMotivation);
@@ -278,7 +278,7 @@ class FSMotivation{
            
             // Create new Slot
             $sql = "INSERT INTO `Motivation` (`Text`, `EventNo`, `ParticipantPersonNo`) VALUES (
-                '".$args['Text']."',
+                '".$args['text']."',
                 ".$event->getNo().", 
                 '".$participant->getNo()."'
             );";
@@ -287,9 +287,9 @@ class FSMotivation{
                       
                 // Get created Membership
                 $argsMotivation = array (
-                    'Text'  => $args['Text'],
-                    'EventNo'   =>  $event->getNo(),
-                    'ParticipantPersonNo'   =>  $participant->getNo()
+                    'text'  => $args['text'],
+                    'eventNo'   =>  $event->getNo(),
+                    'participantPersonNo'   =>  $participant->getNo()
                 );
                 
                 $messageCreatedMotivation = FSMotivation::getMotivation($argsMotivation);
