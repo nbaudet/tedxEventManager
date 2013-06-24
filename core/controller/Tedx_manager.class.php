@@ -897,6 +897,22 @@ class Tedx_manager{
         return $message;
     }//function
     
+    /**
+     *  Cancel the status of a registration, and put 
+     * @param Registration $args a Registration Object
+     * @return Message a Message
+     */
+    public function cancelRegistration( $args ) {
+        $messageAccess = $this->isGranted( "cancelRegistration" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASValidator::cancelRegistration( $args );
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
     /*==========================================================================
      * 
      * ADMIN FUNCTIONS
