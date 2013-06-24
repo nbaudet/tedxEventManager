@@ -111,7 +111,7 @@ class Tedx_manager{
     
     /**
      * Enable an anonym user to login
-     * @param String $login The user's login
+     * @param String $login The user's login OR the person's email address
      * @param String $password The user's password
      * @return Message "User logged" or "Login failure"
      */
