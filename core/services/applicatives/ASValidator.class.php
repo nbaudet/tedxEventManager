@@ -87,10 +87,10 @@ class ASValidator {
     /**
      * Lets the validator cancel an acceptation or a rejection.
      * @param Registration $registration a Registration
-     * @return Message a message with the registration
+     * @return Message a message with the registration or null.
      */
     public static function cancelRegistration( $registration ) {
-        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Waiting');
+        $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Pending');
         return self::changeRegistrationStatus($args);
     }
 
