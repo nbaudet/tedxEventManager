@@ -18,7 +18,7 @@ class FSTeamRole {
         
         global $crud;
         $name = addslashes($name);
-        $sql = "SELECT * FROM TeamRole WHERE Name = '$name'";
+        $sql = "SELECT * FROM TeamRole WHERE Name = '$name' AND IsArchived = 0";
         $data = $crud->getRow($sql);
         
         if($data){
@@ -93,8 +93,10 @@ class FSTeamRole {
 
         }
         return $return;
-        
     }// function
+    
+    
+    
     
     /**
      * Checks non existance of new TeamRole to add, and calls the createTeamRole function

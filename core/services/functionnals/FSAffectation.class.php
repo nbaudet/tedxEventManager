@@ -10,6 +10,7 @@ require_once(APP_DIR . '/core/model/Organizer.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSOrganizer.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
+require_once(APP_DIR . '/core/model/TeamRole.class.php');
 
 class FSAffectation {
 
@@ -198,96 +199,51 @@ class FSAffectation {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }// END createAffectation
 
-// END createAffectation
-
-
-    /** Returns All Event by Speaker
-     * @param a Speaker
-     * @return a Message conainting an array of Event
+    /**
+     * Returns all the TeamRoles of an Organizer
+     * @param Organizer $organizer
+     * @return a Message containing an array of TeamRoles
      */
-    /* public static function getEventsBySpeaker($speaker){   
-      global $crud;
+    public static function getTeamRolesByOrganizer($organizer){
+        global $crud;
+        $teamRole = NULL;
+        
+        $sql = "SELECT TeamRoleName FROM Affectation WHERE 
+            OrganizerPersonNo = ".$organizer->getNo()." AND IsArchived = 0 ";
+        
+        $data = $crud->getRows($sql);
+        
+        if($data){
+            $teamRoles = array();
+            
+            foreach($data as $row){
+                $teamRoles[] = FSTeamRole::getTeamRole($row['TeamRoleName']);
+            }
+            
 
-      $sql = "SELECT EventNo FROM CoOrganization
-      WHERE SpeakerPersonNo = ".$speaker->getNo()." AND IsArchived = 0";
+            $argsMessage = array(
+                'messageNumber'     => 173,
+                'message'           => 'All TeamRoles by Organizer selected',
+                'status'            => true,
+                'content'           => $teamRoles
+            );
+            $return = new Message($argsMessage);
 
-      $data = $crud->getRows($sql);
+        }else{
+            $argsMessage = array(
+                'messageNumber'     => 174,
+                'message'           => 'Error while SELECT * FROM TeamRole by Organizer',
+                'status'            => false,
+                'content'           => NULL    
+            );
+            $return = new Message($argsMessage);
 
-      if($data){
-      $events = array();
+        }
+        return $return;
+    }// function
 
-      foreach($data as $row){
-      $events[] = FSEvent::getEvent($row['EventNo'])->getContent();
-      }//foreach
-
-      $argsMessage = array(
-      'messageNumber' => 139,
-      'message'       => 'All Events for a Speaker selected',
-      'status'        => true,
-      'content'       => $events
-      );
-
-      $return = new Message($argsMessage);
-
-      }else{
-      echo "argh";
-      $argsMessage = array(
-      'messageNumber' => 140,
-      'message'       => 'Error while SELECT * FROM Events WHERE ...',
-      'status'        => false,
-      'content'       => NULL
-      );
-
-      $return = new Message($argsMessage);
-      }
-
-      return $return;
-      } // END getEventBySpeaker */
-
-    /** Returns All Speakers for an Event
-     * @param an Event
-     * @return a Message conainting an array of Speakers
-     */
-    /* public static function getSpeakersByEvent($event){   
-      global $crud;
-
-      $sql = "SELECT SpeakerPersonNo FROM CoOrganization
-      WHERE EventNo = ".$event->getNo()." AND IsArchived = 0";
-
-      $data = $crud->getRows($sql);
-
-      if($data){
-      $speakers = array();
-      var_dump($data);
-      foreach($data as $row){
-      $speakers[] = FSSpeaker::getSpeaker($row['SpeakerPersonNo'])->getContent();
-      }//foreach
-
-      $argsMessage = array(
-      'messageNumber' => 141,
-      'message'       => 'All Speakers for an Event selected',
-      'status'        => true,
-      'content'       => $speakers
-      );
-
-      $return = new Message($argsMessage);
-
-      }else{
-      echo "argh";
-      $argsMessage = array(
-      'messageNumber' => 142,
-      'message'       => 'Error while SELECT * FROM Events WHERE ...',
-      'status'        => false,
-      'content'       => NULL
-      );
-
-      $return = new Message($argsMessage);
-      }
-
-      return $return;
-      } // END getSpeakersByEvent */
 }
 
 ?>

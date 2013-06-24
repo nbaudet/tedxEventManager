@@ -381,6 +381,12 @@ class ASFree {
         $teamRoles = FSTeamRole::getTeamRoles();
         return $teamRoles;
     }// function
+    
+    // Returns all the TeamRoles of an Organizer
+    public static function getTeamRolesByOrganizer($organizer){
+        $messageGetTeamRolesByOrganizer = FSAffectation::getTeamRolesByOrganizer($organizer);
+        return $messageGetTeamRolesByOrganizer;
+    }
        
     //show a Person
     public static function getPerson($no) {

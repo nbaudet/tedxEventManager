@@ -28,18 +28,24 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
 
-$event = FSEvent::getEvent(2)->getContent();
+$organizer = $tedx_manager->getOrganizer(4)->getContent();
+var_dump($tedx_manager->getTeamRolesByOrganizer($organizer));
+var_dump(FSAffectation::getTeamRolesByOrganizer($organizer));
+
+
+
+/*$event = FSEvent::getEvent(2)->getContent();
 
 $argsSlot = array (
     'no'    => '2',
     'event' => $event
-);
+);*/
 
-$slot = FSSlot::getSlot($argsSlot)->getContent();
+//$slot = FSSlot::getSlot($argsSlot)->getContent();
 
 //var_dump(FSParticipation::getParticipantsBySlot($slot));
 
-var_dump($b = $tedx_manager->getParticipantsBySlot($slot));
+//var_dump($b = $tedx_manager->getParticipantsBySlot($slot));
 
 
 
