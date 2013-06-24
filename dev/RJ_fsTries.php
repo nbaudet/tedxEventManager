@@ -15,7 +15,16 @@ require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
 
    $tedx_manager->login("admin", "admin");
  
-
+    echo '<h1>Set Place</h1>';
+    $args =     array(
+            'no'         => 1,
+            'slotNo'   => 1,
+            'slotEventNo'   => 1,
+            'speakerPersonNo'   => 1,
+            'isArchived'   => 0,
+    );
+    $newPlace = new Place($args);
+    var_dump(FSPlace::setPlace($newPlace));
 
    /*echo '<h1>Speakers</h1>';
    
