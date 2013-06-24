@@ -389,7 +389,7 @@ class Tedx_manager{
      * @param Event $event
      * @return a Message containing an array of Roles
      */
-    public function getTeamRolesByOrganizer($organizer){
+    public function getRolesByOrganizer($organizer){
         $messageGetRolesByOrganizer = ASFree::getRolesByOrganizer($organizer);
         return $messageGetRolesByOrganizer;
     }
@@ -420,8 +420,8 @@ class Tedx_manager{
      * @param Organizer $organizer
      * @return a Message containing an array of TeamRoles
      */
-    public function getTeamRolesBOrganizer($organizer){
-        $messageGetTeamRolesByOrganizer = FSAffectation::getTeamRolesByOrganizer($organizer);
+    public function getTeamRolesByOrganizer($organizer){
+        $messageGetTeamRolesByOrganizer = ASFree::getTeamRolesByOrganizer($organizer);
         return $messageGetTeamRolesByOrganizer;
     }
     

@@ -219,7 +219,7 @@ class FSAffectation {
             $teamRoles = array();
             
             foreach($data as $row){
-                $teamRoles[] = FSTeamRole::getTeamRole($row['TeamRoleName']);
+                $teamRoles[] = FSTeamRole::getTeamRole($row['TeamRoleName'])->getContent();
             }
             
 
