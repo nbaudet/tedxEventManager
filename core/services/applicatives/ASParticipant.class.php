@@ -157,7 +157,7 @@ class ASParticipant {
             $aValidMotivation = $messageValidMotivation->getContent();
             if(!$aValidMotivation->getIsArchived()){
                 $aValidMotivation->setIsArchived(1);
-                $messageSetMotivation = FSKeyword::setKeyword($aValidMotivation);
+                $messageSetMotivation = FSMotivation::setMotivation($aValidMotivation);
                 $message = $messageSetMotivation;
             }else{
                 $message = $messageValidMotivation;
