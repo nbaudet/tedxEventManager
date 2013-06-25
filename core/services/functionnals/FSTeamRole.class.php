@@ -2,10 +2,15 @@
 
 require_once(APP_DIR . '/core/model/TeamRole.class.php');
 
+
 /**
- * Description of FSTeamRole
- *
- * @author Lauric
+ * FSTeamRole.class.php
+ * 
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSTeamRole as definited in the model
+ * 
  */
 class FSTeamRole {
     /**

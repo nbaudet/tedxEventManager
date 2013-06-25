@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of FSTalk
- *
- * @author L'eau Rik
- */
-
 require_once(APP_DIR . '/core/model/Talk.class.php');
 require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
@@ -13,6 +7,16 @@ require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 
+
+/**
+ * FSTalk.class.php
+ * 
+ * Author : L'eau Rik
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSTalk as definited in the model
+ * 
+ */
 class FSTalk{
     /**
      *Returns a Talk with the given EventNo and SpeakerNo as Id
