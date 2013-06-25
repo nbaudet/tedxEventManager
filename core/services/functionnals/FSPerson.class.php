@@ -1,13 +1,18 @@
 <?php
 
-/**
- * Description of FSPerson
- *
- * @author Lauric Francelet
- */
 require_once(APP_DIR . '/core/model/Person.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
+
+/**
+ * FSPerson.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSPerson as definited in the model
+ * 
+ */
 class FSPerson {
 
     /**

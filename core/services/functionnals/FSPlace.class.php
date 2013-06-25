@@ -1,15 +1,19 @@
 <?php
 
-/*
- * Description of FSPlace
- * 
- * Author Lauric F
- */
 require_once(APP_DIR . '/core/model/Place.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSSlot.class.php');
 
 
+/**
+ * FSPlace.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSPlace as definited in the model
+ * 
+ */
 class FSPlace {
     
     /**

@@ -1,13 +1,20 @@
 <?php
-/**
- * The Permission functionnal service lets you add/update/archive Permissions,
- * which are links between the tables Access and Unit.
- *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
- */
+
 require_once(APP_DIR . '/core/model/Permission.class.php');
 require_once(APP_DIR . '/core/model/Access.class.php');
 
+
+/**
+ * ASPermission.class.php
+ * 
+ * Author : Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASPermission as definited in the model
+ * The Permission functionnal service lets you add/update/archive Permissions, 
+ * which are links between the tables Access and Unit. 
+ * 
+ */
 class FSPermission {
     
     /**
