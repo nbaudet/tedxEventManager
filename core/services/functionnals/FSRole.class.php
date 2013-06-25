@@ -7,10 +7,15 @@ require_once(APP_DIR . '/core/model/Organizer.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSOrganizer.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 
+
 /**
- * Description of FSRole
- *
- * @author Lauric
+ * FSRole.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSRole as definited in the model
+ * 
  */
 class FSRole {
 

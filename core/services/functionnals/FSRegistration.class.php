@@ -1,17 +1,20 @@
 <?php
 
-
-
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Registration.class.php');
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 
+
 /**
- * Description of FSRegistration
- *
- * @author Rapou
+ * FSRegistration.class.php
+ * 
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSRegistration as definited in the model
+ * 
  */
 class FSRegistration {
 
