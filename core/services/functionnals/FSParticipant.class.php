@@ -249,7 +249,7 @@ class FSParticipant{
                 }
                 // Insert the first registration.
                 $argsRegistration = array(
-                    'status'          => 'Waiting', // String
+                    'status'          => 'Pending', // String
                     'type'            => $args['registrationType'], // String
                     'typeDescription' => $args['registrationTypeDescription'], // Optionel - String
                     'event'           => $args['event'], // object Event
