@@ -212,7 +212,15 @@ class ASOrganizer {
                                'videoURL' => $videoURL
                            );
                            $messageAddedTalk = FSTalk::addTalk($argsTalk);
-                           $message = $messageAddedTalk;
+                           
+                           $argsMessage = array(
+                               'messageNumber' => 175,
+                               'message' => 'Speaker added to Place',
+                               'status' => true,
+                               'content' => array ($messageAddedPlace, $messageAddedTalk)
+                           );
+                           
+                           $message = new Message($argsMessage);
                        }else{
                            $message = $messageAddedPlace;
                        }

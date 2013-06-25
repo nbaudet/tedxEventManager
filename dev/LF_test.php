@@ -28,7 +28,7 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
 
-$speaker = $tedx_manager->getSpeaker(6)->getContent();
+$speaker = $tedx_manager->getSpeaker(24)->getContent();
 var_dump($speaker);
 
 $event = $tedx_manager->getEvent(15)->getContent();
@@ -44,7 +44,7 @@ $slot = $tedx_manager->getSlot($argsSlot)->getContent();
 var_dump($slot);
 
 $argsAddSpeakerToPlace = array(
-    'no' => 2, // integer
+    'no' => 4, // integer
     'event' => $event, // object Event
     'slot' => $slot, // object Slot
     'speaker' => $speaker, // object Speaker

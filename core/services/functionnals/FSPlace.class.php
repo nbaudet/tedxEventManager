@@ -170,16 +170,16 @@ class FSPlace {
         $messageValidateSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
         
         if($messageValidateSpeaker->getStatus()){
-
-            // Validate Slot
+            // Validate Event
             $event = FSEvent::getEvent($slot->getEventNo())->getContent();
 
             $argsGetSlot = array (
-                'no'    => $no,
+                'no'    => $args['slot']->getNo(),
                 'event' => $event
             );
-            $messageValidateSlot = FSSlot::getSlot($argsGetSlot);
             
+            $messageValidateSlot = FSSlot::getSlot($argsGetSlot);
+    
             if($messageValidateSlot->getStatus()){
                 // Validate non existing Place
                 $messageValidatePlace = FSPlace::getPlace($args);
