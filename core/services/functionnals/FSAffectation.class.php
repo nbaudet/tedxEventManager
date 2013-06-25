@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Description of FSAffectation
- *
- * @author L'eau Rik
- */
 require_once(APP_DIR . '/core/model/Affectation.class.php');
 require_once(APP_DIR . '/core/model/Organizer.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSOrganizer.class.php');
@@ -12,6 +7,16 @@ require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/TeamRole.class.php');
 
+
+/**
+ * ASAffectation.class.php
+ * 
+ * Author : L'eau Rik
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASAffectation as definited in the model
+ * 
+ */
 class FSAffectation {
 
     /**

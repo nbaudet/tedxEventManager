@@ -1,14 +1,21 @@
 <?php
-/**
- * Manages the accesses to the API.
- *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
- */
 
 require_once(APP_DIR . '/core/model/Unit.class.php');
 require_once(APP_DIR . '/core/model/Access.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
+
+
+/**
+ * FSAccess.class.php
+ * 
+ * Author : Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSAccess as definited in the model
+ * Manages the accesses to the API.
+ * 
+ */
 class FSAccess {
     
     /**
