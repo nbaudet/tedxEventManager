@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Motivation.class.php');
@@ -111,6 +108,12 @@ class FSMotivation{
     }// function
     
     
+    /**
+     * get Motivations by Participant for an Event
+     * @global type $crud
+     * @param type $args
+     * @return \Message
+     */
     public static function getMotivationsByParticipantForEvent($args){
         global $crud;
         
@@ -247,7 +250,8 @@ class FSMotivation{
             );
         }
         return new Message($argsMessage);
-    }
+    }//function
+    
     
     /**
      * Adds a new Motivation in Database
@@ -324,7 +328,8 @@ class FSMotivation{
         }
         
         return $return;
-    } // END addSlot()
+    } //function
+    
     
     /**
      * Set new parameters to a Motivation
@@ -375,6 +380,7 @@ class FSMotivation{
         return $message;
     }
     
+    
     /**
      * Archive a Motivation
      * @param Keyword $aKeywordToSet
@@ -382,6 +388,6 @@ class FSMotivation{
      */
     public static function archiveMotivation($aMotivationToArchive) {
         return self::setMotivation($aMotivationToArchive);
-    }
-}
+    }//function
+}//class
 ?>
