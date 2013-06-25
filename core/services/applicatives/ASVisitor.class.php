@@ -123,7 +123,6 @@ class ASVisitor {
                 $finalMessage = $messageAddedRegistration; // Registration failed
             } // else
         } else {
-            echo "asclksna";
             $messageUnit = FSUnit::getUnitByName('Participant');
             $participantUnit = $messageUnit->getContent();
             $aMember = FSMember::getMemberByPerson($aPerson)->getContent();
