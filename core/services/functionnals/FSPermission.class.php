@@ -194,7 +194,12 @@ class FSPermission {
         return $message;
     }// End addPermission
     
-    
+    /**
+     * Upsert a Permission
+     * @global type $crud
+     * @param type $args
+     * @return type message
+     */
     public static function upsertPermission( $args ) {
         $access = $args['access'];
         $unit   = $args['unit'];
@@ -280,7 +285,7 @@ class FSPermission {
         }
         
         return $messagePermission;
-    }
+    }//function
     
     
 }// class

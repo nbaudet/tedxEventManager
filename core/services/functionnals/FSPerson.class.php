@@ -58,7 +58,7 @@ class FSPerson {
             $message = new Message($argsMessage);
             return $message;
         }
-    }
+    }//function
 
     /**
      * Returns a Person with the given Email as Email.
@@ -106,7 +106,7 @@ class FSPerson {
         }
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
     /**
      * Returns all the Persons of the database
@@ -159,7 +159,7 @@ class FSPerson {
 
             return $message;
         }
-    }
+    }//function
 
     /**
      * Add a new Person in Database
@@ -221,9 +221,8 @@ class FSPerson {
             $message = $messageFreeEmail;
         }
         return $message;
-    }
+    }//function
 
-// END addPerson
 
     /**
      * Set new parameters to a Person
@@ -288,9 +287,8 @@ class FSPerson {
             $message = $messageFreeEmail;
         }
         return $message;
-    }
+    }//function
 
-// END setPerson
 
     /**
      * Search in the existing persons for their ID, and returns the persons that
@@ -357,9 +355,9 @@ class FSPerson {
         // Returns the message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
-//searchPersonByName
+
 
     /**
      * Check if email is already used
@@ -397,7 +395,8 @@ class FSPerson {
         }
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
+    
     
     /**
      * Search message with args
