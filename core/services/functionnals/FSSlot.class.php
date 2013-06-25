@@ -1,4 +1,6 @@
 <?php
+
+
 require_once(APP_DIR . '/core/model/Slot.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
@@ -89,7 +91,8 @@ class FSSlot {
                         }
 
         return $return;
-    }
+    }//function
+    
     
     /**
      * Returns all the Slots of a given Event
@@ -140,7 +143,8 @@ class FSSlot {
         }
         
         return $return;
-    }
+    }//function
+    
     
     /**
      * Returns all the Slots
@@ -191,7 +195,8 @@ class FSSlot {
         }
         
         return $return;
-    } 
+    }//function
+    
     
     /**
      * Adds a new Slot in Database
@@ -258,8 +263,8 @@ class FSSlot {
         }
         
         return $return;
-    } // END addSlot()
+    }//function
     
-}
+}//class
 
 ?>
