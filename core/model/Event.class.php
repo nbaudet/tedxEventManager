@@ -86,7 +86,7 @@ class Event {
         if(!is_array($array)) {
             throw new Exception('No parameters');
         }//if
-        $this->no = $array['no']; 
+        $this->no = intval($array['no']); 
         $this->mainTopic = $array['mainTopic']; 
         $this->description = $array['description']; 
         $this->startingDate = $array['startingDate']; 

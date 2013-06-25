@@ -30,10 +30,11 @@ class FSSlot {
         
         //If Event not empty
         if(isset($event)){
-                      $aValideEvent = FSEvent::getEvent($event->getNo());
+            $eventNo = $event->getNo();
+                      $aValideEvent = FSEvent::getEvent($eventNo);
                         //If Valid Event
-                        if($aValideEvent){
-        
+                        if($aValideEvent->getStatus()){
+
                                     $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
                                     $data = $crud->getRow($sql);
 

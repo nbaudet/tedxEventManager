@@ -67,7 +67,7 @@ class Slot {
             throw new Exception('No parameters');
             
         }//if
-        $this->no = $array['no']; 
+        $this->no = intval($array['no']); 
         $this->eventNo = $array['eventNo']; 
         $this->happeningDate = $array['happeningDate']; 
         $this->startingTime = $array['startingTime']; 
