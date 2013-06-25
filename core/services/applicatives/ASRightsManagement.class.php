@@ -22,7 +22,7 @@ class ASRightsManagement {
     public static function addAccess( $accessToAdd ) {
         $accessToAdd['Type'] = 'Full';
         return FSAccess::addAccess( $accessToAdd );
-    }
+    }//function
     
     /**
      * 
@@ -46,9 +46,9 @@ class ASRightsManagement {
             $message = new Message( $args );
         }
         return $message;
-    }
+    }//function
     
     //public static function getAccess
-}
+}//class
 
 ?>

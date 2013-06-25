@@ -254,6 +254,6 @@ class ASParticipant {
     public static function getRegistrationHistory($args) {
         return FSRegistration::getRegistrationHistory($args);
     }//function
-}
+}//class
 
 ?>
