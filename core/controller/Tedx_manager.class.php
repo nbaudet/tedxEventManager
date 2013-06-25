@@ -318,7 +318,7 @@ class Tedx_manager{
     
     
     /**
-     * Get Participants
+     * get Participants
      * @return type message
      */
     public function getParticipants() {
@@ -347,7 +347,7 @@ class Tedx_manager{
     
     
     /**
-     * Get Locations
+     * get Locations
      * @return type message
      */
     public function getLocations() {
@@ -670,6 +670,12 @@ class Tedx_manager{
        return ASParticipant::getLastRegistration($args);
    }
     
+   
+   /**
+    * Add Keywords to an Event
+    * @param type $args
+    * @return type message
+    */
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $this->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
@@ -692,8 +698,9 @@ class Tedx_manager{
         return $message;
     }//function
 
+    
     /**
-     * get Keyword 
+     * get a Keyword 
      * @return type message
      */
     public function getKeyword($args) {
@@ -707,7 +714,12 @@ class Tedx_manager{
         return $message;
     }//function 
     
-    //Show all Keywords of a Person
+    
+    /**
+     * Show all Keywords of a person
+     * @param type $aPerson
+     * @return type message
+     */
     public function getKeywordsByPerson($aPerson) {
         $messageAccess = $this->isGranted( "getKeywordsByPerson" );
         if( $messageAccess->getStatus() ) {
@@ -719,7 +731,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Show all Keywords of a Person for an Event
+    
+    /**
+     * Show all Keywords of a Person for an Event
+     * @param type $args
+     * @return type message
+     */
     public function getKeywordsByPersonForEvent($args) {
         $messageAccess = $this->isGranted( "getKeywordsByPersonForEvent" );
         if( $messageAccess->getStatus() ) {
@@ -731,7 +748,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Add a Motivation To An Event
+    
+    /**
+     * Add a Motivation to an Event
+     * @param type $args
+     * @return type message
+     */
     public function addMotivationToAnEvent($args) {
         $messageAccess = $this->isGranted( "addMotivationToAnEvent" );
         if( $messageAccess->getStatus() ) {
@@ -744,6 +766,11 @@ class Tedx_manager{
     }//function
     
     
+    /**
+     * Archive Motivation to an Event
+     * @param type $args
+     * @return type message
+     */
     public function archiveMotivationToAnEvent($args) {
         $messageAccess = $this->isGranted( "archiveMotivationToAnEvent" );
         if( $messageAccess->getStatus() ) {
@@ -755,7 +782,11 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Show a Motivation
+    /**
+     * Show a Motivation
+     * @param type $args
+     * @return type message
+     */
     public function getMotivation($args) {
         $messageAccess = $this->isGranted( "getMotivation" );
         if( $messageAccess->getStatus() ) {
@@ -767,7 +798,11 @@ class Tedx_manager{
         return $message;
     }//function 
     
-    //Show all Motivations of a Person
+    /**
+     * Show Motivation by Participant
+     * @param type $aParticipant
+     * @return type message
+     */
     public function getMotivationsByParticipant($aParticipant) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipant" );
         if( $messageAccess->getStatus() ) {
@@ -779,7 +814,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Show all Motivations of a Person for an Event
+
+    /**
+     * Show all Motivations of a Person for an Event
+     * @param type $args
+     * @return type message
+     */
     public function getMotivationsByParticipantForEvent( $args ) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
         if( $messageAccess->getStatus() ) {
@@ -791,7 +831,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Send a registration
+    
+    /**
+     * Send a Registration 
+     * @param type $args
+     * @return type message
+     */
     public function sendRegistration( $args ) {
         $messageAccess = $this->isGranted( "sendRegistration" );
         if( $messageAccess->getStatus() ) {
@@ -803,7 +848,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Show the Registration history of a Person for an Event
+ 
+    /**
+     * Show the Registration history of a Person for an Event
+     * @param type $args
+     * @return type message
+     */
     public function getRegistrationHistory( $args ) {
         $messageAccess = $this->isGranted( "getRegistrationHistory" );
         if( $messageAccess->getStatus() ) {
@@ -822,7 +872,12 @@ class Tedx_manager{
      * 
      *========================================================================*/
     
-    //Add a Speaker with a Member and his membership
+
+    /**
+     * Add a Speaker with a Member and his Membership
+     * @param type $args
+     * @return type message
+     */
     public function registerSpeaker( $args ) {
         $messageAccess = $this->isGranted( "registerSpeaker" );
         if( $messageAccess->getStatus() ) {
@@ -834,7 +889,11 @@ class Tedx_manager{
         return $message;
     }//function
      
-    //Add a Location
+    /**
+     * Add a Location
+     * @param type $args
+     * @return type message
+     */
     public function addLocation($args) {
         $messageAccess = $this->isGranted( "addLocation" );
         if( $messageAccess->getStatus() ) {
@@ -846,7 +905,11 @@ class Tedx_manager{
         return $message;
     }//function
     
-    //Set an Event Location
+    /**
+     * Set an Event Location
+     * @param type $args
+     * @return type message
+     */
     public function changeEventLocation($args) {
         $messageAccess = $this->isGranted( "changeEventLocation" );
         if( $messageAccess->getStatus() ) {
@@ -858,6 +921,11 @@ class Tedx_manager{
         return $message;
     }
     
+    /**
+     * Add a Slot to an Event
+     * @param type $args
+     * @return type message
+     */
     public function addSlotToEvent( $args ) {
         $messageAccess = $this->isGranted( "addSlotToEvent" );
         if( $messageAccess->getStatus() ) {
@@ -869,6 +937,12 @@ class Tedx_manager{
         return $message;
     }//function
     
+    
+    /**
+     * Change the Position of a Speaker to an Event
+     * @param type $args
+     * @return type message
+     */
     public function changePositionOfSpeakerToEvent( $args ) {
         $messageAccess = $this->isGranted( "changePositionOfSpeakerToEvent" );
         if( $messageAccess->getStatus() ) {
@@ -886,7 +960,11 @@ class Tedx_manager{
      * 
      *========================================================================*/
     
-    // Accept a registration
+    /**
+     * Accept a Registration
+     * @param type $args
+     * @return type message
+     */
     public function acceptRegistration( $args ) {
         $messageAccess = $this->isGranted( "acceptRegistration" );
         if( $messageAccess->getStatus() ) {
@@ -898,7 +976,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Reject a registration
+    
+    /**
+     * Reject a Registration
+     * @param type $args
+     * @return type message
+     */
     public function rejectRegistration( $args ) {
         $messageAccess = $this->isGranted( "rejectRegistration" );
         if( $messageAccess->getStatus() ) {
@@ -910,8 +993,9 @@ class Tedx_manager{
         return $message;
     }//function
     
+    
     /**
-     *  Cancel the status of a registration, and put 
+     * Cancel the status of a registration, and put 
      * @param Registration $args a Registration Object
      * @return Message a Message
      */
@@ -932,7 +1016,12 @@ class Tedx_manager{
      * 
      *========================================================================*/
     
-    //Add a Speaker with a Member and his membership
+
+    /**
+     * Add a Speaker with a Member and his Membership
+     * @param type $args
+     * @return type message
+     */
     public function registerOrganizer( $args ) {
         $messageAccess = $this->isGranted( "registerOrganizer" );
         if( $messageAccess->getStatus() ) {
@@ -944,13 +1033,22 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Sets an existing Person as Organizer
+
+    /**
+     * Sets an existing Person as Organizer
+     * @param type $person
+     * @return type message
+     */
     public function setPersonAsOrganizer($person){
         $messageSetPersonAsOrganizer = FSOrganizer::setPersonAsOrganizer($person);
         return $messageSetPersonAsOrganizer;
     }
     
-    // Add a team role
+    /**
+     * Add a TeamRole
+     * @param type $aName
+     * @return type message
+     */
     public function addTeamRole( $aName ) {
         $messageAccess = $this->isGranted( "addTeamRole" );
         if( $messageAccess->getStatus() ) {
@@ -962,7 +1060,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Affect a TeamRole with a Organizer
+  
+    /**
+     * Affect a TeamRole with an Organizer
+     * @param type $args
+     * @return type message
+     */
     public function affectTeamRole( $args ) {
         $messageAccess = $this->isGranted( "affectTeamRole" );
         if( $messageAccess->getStatus() ) {
@@ -974,7 +1077,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Add an Event
+    
+    /**
+     * Add an Event
+     * @param type $args
+     * @return type message
+     */
     public function addEvent( $args ) {
         $messageAccess = $this->isGranted( "addEvent" );
         if( $messageAccess->getStatus() ) {
@@ -986,6 +1094,11 @@ class Tedx_manager{
         return $message;
     }//function
     
+    /**
+     * Add a Role
+     * @param type $args
+     * @return type message
+     */
     public function addRole( $args ) {
         $messageAccess = $this->isGranted( "addRole" );
         if( $messageAccess->getStatus() ) {
@@ -997,7 +1110,12 @@ class Tedx_manager{
         return $message;
     }//function
     
-    // Change the level of a role
+    
+    /**
+     * Change the Level of a Role
+     * @param type $args
+     * @return type message
+     */
     public function changeRoleLevel( $args ) {
         $messageAccess = $this->isGranted( "changeRoleLevel" );
         if( $messageAccess->getStatus() ) {
@@ -1009,6 +1127,12 @@ class Tedx_manager{
         return $message;
     }//function
     
+    
+    /**
+     * Link a TeamRole
+     * @param type $args
+     * @return type message
+     */
     public function linkTeamRole( $args ) {
         $messageAccess = $this->isGranted( "linkTeamRole" );
         if( $messageAccess->getStatus() ) {
@@ -1065,7 +1189,11 @@ class Tedx_manager{
     //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
     
     
-    
+    /**
+     * Add a Speaker to a Slot
+     * @param type $args
+     * @return type stub assspeaker to slot
+     */
     public function addSpeakerToSlot( $args ) {
         return $this->stub->addSpeakerToSlot( $args ); 
     }//function
