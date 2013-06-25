@@ -1,9 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
@@ -35,18 +31,24 @@ class ASOrganizer {
      */
     public function __construct() {
         // do nothing;
-    }
+        
+    }//construct
     
-    // Add a Location
+    /**
+     * Add a Location
+     * @param type $args
+     * @return type a Location
+     */
     public static function addLocation($args) {
         $aLocation = FSLocation::addLocation($args);
         return $aLocation;
-    }
+    }//function
+    
     
     /**
      * Method registerSpeaker from SA Organizer
      * @param type $args 
-     * @return type 
+     * @return type a registered Speaker
      */
     public static function registerSpeaker($args) {
         /*
@@ -134,7 +136,8 @@ class ASOrganizer {
         
         // Return the message Visitor Registed or not Registred
         return $aRegisteredSpeaker;
-    }
+    }//function
+    
     
     /**
      * Method change the Location of a Event
@@ -146,8 +149,13 @@ class ASOrganizer {
         $anEventToUpdate->setLocationName($args['locationName']);
         $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
         return $aChangedEventLocation;
-    }
+    }//function
     
+    
+    /**
+     * Set an Event
+     * @param type $args
+     */
     public static function setEvent( $args ) {
         /*$anEventToUpdate = ($args['event']);
         $anEventToUpdate->setLocationName($args['locationName']);
@@ -155,9 +163,14 @@ class ASOrganizer {
         return $aChangedEventLocation;*/
     }
     
+    
+    /**
+     * Change a Slot
+     * @param type $args
+     */
     public static function changeSlot( $args ) {
         
-    }
+    }//function
     
     /**
      * Applicative service to add a slot to an event
@@ -166,7 +179,7 @@ class ASOrganizer {
      */
     public static function addSlotToEvent($args){
         return FSSlot::addSlot($args);
-    }
+    }//function
     
     /**
      * Applicative service to add a Speaker to a Slot (Place and Talk)
@@ -355,8 +368,8 @@ class ASOrganizer {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
     
-}
+}//class
 
 ?>
