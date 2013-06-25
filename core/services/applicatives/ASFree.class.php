@@ -638,6 +638,38 @@ class ASFree {
         return FSTalk::getTalksBySpeaker($aSpeaker);  
     }//function 
     
+    // Show all organizer of an Event
+    public static function getOrganizersByEvent($anEvent){
+        $content = Null;
+        $messageValidRoles = FSRole::getRolesByEvent($anEvent);
+        if($messageValidRoles->getStatus()){
+            $listOfValidRoles = $messageValidRoles->getContent();
+            $flagValidOrganizer = true;
+            foreach($listOfValidRoles as $aValidRole){
+                $messageValidOrganizer = FSOrganizer::getOrganizer($aValidRole->getOrganizerPersonNo());
+                if($messageValidOrganizer->getStatus()){
+                    $aValidOrganizer = $messageValidOrganizer->getContent();
+                    $content[$aValidOrganizer->getNo()]['roles'][] = $aValidRole;
+                    $content[$aValidOrganizer->getNo()]['organizer'] = $aValidOrganizer;
+                }else{
+                    $message[] = $messageValidOrganizer;
+                    $flagValidOrganizer = false;
+                }
+            }
+            if($flagValidOrganizer){
+                $argsMessage = array(
+                    'messageNumber' => 450,
+                    'message' => 'All Organizers for the Event',
+                    'status' => true,
+                    'content' => $content
+                );
+                $message = new Message($argsMessage);
+            }
+        }else{
+            $message = $messageValidRoles;
+        }
+        return $message;
+    }
 }// class
 
 ?>

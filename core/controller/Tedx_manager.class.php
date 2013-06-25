@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 /**
@@ -547,6 +548,14 @@ class Tedx_manager{
     public function getTalksBySpeaker($aSpeaker) {
         $messageTalks = ASFree::getTalksBySpeaker($aSpeaker);
         return $messageTalks; 
+    }//function 
+    
+    /**
+     * get All Organizers for an event with all his roles
+     * @return type message
+     */
+    public function getOrganizersByEvent($anEvent) {
+        return ASFree::getOrganizersByEvent($anEvent); 
     }//function 
     
     /*==========================================================================
@@ -1214,7 +1223,3 @@ class Tedx_manager{
         
 }//class
 
-
-
-
-?>

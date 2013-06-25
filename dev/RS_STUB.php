@@ -15,19 +15,14 @@
         
         $login = $tedx_manager->login('admin', 'admin');
         
-        $args = array(
-            'name' => 'Médiateur rencontres post-event',
-            'event' => FSEvent::getEvent(1)->getContent(),
-            'organizer' => FSOrganizer::getOrganizer(2)->getContent()
-        );
-        
-        $message = FSRole::getRole($args);
+        $event = $tedx_manager->getEvent(2)->getContent();
+        $message = $tedx_manager->getOrganizersByEvent($event);
         
         
         
         
         echo "<hr> Mon message final";
-        var_dump($message);
+        var_dump($message->getContent());
         ?>
     </body>
 </html>
