@@ -59,7 +59,7 @@ class FSPlace {
             $return = new Message($argsMessage);
         }
         return $return;
-    } // END getPlace
+    } //function
     
     
     /**
@@ -106,7 +106,8 @@ class FSPlace {
             $return = new Message($argsMessage);
         }
         return $return;
-    } // END getPlaces
+    }//function
+    
     
     /**
      * Returns all the Places concerned by a Slot
@@ -153,7 +154,7 @@ class FSPlace {
             $return = new Message($argsMessage);
         }
         return $return;
-    } // END     
+    }//function     
     
     
     /**
@@ -209,6 +210,7 @@ class FSPlace {
         
     }
     
+    
     /**
      * Adds a new Place in database
      * @param array of args
@@ -254,7 +256,8 @@ class FSPlace {
                 $return = new Message($argsMessage);
         }
         return $return;        
-    }
+    }//function
+    
     
     /**
      * Set Place
@@ -306,6 +309,6 @@ class FSPlace {
                 $message = new Message($argsMessage);
             }
         return $message;
-    }
-}
+    }//function
+}//class
 ?>
