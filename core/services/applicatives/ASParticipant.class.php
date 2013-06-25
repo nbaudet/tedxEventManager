@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSKeyword.class.php');
@@ -21,10 +18,15 @@ require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSMotivation.class.php');
 
+
 /**
- * Description of ASParticipant
- *
- * @author rapou
+ * ASParticipant.class.php
+ * 
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASParticipant as definited in the model
+ * 
  */
 class ASParticipant {
     
