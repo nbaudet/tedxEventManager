@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Registration.class.php');
@@ -108,8 +105,9 @@ class FSRegistration {
             $return = new Message($argsMessage);
         }
         return new Message($argsMessage);
-    }
+    }//function
 
+    
     /**
      * Returns all the Register of the database
      * @return A Message containing an array of Registration
@@ -157,8 +155,9 @@ class FSRegistration {
             );
         }
         return new Message($argsMessage);
-    }
+    }//function
 
+    
     /**
      * Returns all the Register of an Event
      * @param type $anEvent the event of the registrations
@@ -207,10 +206,9 @@ class FSRegistration {
             );
         }// else
         return new Message($argsMessage);
-    }
+    }// function
 
-// function
-
+    
     /**
      * Returns all the Register of a Participant
      * @param $aParticipant 
@@ -261,6 +259,7 @@ class FSRegistration {
         return new Message($argsMessage);
     }
 
+    
     /**
      * Returns the last Registration For a Participant To An event
      * @param array $args The participant and the event
@@ -308,8 +307,15 @@ class FSRegistration {
             );
         }
         return new Message($argsMessage);
-    }
+    }//function
 
+    
+    /**
+     * fet Registration history
+     * @global type $crud
+     * @param type $args
+     * @return \Message
+     */
     public static function getRegistrationHistory($args) {
         // Get database manipulator
         global $crud;
@@ -354,8 +360,9 @@ class FSRegistration {
             );
         }
         return new Message($argsMessage);
-    }
+    }//function
 
+    
     /**
      * Add a new Registration in Database
      * @param $args Parameters of a Registration
@@ -434,8 +441,9 @@ class FSRegistration {
         }
         $finalMessage = new Message($argsMessage);
         return $finalMessage;
-    }
+    }//function
 
+    
     /**
      * Set new parameters to a Registration
      * @param Registration $aRegistrationToSet
@@ -510,9 +518,14 @@ class FSRegistration {
             $message = $messageValidEvent;
         }
         return $message;
-    }
+    }//function
 
-    // Archive the registration in parameter.
+    
+    /**
+     * Archive Registration
+     * @param type $aRegistrationToArchive
+     * @return type setRegistration
+     */
     public static function archiveRegistration($aRegistrationToArchive) {
         return self::setRegistration($aRegistrationToArchive);
     }

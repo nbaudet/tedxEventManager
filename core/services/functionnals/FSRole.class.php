@@ -109,9 +109,8 @@ class FSRole {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
-// END getRole
 
     /**
      * Returns all the Roles of the database
@@ -156,9 +155,8 @@ class FSRole {
         }// else
 
         return $return;
-    }
+    }//function
 
-// function
 
     /**
      * Add a new Role in Database
@@ -217,9 +215,8 @@ class FSRole {
         }
 
         return $return;
-    }
+    }//function
 
-// END addRole
 
     /**
      * Adds a new Role in Database
@@ -261,10 +258,15 @@ class FSRole {
             $return = new Message($argsMessage);
         }// else
         return $return;
-    }
+    }//function
 
-// END createRole
 
+    /**
+     * Set Role
+     * @global type $crud
+     * @param type $aRoleToSet
+     * @return type message
+     */
     public static function setRole($aRoleToSet) {
         global $crud;
         $messageValidEvent = FSEvent::getEvent($aRoleToSet->getEventNo());
@@ -333,8 +335,9 @@ class FSRole {
             $message = $messageValidEvent;
         }
         return $message;
-    }
+    }//function
 
+    
     /**
      * Returns all the Roles of an Event
      * @param Event $event
@@ -381,6 +384,7 @@ class FSRole {
         return $return;
     }
 
+    
     /**
      * Returns all the Roles of an Organizer
      * @param Event $event
@@ -425,8 +429,8 @@ class FSRole {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
-}
+}//class
 
 ?>
