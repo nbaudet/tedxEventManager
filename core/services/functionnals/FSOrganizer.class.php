@@ -1,15 +1,19 @@
 <?php
 
-/**
- * Description of FSOrganizer
- *
- * @author Lauric Francelet
- */
-
 require_once(APP_DIR . '/core/model/Organizer.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 
+
+/**
+ * FSOrganizer.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSOrganizer as definited in the model
+ * 
+ */
 class FSOrganizer{
     /**
      *Returns an Organizer twith the given No as Id

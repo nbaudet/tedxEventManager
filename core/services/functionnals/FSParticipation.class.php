@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of FSParticipation
- *
- * @author Robin Jet-Pierre
- */
-
 require_once(APP_DIR . '/core/model/Participation.class.php');
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSParticipant.class.php');
@@ -15,6 +9,16 @@ require_once(APP_DIR . '/core/services/functionnals/FSSlot.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 
+
+/**
+ * FSParticipation.class.php
+ * 
+ * Author : Robin Jet-Pierre
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSParticipation as definited in the model
+ * 
+ */
 class FSParticipation{
     /**
      *Returns a Participation with the given No as Id

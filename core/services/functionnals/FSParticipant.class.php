@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of FSParticipant
- *
- * @author Robin Jet-Pierre
- */
-
 require_once(APP_DIR . '/core/model/Participant.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
@@ -17,6 +11,15 @@ require_once('../core/services/functionnals/FSRegistration.class.php');
 require_once('../core/services/functionnals/FSParticipation.class.php');
 
 
+/**
+ * FSParticipant.class.php
+ * 
+ * Author : Robin Jet-Pierre
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSParticipant as definited in the model
+ * 
+ */
 class FSParticipant{
    
     
