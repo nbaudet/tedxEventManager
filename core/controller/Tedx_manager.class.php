@@ -867,6 +867,17 @@ class Tedx_manager{
         return $message;
     }//function
     
+    public function changePositionOfSpeakerToEvent( $args ) {
+        $messageAccess = $this->isGranted( "changePositionOfSpeakerToEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changePositionOfSpeakerToEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
     /*==========================================================================
      * 
      * VALIDATOR FUNCTIONS
@@ -1057,9 +1068,6 @@ class Tedx_manager{
         return $this->stub->addSpeakerToSlot( $args ); 
     }//function
     
-    public function changePositionOfSpeakerToEvent( $args ) {
-        return $this->stub->changePositionOfSpeakerToEvent( $args ); 
-    }//function
         
 }//class
 
