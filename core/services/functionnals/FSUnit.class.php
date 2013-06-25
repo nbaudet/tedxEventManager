@@ -51,8 +51,15 @@ class FSUnit {
             $message = new Message($argsMessage);
             return $message;
         }
-    }
+    }//function
     
+    
+    /**
+     * get Unit by name
+     * @global Crud $crud
+     * @param type $aName
+     * @return \Message
+     */
     public static function getUnitByName($aName) {
         $unit = NULL;
         
@@ -88,7 +95,7 @@ class FSUnit {
             $message = new Message($argsMessage);
             return $message;
         }
-    }
+    }//function
     
     /**
      * Returns all the units of a member, or NULL if the member doesn't have 
@@ -135,7 +142,7 @@ class FSUnit {
             $message= new Message($args);
             
         }// if
-        //
+        
         else {
             // message units not found
             $args = array(
@@ -151,6 +158,12 @@ class FSUnit {
     }// function
     
     
+    /**
+     * get Units from Access
+     * @global Crud $crud
+     * @param Access $access
+     * @return \Message
+     */
     public static function getUnitsFromAccess( Access $access ) {
         global $crud;
         // SQL statement
@@ -207,7 +220,8 @@ class FSUnit {
         }// else
         
         return $message;
-    }
+    }//function
+    
     
     /**
      * A way to get all the units in the database.

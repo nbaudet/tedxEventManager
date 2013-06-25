@@ -8,10 +8,10 @@ require_once(APP_DIR . '/core/model/TeamRole.class.php');
  * @author Lauric
  */
 class FSTeamRole {
-       /**
-     *Returns a TeamRole with the given No as Id
-     *@param string $name the id of the TeamRole
-     *@return a Mesage with an existant TeamRole
+    /**
+     * Returns a TeamRole with the given No as Id
+     * @param string $name the id of the TeamRole
+     * @return a Mesage with an existant TeamRole
      */
     public static function getTeamRole($name){
         $teamRole = NULL;
@@ -51,6 +51,7 @@ class FSTeamRole {
         return $return;
     }// function
 
+    
     /**
      * Returns all the TeamRoles of the database
      * @return A Message containing an array of TeamRoles
@@ -96,8 +97,6 @@ class FSTeamRole {
     }// function
     
     
-    
-    
     /**
      * Checks non existance of new TeamRole to add, and calls the createTeamRole function
      * @param string $name
@@ -120,7 +119,8 @@ class FSTeamRole {
         }
         
         return $return;
-    } // END addTeamRole
+    }//function
+    
     
     /**
      * Inserts a new TeamRole in database
@@ -162,7 +162,8 @@ class FSTeamRole {
             }
             return $return;                   
         }
-    } // END createTeamRole
+    }//function
+    
     
     /**
      * Set new parameters to a TeamRole
@@ -244,7 +245,7 @@ class FSTeamRole {
             $message = new Message($argsMessage);
         }//End Event valide
         return $message;
-    }//End Set TeamRole
-}
+    }//function
+}//class
 
 ?>
