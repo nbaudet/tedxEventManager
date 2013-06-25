@@ -63,8 +63,9 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Returns all the Organizers of the database
      * @return A Message containing an array of Organizers
@@ -116,9 +117,10 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
     
-       /**
+    
+    /**
      * Add a new Organizer in Database
      * @param $args Parameters of a Organizer
      * @return a Message containing the new Organizer
@@ -169,7 +171,8 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
             $return = new Message($argsMessage);
         }   
         return $return;
-    }
+    }//function
+    
     
     /**
      * Sets a Person as Organizer (if not already Organizer)
@@ -221,8 +224,8 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
             $return = $messageValidatePerson;
         }
         return $return;
-    }
+    }//function
     
- }
+ }//class
     
 ?>
