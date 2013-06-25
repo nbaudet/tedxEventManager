@@ -270,15 +270,15 @@ class FSMotivation{
         // Validate Participant
         $aValidParticipant = FSParticipant::getParticipant($participant->getNo());
         
-        $aMotivation = array(
-            'text'  => $args['text'],
-            'eventNo'   =>  $event->getNo(),
-            'participantPersonNo'   =>  $participant->getNo()
+        $argsMotivation = array(
+            'text'                => $args['text'],
+            'eventNo'             =>  $event->getNo(),
+            'participantPersonNo' =>  $participant->getNo()
         );
         // Validate Motivation
-        $anInexistantMotivation = FSMotivation::getMotivation($aMotivation);
+        $messageInexistantMotivation = FSMotivation::getMotivation($argsMotivation);
         
-        if(($aValidEvent->getStatus()) && ($aValidParticipant->getStatus()) && !($anInexistantMotivation->getStatus())){
+        if( $aValidEvent->getStatus() && $aValidParticipant->getStatus() && !$messageInexistantMotivation->getStatus() ){
            
             // Create new Slot
             $sql = "INSERT INTO `Motivation` (`Text`, `EventNo`, `ParticipantPersonNo`) VALUES (
