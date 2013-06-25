@@ -1,9 +1,8 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 require_once(APP_DIR . '/core/model/Keyword.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
@@ -104,6 +103,12 @@ class FSKeyword {
     }// function
     
     
+    /**
+     * get Keywords by person for an Event
+     * @global type $crud
+     * @param type $args
+     * @return \Message
+     */
     public static function getKeywordsByPersonForEvent($args){
         global $crud;
         $aPerson = $args['person'];
@@ -192,7 +197,7 @@ class FSKeyword {
                 $message = new Message($argsMessage);
             }
         return $message;
-    }
+    }//function
     
     /**
      * Archive a Keyword
@@ -235,6 +240,12 @@ class FSKeyword {
         return $message;
     }
     
+    /**
+     * Creat Keyword 
+     * @global type $crud
+     * @param type $args
+     * @return \Message
+     */
     private static function createKeyword($args){
         // get database manipulator
         global $crud;
@@ -297,6 +308,6 @@ class FSKeyword {
     }// function
     
     
-}
+}//class
 
 ?>

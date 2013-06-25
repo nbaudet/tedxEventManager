@@ -55,6 +55,7 @@ class FSLocation{
         }// else
     }// function
 
+    
     /**
      * Returns all the Locations of the database
      * @return A Message containing an array of Locations
@@ -103,8 +104,9 @@ class FSLocation{
             return $message;
         }// else
     }// function
+  
     
-       /**
+    /**
      * Add a new Location in Database
      * @param $args Parameters of a Location
      * @return a Message containing the new Location
@@ -166,6 +168,7 @@ class FSLocation{
         }// else   
     }// function
     
+    
     /**
      * get Location linked to the event
      * @param type $event
@@ -175,8 +178,6 @@ class FSLocation{
         // object crud
         global $crud; 
         
-        // message to return
-        $message;
         
         // if args isn't null
         if($event != null) {
