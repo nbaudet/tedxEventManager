@@ -106,7 +106,7 @@ class FSTalk{
         }
 
         return $return;
-    }
+    }//function
 
     /**
      * Returns all the Talks of the database
@@ -153,7 +153,7 @@ class FSTalk{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
     
     
     /**
@@ -202,7 +202,8 @@ class FSTalk{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
+    
     
     /**
      * Add a new Talk in Database
@@ -257,7 +258,7 @@ class FSTalk{
             $return = $messageValidSpeaker;
         }
         return $return;
-    }
+    }//function
     
     
     /**
@@ -309,7 +310,7 @@ class FSTalk{
             $return = new Message($argsMessage);
         }
         return $return;
-    } // END createTalk
+    }//function
     
     
     /** Returns All Event by Speaker
@@ -353,9 +354,9 @@ class FSTalk{
         }
         
         return $return;
-    } // END getEventBySpeaker
+    }//function
      
-     /** Returns All Speakers for an Event
+    /** Returns All Speakers for an Event
      * @param an Event
      * @return a Message conainting an array of Speakers
      */
@@ -396,8 +397,8 @@ class FSTalk{
         }
         
         return $return;
-    } // END getSpeakersByEvent
+    }//function
     
- }
+ }//class
     
 ?>
