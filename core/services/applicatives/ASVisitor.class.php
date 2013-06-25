@@ -34,9 +34,13 @@ class ASVisitor {
      */
     public function __construct() {
         // do nothing;
-    }
+    }//construct
 
-    // function
+    /**
+     * Register to an Event
+     * @param type $args
+     * @return type message
+     */
     public static function registerToAnEvent($args) {
         /*
          * $args = array(
@@ -47,7 +51,6 @@ class ASVisitor {
          *      'typedescription' => 'Redacteur chez Edipresse SA' // String
          *  ); 
          */
-
 
         // gets params
         $aPerson = $args['person'];
@@ -143,9 +146,10 @@ class ASVisitor {
             }
         } // else
         return $finalMessage;
-    }
-
-// function
+    }// function
+    
+    
+    
     /**
      * Edit the profil of a Person.
      * @param type $args the news arguments and the ID of the Person
@@ -176,7 +180,9 @@ class ASVisitor {
             $finalMessage = $messageValidPerson;
         }
         return $finalMessage;
-    }
+    }//function
+    
+    
     /**
      * Edit the password of a Member
      * @param type $args the password and the ID of a Member
@@ -199,8 +205,15 @@ class ASVisitor {
             $finalMessage = $messageValidMember;
         }
         return $finalMessage;
-    }
+    }//function
 
+    
+    /**
+     * Static function setPassword
+     * @param type $aValidMember
+     * @param type $argsToSet
+     * @return type a valid Member
+     */
     private static function setPassword($aValidMember, $argsToSet) {
         /*
           $args = array(
@@ -212,8 +225,15 @@ class ASVisitor {
         }
 
         return $aValidMember;
-    }
+    }//function
 
+    
+    /**
+     * Set profil
+     * @param type $aValidPerson
+     * @param type $argsToSet
+     * @return type a valid Person
+     */
     private static function setProfil($aValidPerson, $argsToSet) {
         /*
           $argsToSet = array(
@@ -269,6 +289,7 @@ class ASVisitor {
         return $aValidPerson;
     }// function
     
+    
     /**
      * Search person with args
      * @param type $args
@@ -283,5 +304,4 @@ class ASVisitor {
 
 }// class
 
-// class
 ?>
