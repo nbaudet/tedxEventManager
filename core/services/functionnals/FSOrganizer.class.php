@@ -18,16 +18,16 @@ class FSOrganizer{
      */
     public static function getOrganizer($personNo){
         $organizer = NULL;
-        
+
         global $crud;
 
         $sql = "SELECT Pe.No, Pe.Name, Pe.FirstName, Pe.DateOfBirth, Pe.Address,
 Pe.City, Pe.Country, Pe.PhoneNumber, Pe.Email, Pe.Description, Org.PersonNo, Org.IsArchived 
 FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.No = $personNo AND Org.IsArchived = 0";    
-        
+
 
         $data = $crud->getRow($sql);
-        
+
         if($data){
             $argsOrganizer = array(
                 'no'            => $data['No'],
@@ -42,7 +42,7 @@ FROM Organizer AS Org INNER JOIN Person AS Pe ON Org.PersonNo = Pe.No WHERE Pe.N
                 'description'   => $data['Description'],
                 'isArchived'    => $data['IsArchived']
             );
-        
+
             $organizer = new Organizer($argsOrganizer);
 
             $argsMessage = array(
