@@ -176,9 +176,9 @@ class FSEvent {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
-// END addEvent
+
 
     /**
      * Adds a new Event in Database
@@ -251,9 +251,9 @@ class FSEvent {
             $return = new Message($argsMessage);
         }// else
         return $return;
-    }
+    }//function
 
-// END createEvent
+
 
     /**
      * Search events with args
@@ -344,12 +344,11 @@ class FSEvent {
         }// else
         // return message
         return $message;
-    }
+    }// function
 
-// function
-
+    
     /**
-     * 
+     * Set Event
      * @global type $crud
      * @param type $anEventToSet
      * @return \Message
@@ -459,7 +458,7 @@ class FSEvent {
         return $message;
     }
 
-}
+}//function
 
 // class
 ?>

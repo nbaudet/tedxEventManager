@@ -32,13 +32,13 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
     
     echo '<h1>Change Place Of Speaker To an Event</h1>';
     
-    $aPlaceNo = 1;
+    $aPlaceNo = 2;
     $aSlotNo = 1;
     $aSpeaker = $tedx_manager->getSpeaker(1)->getContent();
     $anEvent = FSEvent::getEvent(1)->getContent();
     $argsSlot = array(
-        'event' => $anEvent,
-        'no'    => $aSlotNo
+        'no'    => $aSlotNo,
+        'event' => $anEvent
     );
     $aSlot= $tedx_manager->getSlot($argsSlot)->getContent();
     

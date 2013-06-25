@@ -61,6 +61,7 @@ class FSAccess {
         return $message;
     }// End addAccess
     
+    
     /**
      * Returns the access with the specified ID.
      * /!\ Consider that it returns even archived Accesses! Be carefull.
@@ -102,7 +103,8 @@ class FSAccess {
             $message= new Message( $args );
         }
         return $message;
-    }
+    }//function
+    
     
     /**
      * Returns the access with this service name, or an error.
@@ -145,7 +147,8 @@ class FSAccess {
             $message= new Message( $args );
         }
         return $message;
-    }
+    }//function
+    
     
     /**
      * Returns all the accesses for a unit, or NULL of a unit doesn't have
@@ -202,6 +205,11 @@ class FSAccess {
     }// function
     
     
+    /**
+     * get Accesses as String
+     * @global type $crud
+     * @return \Message
+     */
     public static function getAccessesAsString() {
         global $crud;
         
@@ -247,6 +255,11 @@ class FSAccess {
     }// function
     
     
+    /**
+     * get Accesses
+     * @global type $crud
+     * @return \Message
+     */
     public static function getAccesses() {
         global $crud;
         
@@ -392,6 +405,13 @@ class FSAccess {
         return $message;
     }// function
     
+    
+    /**
+     * Delete Accesses
+     * @global type $crud
+     * @param type $accessToDelete
+     * @return \Message
+     */
     public static function deleteAccess( $accessToDelete ) {
         
         global $crud;
@@ -437,7 +457,8 @@ class FSAccess {
             $message= new Message( $args );
         }
         return $message;
-    }
+    }//function
+    
 } // class
 
 ?>
