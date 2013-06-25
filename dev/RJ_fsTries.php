@@ -32,7 +32,8 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
     
     echo '<h1>Change Place Of Speaker To an Event</h1>';
     
-    $aPlaceNo = 2;
+    $anOldPlaceNo = 4;
+    $aNewPlaceNo = 3;
     $aSlotNo = 1;
     $aSpeaker = $tedx_manager->getSpeaker(1)->getContent();
     $anEvent = FSEvent::getEvent(1)->getContent();
@@ -43,10 +44,11 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
     $aSlot= $tedx_manager->getSlot($argsSlot)->getContent();
     
     $args = array (
-        'no'     => $aPlaceNo,
+        'newNo'     => $aNewPlaceNo,
         'slot'  => $aSlot,
         'event'  => $anEvent,
-        'speaker'    => $aSpeaker
+        'speaker'    => $aSpeaker,
+        'oldNo'   => $anOldPlaceNo
     );
     
     $aChangedPlaceOfASpeakerToAnEvent = $tedx_manager->changePositionOfSpeakerToEvent( $args );
@@ -57,7 +59,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
     else
         echo 'Error! ' . $aChangedPlaceOfASpeakerToAnEvent->getMessage();
     
-    var_dump($aChangedPlaceOfASpeakerToAnEvent->getContent());
+    //var_dump($aChangedPlaceOfASpeakerToAnEvent->getContent());
     
    /*echo '<h1>Speakers</h1>';
    

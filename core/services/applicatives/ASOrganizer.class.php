@@ -18,6 +18,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPlace.class.php');
+require_once(APP_DIR . '/core/model/Place.class.php');
 
 /**
  * Description of ASOrganizer
@@ -257,12 +258,28 @@ class ASOrganizer {
      * @param type $args.
      * @return type message
      */
-    public static function changePositionOfSpeakerToEvent($args){
+    public static function changePositionOfSpeaker($args){
         
-        $place = $args['no'];
+        $newPlace = $args['newNo'];
+        $oldPlace = $args['oldNo'];
         $slot = $args['slot'];
         $event = $args['event'];
         $speaker = $args['speaker'];
+        
+        //An array of the new place existance
+        $argsNewPlace = array (
+            'no'    =>  $newPlace,
+            'slot'    =>  $slot,
+            'event'    =>  $event,
+            'speaker'    =>  $speaker
+        );
+        //An array of the old place existance
+        $argsOldPlace = array(
+                            'no'    =>  $oldPlace,
+                            'slot'    =>  $slot,
+                            'event'    =>  $event,
+                            'speaker'    =>  $speaker
+                        );
         
         //If a non empty speaker
         if(isset($speaker)){
@@ -283,10 +300,11 @@ class ASOrganizer {
                                     
                                         //If a valid speaker
                                         if($aValidSlot->getStatus()){
-                                            $messageExistantPlace = FSPlace::getPlace($args);
-                                            if(empty($place)){
+                                            
+                                            $messageExistantPlace = FSPlace::getPlace($argsNewPlace);
+                                            if(empty($newPlace)){
                                                 $argsMessage = array(
-                                                        'messageNumber'     => 000,
+                                                        'messageNumber'     => 242,
                                                         'message'           => 'A not valid Place no',
                                                         'status'            => false,
                                                         'content'           => null
@@ -295,44 +313,46 @@ class ASOrganizer {
                                             }else{
                                                 //If a empty position or a non existant position
                                                 if(!($messageExistantPlace->getStatus())){   
-                                                    //Not exxisting Place
+                                                    //Not existing Place
                                                     $newPlace = array(
                                                         'slot'  =>  $slot,
                                                         'speaker'   =>  $speaker,
-                                                        'no'    =>  $place
+                                                        'no'    =>  $newPlace
                                                     );
                                                     //Not valid place
                                                     $aPlaceAdded = FSPlace::addPlace($newPlace);
-                                                    
+                                                    //Archived la précédente
+                                                    $anOldPlaceToArchive = FSPlace::getPlace($argsOldPlace)->getContent();
+                                                    $anOldPlaceToArchive->setIsArchived(1);
+                                                    FSPlace::setPlace($anOldPlaceToArchive);
                                                     $argsMessage = array(
-                                                        'messageNumber'     => 000,
-                                                        'message'           => 'A place changed',
+                                                        'messageNumber'     => 243,
+                                                        'message'           => 'A place changed and old one archived',
                                                         'status'            => true,
                                                         'content'           => $aPlaceAdded
                                                     );
-                                                    echo 'oooooo';
-                                                    var_dump($aPlaceAdded);
                                                     $return = new Message($argsMessage);
                                                 }else{
                                                     //Existing Place
-                                                    $aPlace = FSPlace::getPlace($args)->getContent();
+                                                    $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
                                                     //If place is not archived (0)
                                                     if(!($aPlace->getIsArchived())){
                                                         
                                                         //$aPlaceArchived = FSPlace::setPlace($args);
                                                         $argsMessage = array(
-                                                            'messageNumber'     => 000,
+                                                            'messageNumber'     => 244,
                                                             'message'           => 'A place already existing',
                                                             'status'            => false,
                                                             'content'           => null
                                                         );
                                                         $return = new Message($argsMessage);
                                                     }else{
+                                                        $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
                                                         //Place is archived (1)
                                                         $aPlaceToArchived = $aPlace->setIsArchived(0);
                                                         $aDearchivedPlace = FSPlace::setPlace($aPlaceToArchived);
                                                         $argsMessage = array(
-                                                        'messageNumber'     => 000,
+                                                        'messageNumber'     => 245,
                                                         'message'           => 'A place changed',
                                                         'status'            => true,
                                                         'content'           => $aDearchivedPlace
@@ -344,7 +364,7 @@ class ASOrganizer {
                                         }else{
                                             
                                             $argsMessage = array(
-                                                'messageNumber'     => 000,
+                                                'messageNumber'     => 246,
                                                 'message'           => 'Inexistant slot',
                                                 'status'            => false,
                                                 'content'           => null
@@ -353,8 +373,8 @@ class ASOrganizer {
                                         }
                                 }else{
                                     $argsMessage = array(
-                                        'messageNumber'     => 000,
-                                        'message'           => 'Empty slot',
+                                        'messageNumber'     => 247,
+                                        'message'           => 'Empty slot for this event',
                                         'status'            => false,
                                         'content'           => null
                                     );
@@ -362,7 +382,7 @@ class ASOrganizer {
                                 }
                             }else{
                                 $argsMessage = array(
-                                    'messageNumber'     => 000,
+                                    'messageNumber'     => 248,
                                     'message'           => 'Inexistant event',
                                     'status'            => false,
                                     'content'           => null
@@ -371,7 +391,7 @@ class ASOrganizer {
                             }
                     }else{
                         $argsMessage = array(
-                            'messageNumber'     => 000,
+                            'messageNumber'     => 249,
                             'message'           => 'Empty event',
                             'status'            => false,
                             'content'           => null
@@ -380,7 +400,7 @@ class ASOrganizer {
                     } 
                 }else{
                     $argsMessage = array(
-                        'messageNumber'     => 000,
+                        'messageNumber'     => 250,
                         'message'           => 'Inexistant speaker',
                         'status'            => false,
                         'content'           => null
@@ -389,7 +409,7 @@ class ASOrganizer {
                 }
         }else{
             $argsMessage = array(
-                'messageNumber'     => 000,
+                'messageNumber'     => 251,
                 'message'           => 'Empty speaker',
                 'status'            => false,
                 'content'           => null

@@ -964,10 +964,10 @@ class Tedx_manager{
     }//function
     
     
-    public function changePositionOfSpeakerToEvent( $args ) {
-        $messageAccess = $this->isGranted( "changePositionOfSpeakerToEvent" );
+    public function changePositionOfSpeaker( $args ) {
+        $messageAccess = $this->isGranted( "changePositionOfSpeaker" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changePositionOfSpeakerToEvent( $args ); 
+            $message = ASOrganizer::changePositionOfSpeaker( $args ); 
         }
         else {
             $message = $messageAccess;
