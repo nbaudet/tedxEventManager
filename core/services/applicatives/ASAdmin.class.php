@@ -32,7 +32,11 @@ class ASAdmin {
         // Nothing
     }
     
-    
+    /**
+     * Register an Organizer
+     * @param type $args
+     * @return type aRegisteredOrganizer
+     */
     public static function registerOrganizer($args) {
         /*
           $argsPerson = array(
@@ -143,22 +147,38 @@ class ASAdmin {
         return $messageAddEvent;
     }
     
-    // Add a Team Role
+    /**
+     * Add a TeamRole
+     * @param type $aName
+     * @return type addTeamRole
+     */
     public static function addTeamRole($aName) {
         return FSTeamRole::addTeamRole($aName);   
     }
     
-    // Affect a team role to an Organizer
+    /**
+     * Affect a TeamRole to an Organizer
+     * @param type $args
+     * @return type addAfectation
+     */
     public static function affectTeamRole($args){
         return FSAffectation::addAffectation($args);
     }
     
-    // Add the role
+    /**
+     * Add a Role
+     * @param type $args
+     * @return type addROle
+     */
     public static function addRole($args){
         return FSRole::addRole($args);
     }
     
-    // Change de level of the Role
+    /**
+     * Change the level of a Role
+     * @param type $args
+     * @return type setRole
+     */
     public static function changeRoleLevel($args){
         $newLevel = $args['level'];
         $aRoleToSet = $args['role'];
@@ -166,7 +186,12 @@ class ASAdmin {
         return FSRole::setRole($aRoleToSet);
     }
     
-    // Link a TeamRole IsMember Of to a TeamRole
+
+    /**
+     * Link a TeamRole isMember Of to a TeamRole
+     * @param type $args
+     * @return type aLinketTeamRole
+     */
     public static function linkTeamRole($args){
         $aLinkedTeamRole = FSTeamRole::setTeamRole($args);
         return $aLinkedTeamRole;
