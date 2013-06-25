@@ -64,8 +64,9 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
 
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Returns all the Speaers of the database
      * @return A Message containing an array of Speakers
@@ -120,15 +121,14 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
         }
         
         return $return;
-    }// End getSpeakers
+    }//function
     
     
-       /**
+    /**
      * Add a new Speaker in Database
      * @param $args Parameters of a Speaker
      * @return a Message containing the new Speaker
      */
-    
     public static function addSpeaker($aPerson){
         global $crud;
         
@@ -176,7 +176,8 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No WHERE Pe.No = 
 
             return $message;
         }   
-    } // END addSpeaker
+    }//function
+    
     
     /**
      * Returns the Speaker that talks at a given Place
@@ -234,8 +235,8 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No
 
         }
         return $return;
-    } // END getSpeakerByPlace
+    }//function
     
- }
+ }//class
     
 ?>
