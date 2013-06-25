@@ -24,11 +24,9 @@ class FSRole {
         global $crud;
 
         $name = addslashes($args['name']);
-        
         $event = $args['event'];
         $organizer = $args['organizer'];
         
-
         //If Event not empty
         if (isset($event)) {
             $aValideEvent = FSEvent::getEvent($event->getNo());

@@ -15,8 +15,13 @@
         
         $login = $tedx_manager->login('admin', 'admin');
         
-        $organizer = $tedx_manager->getOrganizer(4)->getContent();
-        $message = $tedx_manager->getRolesByOrganizer($organizer);
+        $args = array(
+            'name' => 'Médiateur rencontres post-event',
+            'event' => FSEvent::getEvent(1)->getContent(),
+            'organizer' => FSOrganizer::getOrganizer(2)->getContent()
+        );
+        
+        $message = FSRole::getRole($args);
         
         
         
