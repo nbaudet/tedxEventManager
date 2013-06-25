@@ -58,7 +58,7 @@ class FSMember {
         // Return message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
     /**
      * Initializes and returns a Message with all the members in the database,
@@ -106,7 +106,7 @@ class FSMember {
         // Return message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
     
     /**
      * Initializes and returns a Message with all the members in the database,
@@ -148,7 +148,7 @@ class FSMember {
         // Return message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
     
     /**
      * Returns a Message with a member, if the email given was found in the
@@ -193,7 +193,7 @@ class FSMember {
         // Return message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
     /**
      * Functionnal Service addMember
@@ -261,8 +261,9 @@ class FSMember {
             $message = $aValidPerson;
         }
         return $message;
-    }
+    }//function
 
+    
     /**
      * Check if the Person had already a Member associate
      * @global type $crud
@@ -298,8 +299,9 @@ class FSMember {
         // Return the message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
+    
     /**
      * Create a Persistant Member
      * @global type $crud
@@ -340,8 +342,9 @@ class FSMember {
         // Return the message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
+    
     /**
      * Search in the existing members for their ID, and returns the members that
      * have an ID similar to the needle.
@@ -400,8 +403,9 @@ class FSMember {
         // Returns the message
         $message = new Message($argsMessage);
         return $message;
-    }
+    }//function
 
+    
     /**
      * Set new parameters to a Member
      * @param Member $aMemberToSet
@@ -460,9 +464,9 @@ class FSMember {
             $message = new Message($argsMessage);
         }
         return $message;
-    }
+    }//function
 
-// END setMember
-}
+
+}//class
 
 ?>
