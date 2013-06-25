@@ -16,6 +16,35 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 
    $tedx_manager->login("admin", "admin");
  
+   $text = 'TEST';
+// object Event
+$anEvent = FSEvent::getEvent(100)->getContent();
+// object Participant
+$aParticipant = FSParticipant::getParticipant(4)->getContent();
+ 
+// args add Motivation to an Event
+$args= array(
+        'text'        => $text,
+        'event'       => $anEvent,
+        'participant' => $aParticipant
+);
+// adding Motivation to an Event
+$messageAddMotivationToAnEvent = $tedx_manager->addMotivationToAnEvent($args);
+ 
+// if the Motivation is added successfully
+if( $messageAddMotivationToAnEvent->getStatus())
+    echo 'Congrats! ' . $messageAddMotivationToAnEvent->getMessage();
+else
+    echo 'Error! ' . $messageAddMotivationToAnEvent->getMessage();
+   
+   
+   
+   
+   
+   
+   
+   
+   
     /*echo '<h1>Set Place</h1>';
     $args =     array(
             'no'         => 1,
@@ -30,7 +59,7 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
     
     
     
-    echo '<h1>Change Place Of Speaker To an Event</h1>';
+    /*echo '<h1>Change Place Of Speaker To an Event</h1>';
     
     $anOldPlaceNo = 4;
     $aNewPlaceNo = 3;
