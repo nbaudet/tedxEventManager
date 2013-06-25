@@ -51,7 +51,9 @@ class Tedx_manager{
     private $stub; 
     
 
-    
+    /**
+     * Constructor of Tedx Manager. Initialise Stub & Auth stuff
+     */
     public function __construct(){
         $this->asAuth = new ASAuth();
         $this->stub   = new Stub();  //new object Stub 
