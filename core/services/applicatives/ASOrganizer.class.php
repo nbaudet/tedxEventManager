@@ -148,6 +148,17 @@ class ASOrganizer {
         return $aChangedEventLocation;
     }
     
+    public static function setEvent( $args ) {
+        /*$anEventToUpdate = ($args['event']);
+        $anEventToUpdate->setLocationName($args['locationName']);
+        $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
+        return $aChangedEventLocation;*/
+    }
+    
+    public static function changeSlot( $args ) {
+        
+    }
+    
     /**
      * Applicative service to add a slot to an event
      * @param type $args, the event and the slot parameter.
@@ -159,11 +170,18 @@ class ASOrganizer {
     
     /**
      * Applicative service to add a Speaker to a Slot (Place and Talk)
-     * @param type $args, the speaker, the slot, and the parameter of the Place and the Talk of speaker in event.
+     * @param type $args, the speaker, the slot, and the parameter of the Place
+     * and the Talk of speaker in event.
      * @return type message
      */
     public static function addSpeakerToSlot($args){
-       $aNo = $args['no'];
+       // Argument No is optionnal
+       if( isset($args['no'] ) ) {
+           $aNo = $args['no'];
+       }
+       else {
+           $aNo = NULL;
+       }
        $aSlot = $args['slot'];
        $aSpeaker = $args['speaker'];
        $videoTitle = $args['videoTitle'];

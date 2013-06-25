@@ -349,9 +349,11 @@ class FSEvent {
 // function
 
     /**
-     * Set new parameters to a Motivation
-     * @param Motivation $aMotivationToSet
-     * @return Message containing the set Motivation */
+     * 
+     * @global type $crud
+     * @param type $anEventToSet
+     * @return \Message
+     */
     public static function setEvent($anEventToSet) {
         global $crud;
 
