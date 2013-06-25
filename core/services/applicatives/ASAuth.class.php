@@ -259,25 +259,56 @@ class ASAuth {
         return $accesses;
     }// function
     
+    
     /**
-     * Gets basic Units from a logged member
+     * Gets basic Units from a logged member isAdministrator
      * @return Boolean TRUE or FALSE
      */
     public function isAdministrator() {
         return in_array( 'Administrator', $_SESSION['units'] );
     }
+    
+    
+    /**
+     * Gets basic Units from a logged member isValidator
+     * @return Boolean TRUE or FALSE
+     */
     public function isValidator() {
         return in_array( 'Validator', $_SESSION['units'] );
     }
+    
+    
+    /**
+     * Gets basic Units from a logged member isAdministrator
+     * @return Boolean TRUE or FALSE
+     */
     public function isOrganizer() {
         return in_array( 'Organizer', $_SESSION['units'] );
     }
+    
+    
+    /**
+     * Gets basic Units from a logged member isParticipant
+     * @return Boolean TRUE or FALSE
+     */
     public function isParticipant() {
         return in_array( 'Participant', $_SESSION['units'] );
     }
+    
+    
+    /**
+     * Gets basic Units from a logged member isVisitor
+     * @return Boolean TRUE or FALSE
+     */
     public function isVisitor() {
         return in_array( 'Visitor', $_SESSION['units'] );
     }
+    
+    
+    /**
+     * Gets basic Units from a logged member isSuperAdmin
+     * @return Boolean TRUE or FALSE
+     */
     public function isSuperadmin() {
         return in_array( 'Superadmin', $_SESSION['units'] );
     }

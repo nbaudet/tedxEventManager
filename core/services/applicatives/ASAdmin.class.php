@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
@@ -24,7 +21,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 
 /**
  * Description of ASAdmin
- *
+ * 
  * @author rapou
  */
 class ASAdmin {
@@ -34,6 +31,7 @@ class ASAdmin {
     public function __construct() {
         // Nothing
     }
+    
     
     public static function registerOrganizer($args) {
         /*
