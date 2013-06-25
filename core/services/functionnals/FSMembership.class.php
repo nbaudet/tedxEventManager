@@ -1,13 +1,18 @@
 <?php
-/**
- * Description of FSPerson
- *
- * @author Lauric Francelet
- */
 
 require_once(APP_DIR . '/core/model/Membership.class.php');
 require_once(APP_DIR . '/core/model/Member.class.php');
 
+
+/**
+ * FSMembership.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASAdmin as definited in the model
+ * 
+ */
 class FSMembership {
     
     /**

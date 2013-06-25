@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Motivation.class.php');
 require_once(APP_DIR . '/core/model/Participant.class.php');
@@ -10,12 +8,16 @@ require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSParticipant.class.php');
 
-/**
- * Description of FSMotivation
- *
- * @author Robin de la forêt
- */
 
+/**
+ * FSMotivation.class.php
+ * 
+ * Author : Robin de la forêt
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSMotivation as definited in the model
+ * 
+ */
 class FSMotivation{
     /**
      * Returns the Motivation of the database with the 

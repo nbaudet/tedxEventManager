@@ -5,10 +5,15 @@ require_once(APP_DIR . '/core/model/Person.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 
+
 /**
- * Description of FSMember
- *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * FSMember.class.php
+ * 
+ * Author : Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSMember as definited in the model
+ * 
  */
 class FSMember {
 
