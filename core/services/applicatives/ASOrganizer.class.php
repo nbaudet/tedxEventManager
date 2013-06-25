@@ -174,14 +174,8 @@ class ASOrganizer {
      * and the Talk of speaker in event.
      * @return type message
      */
-    public static function addSpeakerToSlot($args){
-       // Argument No is optionnal
-       if( isset($args['no'] ) ) {
-           $aNo = $args['no'];
-       }
-       else {
-           $aNo = NULL;
-       }
+    public static function addSpeakerToPlace($args){
+       $aNo = $args['no'];
        $aSlot = $args['slot'];
        $aSpeaker = $args['speaker'];
        $videoTitle = $args['videoTitle'];

@@ -24,6 +24,7 @@ class FSSlot {
      */
     public static function getSlot($args){
         global $crud;
+        $no = $args['no'];
         $slot = NULL;
         $event = $args['event'];
         $return = NULL;
@@ -33,9 +34,11 @@ class FSSlot {
             $eventNo = $event->getNo();
                       $aValideEvent = FSEvent::getEvent($eventNo);
                         //If Valid Event
+
                         if($aValideEvent->getStatus()){
 
-                                    $sql = "SELECT * FROM Slot WHERE No = ".$args['no']." AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
+                                    $sql = "SELECT * FROM Slot WHERE No = $no AND EventNo = ". $event->getNo() ." AND IsArchived = 0";
+
                                     $data = $crud->getRow($sql);
 
                                     if($data){

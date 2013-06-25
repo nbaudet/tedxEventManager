@@ -28,13 +28,32 @@ require_once(APP_DIR .'/core/model/Unit.class.php');
 
 
 
-$person = $tedx_manager->getPerson(6)->getContent();
-var_dump($person);
+$speaker = $tedx_manager->getSpeaker(6)->getContent();
+var_dump($speaker);
 
-var_dump($tedx_manager->getOrganizers()->getContent());
+$event = $tedx_manager->getEvent(15)->getContent();
+var_dump($event);
 
-var_dump($tedx_manager->setPersonAsOrganizer($person));
+$argsSlot = array (
+    'no'    => 10,
+    'event' => $event
+);
 
+$slot = $tedx_manager->getSlot($argsSlot)->getContent();
+
+var_dump($slot);
+
+$argsAddSpeakerToPlace = array(
+    'no' => 2, // integer
+    'event' => $event, // object Event
+    'slot' => $slot, // object Slot
+    'speaker' => $speaker, // object Speaker
+    'videoTitle'    => "Super Video Title",
+    'videoDescription'  => "Super video Description",
+    'videoURL'      => "www.youtube.com"
+);
+
+var_dump(ASOrganizer::addSpeakerToPlace($argsAddSpeakerToPlace));
 
 //$organizer = $tedx_manager->getOrganizer(4)->getContent();
 //var_dump($tedx_manager->getTeamRolesByOrganizer($organizer));

@@ -27,7 +27,8 @@ class FSRole {
         $event = $args['event'];
         $organizer = $args['organizer'];
         
-        //If Event not empty
+        
+        //If Event is set
         if (isset($event)) {
             $aValideEvent = FSEvent::getEvent($event->getNo());
             //If Valid Event              
