@@ -58,6 +58,7 @@ class FSMembership {
         }// else
     }// function
     
+    
     /**
      * Returns all the Memberships of the database
      * @return A Message containing an array of Memberships
@@ -103,6 +104,7 @@ class FSMembership {
             return $message;
         }// else
     }// function
+    
     
     /**
      * Add a new Membership in Database
@@ -197,7 +199,8 @@ class FSMembership {
         
         return $return;
         
-    }// End addMembership
+    }//function
+    
     
     /**
      * Insert a membership, or if already existing, set it to archived.
@@ -289,7 +292,8 @@ class FSMembership {
             $message = FSMembership::addMembership( $args );
         }
         return $message;
-    }
+    }//function
+    
     
 }// class
 
