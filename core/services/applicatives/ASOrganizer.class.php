@@ -21,7 +21,7 @@ require_once(APP_DIR . '/core/services/functionnals/FSSpeaker.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
-
+require_once(APP_DIR . '/core/services/functionnals/FSPlace.class.php');
 
 /**
  * Description of ASOrganizer
@@ -225,32 +225,40 @@ class ASOrganizer {
      * @return type message
      */
     public static function changePositionOfSpeakerToEvent($args){
-        $speaker = $args['speaker'];
-        $position = $args['position'];
-        $event = $args['event'];
+        
+        $place = $args['no'];
         $slot = $args['slot'];
+        $event = $args['event'];
+        $speaker = $args['speaker'];
+        $aPlace = FSPlace::getPlace($args)->getContent();
+        var_dump($aPlace->getIsArchived());
         
         //If a non empty speaker
         if(isset($speaker)){
             $aValidSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
-                if($aValidSpeaker){
+                if($aValidSpeaker->getStatus()){
                     //If a non empty event
                     if(isset($event)){
                         $aValidEvent = FSEvent::getEvent($event->getNo());
-                            if($aValidEvent){
+                            if($aValidEvent->getStatus()){
                                 //If a non empty slot
                                 if(isset($slot)){
-                                    $aValidSlot = FSSlot::getSlot($slot->getNo());
+                                    $argsSlot = array(
+                                        'event' => $event,
+                                        'no'    => $slot->getNo()
+                                    );
+                                    $aValidSlot = FSSlot::getSlot($argsSlot);
+                                    
                                         //If a valid speaker
-                                        if($aValidSlot){
+                                        if($aValidSlot->getStatus()){
                                             //If a empty position or a non existant position
-                                            if((empty($position))||(FSPosition::getPosition($position->getNo()) == FALSE)){   
+                                            if((empty($place))||((FSPlace::getPlace($args)->getStatus()) == FALSE)){   
                                                 $newPlace = array(
                                                     'slot'  =>  $aValidSlot->getContent(),
                                                     'speaker'   =>  $aValidSpeaker->getContent(),
-                                                    'no'    =>  $aValidSlot->getContent()
+                                                    'no'    =>  $place
                                                 );
-                                                $aPlaceAdded = FSPlace::addPlace($newPlace);
+                                                $aPlaceAdded = FSPlace::addPlace($newPlace)->getContent();
                                                 $argsMessage = array(
                                                     'messageNumber'     => 000,
                                                     'message'           => 'A place changed',
@@ -260,7 +268,7 @@ class ASOrganizer {
                                                 $return = new Message($argsMessage);
                                             }else{
                                                 //If position is not archived
-                                                if($position->getIsArchived()->getContent() == 0){
+                                                if(($aPlace->getIsArchived()) == '0'){
                                                     $aPlaceArchived = FSPlace::setPlace($args);
                                                     $argsMessage = array(
                                                         'messageNumber'     => 000,
@@ -272,6 +280,7 @@ class ASOrganizer {
                                                 }
                                             }
                                         }else{
+                                            echo 'oooooooooooooo';
                                             $argsMessage = array(
                                                 'messageNumber'     => 000,
                                                 'message'           => 'Inexistant slot',

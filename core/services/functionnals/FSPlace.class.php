@@ -6,6 +6,8 @@
  * Author Lauric F
  */
 require_once(APP_DIR . '/core/model/Place.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
+require_once(APP_DIR . '/core/services/functionnals/FSSlot.class.php');
 
 
 class FSPlace {
@@ -190,7 +192,7 @@ class FSPlace {
                 } else {
                     $argsMessage = array(
                         'messageNumber'     => 173,
-                        'message'           => 'Existant Place !',
+                        'message'           => 'Already existant Place !',
                         'status'            => false,
                         'content'           => null
                     );

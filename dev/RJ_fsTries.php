@@ -11,11 +11,12 @@ require_once(APP_DIR .'/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSOrganizer.class.php');
 require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
+require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 //require_once(APP_DIR .'/core/services/functionnals/FSMotivation.class.php');
 
    $tedx_manager->login("admin", "admin");
  
-    echo '<h1>Set Place</h1>';
+    /*echo '<h1>Set Place</h1>';
     $args =     array(
             'no'         => 1,
             'slotNo'   => 1,
@@ -24,8 +25,40 @@ require_once(APP_DIR .'/core/services/functionnals/FSPlace.class.php');
             'isArchived'   => 0,
     );
     $newPlace = new Place($args);
-    var_dump(FSPlace::setPlace($newPlace));
-
+    var_dump(FSPlace::setPlace($newPlace));*/
+    
+    
+    
+    
+    echo '<h1>Change Place Of Speaker To an Event</h1>';
+    
+    $aPlaceNo = 1;
+    $aSlotNo = 1;
+    $aSpeaker = $tedx_manager->getSpeaker(1)->getContent();
+    $anEvent = FSEvent::getEvent(1)->getContent();
+    $argsSlot = array(
+        'event' => $anEvent,
+        'no'    => $aSlotNo
+    );
+    $aSlot= $tedx_manager->getSlot($argsSlot)->getContent();
+    
+    $args = array (
+        'no'     => $aPlaceNo,
+        'slot'  => $aSlot,
+        'event'  => $anEvent,
+        'speaker'    => $aSpeaker
+    );
+    
+    $aChangedPlaceOfASpeakerToAnEvent = $tedx_manager->changePositionOfSpeakerToEvent( $args );
+    
+    // Message
+    if( $aChangedPlaceOfASpeakerToAnEvent->getStatus())
+        echo 'Congrats! ' . $aChangedPlaceOfASpeakerToAnEvent->getMessage();
+    else
+        echo 'Error! ' . $aChangedPlaceOfASpeakerToAnEvent->getMessage();
+    
+    var_dump($aChangedPlaceOfASpeakerToAnEvent->getContent());
+    
    /*echo '<h1>Speakers</h1>';
    
    $someSpeakers = $tedx_manager->getSpeakers();
