@@ -61,8 +61,9 @@ class FSAffectation {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Returns all the Affectations of the database
      * @return A Message containing an array of Affectations
@@ -105,8 +106,9 @@ class FSAffectation {
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Add a new Affectation in Database
      * @param $args Parameters of an Affectation
@@ -153,8 +155,9 @@ class FSAffectation {
             $return = $messageValidOrganizer;
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Create a new Affectation in Database
      * @param type $args
@@ -199,8 +202,9 @@ class FSAffectation {
             $return = new Message($argsMessage);
         }
         return $return;
-    }// END createAffectation
+    }//function
 
+    
     /**
      * Returns all the TeamRoles of an Organizer
      * @param Organizer $organizer
@@ -244,6 +248,6 @@ class FSAffectation {
         return $return;
     }// function
 
-}
+}//class
 
 ?>
