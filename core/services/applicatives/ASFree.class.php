@@ -242,50 +242,81 @@ class ASFree {
         }else{
             return $emptyField;
         };
-    }
+    }//function
 
-    // function
-    //Find an Event from its ID (no)
+
+    /**
+     * Find an Event from its ID (no)
+     * @param type $no
+     * @return type anEvent
+     */
     public static function getEvent($no) {
         $anEvent = FSEvent::getEvent($no);
         return $anEvent;
     }// function
 
-    //Show all event
+    
+    /**
+     * Show all Events
+     * @return type Events
+     */
     public static function getEvents() {
         $events = FSEvent::getEvents();
         return $events;
     }// function
     
-   //Find a Participant from the status
+    
+   /**
+    * Find a Participant with his status
+    * @param type $args
+    * @return type a Participant
+    */
     public static function getParticipant($args) {
         $aParticipant = FSParticipant::getParticipant($args);
         return $aParticipant;
     }// function
 
-    // Show all Participants of an event
+    
+    /**
+     * Show all Participants from an Event
+     * @return type Participants
+     */
     public static function getParticipants(){
         $participants = FSParticipant::getParticipants();
         return $participants;
     }// function
     
-    //Find a Registration from the status, the participant, and the event
+
+    /**
+     * Find a Registration from the status, the Participant, and the Event
+     * @param type $args
+     * @return type a Registration
+     */
     public static function getRegistration($args) {
         $aRegistration = FSRegistration::getRegistration($args);
         return $aRegistration;
     }// function
 
-    // Show all Registration of an event
+    
+    /**
+     * Show all Registrations 
+     * @return type Regitrations
+     */
     public static function getRegistrations(){
         $registrations = FSRegistration::getRegistrations();
         return $registrations;
     }// function
     
-    // Show all Registration of an event
+    /**
+     * Show all Registrations of an Event
+     * @param type $anEvent
+     * @return type registrations
+     */
     public static function getRegistrationsByEvent($anEvent){
         $registrations = FSRegistration::getRegistrationsByEvent($anEvent);
         return $registrations;
     }// function
+    
     
     /**
      * Search events with args
@@ -297,6 +328,7 @@ class ASFree {
         return $messageEvents;
     }// public 
     
+    
     /**
      * Get an Organizer with its Id
      * @param type $args
@@ -306,6 +338,7 @@ class ASFree {
         $anOrganizer = FSOrganizer::getOrganizer($no);
         return $anOrganizer;
     }// function
+    
     
     /**
      * Get Organizers
@@ -317,6 +350,7 @@ class ASFree {
         return $organizers;
     }// function
     
+    
     /**
      * Get a Slot with its Id
      * @param type $args
@@ -326,6 +360,7 @@ class ASFree {
         $aSlot = FSSlot::getSlot($args);
         return $aSlot;
     }// function
+    
     
     /**
      * Get Slots
@@ -337,6 +372,7 @@ class ASFree {
         return $slots;
     }// function
     
+    
     /**
      * Get SlotsByEvent
      * @param type $event
@@ -347,13 +383,22 @@ class ASFree {
         return $slots;
     }// function
     
-    //Find a Location from the status, 
+    
+    /**
+     * Find a Location from the Status
+     * @param type $args
+     * @return type a Location
+     */
     public static function getLocation($args) {
         $aLocation = FSLocation::getLocation($args);
         return $aLocation;
     }// function
 
-    // Show all Locations of an event
+    
+    /**
+     * Show all Locations from an Event
+     * @return type Locations
+     */
     public static function getLocations(){
         $locations = FSLocation::getLocations();  
         return $locations;
@@ -365,49 +410,86 @@ class ASFree {
         return $aRole;
     }// function
 
-    // Show all Roles of an event
+    
+    /**
+     * Show all Roles of an Event
+     * @return type Roles
+     */
     public static function getRoles(){
         $roles = FSRole::getRoles(); 
         return $roles;
     }// function
     
-    //Find a TeamRole from the status
+    
+    /**
+     * Find the TeamRole from a Status
+     * @param type $args
+     * @return type a TeamRole
+     */
     public static function getTeamRole($args) {
         $aTeamRole = FSTeamRole::getTeamRole($args);
         return $aTeamRole;
     }// function
 
-    // Show all TeamRoles of an event
+    
+    /**
+     * Show all TeamRoles of an Event
+     * @return type TeamRoles 
+     */
     public static function getTeamRoles(){
         $teamRoles = FSTeamRole::getTeamRoles();
         return $teamRoles;
     }// function
     
-    // Returns all the TeamRoles of an Organizer
+    
+
+    /**
+     * Returs all TeamRoles of an Organizer
+     * @param type $organizer
+     * @return type message
+     */
     public static function getTeamRolesByOrganizer($organizer){
         $messageGetTeamRolesByOrganizer = FSAffectation::getTeamRolesByOrganizer($organizer);
         return $messageGetTeamRolesByOrganizer;
     }
        
-    //show a Person
+    
+    /**
+     * Show a Person
+     * @param type $no
+     * @return type a Person
+     */
     public static function getPerson($no) {
         $aPerson = FSPerson::getPerson($no); 
         return $aPerson; 
     }//function 
     
-    //Show all Persons 
+    
+    /**
+     * Show all Persons
+     * @return type Persons
+     */
     public static function getPersons() {
         $persons = FSPerson::getPersons();  
         return $persons; 
     }//function 
     
-    //Show a Unit
+    
+    /**
+     * Show a Unit
+     * @param type $aNo
+     * @return type a Unit
+     */
     public static function getUnit($aNo) {
         $aUnit = FSUnit::getUnit($aNo);
         return $aUnit;    
     }//function 
     
-    //Show all Units
+    
+    /**
+     * Show all Units
+     * @return type Units
+     */
     public static function getUnits() {
         $units = FSUnit::getAllUnits(); 
         return $units; 
@@ -503,6 +585,7 @@ class ASFree {
         return $messageGetParticipantsBySlot;
     }
     
+    
     /**
      * Returns all the Talks
      * @param type
@@ -512,6 +595,7 @@ class ASFree {
         $messageTalks = FSTalk::getTalks();
         return $messageTalks;
     }
+    
     
     /**
      * Returns a talk with its Id
@@ -523,19 +607,33 @@ class ASFree {
         return $messageTalk;
     }
     
-    //show a Speaker
+    
+    /**
+     * Show a Speaker
+     * @param type $no
+     * @return type a Speaker
+     */
     public static function getSpeaker($no) {
         $aSpeaker = FSSpeaker::getSpeaker($no); 
         return $aSpeaker; 
     }//function 
     
-    //Show all Speakers 
+    
+    /**
+     * Show all Speakers
+     * @return type Speakers
+     */
     public static function getSpeakers() {
         $speakers = FSSpeaker::getSpeakers();  
         return $speakers; 
     }//function 
     
-    //Show all Talks of a Speaker 
+    
+   /**
+    * Show all Talks of a Speaker
+    * @param type $aSpeaker
+    * @return type
+    */
     public static function getTalksBySpeaker($aSpeaker) {
         return FSTalk::getTalksBySpeaker($aSpeaker);  
     }//function 
