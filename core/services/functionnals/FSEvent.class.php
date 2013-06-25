@@ -1,15 +1,20 @@
 <?php
 
-/**
- * Description of FSEvent
- *
- * @author Lauric Francelet
- */
 require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Speaker.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 require_once(APP_DIR . '/core/model/Slot.class.php');
 
+
+/**
+ * FSEvent.class.php
+ * 
+ * Author : Lauric Francelet
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSEvent as definited in the model
+ * 
+ */
 class FSEvent {
 
     /**

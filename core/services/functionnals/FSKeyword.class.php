@@ -1,17 +1,19 @@
 <?php
 
-
-
-
 require_once(APP_DIR . '/core/model/Keyword.class.php');
 require_once(APP_DIR . '/core/model/Event.class.php');
 require_once(APP_DIR . '/core/model/Person.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
+
 /**
- * Description of FSKeyword
- *
- * @author rapou
+ * FSKeyword.class.php
+ * 
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSKeyword as definited in the model
+ * 
  */
 class FSKeyword {
      /**

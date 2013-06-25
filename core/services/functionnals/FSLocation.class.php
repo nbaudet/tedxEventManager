@@ -1,14 +1,18 @@
 <?php
 
-/**
- * Description of FSLocation
- *
- * @author Robin Jet-Pierre
- */
-
 require_once(APP_DIR . '/core/model/Location.class.php');
 require_once(APP_DIR . '/core/model/Message.class.php');
 
+
+/**
+ * FSLocation.class.php
+ * 
+ * Author : Robin Jet-Pierre
+ * Date : 25.06.2013
+ * 
+ * Description : define the class FSLocation as definited in the model
+ * 
+ */
 class FSLocation{
     /**
      *Returns a Locationwith the given No as Id
