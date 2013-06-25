@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
@@ -34,9 +31,14 @@ class ASValidator {
      */
     public function __construct() {
         // Nothing
-    }
+    }//construct
 
-    // Change the status of the current registration.
+
+    /**
+     * Change the status of the current Registration
+     * @param type $args
+     * @return type message
+     */
     private static function changeRegistrationStatus($args) {
         $currentRegistration = $args['currentRegistration'];
         $newStatus = $args['newStatus'];
@@ -93,20 +95,28 @@ class ASValidator {
             $message = $messageValidEvent;
         }
         return $message;
-    }
+    }//function
 
-//function
-    // 
+
+    /**
+     * Accept a Registration
+     * @param type $aRegistration
+     * @return type changeRegistrationStatus
+     */
     public static function acceptRegistration($aRegistration) {
         $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Accepted');
         return self::changeRegistrationStatus($args);
-    }
+    }//function
 
-    //
+    /**
+     * Reject a Registration
+     * @param type $aRegistration
+     * @return type changeRegistrationStatus
+     */
     public static function rejectRegistration($aRegistration) {
         $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Rejected');
         return self::changeRegistrationStatus($args);
-    }
+    }//function
     
     /**
      * Lets the validator cancel an acceptation or a rejection.
@@ -116,8 +126,8 @@ class ASValidator {
     public static function cancelRegistration( $aRegistration ) {
         $args = array('currentRegistration' => $aRegistration, 'newStatus' => 'Sent');
         return self::changeRegistrationStatus($args);
-    }
+    }//function
 
-}
+}//class
 
 ?>
