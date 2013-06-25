@@ -937,12 +937,25 @@ class Tedx_manager{
         return $message;
     }//function
     
+
     
     /**
      * Change the Position of a Speaker to an Event
      * @param type $args
      * @return type message
      */
+    public function addSpeakerToPlace( $args ) {
+        $messageAccess = $this->isGranted( "addSpeakerToPlace" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::addSpeakerToPlace( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }//function
+    
+    
     public function changePositionOfSpeakerToEvent( $args ) {
         $messageAccess = $this->isGranted( "changePositionOfSpeakerToEvent" );
         if( $messageAccess->getStatus() ) {
