@@ -70,7 +70,7 @@ class FSParticipant{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
     /**
      * Returns all the Participants of the database
@@ -124,9 +124,9 @@ class FSParticipant{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
     
-       /**
+    /**
      * Add a new Participant in Database
      * @param $args Parameters of a Participant
      * @return a Message containing the new Participant
@@ -202,6 +202,13 @@ class FSParticipant{
         return $finalMessage;
     }
   
+    
+    /**
+     * Creat a Participant
+     * @global type $crud
+     * @param type $args
+     * @return type Message
+     */
     private static function createParticipant($args){
         global $crud;
         /* ---------------------------------------------------------------------
@@ -274,7 +281,7 @@ class FSParticipant{
             $finalMessage = $messageAddedParticipant;
         }
         return $finalMessage;
-    }
- }
+    }//function
+ }//class
     
 ?>

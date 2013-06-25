@@ -61,8 +61,9 @@ class FSParticipation{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
 
+    
     /**
      * Returns all the Participations of the database
      * @return A Message containing an array of Participations
@@ -107,7 +108,8 @@ class FSParticipation{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
+    
     
     /**
      * Returns all the Participants of a Slot
@@ -144,7 +146,8 @@ class FSParticipation{
             $return = new Message($argsMessage);
         }
         return $return;
-    }
+    }//function
+    
     
     /**
      * Add a new Participation in Database
@@ -203,8 +206,14 @@ class FSParticipation{
             $finalMessage = $messageValidParticipant;
         }
         return $finalMessage;
-    }
+    }//function
     
+    /**
+     * Creat a Participation
+     * @global type $crud
+     * @param type $args
+     * @return \Message
+     */
     private static function createParticipation($args){
         /* --------------------------------------------
          *  $argsCreateParticipation = array(
@@ -249,8 +258,8 @@ class FSParticipation{
             $finalMessage = new Message($argsMessage);
         }
         return $finalMessage;
-    }
+    }//function
     
- }
+ }//class
     
 ?>
