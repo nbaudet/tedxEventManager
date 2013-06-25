@@ -1,6 +1,5 @@
 <?php
 
-
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSKeyword.class.php');
@@ -26,15 +25,16 @@ require_once(APP_DIR . '/core/model/Place.class.php');
  * @author rapou
  */
 class ASOrganizer {
-    
-     /**
+
+    /**
      * Constructor of applicative service Organizer
      */
     public function __construct() {
         // do nothing;
-        
-    }//construct
-    
+    }
+
+//construct
+
     /**
      * Add a Location
      * @param type $args
@@ -43,9 +43,10 @@ class ASOrganizer {
     public static function addLocation($args) {
         $aLocation = FSLocation::addLocation($args);
         return $aLocation;
-    }//function
-    
-    
+    }
+
+//function
+
     /**
      * Method registerSpeaker from SA Organizer
      * @param type $args 
@@ -86,7 +87,7 @@ class ASOrganizer {
         if ($messageAddedPerson->getStatus()) {
             $anAddedPerson = $messageAddedPerson->getContent();
             $messageAddedSpeaker = FSSpeaker::addSpeaker($anAddedPerson);
-            if ($messageAddedSpeaker->getStatus()){
+            if ($messageAddedSpeaker->getStatus()) {
                 // Arguments for adding a Member
                 $argsMember = array(
                     'id' => $args['idmember'],
@@ -126,7 +127,7 @@ class ASOrganizer {
                     // Else give the error message about non-adding Member
                     $aRegisteredSpeaker = $messageAddedMember;
                 }
-            }else{
+            } else {
                 // Else give the error message about non-adding Member
                 $aRegisteredSpeaker = $messageAddedSpeaker;
             }
@@ -134,12 +135,13 @@ class ASOrganizer {
             // Else give the error message about non-adding Person
             $aRegisteredSpeaker = $messageAddedPerson;
         }
-        
+
         // Return the message Visitor Registed or not Registred
         return $aRegisteredSpeaker;
-    }//function
-    
-    
+    }
+
+//function
+
     /**
      * Method change the Location of a Event
      * @param type $args 
@@ -150,275 +152,281 @@ class ASOrganizer {
         $anEventToUpdate->setLocationName($args['locationName']);
         $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
         return $aChangedEventLocation;
-    }//function
-    
-    
+    }
+
+//function
+
     /**
      * Set an Event
      * @param type $args
      */
-    public static function setEvent( $args ) {
-        /*$anEventToUpdate = ($args['event']);
-        $anEventToUpdate->setLocationName($args['locationName']);
-        $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
-        return $aChangedEventLocation;*/
+    public static function setEvent($args) {
+        /* $anEventToUpdate = ($args['event']);
+          $anEventToUpdate->setLocationName($args['locationName']);
+          $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
+          return $aChangedEventLocation; */
     }
-    
-    
+
     /**
      * Change a Slot
      * @param type $args
      */
-    public static function changeSlot( $args ) {
+    public static function changeSlot($args) {
         
-    }//function
-    
+    }
+
+//function
+
     /**
      * Applicative service to add a slot to an event
      * @param type $args, the event and the slot parameter.
      * @return type message
      */
-    public static function addSlotToEvent($args){
+    public static function addSlotToEvent($args) {
         return FSSlot::addSlot($args);
-    }//function
-    
+    }
+
+//function
+
     /**
      * Applicative service to add a Speaker to a Slot (Place and Talk)
      * @param type $args, the speaker, the slot, and the parameter of the Place
      * and the Talk of speaker in event.
      * @return type message
      */
-    public static function addSpeakerToPlace($args){
-       $aNo = $args['no'];
-       $aSlot = $args['slot'];
-       $aSpeaker = $args['speaker'];
-       $videoTitle = $args['videoTitle'];
-       $videoDescription = $args['videoDescription'];
-       $videoURL = $args['videoURL'];
-       
-       $messageValidEvent = FSEvent::getEvent($aSlot->getEventNo());
-       if($messageValidEvent->getStatus()){
-           $aValidEvent = $messageValidEvent->getContent();
-           $argsSlot = array(
-               'event' => $aValidEvent,
-               'no' => $aSlot->getNo()
-           );
-           $messageValidSlot = FSSlot::getSlot($argsSlot);
-           if($messageValidSlot->getStatus()){
-               $aValidSlot = $messageValidSlot->getContent();
-               $messageValidSpeaker = FSSpeaker::getSpeaker($aSpeaker->getNo());
-               if($messageValidSpeaker->getStatus()){
-                   $aValidSpeaker = $messageValidSpeaker->getContent();
-                   $argsPlace = array(
-                       'speaker' => $aValidSpeaker,
-                       'slot' => $aValidSlot,
-                       'no' => $aNo
-                   );
-                   $messageValidPlace = FSPlace::getPlace($argsPlace);
-                   if(!$messageValidPlace->getStatus()){
-                       $messageAddedPlace = FSPlace::addPlace($argsPlace);
-                       if($messageAddedPlace->getStatus()){
-                           $argsTalk = array(
-                               'event' => $aValidEvent,
-                               'speaker' => $aValidSpeaker,
-                               'videoTitle' => $videoTitle,
-                               'videoDescription' => $videoDescription,
-                               'videoURL' => $videoURL
-                           );
-                           $messageAddedTalk = FSTalk::addTalk($argsTalk);
-                           
-                           $argsMessage = array(
-                               'messageNumber' => 175,
-                               'message' => 'Speaker added to Place',
-                               'status' => true,
-                               'content' => array ($messageAddedPlace, $messageAddedTalk)
-                           );
-                           
-                           $message = new Message($argsMessage);
-                       }else{
-                           $message = $messageAddedPlace;
-                       }
-                   }else{
-                       $message = $messageValidPlace;
-                   }
-               }else{
-                   $message = $messageValidSpeaker;
-               }
-           }else{
-               $message = $messageValidSlot;
-           }
-       }else{
-           $message = $messageValidEvent;
-       }
-       return $message;
+    public static function addSpeakerToPlace($args) {
+        $aNo = $args['no'];
+        $aSlot = $args['slot'];
+        $aSpeaker = $args['speaker'];
+        $videoTitle = $args['videoTitle'];
+        $videoDescription = $args['videoDescription'];
+        $videoURL = $args['videoURL'];
+
+        $messageValidEvent = FSEvent::getEvent($aSlot->getEventNo());
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $argsSlot = array(
+                'event' => $aValidEvent,
+                'no' => $aSlot->getNo()
+            );
+            $messageValidSlot = FSSlot::getSlot($argsSlot);
+            if ($messageValidSlot->getStatus()) {
+                $aValidSlot = $messageValidSlot->getContent();
+                $messageValidSpeaker = FSSpeaker::getSpeaker($aSpeaker->getNo());
+                if ($messageValidSpeaker->getStatus()) {
+                    $aValidSpeaker = $messageValidSpeaker->getContent();
+                    $argsPlace = array(
+                        'speaker' => $aValidSpeaker,
+                        'slot' => $aValidSlot,
+                        'no' => $aNo
+                    );
+                    $messageValidPlace = FSPlace::getPlace($argsPlace);
+                    if (!$messageValidPlace->getStatus()) {
+                        $messageAddedPlace = FSPlace::addPlace($argsPlace);
+                        if ($messageAddedPlace->getStatus()) {
+                            $argsTalk = array(
+                                'event' => $aValidEvent,
+                                'speaker' => $aValidSpeaker,
+                                'videoTitle' => $videoTitle,
+                                'videoDescription' => $videoDescription,
+                                'videoURL' => $videoURL
+                            );
+                            $messageAddedTalk = FSTalk::addTalk($argsTalk);
+
+                            $argsMessage = array(
+                                'messageNumber' => 175,
+                                'message' => 'Speaker added to Place',
+                                'status' => true,
+                                'content' => array($messageAddedPlace, $messageAddedTalk)
+                            );
+
+                            $message = new Message($argsMessage);
+                        } else {
+                            $message = $messageAddedPlace;
+                        }
+                    } else {
+                        $message = $messageValidPlace;
+                    }
+                } else {
+                    $message = $messageValidSpeaker;
+                }
+            } else {
+                $message = $messageValidSlot;
+            }
+        } else {
+            $message = $messageValidEvent;
+        }
+        return $message;
     }
-    
+
     /**
      * Applicative service to change a place of a Speaker to an Event
      * @param type $args.
      * @return type message
      */
-    public static function changePositionOfSpeaker($args){
-        
+    public static function changePositionOfSpeaker($args) {
+
         $newPlace = $args['newNo'];
         $oldPlace = $args['oldNo'];
         $slot = $args['slot'];
         $event = $args['event'];
         $speaker = $args['speaker'];
-        
+
         //An array of the new place existance
-        $argsNewPlace = array (
-            'no'    =>  $newPlace,
-            'slot'    =>  $slot,
-            'event'    =>  $event,
-            'speaker'    =>  $speaker
+        $argsNewPlace = array(
+            'no' => $newPlace,
+            'slot' => $slot,
+            'event' => $event,
+            'speaker' => $speaker
         );
         //An array of the old place existance
         $argsOldPlace = array(
-                            'no'    =>  $oldPlace,
-                            'slot'    =>  $slot,
-                            'event'    =>  $event,
-                            'speaker'    =>  $speaker
-                        );
-        
+            'no' => $oldPlace,
+            'slot' => $slot,
+            'event' => $event,
+            'speaker' => $speaker
+        );
+
         //If a non empty speaker
-        if(isset($speaker)){
+        if (isset($speaker)) {
             $aValidSpeaker = FSSpeaker::getSpeaker($speaker->getNo());
-                if($aValidSpeaker->getStatus()){
-                    //If a non empty event
-                    if(isset($event)){
-                        $aValidEvent = FSEvent::getEvent($event->getNo());
-                            //If a valid Event
-                            if($aValidEvent->getStatus()){
-                                //If a non empty slot
-                                if(isset($slot)){
-                                    $argsSlot = array(
-                                        'no'    => $slot->getNo(),
-                                        'event' => $event
+            if ($aValidSpeaker->getStatus()) {
+                //If a non empty event
+                if (isset($event)) {
+                    $aValidEvent = FSEvent::getEvent($event->getNo());
+                    //If a valid Event
+                    if ($aValidEvent->getStatus()) {
+                        //If a non empty slot
+                        if (isset($slot)) {
+                            $argsSlot = array(
+                                'no' => $slot->getNo(),
+                                'event' => $event
+                            );
+                            $aValidSlot = FSSlot::getSlot($argsSlot);
+
+                            //If a valid speaker
+                            if ($aValidSlot->getStatus()) {
+
+                                $messageExistantPlace = FSPlace::getPlace($argsNewPlace);
+                                if (empty($newPlace)) {
+                                    $argsMessage = array(
+                                        'messageNumber' => 242,
+                                        'message' => 'A not valid Place no',
+                                        'status' => false,
+                                        'content' => null
                                     );
-                                    $aValidSlot = FSSlot::getSlot($argsSlot);
-                                    
-                                        //If a valid speaker
-                                        if($aValidSlot->getStatus()){
-                                            
-                                            $messageExistantPlace = FSPlace::getPlace($argsNewPlace);
-                                            if(empty($newPlace)){
-                                                $argsMessage = array(
-                                                        'messageNumber'     => 242,
-                                                        'message'           => 'A not valid Place no',
-                                                        'status'            => false,
-                                                        'content'           => null
-                                                    );
-                                                    $return = new Message($argsMessage);
-                                            }else{
-                                                //If a empty position or a non existant position
-                                                if(!($messageExistantPlace->getStatus())){   
-                                                    //Not existing Place
-                                                    $newPlace = array(
-                                                        'slot'  =>  $slot,
-                                                        'speaker'   =>  $speaker,
-                                                        'no'    =>  $newPlace
-                                                    );
-                                                    //Not valid place
-                                                    $aPlaceAdded = FSPlace::addPlace($newPlace);
-                                                    //Archived la précédente
-                                                    $anOldPlaceToArchive = FSPlace::getPlace($argsOldPlace)->getContent();
-                                                    $anOldPlaceToArchive->setIsArchived(1);
-                                                    FSPlace::setPlace($anOldPlaceToArchive);
-                                                    $argsMessage = array(
-                                                        'messageNumber'     => 243,
-                                                        'message'           => 'A place changed and old one archived',
-                                                        'status'            => true,
-                                                        'content'           => $aPlaceAdded
-                                                    );
-                                                    $return = new Message($argsMessage);
-                                                }else{
-                                                    //Existing Place
-                                                    $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
-                                                    //If place is not archived (0)
-                                                    if(!($aPlace->getIsArchived())){
-                                                        
-                                                        //$aPlaceArchived = FSPlace::setPlace($args);
-                                                        $argsMessage = array(
-                                                            'messageNumber'     => 244,
-                                                            'message'           => 'A place already existing',
-                                                            'status'            => false,
-                                                            'content'           => null
-                                                        );
-                                                        $return = new Message($argsMessage);
-                                                    }else{
-                                                        $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
-                                                        //Place is archived (1)
-                                                        $aPlaceToArchived = $aPlace->setIsArchived(0);
-                                                        $aDearchivedPlace = FSPlace::setPlace($aPlaceToArchived);
-                                                        $argsMessage = array(
-                                                        'messageNumber'     => 245,
-                                                        'message'           => 'A place changed',
-                                                        'status'            => true,
-                                                        'content'           => $aDearchivedPlace
-                                                    );
-                                                    $return = new Message($argsMessage);
-                                                    }
-                                                }
-                                            }
-                                        }else{
-                                            
+                                    $return = new Message($argsMessage);
+                                } else {
+                                    //If a empty position or a non existant position
+                                    if (!($messageExistantPlace->getStatus())) {
+                                        //Not existing Place
+                                        $newPlace = array(
+                                            'slot' => $slot,
+                                            'speaker' => $speaker,
+                                            'no' => $newPlace
+                                        );
+                                        //Not valid place
+                                        $aPlaceAdded = FSPlace::addPlace($newPlace);
+                                        //Archived la précédente
+                                        $anOldPlaceToArchive = FSPlace::getPlace($argsOldPlace)->getContent();
+                                        $anOldPlaceToArchive->setIsArchived(1);
+                                        FSPlace::setPlace($anOldPlaceToArchive);
+                                        $argsMessage = array(
+                                            'messageNumber' => 243,
+                                            'message' => 'A place changed and old one archived',
+                                            'status' => true,
+                                            'content' => $aPlaceAdded
+                                        );
+                                        $return = new Message($argsMessage);
+                                    } else {
+                                        //Existing Place
+                                        $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
+                                        //If place is not archived (0)
+                                        if (!($aPlace->getIsArchived())) {
+
+                                            //$aPlaceArchived = FSPlace::setPlace($args);
                                             $argsMessage = array(
-                                                'messageNumber'     => 246,
-                                                'message'           => 'Inexistant slot',
-                                                'status'            => false,
-                                                'content'           => null
+                                                'messageNumber' => 244,
+                                                'message' => 'A place already existing',
+                                                'status' => false,
+                                                'content' => null
+                                            );
+                                            $return = new Message($argsMessage);
+                                        } else {
+                                            $aPlace = FSPlace::getPlace($argsNewPlace)->getContent();
+                                            //Place is archived (1)
+                                            $aPlaceToArchived = $aPlace->setIsArchived(0);
+                                            $aDearchivedPlace = FSPlace::setPlace($aPlaceToArchived);
+                                            $argsMessage = array(
+                                                'messageNumber' => 245,
+                                                'message' => 'A place changed',
+                                                'status' => true,
+                                                'content' => $aDearchivedPlace
                                             );
                                             $return = new Message($argsMessage);
                                         }
-                                }else{
-                                    $argsMessage = array(
-                                        'messageNumber'     => 247,
-                                        'message'           => 'Empty slot for this event',
-                                        'status'            => false,
-                                        'content'           => null
-                                    );
-                                $return = new Message($argsMessage);
+                                    }
                                 }
-                            }else{
+                            } else {
+
                                 $argsMessage = array(
-                                    'messageNumber'     => 248,
-                                    'message'           => 'Inexistant event',
-                                    'status'            => false,
-                                    'content'           => null
+                                    'messageNumber' => 246,
+                                    'message' => 'Inexistant slot',
+                                    'status' => false,
+                                    'content' => null
                                 );
                                 $return = new Message($argsMessage);
                             }
-                    }else{
+                        } else {
+                            $argsMessage = array(
+                                'messageNumber' => 247,
+                                'message' => 'Empty slot for this event',
+                                'status' => false,
+                                'content' => null
+                            );
+                            $return = new Message($argsMessage);
+                        }
+                    } else {
                         $argsMessage = array(
-                            'messageNumber'     => 249,
-                            'message'           => 'Empty event',
-                            'status'            => false,
-                            'content'           => null
+                            'messageNumber' => 248,
+                            'message' => 'Inexistant event',
+                            'status' => false,
+                            'content' => null
                         );
                         $return = new Message($argsMessage);
-                    } 
-                }else{
+                    }
+                } else {
                     $argsMessage = array(
-                        'messageNumber'     => 250,
-                        'message'           => 'Inexistant speaker',
-                        'status'            => false,
-                        'content'           => null
+                        'messageNumber' => 249,
+                        'message' => 'Empty event',
+                        'status' => false,
+                        'content' => null
                     );
                     $return = new Message($argsMessage);
                 }
-        }else{
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 250,
+                    'message' => 'Inexistant speaker',
+                    'status' => false,
+                    'content' => null
+                );
+                $return = new Message($argsMessage);
+            }
+        } else {
             $argsMessage = array(
-                'messageNumber'     => 251,
-                'message'           => 'Empty speaker',
-                'status'            => false,
-                'content'           => null
+                'messageNumber' => 251,
+                'message' => 'Empty speaker',
+                'status' => false,
+                'content' => null
             );
             $return = new Message($argsMessage);
         }
         return $return;
-    }//function
-    
-}//class
+    }
 
+//function
+}
+
+//class
 ?>
