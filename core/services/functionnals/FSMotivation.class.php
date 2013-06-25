@@ -266,89 +266,108 @@ class FSMotivation{
         $event = $args['event'];
         $participant = $args['participant'];
         
-        if(isset($event)){
-            if(isset($participant)){
-                // Validate Event
-                $aValidEvent = FSEvent::getEvent($event->getNo());
+        if( isset( $event ) && isset( $participant ) ) {
+            // Validate Event
+            $messageValidEvent = FSEvent::getEvent($event->getNo());
+            if( $messageValidEvent->getStatus() ) {
 
                 // Validate Participant
-                $aValidParticipant = FSParticipant::getParticipant($participant->getNo());
+                $messageValidParticipant = FSParticipant::getParticipant($participant->getNo());
+                if( $messageValidParticipant->getStatus() ) {
+                    $argsMotivation = array(
+                        'text'                => $args['text'],
+                        'eventNo'             => $event->getNo(),
+                        'participantPersonNo' => $participant->getNo()
+                    );
+                    // Validate Motivation
+                    $messageExistingMotivation = FSMotivation::getMotivation($argsMotivation);
+                    // if motivation doesn't exist yet
+                    if( !$messageExistingMotivation->getStatus() ){
 
-                $argsMotivation = array(
-                    'text'                => $args['text'],
-                    'eventNo'             =>  $event->getNo(),
-                    'participantPersonNo' =>  $participant->getNo()
-                );
-                // Validate Motivation
-                $messageInexistantMotivation = FSMotivation::getMotivation($argsMotivation);
+                        // Create new Slot
+                        $sql = "INSERT INTO `Motivation` (`Text`, `EventNo`, `ParticipantPersonNo`) VALUES (
+                            '".$args['text']."',
+                            ".$event->getNo().", 
+                            '".$participant->getNo()."'
+                        );";
 
-                if( $aValidEvent->getStatus() && $aValidParticipant->getStatus() && !$messageInexistantMotivation->getStatus() ){
+                        if($crud->exec($sql) == 1){
 
-                    // Create new Slot
-                    $sql = "INSERT INTO `Motivation` (`Text`, `EventNo`, `ParticipantPersonNo`) VALUES (
-                        '".$args['text']."',
-                        ".$event->getNo().", 
-                        '".$participant->getNo()."'
-                    );";
+                            // Get created Membership
+                            $argsMotivation = array (
+                                'text'  => $args['text'],
+                                'eventNo'   =>  $event->getNo(),
+                                'participantPersonNo'   =>  $participant->getNo()
+                            );
 
-                    if($crud->exec($sql) == 1){
+                            $messageCreatedMotivation = FSMotivation::getMotivation($argsMotivation);
 
-                        // Get created Membership
-                        $argsMotivation = array (
-                            'text'  => $args['text'],
-                            'eventNo'   =>  $event->getNo(),
-                            'participantPersonNo'   =>  $participant->getNo()
-                        );
-
-                        $messageCreatedMotivation = FSMotivation::getMotivation($argsMotivation);
-
+                            $argsMessage = array(
+                                'messageNumber' => 227,
+                                'message'       => 'New Motivation added !',
+                                'status'        => true,
+                                'content'       => $messageCreatedMotivation->getContent()
+                            );
+                            $return = new Message($argsMessage);
+                        } // if: addedCorrectly
+                        else {
+                            $argsMessage = array(
+                                'messageNumber' => 228,
+                                'message'       => 'Error while inserting new Motivation',
+                                'status'        => false,
+                                'content'       => NULL
+                            );
+                            $return = new Message($argsMessage);
+                        }
+                    } // if motivation doesn't exist yet
+                    else {
+                        // Do nothing, because the motivation already exists
                         $argsMessage = array(
-                            'messageNumber' => 227,
-                            'message'       => 'New Motivation added !',
-                            'status'        => true,
-                            'content'       => $messageCreatedMotivation->getContent()
+                        'messageNumber' => 223,
+                        'message'       => 'Existant Motivation',
+                        'status'        => true,
+                        'content'       => $messageExistingMotivation->getContent()
                         );
                         $return = new Message($argsMessage);
-
-                    } else {
-                        $argsMessage = array(
-                           'messageNumber' => 228,
-                           'message'       => 'Error while inserting new Motivation',
-                           'status'        => false,
-                           'content'       => NULL
-                       );
-                       $return = new Message($argsMessage);
-                    } // END Create Motivation
-
-                } else {
+                    }
+                } // if: participant valid
+                else {
                     $argsMessage = array(
-                        'messageNumber' => 229,
-                        'message'       => 'No valid Event or Participant found',
-                        'status'        => FALSE,
-                        'content'       => null
+                    'messageNumber' => 229,
+                    'message'       => 'No valid Participant found',
+                    'status'        => FALSE,
+                    'content'       => null
                     );
-
-                    $return = new Message($argsMessage);            
+                    $return = new Message($argsMessage);
                 }
-        }else{
+            } // if: validEvent
+            else {
                 $argsMessage = array(
-                        'messageNumber' => 229,
-                        'message'       => 'No valid Participant found',
-                        'status'        => FALSE,
-                        'content'       => null
-                    );
+                    'messageNumber' => 229,
+                    'message'       => 'No valid Event found',
+                    'status'        => FALSE,
+                    'content'       => null
+                );
                 $return = new Message($argsMessage);
             }
-        }else{
+        }// if: isset(participant and event)
+        else {
             $argsMessage = array(
-                        'messageNumber' => 229,
-                        'message'       => 'No valid Event found',
-                        'status'        => FALSE,
-                        'content'       => null
-                    );
-            $return = new Message($argsMessage);
+                    'messageNumber' => 045,
+                    'message'       => 'Missing Participant or Event argument',
+                    'status'        => FALSE,
+                );
+                $return = new Message($argsMessage);
         }
         return $return;
+        
+////////////////////////////// CHOSES QU'IL RESTAIT DANS LE CODE
+/*$argsMessage = array(
+    'messageNumber' => 229,
+    'message'       => 'No valid Event or Participant found',
+    'status'        => FALSE,
+    'content'       => null
+$return = new Message($argsMessage);*/
     } //function
     
     
