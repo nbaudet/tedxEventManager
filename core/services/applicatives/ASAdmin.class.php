@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSKeyword.class.php');
@@ -19,10 +17,15 @@ require_once(APP_DIR . '/core/services/functionnals/FSTeamRole.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSPerson.class.php');
 
+
 /**
- * Description of ASAdmin
+ * ASAdmin.class.php
  * 
- * @author rapou
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASAdmin as definited in the model
+ * 
  */
 class ASAdmin {
     /**

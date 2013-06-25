@@ -1,16 +1,23 @@
 <?php
-/**
- * The Auth applicative service enables registered members to login to the site.
- * The class also computes the rights and privileges to the application.
- *
- * @author Nicolas Baudet <nicolas.baudet@heig-vd.ch>
- */
+
 require_once(APP_DIR.'/core/model/Member.class.php');
 require_once(APP_DIR.'/core/model/Message.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSMember.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSUnit.class.php');
 require_once(APP_DIR.'/core/services/functionnals/FSAccess.class.php');
 
+
+/**
+ * ASAuth.class.php
+ * 
+ * Author : Nicolas Baudet <nicolas.baudet@heig-vd.ch>
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASAuth as definited in the model
+ * The Auth applicative service enables registered members to longin to the site.
+ * The class also computes the rights and privileges to the application.
+ * 
+ */
 class ASAuth {
     
     /**

@@ -22,9 +22,13 @@ require_once(APP_DIR . '/core/services/functionnals/FSTalk.class.php');
 
 
 /**
- * Description of ASFree
- *
- * @author rapou
+ * ASFree.class.php
+ * 
+ * Author : Raphael Schmutz
+ * Date : 25.06.2013
+ * 
+ * Description : define the class ASFree as definited in the model
+ * 
  */
 class ASFree {
 
