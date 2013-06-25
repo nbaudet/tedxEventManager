@@ -1,9 +1,7 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 
 require_once(APP_DIR . '/core/services/functionnals/FSAccess.class.php');
 require_once(APP_DIR . '/core/services/functionnals/FSEvent.class.php');
@@ -29,23 +27,40 @@ require_once(APP_DIR . '/core/services/functionnals/FSMotivation.class.php');
  * @author rapou
  */
 class ASParticipant {
-    //Show a Keyword
+    
+    
+    /**
+     * Show a Keyword
+     * @param type $args
+     * @return type a Keyword
+     */
     public static function getKeyword($args) {
         $aKeyword = FSKeyword::getKeyword($args);
         return $aKeyword;    
     }//function 
     
-    //Show all Keywords of a Person
+
+    /**
+     * Show all Keywords of a Person
+     * @param type $aPerson
+     * @return type Keywords
+     */
     public static function getKeywordsByPerson($aPerson) {
         $keywords = FSKeyword::getKeywordsByPerson($aPerson); 
         return $keywords; 
     }//function
     
-    //Show all Keywords of a Person for an Event
+    
+    /**
+     * Show all Keywords of a Person for an Event
+     * @param type $args
+     * @return type Keywords
+     */
     public static function getKeywordsByPersonForEvent($args) {
         $keywords = FSKeyword::getKeywordsByPersonForEvent($args); 
         return $keywords; 
     }//function
+    
     
     /**
      *Returns the last Registration For a Participant To An event
@@ -54,9 +69,14 @@ class ASParticipant {
      */
     public static function getLastRegistration($args){
        return FSRegistration::getLastRegistration($args);
-   }
+   }//function
     
-    // Add Keyword To An Event For A Person
+  
+   /**
+    * Add Keyword to an Event for a Person
+    * @param type $args
+    * @return type messages
+    */
     public static function addKeywordsToAnEvent($args) {
     /*  -----------------------------------------------
         $args = array(
@@ -94,7 +114,12 @@ class ASParticipant {
         return $messages; 
     }//function
     
-    //Show all Keywords of a Person for an Event
+    
+    /**
+     * Show all Keyords of a Person foir an Event
+     * @param type $args
+     * @return type message
+     */
     public static function archiveKeyword($args) {
         $value = $args['value'];
         $anEvent = $args['event'];
@@ -115,19 +140,33 @@ class ASParticipant {
         return $message; 
     }//function
     
-    //Show a Motivation
+    /**
+     * Show a Motivation
+     * @param type $args
+     * @return type a Motivation
+     */
     public static function getMotivation($args) {
         $aMotivation = FSMotivation::getMotivation($args);
         return $aMotivation;    
     }//function 
     
-    //Show all Motivations of a Person
+
+    /**
+     * Show all Motivations of a Person
+     * @param type $aPerson
+     * @return type Motivations
+     */
     public static function getMotivationsByParticipant($aPerson) {
         $motivations = FSMotivation::getMotivationsByPerson($aPerson); 
         return $motivations; 
     }//function
     
-    //Show all Motivations of a Person for an Event
+    
+    /**
+     * Show all Motivations of a Person for an Event
+     * @param type $args
+     * @return type getMotivationsByParticipantForEvent
+     */
     public static function getMotivationsByParticipantForEvent($args) {
         return FSMotivation::getMotivationsByParticipantForEvent($args); 
     }//function
@@ -141,7 +180,8 @@ class ASParticipant {
     public static function addMotivationToAnEvent($args){
         $aMotivationForAnEvent = FSMotivation::addMotivation($args);
         return $aMotivationForAnEvent;
-    }
+    }//function
+    
     
     /**
      * Method archiveMotivationToAnEvent from SA Participant
@@ -166,9 +206,14 @@ class ASParticipant {
             $message = $messageValidMotivation;
         }
         return $message;
-    }
+    }//function
     
-    // A participant send the registration to a Validator
+
+    /**
+     * A Participant send the Registration to a Validator
+     * @param type $currentRegistration
+     * @return type message
+     */
     public static function sendRegistration($currentRegistration) {
         $newStatus = 'Sent';
         $messageValidEvent = FSEvent::getEvent($currentRegistration->getEventNo());
@@ -200,10 +245,15 @@ class ASParticipant {
         return $message; 
     }//function
     
-    // For getting the history of the registration of a Participant.
+
+    /**
+     * For getting the history of the Registration of a Participant
+     * @param type $args
+     * @return type getRegistrationHistory
+     */
     public static function getRegistrationHistory($args) {
         return FSRegistration::getRegistrationHistory($args);
-    }
+    }//function
 }
 
 ?>
