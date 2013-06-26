@@ -461,8 +461,7 @@ class FSEvent {
             $message = new Message($argsMessage);
         }//End Event valide
         return $message;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     }
     
     /**
@@ -549,19 +548,10 @@ class FSEvent {
             return $message;
         }
         return self::setEvent($argsEventToSetButArchive);
-    }
-=======
+    
     } // Function
 
 }
->>>>>>> 5e4c6a244928f6987ccb8178244d2df7963ff27e
-=======
-    } // Function
-
-}
->>>>>>> 5e4c6a244928f6987ccb8178244d2df7963ff27e
-
-
 
 // class
 ?>
