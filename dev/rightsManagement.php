@@ -7,6 +7,7 @@
  */
 require_once( '../tedx-config.php' );
 
+// DEBUG
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
 echo '<h2>Request</h2>';
@@ -17,6 +18,7 @@ if( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'logout' ) {
     $tedx_manager->logout();
 }
 
+// ALGORITHM FOR THIS USER INTERFACE
 // Is the user logged ?
 // yes -> Does he have sufficient rights ?
 //        yes -> show the menu / do the action
@@ -144,7 +146,10 @@ else {
     showMenu();
 }
 
-
+/**
+ * Shows the login form.
+ * nb: only the superadmin is allowed to manage the rights.
+ */
 function loginForm(){
     if( isset( $_REQUEST['try'] ) && $_REQUEST['try'] == 'fail' ) {
         echo '<p style="color: crimson;"><strong>Login failed</strong></p>';
@@ -159,6 +164,9 @@ function loginForm(){
         <input type="submit" value="login" />';
 }
 
+/**
+ * Shows the landing page
+ */
 function showMenu(){
     //var_dump($_SESSION);
     echo '<h2>Welcome to the rights management page</h2>
@@ -171,7 +179,10 @@ function showMenu(){
     ';
 }
 
-
+/**
+ * Shows all the members and the units they are part of.
+ * @param Mixed $members an array of Member
+ */
 function showMembers( $members ) {
     $tabOfAllUnits = getUnitsAsString();
     
@@ -180,7 +191,7 @@ function showMembers( $members ) {
     echo '<th>Login\Unit</th>';
     foreach($tabOfAllUnits as $unit){
         echo '<th>'.$unit.'</th>';
-    }
+    } // foreach
     echo '<th>Update</th></tr>'.PHP_EOL;
     
     $lineColor = 0;
@@ -195,18 +206,22 @@ function showMembers( $members ) {
 
             if( in_array( $unit, $tabUnitsOfMember ) ) {
                 echo '<td style="text-align: center;">&#10003;</td>';
-            }
+            } // if
             else {
                 echo '<td style="text-align: center; color: darkgray;">&#10005;</td>';
-            }
-        }
+            } // else
+        } // foreach
         echo '<td><a href="?action=displayMember&memberID='.$member->getID().'">Change rights</a></td></tr>'.PHP_EOL;
-    }
+    } // foreach
     echo '</table>'.PHP_EOL;
 }
 
+/**
+ * Shows all the Accesses and the Units which are allowed to use them.
+ * Also show two form: one to add an Access and one to erase an Access
+ * @param Mixed $accesses an array of Access
+ */
 function showAccesses( $accesses ) {
-    
     // Echo a form to add/delete accesses to the application
     echo '<div style="float: right;
         background-color: lightgray;
@@ -245,7 +260,7 @@ function showAccesses( $accesses ) {
     echo '<th>Access\Unit</th>';
     foreach($tabOfAllUnits as $unit){
         echo '<th>'.$unit.'</th>';
-    }
+    } // foreach
     echo '<th>Update</th></tr>'.PHP_EOL;
     
     $lineColor = 0;
@@ -260,13 +275,13 @@ function showAccesses( $accesses ) {
 
             if( in_array( $unit, $tabUnitsOfAccess ) ) {
                 echo '<td style="text-align: center;">&#10003;</td>';
-            }
+            } // if
             else {
                 echo '<td style="text-align: center; color: darkgray;">&#10005;</td>';
-            }
-        }
+            } // else
+        } // foeach
         echo '<td><a href="?action=displayAccess&AccessNo='.$access->getNo().'">Change units</a></td></tr>'.PHP_EOL;
-    }
+    } // foreach
     echo '</table>'.PHP_EOL;
 }
 
@@ -290,20 +305,20 @@ function showMember() {
         foreach ( $tabOfAllUnits as $unit ) {
             if( in_array( $unit, $tabUnitsOfMember ) ) {
                 echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" checked />';
-            }
+            } // if
             else {
                 echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" />';
-            }
+            } // else
             echo '<label for="'.$unit.'">'.$unit.'</label>'.PHP_EOL;
             echo '<br />'.PHP_EOL;
-        }
+        } // foreach
         
         echo '<input type="submit" value="Change rights" />
             </form>';
-    }
+    } // if
     else {
         echo 'Error: no member set.';
-    }
+    } // else
 }
 
 
@@ -326,22 +341,28 @@ function showAccess() {
         foreach ( $tabOfAllUnits as $unit ) {
             if( in_array( $unit, $tabUnitsOfAccess ) ) {
                 echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" checked />';
-            }
+            } // if
             else {
                 echo '<input type="checkbox" id="'.$unit.'" name="'.$unit.'" />';
-            }
+            } // else
             echo '<label for="'.$unit.'">'.$unit.'</label>'.PHP_EOL;
             echo '<br />'.PHP_EOL;
-        }
+        } // foreach
         
         echo '<input type="submit" value="Change Units" />
             </form>';
-    }
+    } // if
     else {
         echo 'Error: no Access set.';
-    }
+    } // else
 }
 
+/**
+ * Updates the units a Member is part of.
+ * When we unset a Unit, it is archived. So, when we set one, we first check if
+ * there is an archived one, and we dearchived it.
+ * @global Tedx_manager $tedx_manager
+ */
 function updateMember() {
     
     global $tedx_manager;
@@ -365,7 +386,7 @@ function updateMember() {
             if( isset( $checkedUnits[$unit] ) ) {
                 // do nothing
                 //echo $unit.' already granted<br />';
-            }
+            } // if
             // Change this right
             else {
                 // change the right
@@ -376,8 +397,8 @@ function updateMember() {
                     'unit'   => $objectUnit
                 );
                 FSMembership::upsertMembership( $args );
-            }
-        }
+            } // else
+        } // if
         
         // If this access was not yet granted
         else {
@@ -395,15 +416,14 @@ function updateMember() {
             else {
                 // do nothing
                 //echo $unit.' already not granted<br />';
-            }
-            
-        }
-    }
+            } // else
+        } // else
+    } // foreach
     showMember();
 }
 
 /**
- * 
+ * Updates the Units an Access lets access to.
  * @global Tedx_manager $tedx_manager
  */
 function updateAccess() {
@@ -432,7 +452,7 @@ function updateAccess() {
             if( isset( $checkedUnits[$unit] ) ) {
                 // do nothing
                 //echo $unit.' already granted<br />';
-            }
+            } // if
             // Change this right
             else {
                 // change the right
@@ -443,8 +463,8 @@ function updateAccess() {
                     'unit'   => $objectUnit
                 );
                 FSPermission::upsertPermission( $args );
-            }
-        }
+            } // else
+        } // if
         
         // If this access was not yet granted
         else {
@@ -458,19 +478,19 @@ function updateAccess() {
                     'unit'   => $objectUnit
                 );
                 $message = FSPermission::upsertPermission( $args );
-            }
+            } // if
             else {
                 // do nothing
                 //echo $unit.' already not granted<br />';
-            }
-            
-        }
-    }
+            } // else
+        } // else
+    } // foreach
     showAccess();
 }
 
 /**
- * Get all the existing units and make an array with their names
+ * Get all the existing units and make an array with their names.
+ * The array of is then ordered by Unit, following their rank.
  * @return String Array of all the units' names
  */
 function getUnitsAsString() {
@@ -486,9 +506,9 @@ function getUnitsAsString() {
 }
 
 /**
- * Get all the units of a member and make an array
+ * Get all the units of a member and make an array.
  * @param Member The member to get the units from.
- * @return Mixed An array with units
+ * @return Mixed An array with units OR null
  */
 function getUnitsFromMember( $member ) {
     $unitsOfMember = FSUnit::getUnitsFromMember( $member )->getContent();
@@ -505,6 +525,11 @@ function getUnitsFromMember( $member ) {
     return $tabUnitsOfMember;
 }
 
+/**
+ * Get all the units from an access and make an array.
+ * @param Access $access
+ * @return Mixed An array with accesses OR null
+ */
 function getUnitsFromAccess( $access ) {
     $unitsFromAccess = FSUnit::getUnitsFromAccess( $access )->getContent();
     $tabAccessesOfUnit = array();
