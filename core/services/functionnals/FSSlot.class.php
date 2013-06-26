@@ -269,6 +269,57 @@ class FSSlot {
         return $return;
     }//function
     
+    /**
+     * Set new parameters to a Slot
+     * @param Slot $aSlotToSet
+     * @return Message containing the setted Slot
+     */
+    public static function setSlot($aSlotToSet) {
+        global $crud;
+        $messageValidEvent = FSEvent::getEvent($aSlotToSet->getEventNo());
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $argsSlot = array('no' => $aSlotToSet->getNo(), 'event' => $aValidEvent);
+            $messageValidSlot = self::getSlot($argsSlot);
+            if ($messageValidSlot->getStatus()) {
+                $aValidSlot = $messageValidSlot->getContent();
+                $sql = "UPDATE  Location SET  
+                    HappeningDate =     '" . $aSlotToSet->getHappeningDate() . "',
+                    StartingTime =   '" . $aSlotToSet->getStartingTime() . "',
+                    EndingTime =       '" . $aSlotToSet->getEndingTime() . "',
+                    IsArchived =    '" . $aSlotToSet->getIsArchived() . "'
+                    WHERE  Slot.No = " . $aValidSlot->getNo() . "
+                    AND Slot.EventNo = ". $aValidEvent->getNo();
+                
+                if ($crud->exec($sql) == 1) {
+                    
+                    $aSettedSlot = FSSlot::getSlot($argsSlot)->getContent();
+
+                    $argsMessage = array(
+                        'messageNumber' => 453,
+                        'message' => 'Slot setted !',
+                        'status' => true,
+                        'content' => $aSettedSlot
+                    );
+                    $message = new Message($argsMessage);
+                } else {
+                    $argsMessage = array(
+                        'messageNumber' => 454,
+                        'message' => 'Error while setting Slot',
+                        'status' => false,
+                        'content' => NULL
+                    );
+                    $message = new Message($argsMessage);
+                }
+            } else {
+                $message = $messageValidSlot;
+            }
+        } else {
+            $message = $messageValidEvent;
+        }
+        return $message;
+    }//function
+    
 }//class
 
 ?>
