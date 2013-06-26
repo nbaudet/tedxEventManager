@@ -249,7 +249,7 @@ class FSPerson {
                 Country =       '" . $aPersonToSet->getCountry() . "',
                 PhoneNumber =   '" . $aPersonToSet->getPhoneNumber() . "',
                 Email =         '" . $aFreeEmail . "',
-                Description =   '" . $aPersonToSet->getDescription() . "',
+                Description =   '" . addslashes($aPersonToSet->getDescription()) . "',
                 IsArchived =    '" . $aPersonToSet->getIsArchived() . "'
                 WHERE  Person.No = " . $aPersonToSet->getNo();
 
