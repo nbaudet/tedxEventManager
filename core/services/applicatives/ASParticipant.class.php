@@ -118,7 +118,7 @@ class ASParticipant {
     
     
     /**
-     * Show all Keyords of a Person foir an Event
+     * Show all Keywords of a Person foir an Event
      * @param type $args
      * @return type message
      */

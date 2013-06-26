@@ -975,6 +975,25 @@ class Tedx_manager{
         return $message;
     }//function
     
+    /**
+     * Set an Event but let it non archived
+     * @param type $args
+     * @return type message
+     */
+    public function setEventAndLetArchive( $args ) {    
+        $messageAccess = $this->isGranted( "setEventAndLetArchive" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::setEventAndLetArchive( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+     
+        
+    
+    
     /*==========================================================================
      * 
      * VALIDATOR FUNCTIONS

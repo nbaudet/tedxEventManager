@@ -425,6 +425,13 @@ class ASOrganizer {
         return $return;
     }
 
+     /**
+     * Applicative service to set an Event but let it non archived
+     * @return type message
+     */
+    public static function setEventAndLetArchive($args) {
+        return FSEvent::setEventAndLetArchive($args);
+    }
 //function
 }
 
