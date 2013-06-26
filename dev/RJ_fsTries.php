@@ -17,28 +17,21 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
    $tedx_manager->login("admin", "admin");
  
    
-  echo '<h1> Set an event and let Archived </h1>';
-  
-  $anEventNo = 1;
-  
-  $anEventToSet = array(
-        'no' => $anEventNo //,
-        //'mainTopic' => '',
-        //'locationName' => '',
-        //'description' => '',
-        //'startingDate' => '',
-        //'endingDate' => '',
-        //'startingTime' => '',
-        //'endingTime' => '',
-        //'locationName' => ''
-  );
-  
-  $anArchivedEvent = $tedx_manager->setEventAndLetArchive($anEventToSet);
-// if the Motivation is archived successfully
-if( $anArchivedEvent->getStatus())
-    echo 'Congrats! ' . $anArchivedEvent->getMessage();
-else
-    echo 'Error! ' . $anArchivedEvent->getMessage();
+  echo '<h1> Get Slot </h1>';
+
+  // Object Event
+    $anEvent = FSEvent::getEvent(1)->getContent();;
+
+    $args = array(
+        'no'            =>  2,
+        'event'       =>  $anEvent
+    );
+    $messageGetSlot = $tedx_manager->getSlot($args);
+    // Message
+    if( $messageGetSlot->getStatus())
+        echo 'Congrats! ' . $messageGetSlot->getMessage();
+    else
+    echo 'Error! ' . $messageGetSlot->getMessage();
   
 /*$motivationText = 'An awesome motivation for an awesome participant. Oh yeah!!';
 // object Event

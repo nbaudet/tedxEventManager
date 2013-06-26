@@ -56,7 +56,6 @@ class Tedx_manager{
      */
     public function __construct(){
         $this->asAuth = new ASAuth();
-        $this->stub   = new Stub();  //new object Stub 
     } // construct
     
     
@@ -1233,20 +1232,6 @@ class Tedx_manager{
         }
         return $message;
     }
-    
-    
-    
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
-    
-    
-    /**
-     * Add a Speaker to a Slot
-     * @param type $args
-     * @return type stub assspeaker to slot
-     */
-    public function addSpeakerToSlot( $args ) {
-        return $this->stub->addSpeakerToSlot( $args ); 
-    }//function
     
         
 }//class
