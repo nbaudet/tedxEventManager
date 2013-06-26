@@ -252,23 +252,12 @@ class FSLocation{
                 City =   '" . $aLocationToSet->getCity() . "',
                 Country =       '" . $aLocationToSet->getCountry() . "',
                 Direction =          '" . $aLocationToSet->getDirection() . "',
-                IsArchived =    '" . $aLocationToSet->getIsArchived() . "'
-                WHERE  Location.Name = " . $aValidLocation->getName();
+                IsArchived =    " . $aLocationToSet->getIsArchived() . "
+                WHERE  Location.Name = '" . $aValidLocation->getName() . "'";
 
             if ($crud->exec($sql) == 1) {
-                $sql = "SELECT * FROM Location WHERE No = " . $aValidLocation->getName();
-                $data = $crud->getRow($sql);
 
-                $argsLocation = array(
-                    'name'          => $data['Name'],
-                    'address'       => $data['Address'],
-                    'city'          => $data['City'],
-                    'country'       => $data['Country'],
-                    'direction'     => $data['Direction'],
-                    'isArchived'    => $data['IsArchived']
-                );
-
-                $aSettedLocation = new Location($argsLocation);
+                $aSettedLocation = FSLocation::getLocation($aLocationToSet->getName())->getContent();
 
                 $argsMessage = array(
                     'messageNumber' => 451,

@@ -293,19 +293,19 @@ class FSSlot {
                 
                 if ($crud->exec($sql) == 1) {
                     
-                    $aSettedLocation = FSSlot::getSlot($argsSlot);
+                    $aSettedSlot = FSSlot::getSlot($argsSlot)->getContent();
 
                     $argsMessage = array(
-                        'messageNumber' => 451,
-                        'message' => 'Location setted !',
+                        'messageNumber' => 453,
+                        'message' => 'Slot setted !',
                         'status' => true,
-                        'content' => $aSettedLocation
+                        'content' => $aSettedSlot
                     );
                     $message = new Message($argsMessage);
                 } else {
                     $argsMessage = array(
-                        'messageNumber' => 132,
-                        'message' => 'Error while setting Location',
+                        'messageNumber' => 454,
+                        'message' => 'Error while setting Slot',
                         'status' => false,
                         'content' => NULL
                     );
