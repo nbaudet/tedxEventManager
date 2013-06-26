@@ -428,7 +428,7 @@ class FSMember {
                 PersonNo =     '" . $aMemberToSet->getPersonNo() . "',
                 IsArchived =   '" . $aMemberToSet->getIsArchived() . "'
                 WHERE  Member.ID = '" . $aValidMember->getId() . "'";
-            echo $sql;
+
             if ($crud->exec($sql) == 1) {
                 
                 $sql = "SELECT * FROM Member WHERE ID = '" . $aValidMember->getId() . "'";
