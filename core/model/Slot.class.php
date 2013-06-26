@@ -113,8 +113,8 @@ class Slot {
      * set happeningDate
      * @param type $happeningDate 
      */
-    public function setHappeingDate($happeningDate) {
-        return $this->happeningDate; 
+    public function setHappeningDate($happeningDate) {
+        $this->happeningDate = $happeningDate; 
     }//function
     
       

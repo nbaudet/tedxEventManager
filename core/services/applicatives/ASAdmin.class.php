@@ -199,6 +199,8 @@ class ASAdmin {
         $aLinkedTeamRole = FSTeamRole::setTeamRole($args);
         return $aLinkedTeamRole;
     }
-}
+    
+}// class
+
 
 ?>

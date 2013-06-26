@@ -157,27 +157,6 @@ class ASOrganizer {
 //function
 
     /**
-     * Set an Event
-     * @param type $args
-     */
-    public static function setEvent($args) {
-        /* $anEventToUpdate = ($args['event']);
-          $anEventToUpdate->setLocationName($args['locationName']);
-          $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
-          return $aChangedEventLocation; */
-    }
-
-    /**
-     * Change a Slot
-     * @param type $args
-     */
-    public static function changeSlot($args) {
-        
-    }
-
-//function
-
-    /**
      * Applicative service to add a slot to an event
      * @param type $args, the event and the slot parameter.
      * @return type message
@@ -425,8 +404,183 @@ class ASOrganizer {
         return $return;
     }
 
-//function
+    /**
+     * Edit the parameter of the event.
+     * @param array $args the news arguments 
+     * @return type message
+     */
+    public static function changeEvent($args) {
+        /*
+          $argsEvent = array(
+            'no' => $row['No'],
+            'mainTopic' => $row['MainTopic'],
+            'description' => $row['Description'],
+            'startingDate' => $row['StartingDate'],
+            'endingDate' => $row['EndingDate'],
+            'startingTime' => $row['StartingTime'],
+            'endingTime' => $row['EndingTime'],
+          );
+        */
+        $messageValidEvent = FSEvent::getEvent($args['no']);
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $anEventToSet = self::setEvent($aValidEvent, $args);
+            $messageSetEvent = FSEvent::setEvent($anEventToSet);
+            $finalMessage = $messageSetEvent;
+        } else {
+            $finalMessage = $messageValidEvent;
+        }
+        return $finalMessage;
+    }//function
+    
+    /**
+     * Edit the parameter of a Location.
+     * @param array $args the news arguments and the ID of the Person
+     * @return type message
+     */
+    public static function changeLocation($args) {
+        /*
+            $argsLocation = array(
+                'name'          => $data['Name'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'direction'     => $data['Direction'],
+            );
+        */
+        $messageValidLocation = FSLocation::getLocation($args['name']);
+        if ($messageValidLocation->getStatus()) {
+            $aValidLocation = $messageValidLocation->getContent();
+            $anLocationToSet = self::setLocation($aValidLocation, $args);
+            $messageSetLocation = FSLocation::setLocation($anLocationToSet);
+            $finalMessage = $messageSetLocation;
+        } else {
+            $finalMessage = $messageValidLocation;
+        }
+        return $finalMessage;
+    }//function
+    
+    
+    /**
+     * Edit the parameters of a Slot.
+     * @param array $args the news arguments and the ID
+     * @return Message
+     */
+    public static function changeSlot($args) {
+        /*
+            $argsSlot = array(
+                'no'          => $data['No'],
+                'event'       => $anEvent,
+                'happeningDate' => $data['HappeningDate'],
+                'startingTime'  => $data['StartingTime'],
+                'endingTime'    => $data['EndingTime'],
+            );
+        */
+        $messageValidSlot = FSSlot::getSlot($args);
+        if ($messageValidSlot->getStatus()) {
+            $aValidSlot = $messageValidSlot->getContent();
+            $aSlotToSet = self::setSlot($aValidSlot, $args);
+            $messageSetSlot = FSSlot::setSlot($aSlotToSet);
+            $finalMessage = $messageSetSlot;
+        } else {
+            $finalMessage = $messageValidSlot;
+        }
+        return $finalMessage;
+    }//function
+    
+    /**
+     * Set Event
+     * @param Event $aValidPerson
+     * @param array $argsToSet
+     * @return Event a valid Event
+     */
+    private static function setEvent($aValidEvent, $argsToSet) {
+        /*
+          $argsEvent = array(
+            'mainTopic' => $row['MainTopic'],
+            'description' => $row['Description'],
+            'startingDate' => $row['StartingDate'],
+            'endingDate' => $row['EndingDate'],
+            'startingTime' => $row['StartingTime'],
+            'endingTime' => $row['EndingTime'],
+          );
+         */
+        foreach($argsToSet as $key => $arg){
+            switch ($key) {
+                case 'mainTopic':
+                    $aValidEvent->setMainTopic($arg);
+                    break; 
+                case 'description':
+                    $aValidEvent->setDescription($arg);
+                    break;
+                case 'startingDate':
+                    $aValidEvent->setStartingDate($arg);
+                    break;
+                case 'endingDate':
+                    $aValidEvent->setEndingDate($arg);
+                    break; 
+                case 'startingTime':
+                    $aValidEvent->setStartingTime($arg);
+                    break;
+                case 'endingTime':
+                    $aValidEvent->setEndingTime($arg);
+                    break;
+            } // Switch
+        } // Foreach
+        return $aValidEvent;
+    }// function
+    
+    private static function setLocation($aValidLocation, $argsToSet) {
+        /*
+          $argsLocation = array(
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'direction'     => $data['Direction'],
+            );
+         */
+        foreach($argsToSet as $key => $arg){
+            switch ($key) {
+                case 'address':
+                    $aValidLocation->setAddress($arg);
+                    break; 
+                case 'city':
+                    $aValidLocation->setCity($arg);
+                    break; 
+                case 'country':
+                    $aValidLocation->setCountry($arg);
+                    break; 
+                case 'direction':
+                    $aValidLocation->setDirection($arg);
+                    break;
+            } // Switch
+        } // Foreach
+        return $aValidLocation;
+    }// function
+    
+    private static function setSlot($aValidSlot, $argsToSet) {
+        /*
+           $argsSlot = array(
+                'happeningDate' => $data['HappeningDate'],
+                'startingTime'  => $data['StartingTime'],
+                'endingTime'    => $data['EndingTime'],
+            );
+         */
+        foreach($argsToSet as $key => $arg){
+            switch ($key) {
+                case 'happeningDate':
+                    $aValidSlot->setHappeningDate($arg);
+                    break; 
+               case 'startingTime':
+                    $aValidSlot->setStartingTime($arg);
+                    break;
+               case 'endingTime':
+                    $aValidSlot->setEndingTime($arg);
+                    break;
+            } // Switch
+        } // Foreach
+        return $aValidSlot;
+    }// function
 }
-
 //class
 ?>

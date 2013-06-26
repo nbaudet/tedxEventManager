@@ -179,6 +179,7 @@ class FSPerson {
         } else {
             $description = addslashes($args['description']);
         }
+        $address = addslashes($args['address']);
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . addslashes($args['name']) . "', '" . addslashes($args['firstname']) . "', '" . addslashes($args['dateOfBirth']) . "', '" . addslashes($args['address']) . "', '" . addslashes($args['city']) . "', '" . addslashes($args['country']) . "', '" . addslashes($args['phoneNumber']) . "', '" . addslashes($args['email']) . "', '" . $description . "')";
 
         $messageFreeEmail = self::checkFreeEmail(array('email' => $args['email']));
@@ -190,17 +191,17 @@ class FSPerson {
                 $data = $crud->getRow($sql);
 
                 $argsPerson = array(
-                    'no' => $data['No'],
-                    'name' => $data['Name'],
-                    'firstname' => $data['Firstname'],
-                    'dateOfBirth' => $data['DateOfBirth'],
-                    'address' => $data['Address'],
-                    'city' => $data['City'],
-                    'country' => $data['Country'],
-                    'phoneNumber' => $data['PhoneNumber'],
-                    'email' => $aFreeEmail,
-                    'description' => $data['Description'],
-                    'isArchived' => $data['IsArchived']
+                    'no'            => $data['No'],
+                    'name'          => addslashes($data['Name']),
+                    'firstname'     => addslashes($data['Firstname']),
+                    'dateOfBirth'   => $data['DateOfBirth'],
+                    'address'       => addslashes($address),
+                    'city'          => addslashes($data['City']),
+                    'country'       => addslashes($data['Country']),
+                    'phoneNumber'   => $data['PhoneNumber'],
+                    'email'         => $aFreeEmail,
+                    'description'   => $description,
+                    'isArchived'    => $data['IsArchived']
                 );
 
                 $person = new Person($argsPerson);
@@ -240,15 +241,15 @@ class FSPerson {
         if ($messageFreeEmail->getStatus()) {
             $aFreeEmail = $messageFreeEmail->getContent();
             $sql = "UPDATE  Person SET  
-                Name =          '" . $aPersonToSet->getName() . "',
-                Firstname =     '" . $aPersonToSet->getFirstname() . "',
+                Name =          '" . addslashes($aPersonToSet->getName()) . "',
+                Firstname =     '" . addslashes($aPersonToSet->getFirstname()) . "',
                 DateOfBirth =   '" . $aPersonToSet->getDateOfBirth() . "',
-                Address =       '" . $aPersonToSet->getAddress() . "',
-                City =          '" . $aPersonToSet->getCity() . "',
-                Country =       '" . $aPersonToSet->getCountry() . "',
+                Address =       '" . addslashes($aPersonToSet->getAddress()) . "',
+                City =          '" . addslashes($aPersonToSet->getCity()) . "',
+                Country =       '" . addslashes($aPersonToSet->getCountry()) . "',
                 PhoneNumber =   '" . $aPersonToSet->getPhoneNumber() . "',
                 Email =         '" . $aFreeEmail . "',
-                Description =   '" . $aPersonToSet->getDescription() . "',
+                Description =   '" . addslashes($aPersonToSet->getDescription()) . "',
                 IsArchived =    '" . $aPersonToSet->getIsArchived() . "'
                 WHERE  Person.No = " . $aPersonToSet->getNo();
 

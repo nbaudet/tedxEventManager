@@ -236,6 +236,51 @@ class FSLocation{
         return $message;
     }// function
     
+    
+     /**
+     * Set new parameters to a Location
+     * @param Location $aLocationToSet
+     * @return Message containing the setted Location
+     */
+    public static function setLocation($aLocationToSet) {
+        global $crud;
+        $messageValidLocation = self::getLocation($aLocationToSet->getName());
+        if ($messageValidLocation->getStatus()) {
+            $aValidLocation = $messageValidLocation->getContent();
+            $sql = "UPDATE  Location SET  
+                Address =     '" . $aLocationToSet->getAddress() . "',
+                City =   '" . $aLocationToSet->getCity() . "',
+                Country =       '" . $aLocationToSet->getCountry() . "',
+                Direction =          '" . $aLocationToSet->getDirection() . "',
+                IsArchived =    " . $aLocationToSet->getIsArchived() . "
+                WHERE  Location.Name = '" . $aValidLocation->getName() . "'";
+
+            if ($crud->exec($sql) == 1) {
+
+                $aSettedLocation = FSLocation::getLocation($aLocationToSet->getName())->getContent();
+
+                $argsMessage = array(
+                    'messageNumber' => 451,
+                    'message' => 'Location setted !',
+                    'status' => true,
+                    'content' => $aSettedLocation
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 452,
+                    'message' => 'Error while setting Location',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
+        } else {
+            $message = $messageValidLocation;
+        }
+        return $message;
+    }//function
+    
  }// class
     
 ?>

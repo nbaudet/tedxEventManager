@@ -324,9 +324,9 @@ class FSMotivation{
                         // Do nothing, because the motivation already exists
                         $argsMessage = array(
                         'messageNumber' => 223,
-                        'message'       => 'Existant Motivation',
-                        'status'        => true,
-                        'content'       => $messageExistingMotivation->getContent()
+                        'message'       => 'Already existant Motivation',
+                        'status'        => false,
+                        'content'       => null
                         );
                         $return = new Message($argsMessage);
                     }
@@ -354,7 +354,7 @@ class FSMotivation{
         else {
             $argsMessage = array(
                     'messageNumber' => 045,
-                    'message'       => 'Missing Participant or Event argument',
+                    'message'       => 'Wrong or Missing Participant or Event argument',
                     'status'        => FALSE,
                 );
                 $return = new Message($argsMessage);
@@ -423,8 +423,8 @@ $return = new Message($argsMessage);*/
     
     /**
      * Archive a Motivation
-     * @param Keyword $aKeywordToSet
-     * @return Message containing the archived Keyword
+     * @param Motivation $aMotivationToSet
+     * @return Message containing the archived Motivation
      */
     public static function archiveMotivation($aMotivationToArchive) {
         return self::setMotivation($aMotivationToArchive);

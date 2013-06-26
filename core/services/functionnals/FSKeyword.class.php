@@ -167,12 +167,10 @@ class FSKeyword {
                 AND Keyword.EventNo = " . $aKeywordToSet->getEventNo() . "
                 AND Keyword.PersonNo = " . $aKeywordToSet->getPersonNo();
 
-                            var_dump($sql);
-
+                           
             if ($crud->exec($sql) == 1) {
                 $sql = "SELECT * FROM Keyword WHERE Value = '" . $aKeywordToSet->getValue() . "' AND EventNo = " . $aKeywordToSet->getEventNo() . " AND PersonNo = " . $aKeywordToSet->getPersonNo();
                 $data = $crud->getRow($sql);
-                var_dump($data);
                 $argsKeyword = array(
                     'value' => $data['Value'],
                     'eventNo' => $data['EventNo'],

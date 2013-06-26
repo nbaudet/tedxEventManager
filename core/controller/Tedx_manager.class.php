@@ -56,7 +56,6 @@ class Tedx_manager{
      */
     public function __construct(){
         $this->asAuth = new ASAuth();
-        $this->stub   = new Stub();  //new object Stub 
     } // construct
     
     
@@ -663,6 +662,7 @@ class Tedx_manager{
         return $messagePersonLogged;
     }// function
     
+    
     /*==========================================================================
      * 
      * PARTICIPANT FUNCTIONS
@@ -975,6 +975,70 @@ class Tedx_manager{
         return $message;
     }//function
     
+    /**
+     * Set an Event but let it non archived
+     * @param type $args
+     * @return type message
+     */
+    public function setEventAndLetArchive( $args ) {    
+        $messageAccess = $this->isGranted( "setEventAndLetArchive" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::setEventAndLetArchive( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+     
+    /**
+     * Change the parameters of an Event
+     * @param array $args
+     * @return Message with the changed Event
+     */
+    public function changeEvent( $args ) {    
+        $messageAccess = $this->isGranted( "changeEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }    
+    
+    /**
+     * Change the parameters of a Location
+     * @param array $args
+     * @return Message with the changed Location
+     */
+    public function changeLocation( $args ) {    
+        $messageAccess = $this->isGranted( "changeLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeLocation( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+    
+    /**
+     * Change the parameters of a Slot
+     * @param array $args
+     * @return Message with the changed Slot
+     */
+    public function changeSlot( $args ) {    
+        $messageAccess = $this->isGranted( "changeSlot" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeSlot( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+    
     /*==========================================================================
      * 
      * VALIDATOR FUNCTIONS
@@ -1204,20 +1268,6 @@ class Tedx_manager{
         }
         return $message;
     }
-    
-    
-    
-    //---------Appel des fonctions qui se trouvent dans la classe Stub.class.php----------
-    
-    
-    /**
-     * Add a Speaker to a Slot
-     * @param type $args
-     * @return type stub assspeaker to slot
-     */
-    public function addSpeakerToSlot( $args ) {
-        return $this->stub->addSpeakerToSlot( $args ); 
-    }//function
     
         
 }//class

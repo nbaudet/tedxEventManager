@@ -48,10 +48,10 @@ class FSTalk{
                                 $argsTalk = array(
                                     'eventNo'            => $data['EventNo'],
                                     'speakerPersonNo'    => $data['SpeakerPersonNo'],
-                                    'videoTitle'    => $data['VideoTitle'],
-                                    'videoDescription'    => $data['VideoDescription'],
-                                    'videoURL'    => $data['VideoURL'],
-                                    'isArchived'    => $data['IsArchived']
+                                    'videoTitle'         => $data['VideoTitle'],
+                                    'videoDescription'   => $data['VideoDescription'],
+                                    'videoURL'           => $data['VideoURL'],
+                                    'isArchived'         => $data['IsArchived']
                                 );
 
                                 $talk = new Talk($argsTalk);
@@ -131,10 +131,10 @@ class FSTalk{
                 $argsTalks = array(
                     'eventNo'            => $row['EventNo'],
                     'speakerPersonNo'    => $row['SpeakerPersonNo'],
-                    'videoTitle'    => $row['VideoTitle'],
-                    'videoDescription'    => $row['VideoDescription'],
-                    'videoURL'    => $row['VideoURL'],
-                    'isArchived'    => $row['IsArchived']
+                    'videoTitle'         => $row['VideoTitle'],
+                    'videoDescription'   => $row['VideoDescription'],
+                    'videoURL'           => $row['VideoURL'],
+                    'isArchived'         => $row['IsArchived']
                   );
             
                 $talks[] = new Talk($argsTalks);
@@ -401,6 +401,60 @@ class FSTalk{
         }
         
         return $return;
+    }//function
+    
+    /**
+     * Set new parameters to a Talk
+     * @param Talk $aTalkToSet
+     * @return Message containing the setted Talk
+     */
+    public static function setTalk($aTalkToSet) {
+        global $crud;
+        
+        $speaker = FSSpeaker::getSpeaker($aTalkToSet->getSpeakerPersonNo())->getContent();
+        $event = FSEvent::getEvent($aTalkToSet->getEventNo())->getContent();
+        
+        $argsGetTalk = array(
+            'speaker'  => $speaker,
+            'event'    => $event
+        );
+        
+        $messageValidTalk = self::getTalk($argsGetTalk);
+        
+        if ($messageValidTalk->getStatus()) {
+            //$aValidTalk = $messageValidTalk->getContent();
+            $sql = "UPDATE  Talk SET  
+                VideoTitle       = '" . $aTalkToSet->getVideoTitle() . "',
+                VideoDescription = '" . $aTalkToSet->getVideoDescription() . "',
+                VideoURL         = '" . $aTalkToSet->getVideoURL() . "',
+                IsArchived       =  " . $aTalkToSet->getIsArchived() . "
+                WHERE   EventNo  =  " . $event->getNo() . " AND
+                SpeakerPersonNo  =  " . $speaker->getNo();
+            
+            if ($crud->exec($sql) == 1) {
+
+                $aSettedTalk = self::getTalk($argsGetTalk);
+
+                $argsMessage = array(
+                    'messageNumber' => 176,
+                    'message' => 'Talk setted !',
+                    'status' => true,
+                    'content' => $aSettedTalk
+                );
+                $message = new Message($argsMessage);
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 177,
+                    'message' => 'Error while setting Talk',
+                    'status' => false,
+                    'content' => NULL
+                );
+                $message = new Message($argsMessage);
+            }
+        } else {
+            $message = $messageValidTalk;
+        }
+        return $message;
     }//function
     
  }//class

@@ -26,8 +26,23 @@ require_once(APP_DIR .'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
+$speaker = $tedx_manager->getSpeaker(6)->getContent();
+$event = $tedx_manager->getEvent(15)->getContent();
 
+$arrayTalkToSet = array(
+    'eventNo'            => 15,
+    'speakerPersonNo'    => 6,
+    'videoTitle'         => 'Video title of the year',
+    'videoDescription'   => "This video is about a crazy cat fighting with an orange",
+    'videoURL'           => "www.youtube.com",
+    'isArchived'         => 0
+);
 
+$aTalkToSet = new Talk($arrayTalkToSet);
+var_dump($aTalkToSet);
+
+var_dump(FSTalk::setTalk($aTalkToSet));
+/*------------------------
 $speaker = $tedx_manager->getSpeaker(24)->getContent();
 var_dump($speaker);
 
@@ -54,7 +69,7 @@ $argsAddSpeakerToPlace = array(
 );
 
 var_dump(ASOrganizer::addSpeakerToPlace($argsAddSpeakerToPlace));
-
+*/
 //$organizer = $tedx_manager->getOrganizer(4)->getContent();
 //var_dump($tedx_manager->getTeamRolesByOrganizer($organizer));
 

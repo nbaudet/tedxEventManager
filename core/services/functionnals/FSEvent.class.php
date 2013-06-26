@@ -202,7 +202,7 @@ class FSEvent {
                 '" . $args['endingDate'] . "', 
                 '" . $args['startingTime'] . "', 
                 '" . $args['endingTime'] . "',
-                '" . $args['locationName'] . "'
+                '" . addslashes($args['locationName']) . "'
         );";
         } else {
             $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
@@ -228,12 +228,12 @@ class FSEvent {
                 'no' => $data['No'],
                 'mainTopic' => $data['MainTopic'],
                 'locationName' => $data['LocationName'],
-                'description' => $data['Description'],
+                'description' => addslashes($data['Description']),
                 'startingDate' => $data['StartingDate'],
                 'endingDate' => $data['EndingDate'],
                 'startingTime' => $data['StartingTime'],
                 'endingTime' => $data['EndingTime'],
-                'locationName' => $data['LocationName'],
+                'locationName' => addslashes($data['LocationName']),
                 'isArchived' => $data['IsArchived']
             );
 
@@ -355,7 +355,7 @@ class FSEvent {
     /**
      * Set Event
      * @global type $crud
-     * @param type $anEventToSet
+     * @param Event $anEventToSet
      * @return \Message
      */
     public static function setEvent($anEventToSet) {
@@ -392,7 +392,7 @@ class FSEvent {
             } else {
                 $sql = "UPDATE  Event SET  
                  MainTopic = '" . $anEventToSet->getMainTopic() . "',
-                 Description = '" . $anEventToSet->getDescription() . "',
+                 Description = '" . addslashes($anEventToSet->getDescription()) . "',
                  StartingDate = '" . $anEventToSet->getStartingDate() . "',
                  EndingDate = '" . $anEventToSet->getEndingDate() . "',
                  StartingTime = '" . $anEventToSet->getStartingTime() . "',
@@ -412,8 +412,8 @@ class FSEvent {
                     $argsMotivation = array(
                         'no' => $anEventToSet->getNo(),
                         'mainTopic' => $anEventToSet->getMainTopic(),
-                        'locationName' => $anEventToSet->getLocationName(),
-                        'description' => $anEventToSet->getDescription(),
+                        'locationName' => addslashes($anEventToSet->getLocationName()),
+                        'description' => addslashes($anEventToSet->getDescription()),
                         'startingDate' => $anEventToSet->getStartingDate(),
                         'endingDate' => $anEventToSet->getEndingDate(),
                         'startingTime' => $anEventToSet->getStartingTime(),
@@ -424,7 +424,7 @@ class FSEvent {
                     $argsMotivation = array(
                         'no' => $anEventToSet->getNo(),
                         'mainTopic' => $anEventToSet->getMainTopic(),
-                        'description' => $anEventToSet->getDescription(),
+                        'description' => addslashes($anEventToSet->getDescription()),
                         'startingDate' => $anEventToSet->getStartingDate(),
                         'endingDate' => $anEventToSet->getEndingDate(),
                         'startingTime' => $anEventToSet->getStartingTime(),
@@ -461,9 +461,8 @@ class FSEvent {
             $message = new Message($argsMessage);
         }//End Event valide
         return $message;
-    }
-
-}//function
+    }   
+}
 
 // class
 ?>

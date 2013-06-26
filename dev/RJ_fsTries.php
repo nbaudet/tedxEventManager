@@ -16,11 +16,48 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 
    $tedx_manager->login("admin", "admin");
  
-   $text = 'TEST';
+   
+  echo '<h1> Get Slot </h1>';
+
+  // Object Event
+    $anEvent = FSEvent::getEvent(1)->getContent();;
+
+    $args = array(
+        'no'            =>  2,
+        'event'       =>  $anEvent
+    );
+    $messageGetSlot = $tedx_manager->getSlot($args);
+    // Message
+    if( $messageGetSlot->getStatus())
+        echo 'Congrats! ' . $messageGetSlot->getMessage();
+    else
+    echo 'Error! ' . $messageGetSlot->getMessage();
+  
+/*$motivationText = 'An awesome motivation for an awesome participant. Oh yeah!!';
+// object Event
+$anEvent = FSEvent::getEvent(41)->getContent();
+// object Participant
+$aParticipant = FSParticipant::getParticipant(42)->getContent();
+ 
+$aMotivationToArchive = array(
+    'text'         => $motivationText, // An Motivation text string
+    'event'        => $anEvent,
+    'participant'  => $aParticipant
+);
+// archive Motivation
+$motivationArchiveMotivationToAnEvent = $tedx_manager->archiveMotivationToAnEvent($aMotivationToArchive);
+// if the Motivation is archived successfully
+if( $motivationArchiveMotivationToAnEvent->getStatus())
+    echo 'Congrats! ' . $motivationArchiveMotivationToAnEvent->getMessage();
+else
+    echo 'Error! ' . $motivationArchiveMotivationToAnEvent->getMessage();
+   
+   
+  /* $text = 'TEST5';
 // object Event
 $anEvent = FSEvent::getEvent(100)->getContent();
 // object Participant
-$aParticipant = FSParticipant::getParticipant(4)->getContent();
+$aParticipant = FSParticipant::getParticipant(1)->getContent();
  
 // args add Motivation to an Event
 $args= array(
