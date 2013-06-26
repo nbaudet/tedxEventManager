@@ -991,6 +991,11 @@ class Tedx_manager{
         return $message;
     }
      
+    /**
+     * Change the parameters of an Event
+     * @param array $args
+     * @return Message with the changed Event
+     */
     public function changeEvent( $args ) {    
         $messageAccess = $this->isGranted( "changeEvent" );
         if( $messageAccess->getStatus() ) {
@@ -1002,6 +1007,37 @@ class Tedx_manager{
         return $message;
     }    
     
+    /**
+     * Change the parameters of a Location
+     * @param array $args
+     * @return Message with the changed Location
+     */
+    public function changeLocation( $args ) {    
+        $messageAccess = $this->isGranted( "changeLocation" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeLocation( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
+    
+    /**
+     * Change the parameters of a Slot
+     * @param array $args
+     * @return Message with the changed Slot
+     */
+    public function changeSlot( $args ) {    
+        $messageAccess = $this->isGranted( "changeSlot" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeSlot( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }
     
     /*==========================================================================
      * 

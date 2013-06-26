@@ -290,7 +290,7 @@ class FSSlot {
             $messageValidSlot = self::getSlot($argsSlot);
             if ($messageValidSlot->getStatus()) {
                 $aValidSlot = $messageValidSlot->getContent();
-                $sql = "UPDATE  Location SET  
+                $sql = "UPDATE  Slot SET  
                     HappeningDate =     '" . $aSlotToSet->getHappeningDate() . "',
                     StartingTime =   '" . $aSlotToSet->getStartingTime() . "',
                     EndingTime =       '" . $aSlotToSet->getEndingTime() . "',

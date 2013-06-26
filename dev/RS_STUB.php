@@ -15,12 +15,12 @@
         
         $login = $tedx_manager->login('admin', 'admin');
         
-         $argsEvent = array(
-            'no' => 31,
-            'mainTopic' => 'La vie de Bryan',
-            'description' => 'Retour sur le film des Monthy-Piton' 
-          );
-        $message = $tedx_manager->changeEvent($argsEvent);
+        $argsSlot = array(
+            'no' => '3',
+            'event' => $tedx_manager->getEvent(1)->getContent(),  
+            'happeningDate' => '2000-01-21'
+        );
+        $message = $tedx_manager->changeSlot($argsSlot);
         
         
         
