@@ -192,12 +192,12 @@ class FSPerson {
 
                 $argsPerson = array(
                     'no'            => $data['No'],
-                    'name'          => $data['Name'],
-                    'firstname'     => $data['Firstname'],
+                    'name'          => addslashes($data['Name']),
+                    'firstname'     => addslashes($data['Firstname']),
                     'dateOfBirth'   => $data['DateOfBirth'],
-                    'address'       => $address,
-                    'city'          => $data['City'],
-                    'country'       => $data['Country'],
+                    'address'       => addslashes($address),
+                    'city'          => addslashes($data['City']),
+                    'country'       => addslashes($data['Country']),
                     'phoneNumber'   => $data['PhoneNumber'],
                     'email'         => $aFreeEmail,
                     'description'   => $description,
@@ -241,12 +241,12 @@ class FSPerson {
         if ($messageFreeEmail->getStatus()) {
             $aFreeEmail = $messageFreeEmail->getContent();
             $sql = "UPDATE  Person SET  
-                Name =          '" . $aPersonToSet->getName() . "',
-                Firstname =     '" . $aPersonToSet->getFirstname() . "',
+                Name =          '" . addslashes($aPersonToSet->getName()) . "',
+                Firstname =     '" . addslashes($aPersonToSet->getFirstname()) . "',
                 DateOfBirth =   '" . $aPersonToSet->getDateOfBirth() . "',
-                Address =       '" . $aPersonToSet->getAddress() . "',
-                City =          '" . $aPersonToSet->getCity() . "',
-                Country =       '" . $aPersonToSet->getCountry() . "',
+                Address =       '" . addslashes($aPersonToSet->getAddress()) . "',
+                City =          '" . addslashes($aPersonToSet->getCity()) . "',
+                Country =       '" . addslashes($aPersonToSet->getCountry()) . "',
                 PhoneNumber =   '" . $aPersonToSet->getPhoneNumber() . "',
                 Email =         '" . $aFreeEmail . "',
                 Description =   '" . addslashes($aPersonToSet->getDescription()) . "',

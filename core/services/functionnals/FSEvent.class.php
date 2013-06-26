@@ -202,7 +202,7 @@ class FSEvent {
                 '" . $args['endingDate'] . "', 
                 '" . $args['startingTime'] . "', 
                 '" . $args['endingTime'] . "',
-                '" . $args['locationName'] . "'
+                '" . addslashes($args['locationName']) . "'
         );";
         } else {
             $sql = "INSERT INTO Event (MainTopic, Description, StartingDate, EndingDate,
@@ -233,7 +233,7 @@ class FSEvent {
                 'endingDate' => $data['EndingDate'],
                 'startingTime' => $data['StartingTime'],
                 'endingTime' => $data['EndingTime'],
-                'locationName' => $data['LocationName'],
+                'locationName' => addslashes($data['LocationName']),
                 'isArchived' => $data['IsArchived']
             );
 
@@ -412,7 +412,7 @@ class FSEvent {
                     $argsMotivation = array(
                         'no' => $anEventToSet->getNo(),
                         'mainTopic' => $anEventToSet->getMainTopic(),
-                        'locationName' => $anEventToSet->getLocationName(),
+                        'locationName' => addslashes($anEventToSet->getLocationName()),
                         'description' => addslashes($anEventToSet->getDescription()),
                         'startingDate' => $anEventToSet->getStartingDate(),
                         'endingDate' => $anEventToSet->getEndingDate(),
