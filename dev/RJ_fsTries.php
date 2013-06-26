@@ -16,11 +16,11 @@ require_once(APP_DIR .'/core/services/functionnals/FSSlot.class.php');
 
    $tedx_manager->login("admin", "admin");
  
-   $text = 'TEST';
+   $text = 'TEST5';
 // object Event
-$anEvent = FSEvent::getEvent(100)->getContent();
+$anEvent = FSEvent::getEvent(1)->getContent();
 // object Participant
-$aParticipant = FSParticipant::getParticipant(4)->getContent();
+$aParticipant = FSParticipant::getParticipant(91)->getContent();
  
 // args add Motivation to an Event
 $args= array(
