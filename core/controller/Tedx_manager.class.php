@@ -663,6 +663,7 @@ class Tedx_manager{
         return $messagePersonLogged;
     }// function
     
+    
     /*==========================================================================
      * 
      * PARTICIPANT FUNCTIONS
@@ -991,7 +992,16 @@ class Tedx_manager{
         return $message;
     }
      
-        
+    public function changeEvent( $args ) {    
+        $messageAccess = $this->isGranted( "changeEvent" );
+        if( $messageAccess->getStatus() ) {
+            $message = ASOrganizer::changeEvent( $args ); 
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+    }    
     
     
     /*==========================================================================

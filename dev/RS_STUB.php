@@ -15,14 +15,17 @@
         
         $login = $tedx_manager->login('admin', 'admin');
         
-        $event = $tedx_manager->getEvent(2)->getContent();
-        $message = $tedx_manager->getOrganizersByEvent($event);
-        
+         $argsEvent = array(
+            'no' => 31,
+            'mainTopic' => 'La vie de Bryan',
+            'description' => 'Retour sur le film des Monthy-Piton' 
+          );
+        $message = $tedx_manager->changeEvent($argsEvent);
         
         
         
         echo "<hr> Mon message final";
-        var_dump($message->getContent());
+        var_dump($message);
         ?>
     </body>
 </html>

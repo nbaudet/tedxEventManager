@@ -460,46 +460,32 @@ class ASOrganizer {
             'endingDate' => $row['EndingDate'],
             'startingTime' => $row['StartingTime'],
             'endingTime' => $row['EndingTime'],
-           );
+          );
          */
-
-        if(isset($argsToSet['mainTopic'])){
-            if (($argsToSet['mainTopic'] != '') and ($argsToSet['mainTopic'] != $aValidEvent->getMainTopic())) {
-                $aValidEvent->setMainTopic($argsToSet['mainTopic']);
-            }
-        }
-        if(isset($argsToSet['description'])){
-            if (($argsToSet['description'] != '') and ($argsToSet['description'] != $aValidEvent->getDescription())) {
-                $aValidEvent->setDescription($argsToSet['description']);
-            }
-        }
-        
-        if(isset($argsToSet['startingDate'])){
-            if (($argsToSet['startingDate'] != '') and ($argsToSet['startingDate'] != $aValidEvent->getStartingDate())) {
-                $aValidEvent->setStartingDate($argsToSet['startingDate']);
-            }
-        }
-        
-        if(isset($argsToSet['endingDate'])){
-            if (($argsToSet['endingDate'] != '') and ($argsToSet['endingDate'] != $aValidEvent->getEndingDate())) {
-                $aValidEvent->setEndingDate($argsToSet['endingDate']);
-            }
-        }
-        
-        if(isset($argsToSet['startingTime'])){
-            if (($argsToSet['startingTime'] != '') and ($argsToSet['startingTime'] != $aValidEvent->getStartingTime())) {
-                $aValidEvent->setStartingTime($argsToSet['startingTime']);
-            }
-        }
-        
-        if(isset($argsToSet['endingTime'])){
-            if(($argsToSet['endingTime'] != '') and ($argsToSet['endingTime'] != $aValidEvent->getEndingTime())) {
-                $aValidEvent->setEndingTime($argsToSet['endingTime']);
-            }
-        }
+        foreach($argsToSet as $key => $arg){
+            switch ($key) {
+                case 'mainTopic':
+                    $aValidEvent->setMainTopic($argsToSet['mainTopic']);
+                    break; 
+                case 'description':
+                    $aValidEvent->setDescription($argsToSet['description']);
+                    break;
+                case 'startingDate':
+                    $aValidEvent->setStartingDate($argsToSet['startingDate']);
+                    break;
+                case 'endingDate':
+                    $aValidEvent->setEndingDate($argsToSet['endingDate']);
+                    break; 
+                case 'startingTime':
+                    $aValidEvent->setStartingTime($argsToSet['startingTime']);
+                    break;
+                case 'endingTime':
+                    $aValidEvent->setEndingTime($argsToSet['endingTime']);
+                    break;
+            } // Switch
+        } // Foreach
         return $aValidEvent;
     }// function
-//function
 }
 
 //class
