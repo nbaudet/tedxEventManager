@@ -194,15 +194,18 @@ class ASParticipant {
         $aText = $args['text'];
         $anEvent = $args['event'];
         $aParticipant = $args['participant'];
-        $messageValidMotivation = FSMotivation::getMotivation(array('text'=> $aText, 'event'=> $anEvent, 'participant' => $aParticipant));
+        $messageValidMotivation = FSMotivation::getMotivationsByParticipantForEvent(array('text'=> $aText, 'event'=> $anEvent, 'participant' => $aParticipant));
         if($messageValidMotivation->getStatus()){
             $aValidMotivation = $messageValidMotivation->getContent();
-            if(!$aValidMotivation->getIsArchived()){
-                $aValidMotivation->setIsArchived(1);
-                $messageSetMotivation = FSMotivation::setMotivation($aValidMotivation);
-                $message = $messageSetMotivation;
-            }else{
-                $message = $messageValidMotivation;
+            var_dump($aValidMotivation);
+            foreach($aValidMotivation as $aMotivation){
+                if(!$aMotivation->getIsArchived()){
+                    $aMotivation->setIsArchived(1);
+                    $messageSetMotivation = FSMotivation::setMotivation($aMotivation);
+                    $message = $messageSetMotivation;
+                }else{
+                    $message = $messageValidMotivation;
+                }
             }
         }else{
             $message = $messageValidMotivation;
