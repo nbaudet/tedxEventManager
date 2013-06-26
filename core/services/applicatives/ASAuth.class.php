@@ -254,7 +254,6 @@ class ASAuth {
         
         // Merge the two arrays
         $accesses = array();
-        //var_dump($tabAccesses);
         foreach( $tabAccesses as $extAccesses ) {
             foreach( $extAccesses as $intAccess ) {
                 $accesses[] = $intAccess;

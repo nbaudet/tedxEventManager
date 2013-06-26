@@ -38,7 +38,7 @@
 	<body>
 		<section id="wrapper">
 			<header>
-				<img src="./Common/logo_TEDx_Events_Manager.png" alt="TEDx Events Manager" />
+				<img src="./common/logo_TEDx_Events_Manager.png" alt="TEDx Events Manager" />
 				<p>Sélectionnez un template réalisé par les classes médias</p>
 			</header>
 			<section id="content">
@@ -49,13 +49,13 @@
 					</a>
 				</section>
 				
-				<section class="groupe" style="margin-right:0px">
+				<section class="groupe">
 					<a href="projet_mi/index.php">
-						Accéder au template du groupe projet_mi
+						Accéder au template du groupe TEDchen
 					</a>
 				</section>
 
-				<section class="groupe">
+				<section class="groupe" style="margin-right: 0px;">
 					<a href="SplashyPants/index.php">
 						Accéder au template du groupe SplashyPants
 					</a>

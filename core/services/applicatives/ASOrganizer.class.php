@@ -168,7 +168,8 @@ class ASOrganizer {
 //function
 
     /**
-     * Applicative service to add a Speaker to a Slot (Place and Talk)
+     * Applicative service to add a Speaker to a Slot (Place and Talk).
+     * Give the units Visitor, Participant and Organizer to the Speaker.
      * @param type $args, the speaker, the slot, and the parameter of the Place
      * and the Talk of speaker in event.
      * @return type message
