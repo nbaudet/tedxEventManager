@@ -268,7 +268,7 @@ class FSLocation{
                 $message = new Message($argsMessage);
             } else {
                 $argsMessage = array(
-                    'messageNumber' => 132,
+                    'messageNumber' => 452,
                     'message' => 'Error while setting Location',
                     'status' => false,
                     'content' => NULL
