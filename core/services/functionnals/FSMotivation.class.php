@@ -423,8 +423,8 @@ $return = new Message($argsMessage);*/
     
     /**
      * Archive a Motivation
-     * @param Keyword $aKeywordToSet
-     * @return Message containing the archived Keyword
+     * @param Motivation $aMotivationToSet
+     * @return Message containing the archived Motivation
      */
     public static function archiveMotivation($aMotivationToArchive) {
         return self::setMotivation($aMotivationToArchive);
