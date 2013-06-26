@@ -179,6 +179,7 @@ class FSPerson {
         } else {
             $description = addslashes($args['description']);
         }
+        $address = addslashes($args['address']);
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . addslashes($args['name']) . "', '" . addslashes($args['firstname']) . "', '" . addslashes($args['dateOfBirth']) . "', '" . addslashes($args['address']) . "', '" . addslashes($args['city']) . "', '" . addslashes($args['country']) . "', '" . addslashes($args['phoneNumber']) . "', '" . addslashes($args['email']) . "', '" . $description . "')";
 
         $messageFreeEmail = self::checkFreeEmail(array('email' => $args['email']));
@@ -190,17 +191,17 @@ class FSPerson {
                 $data = $crud->getRow($sql);
 
                 $argsPerson = array(
-                    'no' => $data['No'],
-                    'name' => $data['Name'],
-                    'firstname' => $data['Firstname'],
-                    'dateOfBirth' => $data['DateOfBirth'],
-                    'address' => $data['Address'],
-                    'city' => $data['City'],
-                    'country' => $data['Country'],
-                    'phoneNumber' => $data['PhoneNumber'],
-                    'email' => $aFreeEmail,
-                    'description' => $data['Description'],
-                    'isArchived' => $data['IsArchived']
+                    'no'            => $data['No'],
+                    'name'          => $data['Name'],
+                    'firstname'     => $data['Firstname'],
+                    'dateOfBirth'   => $data['DateOfBirth'],
+                    'address'       => $address,
+                    'city'          => $data['City'],
+                    'country'       => $data['Country'],
+                    'phoneNumber'   => $data['PhoneNumber'],
+                    'email'         => $aFreeEmail,
+                    'description'   => $description,
+                    'isArchived'    => $data['IsArchived']
                 );
 
                 $person = new Person($argsPerson);
