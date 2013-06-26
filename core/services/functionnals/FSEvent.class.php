@@ -461,9 +461,11 @@ class FSEvent {
             $message = new Message($argsMessage);
         }//End Event valide
         return $message;
-    }
+    } // Function
 
-}//function
+}
+
+
 
 // class
 ?>
