@@ -355,7 +355,7 @@ class FSEvent {
     /**
      * Set Event
      * @global type $crud
-     * @param type $anEventToSet
+     * @param Event $anEventToSet
      * @return \Message
      */
     public static function setEvent($anEventToSet) {
@@ -461,96 +461,7 @@ class FSEvent {
             $message = new Message($argsMessage);
         }//End Event valide
         return $message;
-
-    }
-    
-    /**
-     * Archive Event
-     * @param type $anEventToArchive
-     * @return type setEvent
-     */
-    public static function setEventAndLetArchive($anEventToSetButArchived) {
-        //If field No not empty
-        if(isset($anEventToSetButArchived['no'])){
-            //If Existant Event
-            if(FSEvent::getEvent($no)->getStatus()){
-                            $no = $anEventToSetButArchived['no'];
-                            $event = FSEvent::getEvent($no)->getContent();
-
-                            if($anEventToSetButArchived->getIsArchived() === 1){
-
-                                if ($anEventToSetButArchived->getMainTopic()) {
-                                    $mainTopic = $anEventToSetButArchived->getMainTopic();
-                                }else{
-                                    $mainTopic = $event->getMainTopic();
-                                };
-                                if ($anEventToSetButArchived->getLocationName()) {
-                                    $locationName = $anEventToSetButArchived->getLocationName();
-                                }else{
-                                    $locationName = $event->getLocationName();
-                                };
-                                if ($anEventToSetButArchived->getDescription()) {
-                                    $description = $anEventToSetButArchived->getDescription();
-                                }else{
-                                    $description = $event->getDescription();
-                                };
-                                if ($anEventToSetButArchived->getStartingDate()) {
-                                    $startingDate = $anEventToSetButArchived->getStartingDate();
-                                }else{
-                                    $startingDate = $event->getStartingDate();
-                                };
-                                if ($anEventToSetButArchived->getEndingDate()) {
-                                    $endingDate = $anEventToSetButArchived->getEndingDate();
-                                }else{
-                                    $endingDate = $event->getEndingDate();
-                                };
-                                if ($anEventToSetButArchived->getStartingTime()) {
-                                    $startingTime = $anEventToSetButArchived->getStartingTime();
-                                }else{
-                                    $startingTime = $event->getStartingTime();
-                                };
-                                if ($anEventToSetButArchived->getEndingTime()) {
-                                    $endingTime = $anEventToSetButArchived->getEndingTime();
-                                }else{
-                                    $endingTime = $event->getEndingTime();
-                                };
-
-                                $argsEventToSetButArchive = array(
-                                    'no' => $no,
-                                    'mainTopic' => $mainTopic,
-                                    'locationName' => $locationName,
-                                    'description' => $description,
-                                    'startingDate' => $startingDate,
-                                    'endingDate' => $endingDate,
-                                    'startingTime' => $startingTime,
-                                    'endingTime' => $endingTime,
-                                    'isArchived' => 0
-                                );
-                            };
-            }else{
-               $argsMessage = array(
-                'messageNumber' => 235,
-                'message' => 'Inexistant Event',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage); 
-            return $message;
-            }
-        }else{
-            $argsMessage = array(
-                'messageNumber' => 235,
-                'message' => 'Empty Event No',
-                'status' => false,
-                'content' => NULL
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        }
-        return self::setEvent($argsEventToSetButArchive);
-    
-    } // Function
-
+    }   
 }
 
 // class

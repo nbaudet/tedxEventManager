@@ -156,16 +156,6 @@ class ASOrganizer {
 
 //function
 
-    /**
-     * Set an Event
-     * @param type $args
-     */
-    public static function setEvent($args) {
-        /* $anEventToUpdate = ($args['event']);
-          $anEventToUpdate->setLocationName($args['locationName']);
-          $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
-          return $aChangedEventLocation; */
-    }
 
     /**
      * Change a Slot
@@ -425,13 +415,90 @@ class ASOrganizer {
         return $return;
     }
 
-     /**
-     * Applicative service to set an Event but let it non archived
+      /**
+     * Edit the parameter of the event.
+     * @param array $args the news arguments and the ID of the Person
      * @return type message
      */
-    public static function setEventAndLetArchive($args) {
-        return FSEvent::setEventAndLetArchive($args);
-    }
+    public static function changeEvent($args) {
+        /*
+          $argsEvent = array(
+            'no' => $row['No'],
+            'mainTopic' => $row['MainTopic'],
+            'description' => $row['Description'],
+            'startingDate' => $row['StartingDate'],
+            'endingDate' => $row['EndingDate'],
+            'startingTime' => $row['StartingTime'],
+            'endingTime' => $row['EndingTime'],
+          );
+        */
+        $messageValidEvent = FSEvent::getEvent($args['no']);
+        if ($messageValidEvent->getStatus()) {
+            $aValidEvent = $messageValidEvent->getContent();
+            $anEventToSet = self::setEvent($aValidEvent, $args);
+            $messageSetEvent = FSEvent::setEvent($anEventToSet);
+            $finalMessage = $messageSetEvent;
+        } else {
+            $finalMessage = $messageValidEvent;
+        }
+        return $finalMessage;
+    }//function
+    
+    
+    /**
+     * Set Event
+     * @param Event $aValidPerson
+     * @param array $argsToSet
+     * @return Event a valid Event
+     */
+    private static function setEvent($aValidEvent, $argsToSet) {
+        /*
+          $argsEvent = array(
+            'mainTopic' => $row['MainTopic'],
+            'description' => $row['Description'],
+            'startingDate' => $row['StartingDate'],
+            'endingDate' => $row['EndingDate'],
+            'startingTime' => $row['StartingTime'],
+            'endingTime' => $row['EndingTime'],
+           );
+         */
+
+        if(isset($argsToSet['mainTopic'])){
+            if (($argsToSet['mainTopic'] != '') and ($argsToSet['mainTopic'] != $aValidEvent->getMainTopic())) {
+                $aValidEvent->setMainTopic($argsToSet['mainTopic']);
+            }
+        }
+        if(isset($argsToSet['description'])){
+            if (($argsToSet['description'] != '') and ($argsToSet['description'] != $aValidEvent->getDescription())) {
+                $aValidEvent->setDescription($argsToSet['description']);
+            }
+        }
+        
+        if(isset($argsToSet['startingDate'])){
+            if (($argsToSet['startingDate'] != '') and ($argsToSet['startingDate'] != $aValidEvent->getStartingDate())) {
+                $aValidEvent->setStartingDate($argsToSet['startingDate']);
+            }
+        }
+        
+        if(isset($argsToSet['endingDate'])){
+            if (($argsToSet['endingDate'] != '') and ($argsToSet['endingDate'] != $aValidEvent->getEndingDate())) {
+                $aValidEvent->setEndingDate($argsToSet['endingDate']);
+            }
+        }
+        
+        if(isset($argsToSet['startingTime'])){
+            if (($argsToSet['startingTime'] != '') and ($argsToSet['startingTime'] != $aValidEvent->getStartingTime())) {
+                $aValidEvent->setStartingTime($argsToSet['startingTime']);
+            }
+        }
+        
+        if(isset($argsToSet['endingTime'])){
+            if(($argsToSet['endingTime'] != '') and ($argsToSet['endingTime'] != $aValidEvent->getEndingTime())) {
+                $aValidEvent->setEndingTime($argsToSet['endingTime']);
+            }
+        }
+        return $aValidEvent;
+    }// function
 //function
 }
 
