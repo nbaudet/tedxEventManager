@@ -15,17 +15,24 @@
         
         $login = $tedx_manager->login('admin', 'admin');
         
-        $argsSlot = array(
-            'no' => '3',
-            'event' => $tedx_manager->getEvent(1)->getContent(),  
-            'happeningDate' => '2000-01-21'
+        $speaker = $tedx_manager->getSpeaker(6)->getContent();
+        $event = $tedx_manager->getEvent(15)->getContent();
+
+        $arrayTalkToSet = array(
+            'eventNo'            => 15,
+            'speakerPersonNo'    => 6,
+            'videoTitle'         => 'Video title of the year',
+            'videoDescription'   => "This video is about a crazy cat fighting with an orange",
+            'videoURL'           => "www.youtube.com/",
+            'isArchived'         => 0
         );
-        $message = $tedx_manager->changeSlot($argsSlot);
-        
-        
+
+        $aTalkToSet = new Talk($arrayTalkToSet);
+        var_dump($aTalkToSet);
+
+        var_dump(FSTalk::setTalk($aTalkToSet));
         
         echo "<hr> Mon message final";
-        var_dump($message);
-        ?>
+        ?> 
     </body>
 </html>

@@ -411,8 +411,8 @@ class FSTalk{
     public static function setTalk($aTalkToSet) {
         global $crud;
         
-        $speaker = FSSpeaker::getSpeaker($aTalkToSet->getSpeakerPersonNo());
-        $event = FSEvent::getEvent($aTalkToSet->getEventNo());
+        $speaker = FSSpeaker::getSpeaker($aTalkToSet->getSpeakerPersonNo())->getContent();
+        $event = FSEvent::getEvent($aTalkToSet->getEventNo())->getContent();
         
         $argsGetTalk = array(
             'speaker'  => $speaker,
@@ -426,14 +426,14 @@ class FSTalk{
             $sql = "UPDATE  Talk SET  
                 VideoTitle       = '" . $aTalkToSet->getVideoTitle() . "',
                 VideoDescription = '" . $aTalkToSet->getVideoDescription() . "',
-                VideoURL         = '" . $aTalkToSet->getCountry() . "',
-                IsArchived       = " . $aTalkToSet->getIsArchived() . "
-                WHERE   EventNo = " . $event->getNo(). " AND
-                SpeakerPersonNo = " . $speaker->getNo(). " AND IsArchived = 0 ";
+                VideoURL         = '" . $aTalkToSet->getVideoURL() . "',
+                IsArchived       =  " . $aTalkToSet->getIsArchived() . "
+                WHERE   EventNo  =  " . $event->getNo() . " AND
+                SpeakerPersonNo  =  " . $speaker->getNo();
             
-            if ($$crud->exec($sql) == 1) {
+            if ($crud->exec($sql) == 1) {
 
-                $aSettedTalk = FSTalk::getTalk($argsGetTalk);
+                $aSettedTalk = self::getTalk($argsGetTalk);
 
                 $argsMessage = array(
                     'messageNumber' => 176,

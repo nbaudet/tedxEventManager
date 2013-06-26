@@ -570,7 +570,6 @@ class ASOrganizer {
             switch ($key) {
                 case 'happeningDate':
                     $aValidSlot->setHappeningDate($arg);
-                                        var_dump($aValidSlot);
                     break; 
                case 'startingTime':
                     $aValidSlot->setStartingTime($arg);
