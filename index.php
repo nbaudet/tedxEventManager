@@ -64,7 +64,7 @@
 				<div style="clear:both"></div>
 			</section>
 			<footer>
-				<p>Une application Web réalisé par étudiants COMEM+ en 2ème année.</p>
+				<p>Une application Web réalisé par étudiants COMEM<sup>+</sup> en 2ème année.</p>
 			</footer>
 		</section>
 	</body>
