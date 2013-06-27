@@ -23,8 +23,7 @@ class FSLocation{
         $location = NULL;
         
         global $crud;
-        $name = addslashes($name);
-        $sql = "SELECT * FROM Location WHERE Name = '$name'";
+        $sql = "SELECT * FROM Location WHERE Name = '" . addslashes($name) . "'";
         $data = $crud->getRow($sql);
         
         if($data){
@@ -183,7 +182,7 @@ class FSLocation{
         
         // if args isn't null
         if($event != null) {
-            $sql = "SELECT * FROM Location INNER JOIN Event ON Location.Name = Event.LocationName WHERE Event.LocationName = '".addslashes($event->getLocationName())."'";
+            $sql = "SELECT * FROM Location INNER JOIN Event ON Location.Name = Event.LocationName WHERE Event.LocationName = '". addslashes($event->getLocationName()) ."'";
         
             $data = $crud->getRow($sql);
             
@@ -246,12 +245,12 @@ class FSLocation{
         if ($messageValidLocation->getStatus()) {
             $aValidLocation = $messageValidLocation->getContent();
             $sql = "UPDATE  Location SET  
-                Address =     '" . $aLocationToSet->getAddress() . "',
-                City =   '" . $aLocationToSet->getCity() . "',
-                Country =       '" . $aLocationToSet->getCountry() . "',
-                Direction =          '" . $aLocationToSet->getDirection() . "',
+                Address =     '" . addslashes($aLocationToSet->getAddress()) . "',
+                City =   '" . addslashes($aLocationToSet->getCity()) . "',
+                Country =       '" . addslashes($aLocationToSet->getCountry()) . "',
+                Direction =          '" . addslashes($aLocationToSet->getDirection()) . "',
                 IsArchived =    " . $aLocationToSet->getIsArchived() . "
-                WHERE  Location.Name = '" . $aValidLocation->getName() . "'";
+                WHERE  Location.Name = '" . addslashes($aValidLocation->getName()) . "'";
 
             if ($crud->exec($sql) == 1) {
 
