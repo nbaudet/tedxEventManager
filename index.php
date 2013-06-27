@@ -50,8 +50,8 @@
 				</section>
 				
 				<section class="groupe">
-					<a href="projet_mi/index.php">
-						Accéder au template du groupe TEDchen
+					<a href="TEDchen/index.php" title="Accéder au template du groupe TEDchen">
+						<img src="./common/TEDchen_logo.png" />
 					</a>
 				</section>
 
