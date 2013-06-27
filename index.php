@@ -56,8 +56,8 @@
 				</section>
 
 				<section class="groupe" style="margin-right: 0px;">
-					<a href="SplashyPants/index.php">
-						Accéder au template du groupe SplashyPants
+					<a href="SplashyPants/index.php" title="Accéder au template du groupe SplashyPants" style="margin-left: 50px;" >
+						<img src="./common/logo_splashypants.jpg" style="margin-top: 35px;"/>
 					</a>
 				</section>
 
