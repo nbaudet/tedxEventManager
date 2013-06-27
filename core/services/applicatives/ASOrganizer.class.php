@@ -100,7 +100,7 @@ class ASOrganizer {
                 if ($messageAddedMember->getStatus()) {
                     $anAddedMember = $messageAddedMember->getContent();
                     // Get the Unit with the name 'Visitor' 
-                    $messageUnit = FSUnit::getUnitByName('Participant');
+                    $messageUnit = FSUnit::getUnitByName('Organizer');
                     $participantUnit = $messageUnit->getContent();
                     // Arguments for adding a Membership
                     $argsMembership = array(
