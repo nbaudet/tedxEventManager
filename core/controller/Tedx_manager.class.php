@@ -1532,7 +1532,15 @@ class Tedx_manager{
     public function registerOrganizer( $args ) {
         $messageAccess = $this->isGranted( "registerOrganizer" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::registerOrganizer( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::registerOrganizer( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1547,8 +1555,23 @@ class Tedx_manager{
      * @return type message
      */
     public function setPersonAsOrganizer($person){
-        $messageSetPersonAsOrganizer = FSOrganizer::setPersonAsOrganizer($person);
-        return $messageSetPersonAsOrganizer;
+        $messageAccess = $this->isGranted( "setPersonAsOrganizer" );
+        if( $messageAccess->getStatus() ) {
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($person);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::setPersonAsOrganizer( $person );
+            } else {
+                $message = $messageCheckData;
+            }
+
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
+
     }
     
     /**
@@ -1559,7 +1582,15 @@ class Tedx_manager{
     public function addTeamRole( $aName ) {
         $messageAccess = $this->isGranted( "addTeamRole" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::addTeamRole($aName);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($aName);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::addTeamRole( $aName );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1576,7 +1607,15 @@ class Tedx_manager{
     public function affectTeamRole( $args ) {
         $messageAccess = $this->isGranted( "affectTeamRole" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::affectTeamRole( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::affectTeamRole( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1593,7 +1632,15 @@ class Tedx_manager{
     public function addEvent( $args ) {
         $messageAccess = $this->isGranted( "addEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::addEvent( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::addEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1609,7 +1656,15 @@ class Tedx_manager{
     public function addRole( $args ) {
         $messageAccess = $this->isGranted( "addRole" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::addRole( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::addRole( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1626,7 +1681,15 @@ class Tedx_manager{
     public function changeRoleLevel( $args ) {
         $messageAccess = $this->isGranted( "changeRoleLevel" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::changeRoleLevel($args);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::changeRoleLevel( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1643,7 +1706,15 @@ class Tedx_manager{
     public function linkTeamRole( $args ) {
         $messageAccess = $this->isGranted( "linkTeamRole" );
         if( $messageAccess->getStatus() ) {
-            $message = ASAdmin::linkTeamRole($args);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASAdmin::linkTeamRole( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;

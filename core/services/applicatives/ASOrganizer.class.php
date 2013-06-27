@@ -591,5 +591,15 @@ class ASOrganizer {
         } // Foreach
         return $aValidSlot;
     }// function
+    
+    /**
+     * Sets a Person as Organizer (if not already Organizer)
+     * @param Person $person
+     * @return a Message containing the created Organizer
+     */
+    public static function setPersonAsOrganizer($person){
+        return FSOrganizer::setPersonAsOrganizer($person);
+    }
+    
 }//class
 ?>
