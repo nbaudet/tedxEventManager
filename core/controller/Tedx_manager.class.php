@@ -767,7 +767,15 @@ class Tedx_manager{
     public function registerToAnEvent($args) {
         $messageAccess = $this->isGranted( "registerToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::registerToAnEvent($args); //ASVisitor::registerToAnEvent($args);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASVisitor::registerToAnEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+            
         }
         else {
             $message = $messageAccess;
@@ -783,7 +791,15 @@ class Tedx_manager{
     public function changeProfil( $args ) {
         $messageAccess = $this->isGranted( "changeProfil" );
         if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::changeProfil( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASVisitor::changeProfil( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+            
         }
         else {
             $message = $messageAccess;
@@ -799,7 +815,15 @@ class Tedx_manager{
     public function changePassword( $args ) {
         $messageAccess = $this->isGranted( "changePassword" );
         if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::changePassword( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASVisitor::changePassword( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+            
         }
         else {
             $message = $messageAccess;
@@ -815,7 +839,15 @@ class Tedx_manager{
     public function searchPersons($args) {
         $messageAccess = $this->isGranted( "searchPersons" );
         if( $messageAccess->getStatus() ) {
-            $message = ASVisitor::searchPersons( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASVisitor::searchPersons( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+            
         }
         else {
             $message = $messageAccess;
