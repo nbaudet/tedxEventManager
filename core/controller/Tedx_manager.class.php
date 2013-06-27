@@ -1,12 +1,24 @@
 <?php
-
 /**
  * Tedx_manager.class.php
  * 
  * Author : MIT40
  * Date : 05.06.2013
  * 
- * Description : 
+ * Description: This class is the entry point of Tedx Events Manager.
+ * Every method hereunder is described in the online codex at:
+ *    www.pingouin1.heig-vd.ch/tedx-codex/
+ * 
+ * This class has the following responsibilities:
+ *  - offer all needed methods to manage Tedx events
+ *  - check the privileges of the method's user
+ *  - check the parameter's contents
+ * 
+ * For all additionnal information, please visit the codex at:
+ *    www.pingouin1.heig-vd.ch/tedx-codex/
+ * 
+ * For bug reports, please leave a precise message on the codex, and we'll con-
+ * tact you.
  * 
  */
 
@@ -23,20 +35,8 @@ require_once(APP_DIR.'/core/services/applicatives/ASValidator.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAdmin.class.php');
 
 
-
 /**
- * Require all Stub functions
- */
-require_once (APP_DIR.'/core/model/Stub.class.php');
-
-
-/**
- * Require all Fonctional Services
- */
-//require_once('MemberManager.php');
-
-/**
- * Principal controller of the Events Manager.
+ * Main controller for the Events Manager.
  */
 class Tedx_manager{
     
@@ -45,14 +45,8 @@ class Tedx_manager{
      */
     private $asAuth;
     
-    /*
-     * Object enabling to receive all the stubs
-     */
-    private $stub; 
-    
-
     /**
-     * Constructor of Tedx Manager. Initialise Stub & Auth stuff
+     * Constructor of Tedx Manager. Initialise Authentication Object
      */
     public function __construct(){
         $this->asAuth = new ASAuth();
