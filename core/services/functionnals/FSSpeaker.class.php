@@ -197,7 +197,9 @@ FROM Speaker AS Sp INNER JOIN Person AS Pe ON Sp.PersonNo = Pe.No
                 WHERE Sp.IsArchived = 0 AND Pe.No IN (
                                                 SELECT SpeakerPersonNo FROM Place 
                                                 WHERE SlotNo =  ".$place->getSlotNo()." 
-                                                AND IsArchived = 0
+                                                AND   SlotEventNo = ".$place->getSlotEventNo()."
+                                                AND   No = ".$place->getNo()."
+                                                AND   IsArchived = 0
                                             );";
         
         $data = $crud->getRow($sql);
