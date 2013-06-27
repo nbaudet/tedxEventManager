@@ -159,7 +159,7 @@ class ASParticipant {
      * @return type Motivations
      */
     public static function getMotivationsByParticipant($aPerson) {
-        $motivations = FSMotivation::getMotivationsByPerson($aPerson); 
+        $motivations = FSMotivation::getMotivationsByParticipant($aPerson); 
         return $motivations; 
     }//function
     

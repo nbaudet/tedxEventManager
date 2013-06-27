@@ -905,7 +905,22 @@ class Tedx_manager{
      *@return a Message with an existant Registration
      */
     public function getLastRegistration($args){
-       return ASParticipant::getLastRegistration($args);
+        $messageAccess = $this->isGranted( "getLastRegistration" );
+        if( $messageAccess->getStatus() ) {
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getLastRegistration( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
+        }
+        else {
+            $message = $messageAccess;
+        }
+        return $message;
    }
     
    
@@ -917,7 +932,15 @@ class Tedx_manager{
     public function addKeywordsToAnEvent( $args ) {
         $messageAccess = $this->isGranted( "addKeywordsToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::addKeywordsToAnEvent( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::addKeywordsToAnEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -928,7 +951,15 @@ class Tedx_manager{
     public function archiveKeyword( $args ) {
         $messageAccess = $this->isGranted( "archiveKeyword" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::archiveKeyword( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::archiveKeyword( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -944,7 +975,15 @@ class Tedx_manager{
     public function getKeyword($args) {
         $messageAccess = $this->isGranted( "getKeyword" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getKeyword($args);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getKeyword( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -961,7 +1000,15 @@ class Tedx_manager{
     public function getKeywordsByPerson($aPerson) {
         $messageAccess = $this->isGranted( "getKeywordsByPerson" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getKeywordsByPerson($aPerson); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($aPerson);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getKeywordsByPerson( $aPerson );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -978,7 +1025,15 @@ class Tedx_manager{
     public function getKeywordsByPersonForEvent($args) {
         $messageAccess = $this->isGranted( "getKeywordsByPersonForEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getKeywordsByPersonForEvent($args); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getKeywordsByPersonForEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -995,7 +1050,15 @@ class Tedx_manager{
     public function addMotivationToAnEvent($args) {
         $messageAccess = $this->isGranted( "addMotivationToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::addMotivationToAnEvent($args); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::addMotivationToAnEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1012,7 +1075,15 @@ class Tedx_manager{
     public function archiveMotivationToAnEvent($args) {
         $messageAccess = $this->isGranted( "archiveMotivationToAnEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::archiveMotivationToAnEvent( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::archiveMotivationToAnEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1028,7 +1099,15 @@ class Tedx_manager{
     public function getMotivation($args) {
         $messageAccess = $this->isGranted( "getMotivation" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getMotivation($args);
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getMotivation( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1044,7 +1123,15 @@ class Tedx_manager{
     public function getMotivationsByParticipant($aParticipant) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipant" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getMotivationsByPerson($aParticipant); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($aParticipant);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getMotivationsByParticipant( $aParticipant );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1061,7 +1148,15 @@ class Tedx_manager{
     public function getMotivationsByParticipantForEvent( $args ) {
         $messageAccess = $this->isGranted( "getMotivationsByParticipantForEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getMotivationsByParticipantForEvent( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getMotivationsByParticipantForEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1078,7 +1173,15 @@ class Tedx_manager{
     public function sendRegistration( $args ) {
         $messageAccess = $this->isGranted( "sendRegistration" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::sendRegistration( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::sendRegistration( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1095,7 +1198,15 @@ class Tedx_manager{
     public function getRegistrationHistory( $args ) {
         $messageAccess = $this->isGranted( "getRegistrationHistory" );
         if( $messageAccess->getStatus() ) {
-            $message = ASParticipant::getRegistrationHistory( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASParticipant::getRegistrationHistory( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
