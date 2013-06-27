@@ -121,29 +121,29 @@ class FSLocation{
         /*
          * Validate Location NotExistant
          */
-        $aValidLocation = FSLocation::getLocation($args['Name']);
+        $aValidLocation = FSLocation::getLocation($args['name']);
         
         /*
          * If already Inexistant Location
          */
         if(!($aValidLocation->getStatus())){ 
             /*0..1 Direction*/
-            if(isset($args['Direction'])){
+            if(isset($args['direction'])){
                 $sql = "INSERT INTO Location (
                     Name, Address, City, Country, Direction) VALUES (
-                        '".$args['Name']."', 
-                        '".$args['Address']."', 
-                        '".$args['City']."', 
-                        '".$args['Country']."',
-                        '".$args['Direction']."'
+                        '".$args['name']."', 
+                        '".$args['address']."', 
+                        '".$args['city']."', 
+                        '".$args['country']."',
+                        '".$args['direction']."'
                 );";
             }else{
                 $sql = "INSERT INTO Location (
                     Name, Address, City, Country) VALUES (
-                        '".$args['Name']."', 
-                        '".$args['Address']."', 
-                        '".$args['City']."', 
-                        '".$args['Country']."'
+                        '".$args['name']."', 
+                        '".$args['address']."', 
+                        '".$args['city']."', 
+                        '".$args['country']."'
                 );";
             }
         }else{
