@@ -60,7 +60,7 @@ class ASFree {
         if(!isset($args['name']) || $args['name'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (1).',
                         'status' => false,
                         'content' => null
                     );
@@ -72,7 +72,7 @@ class ASFree {
         if(!isset($args['firstname']) || $args['firstname'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (2).',
                         'status' => false,
                         'content' => null
                     );
@@ -84,7 +84,7 @@ class ASFree {
         if(!isset($args['dateOfBirth']) || $args['dateOfBirth'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (3).',
                         'status' => false,
                         'content' => null
                     );
@@ -96,7 +96,7 @@ class ASFree {
         if(!isset($args['address']) || $args['address'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (4).',
                         'status' => false,
                         'content' => null
                     );
@@ -108,7 +108,7 @@ class ASFree {
         if(!isset($args['city']) || $args['city'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional)  (5).',
                         'status' => false,
                         'content' => null
                     );
@@ -120,7 +120,7 @@ class ASFree {
          if(!isset($args['country']) || $args['country'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (6).',
                         'status' => false,
                         'content' => null
                     );
@@ -132,7 +132,7 @@ class ASFree {
         if(!isset($args['phoneNumber']) || $args['phoneNumber'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (7).',
                         'status' => false,
                         'content' => null
                     );
@@ -144,7 +144,7 @@ class ASFree {
         if(!isset($args['email']) || $args['email'] == ''){
             $argsMessage = array(
                         'messageNumber' => 666,
-                        'message' => 'Empty field. Please, fill all field asked (Description optional).',
+                        'message' => 'Empty field. Please, fill all field asked (Description optional) (8).',
                         'status' => false,
                         'content' => null
                     );
