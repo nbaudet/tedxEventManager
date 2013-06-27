@@ -27,7 +27,7 @@ class ASDataValidator {
      * @param array $args
      * @return Message containing the same $args as the input
      */
-    public static function checkData($args){
+    public static function stubCheckData($args){
         if ($args != null){
             $argsMessage = array(
                 'messageNumber' => 178,
@@ -54,7 +54,7 @@ class ASDataValidator {
      * @param array $args
      * @return Message containing the same $args as the input
      */
-    public static function checkData($args, $args2){
+    public static function stubCheckData2($args, $args2){
         if ($args != null && $args2 != null){
             $argsMessage = array(
                 'messageNumber' => 178,
@@ -74,7 +74,29 @@ class ASDataValidator {
         }
         return $return;
     }
-
+    
+        /**
+     * Check the type of a variable
+     * @param type $type
+     * @param type $variableToCheck
+     */
+    public function checkType($type, $variableToCheck){
+        switch ($type){
+            case "string" :
+                return is_string($variableToCheck);
+                break;
+            case "int" :
+                return is_int($variableToCheck);
+                break;
+            case "email" :
+                if (preg_match('/^[\S]+@[\S]+\.\D{2,4}$/', $variableToCheck)== 1){
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+        }
+    }//function
 
 }//class
 

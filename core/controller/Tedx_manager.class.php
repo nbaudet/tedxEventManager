@@ -65,21 +65,7 @@ class Tedx_manager{
      * @param type $variableToCheck
      */
     public function checkType($type, $variableToCheck){
-        switch ($type){
-            case "string" :
-                return is_string($variableToCheck);
-                break;
-            case "int" :
-                return is_int($variableToCheck);
-                break;
-            case "email" :
-                if (preg_match('/^[\S]+@[\S]+\.\D{2,4}$/', $variableToCheck)== 1){
-                    return true;
-                } else {
-                    return false;
-                }
-                break;
-        }
+        return ASDataValidator::checkType($type, $variableToCheck); 
     }//function
     
     
@@ -94,7 +80,15 @@ class Tedx_manager{
      * @return Message "Missing action", "Access granted", or "Access restricted"
      */
     public function isGranted( $action ) {
-        return $this->asAuth->isGranted( $action );
+        // Check Data
+        $messageCheckData = ASDataValidator::checkData($action);
+        
+        if ($messageCheckData->getStatus()){
+            $return = $this->asAuth->isGranted( $action );
+        } else {
+            $return = $messageCheckData;            
+        }
+        return $return;
     } // function
     
     /**
@@ -112,22 +106,30 @@ class Tedx_manager{
      * @return Message "User logged" or "Login failure"
      */
     public function login( $login, $password ){
-        if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
-            $loginArgs = array (
-                'id' => $login,
-                'password' => $password
-            );
-            $messageLogin = $this->asAuth->login( $loginArgs );
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData2($login, $password);
+        
+        if ($messageCheckData->getStatus()){
+            if( $this->checkType( "string",  $login ) && $this->checkType( "string", $password ) ){
+                $loginArgs = array (
+                    'id' => $login,
+                    'password' => $password
+                );
+                $messageLogin = $this->asAuth->login( $loginArgs );
+            } else {
+                $messageArgs = array (
+                    'messageNumber' => 004,
+                    'message' => "Login or password is not a string",
+                    'status' => FALSE
+                );
+                $messageLogin = new Message( $messageArgs );
+            } // else
+            $return = $messageLogin;
         } else {
-            $messageArgs = array (
-                'messageNumber' => 004,
-                'message' => "Login or password is not a string",
-                'status' => FALSE
-            );
-            $messageLogin = new Message( $messageArgs );
-        } // else
-        return $messageLogin;
-    } // function
+            $return = $messageCheckData;
+        }
+        return $return;        
+    } // END login
     
     /**
      * Logs the current member out
@@ -179,7 +181,15 @@ class Tedx_manager{
      * @return type Message Registered Visitor or Specifics messages about a problem.
      */
     public function registerVisitor( $args ) {
-        return  ASFree::registerVisitor( $args );
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::registerVisitor( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function
     
     /**
@@ -188,7 +198,15 @@ class Tedx_manager{
      * @return type Message The registration.
      */
     public function getRegistration( $args ) {
-        return  ASFree::getRegistration( $args );
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRegistration( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function
     
      /**
@@ -205,7 +223,15 @@ class Tedx_manager{
      * @return type Message The registrations of an Event.
      */
     public function getRegistrationsByEvent( $anEvent ) {
-        return  ASFree::getRegistrationsByEvent( $anEvent );
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($anEvent);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRegistrationsByEvent( $anEvent );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function
     
     /**
@@ -214,7 +240,15 @@ class Tedx_manager{
      * @return a Message containing the registrations
      */
     public function getRegistrationsByParticipant($participant){
-        return ASFree::getRegistrationsByParticipant($participant);
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($participant);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRegistrationsByParticipant( $participant );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }
     
     /**
@@ -223,13 +257,27 @@ class Tedx_manager{
      * @return type message
      */
     public function getLocationFromEvent( $anEvent ){
-        return ASFree::getLocationFromEvent($anEvent);
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($anEvent);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getLocationFromEvent( $anEvent );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }// function
     
     public function getEvent( $args ) {
-        //No check needed ->Free
-        $anEvent = ASFree::getEvent($args); 
-        return $anEvent; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getEvent( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function
 
     public function getEvents() {
@@ -244,8 +292,15 @@ class Tedx_manager{
      * @return type message
      */
     public function searchEvents($args){
-        $messageSearchEvents = ASFree::searchEvent($args);
-        return $messageSearchEvents;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::searchEvent( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }// function
     
     /**
@@ -254,13 +309,19 @@ class Tedx_manager{
      * @return type message
      */
     public function getOrganizer($no){
-        $messageGetOrganizer = ASFree::getOrganizer($no);
-        return $messageGetOrganizer;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($no);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getOrganizer( $no );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }// function
     
     /**
      * Get Organizers
-     * 
      * @return type message
      */
     public function getOrganizers(){
@@ -284,8 +345,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getSlot($args){
-        $messageGetSlot = ASFree::getSlot($args);
-        return $messageGetSlot;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getSlot( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }// function
     
     
@@ -295,8 +363,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getSlotsFromEvent($event){
-        $messageGetSlotsByEvent = ASFree::getSlotsByEvent($event);
-        return $messageGetSlotsByEvent;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($event);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getSlotsByEvent( $event );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }// function
     
     
@@ -306,8 +381,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getParticipant($args) {
-        $messageGetParticipant = ASFree::getParticipant($args); 
-        return $messageGetParticipant; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getParticipant( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function
     
     
@@ -326,7 +408,15 @@ class Tedx_manager{
      * @return a Message containing an array of Participants
      */
     public function getParticipantsBySlot($slot){
-        return ASFree::getParticipantsBySlot($slot);
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($slot);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::registerVisitor( $slot );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }
     
     /**
@@ -335,8 +425,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getLocation($args) {
-        $messageGetLocation = ASFree::getLocation($args); 
-        return $messageGetLocation; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getLocation( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     
@@ -356,8 +453,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getRole($args) {
-        $messageGetRole = ASFree::getRole($args); 
-        return $messageGetRole; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRole( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return; 
     }//function 
     
     
@@ -376,8 +480,15 @@ class Tedx_manager{
      * @return a Message containing an array of Roles
      */
     public function getRolesByEvent($event){
-        $messageGetRolesByEvent = ASFree::getRolesByEvent($event);
-        return $messageGetRolesByEvent;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($event);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRolesByEvent( $event );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }
     
     /**
@@ -386,8 +497,15 @@ class Tedx_manager{
      * @return a Message containing an array of Roles
      */
     public function getRolesByOrganizer($organizer){
-        $messageGetRolesByOrganizer = ASFree::getRolesByOrganizer($organizer);
-        return $messageGetRolesByOrganizer;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($organizer);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getRolesByOrganizer( $organizer );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }
     
     
@@ -397,8 +515,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getTeamRole($args) {
-        $messageGetTeamRole = ASFree::getTeamRole($args); 
-        return $messageGetTeamRole; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getTeamRole( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     
@@ -417,8 +542,15 @@ class Tedx_manager{
      * @return a Message containing an array of TeamRoles
      */
     public function getTeamRolesByOrganizer($organizer){
-        $messageGetTeamRolesByOrganizer = ASFree::getTeamRolesByOrganizer($organizer);
-        return $messageGetTeamRolesByOrganizer;
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($organizer);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getTeamRolesByOrganizer( $organizer );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }
     
     
@@ -428,8 +560,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getPerson($no) {
-        $messageGetPerson = ASFree::getPerson($no); 
-        return $messageGetPerson; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($no);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getPerson( $no );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     
@@ -448,8 +587,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getUnit($aNo) {
-        $messageGetUnit = ASFree::getUnit($aNo); 
-        return $messageGetUnit;    
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($aNo);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getUnit( $aNo );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;   
     }//function 
     
     
@@ -467,8 +613,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getEventsBySpeaker($args) {
-        $messageGetEventsBySpeaker = ASFree::getEventsBySpeaker($args);
-        return $messageGetEventsBySpeaker; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getEventsBySpeaker( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -476,8 +629,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getSpeakersByEvent($args) {
-        $messageGetSpeakersByEvent = ASFree::getSpeakersByEvent($args);
-        return $messageGetSpeakersByEvent; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getSpeakersByEvent( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -485,8 +645,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getPlacesBySlot($slot) {
-        $messageGetPlacesBySlot = ASFree::getPlacesBySlot($slot);
-        return $messageGetPlacesBySlot; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($slot);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getPlacesBySlot( $slot );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -494,8 +661,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getSpeakerByPlace($place) {
-        $messageGetSpeakerByPlace = ASFree::getSpeakerByPlace($place);
-        return $messageGetSpeakerByPlace; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($place);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getSpeakerByPlace( $place );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -503,8 +677,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getSpeaker($args) {
-        $messageSpeaker = ASFree::getSpeaker($args);
-        return $messageSpeaker; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getSpeaker( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -521,8 +702,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getTalk($args) {
-        $messageTalk = ASFree::getTalk($args);
-        return $messageTalk; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($args);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getTalk( $args );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -539,8 +727,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getTalksBySpeaker($aSpeaker) {
-        $messageTalks = ASFree::getTalksBySpeaker($aSpeaker);
-        return $messageTalks; 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($aSpeaker);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getTalksBySpeaker( $aSpeaker );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /**
@@ -548,7 +743,15 @@ class Tedx_manager{
      * @return type message
      */
     public function getOrganizersByEvent($anEvent) {
-        return ASFree::getOrganizersByEvent($anEvent); 
+        // Check Data
+        $messageCheckData = ASDataValidator::stubCheckData($anEvent);
+        
+        if($messageCheckData->getStatus()){
+            $return = ASFree::getOrganizersByEvent( $anEvent );
+        } else {
+            $return = $messageCheckData;
+        }
+        return $return;
     }//function 
     
     /*==========================================================================
