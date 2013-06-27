@@ -1737,7 +1737,15 @@ class Tedx_manager{
     public function addAccess( $args ) {
         $messageAccess = $this->isGranted( "manageRights" );
         if( $messageAccess->getStatus() ) {
-            $message = ASRightsManagement::addAccess( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASRightsManagement::addAccess( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1754,7 +1762,15 @@ class Tedx_manager{
     public function deleteAccess( $args ) {
         $messageAccess = $this->isGranted( "manageRights" );
         if( $messageAccess->getStatus() ) {
-            $message = ASRightsManagement::deleteAccess( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASRightsManagement::deleteAccess( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
