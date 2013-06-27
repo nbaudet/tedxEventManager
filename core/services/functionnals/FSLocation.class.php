@@ -121,12 +121,12 @@ class FSLocation{
         /*
          * Validate Location NotExistant
          */
-        $aValidLocation = FSLocation::getLocation($args['name']);
+        $messageValidLocation = FSLocation::getLocation($args['name']);
         
         /*
          * If already Inexistant Location
          */
-        if(!($aValidLocation->getStatus())){ 
+        if(!($messageValidLocation->getStatus())){ 
             /*0..1 Direction*/
             if(isset($args['direction'])){
                 $sql = "INSERT INTO Location (
@@ -146,30 +146,28 @@ class FSLocation{
                         '".$args['country']."'
                 );";
             }
+            
+            if($crud->exec($sql)){   
+                $aValidLocation = FSLocation::getLocation($args['name'])->getContent();
+                $argsMessage = array(
+                    'messageNumber' => 205,
+                    'message'       => 'New Location added !',
+                    'status'        => true,
+                    'content'       => $aValidLocation
+                );
+            } else {
+                $argsMessage = array(
+                    'messageNumber' => 206,
+                    'message'       => 'Error while inserting new Location',
+                    'status'        => false,
+                    'content'       => NULL
+                );
+            }// else
+            $message = new Message($argsMessage);            
         }else{
-            $sql="";
-        }
-        
-        if($crud->exec($sql)){       
-            $argsMessage = array(
-                'messageNumber' => 205,
-                'message'       => 'New Location added !',
-                'status'        => true,
-                'content'       => 1
-            );
-            $message = new Message($argsMessage);
-            return $message;
-        } else {
-            $argsMessage = array(
-                'messageNumber' => 206,
-                'message'       => 'Error while inserting new Location',
-                'status'        => false,
-                'content'       => NULL
-            );
-            $message = new Message($argsMessage);
-
-            return $message;
-        }// else   
+            $message = $messageValidLocation;
+        } 
+        return $message;
     }// function
     
     
