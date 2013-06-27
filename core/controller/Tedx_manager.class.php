@@ -81,7 +81,7 @@ class Tedx_manager{
      */
     public function isGranted( $action ) {
         // Check Data
-        $messageCheckData = ASDataValidator::checkData($action);
+        $messageCheckData = ASDataValidator::stubCheckData($action);
         
         if ($messageCheckData->getStatus()){
             $return = $this->asAuth->isGranted( $action );
