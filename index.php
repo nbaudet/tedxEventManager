@@ -43,9 +43,9 @@
 			</header>
 			<section id="content">
 
-				<section class="groupe">
+				<section class="groupe" title="Accéder au template du groupe cortX">
 					<a href="cortX/index.php">
-						Accéder au template du groupe cortX
+                                                <img src="./common/cortx.jpg" />
 					</a>
 				</section>
 				
