@@ -1451,7 +1451,15 @@ class Tedx_manager{
     public function acceptRegistration( $args ) {
         $messageAccess = $this->isGranted( "acceptRegistration" );
         if( $messageAccess->getStatus() ) {
-            $message = ASValidator::acceptRegistration( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASValidator::acceptRegistration( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1468,7 +1476,15 @@ class Tedx_manager{
     public function rejectRegistration( $args ) {
         $messageAccess = $this->isGranted( "rejectRegistration" );
         if( $messageAccess->getStatus() ) {
-            $message = ASValidator::rejectRegistration( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASValidator::rejectRegistration( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1485,7 +1501,15 @@ class Tedx_manager{
     public function cancelRegistration( $args ) {
         $messageAccess = $this->isGranted( "cancelRegistration" );
         if( $messageAccess->getStatus() ) {
-            $message = ASValidator::cancelRegistration( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASValidator::cancelRegistration( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
