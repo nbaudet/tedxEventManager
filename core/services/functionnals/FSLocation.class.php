@@ -148,7 +148,7 @@ class FSLocation{
             }
         }else{
             $sql="";
-        };
+        }
         
         if($crud->exec($sql)){       
             $argsMessage = array(
