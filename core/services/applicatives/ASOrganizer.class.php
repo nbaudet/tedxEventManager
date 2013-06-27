@@ -31,9 +31,7 @@ class ASOrganizer {
      */
     public function __construct() {
         // do nothing;
-    }
-
-//construct
+    }//construct
 
     /**
      * Add a Location
@@ -43,9 +41,7 @@ class ASOrganizer {
     public static function addLocation($args) {
         $aLocation = FSLocation::addLocation($args);
         return $aLocation;
-    }
-
-//function
+    }//function
 
     /**
      * Method registerSpeaker from SA Organizer
@@ -138,9 +134,7 @@ class ASOrganizer {
 
         // Return the message Visitor Registed or not Registred
         return $aRegisteredSpeaker;
-    }
-
-//function
+    }//function
 
     /**
      * Method change the Location of a Event
@@ -152,9 +146,7 @@ class ASOrganizer {
         $anEventToUpdate->setLocationName($args['locationName']);
         $aChangedEventLocation = FSEvent::setEvent($anEventToUpdate);
         return $aChangedEventLocation;
-    }
-
-//function
+    }//function
 
     /**
      * Applicative service to add a slot to an event
@@ -163,9 +155,7 @@ class ASOrganizer {
      */
     public static function addSlotToEvent($args) {
         return FSSlot::addSlot($args);
-    }
-
-//function
+    }//function
 
     /**
      * Applicative service to add a Speaker to a Slot (Place and Talk).
@@ -182,6 +172,7 @@ class ASOrganizer {
         $videoDescription = $args['videoDescription'];
         $videoURL = $args['videoURL'];
 
+        // Validate existence of Event
         $messageValidEvent = FSEvent::getEvent($aSlot->getEventNo());
         if ($messageValidEvent->getStatus()) {
             $aValidEvent = $messageValidEvent->getContent();
@@ -189,9 +180,13 @@ class ASOrganizer {
                 'event' => $aValidEvent,
                 'no' => $aSlot->getNo()
             );
+            
+            // Validate existence of Slot
             $messageValidSlot = FSSlot::getSlot($argsSlot);
             if ($messageValidSlot->getStatus()) {
                 $aValidSlot = $messageValidSlot->getContent();
+                
+                // Validate existence of Speaker
                 $messageValidSpeaker = FSSpeaker::getSpeaker($aSpeaker->getNo());
                 if ($messageValidSpeaker->getStatus()) {
                     $aValidSpeaker = $messageValidSpeaker->getContent();
@@ -200,8 +195,12 @@ class ASOrganizer {
                         'slot' => $aValidSlot,
                         'no' => $aNo
                     );
+                    
+                    // Validate inexistence of Place
                     $messageValidPlace = FSPlace::getPlace($argsPlace);
                     if (!$messageValidPlace->getStatus()) {
+                        
+                        // Add new Place
                         $messageAddedPlace = FSPlace::addPlace($argsPlace);
                         if ($messageAddedPlace->getStatus()) {
                             $argsTalk = array(
@@ -221,19 +220,29 @@ class ASOrganizer {
                             );
 
                             $message = new Message($argsMessage);
-                        } else {
+                        }
+                        // Else: Place not added
+                        else {
                             $message = $messageAddedPlace;
                         }
-                    } else {
+                    }
+                    // Else: Already existing place
+                    else {
                         $message = $messageValidPlace;
                     }
-                } else {
+                }
+                // Else: nonexistent Speaker
+                else {
                     $message = $messageValidSpeaker;
                 }
-            } else {
+            }
+            // Else: nonexistent Slot
+            else {
                 $message = $messageValidSlot;
             }
-        } else {
+        }
+        // Else: nonexistent Event
+        else {
             $message = $messageValidEvent;
         }
         return $message;
@@ -582,6 +591,5 @@ class ASOrganizer {
         } // Foreach
         return $aValidSlot;
     }// function
-}
-//class
+}//class
 ?>
