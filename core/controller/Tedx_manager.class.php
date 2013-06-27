@@ -1230,7 +1230,15 @@ class Tedx_manager{
     public function registerSpeaker( $args ) {
         $messageAccess = $this->isGranted( "registerSpeaker" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::registerSpeaker( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::registerSpeaker( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1246,7 +1254,15 @@ class Tedx_manager{
     public function addLocation($args) {
         $messageAccess = $this->isGranted( "addLocation" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::addLocation( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::addLocation( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1262,7 +1278,15 @@ class Tedx_manager{
     public function changeEventLocation($args) {
         $messageAccess = $this->isGranted( "changeEventLocation" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changeEventLocation( $args );
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::changeEventLocation( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1278,7 +1302,15 @@ class Tedx_manager{
     public function addSlotToEvent( $args ) {
         $messageAccess = $this->isGranted( "addSlotToEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::addSlotToEvent( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::addSlotToEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1296,7 +1328,15 @@ class Tedx_manager{
     public function addSpeakerToPlace( $args ) {
         $messageAccess = $this->isGranted( "addSpeakerToPlace" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::addSpeakerToPlace( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::addSpeakerToPlace( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1308,7 +1348,15 @@ class Tedx_manager{
     public function changePositionOfSpeaker( $args ) {
         $messageAccess = $this->isGranted( "changePositionOfSpeaker" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changePositionOfSpeaker( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::changePositionOfSpeaker( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1316,21 +1364,6 @@ class Tedx_manager{
         return $message;
     }//function
     
-    /**
-     * Set an Event but let it non archived
-     * @param type $args
-     * @return type message
-     */
-    public function setEventAndLetArchive( $args ) {    
-        $messageAccess = $this->isGranted( "setEventAndLetArchive" );
-        if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::setEventAndLetArchive( $args ); 
-        }
-        else {
-            $message = $messageAccess;
-        }
-        return $message;
-    }
      
     /**
      * Change the parameters of an Event
@@ -1340,7 +1373,15 @@ class Tedx_manager{
     public function changeEvent( $args ) {    
         $messageAccess = $this->isGranted( "changeEvent" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changeEvent( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::changeEvent( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1356,7 +1397,15 @@ class Tedx_manager{
     public function changeLocation( $args ) {    
         $messageAccess = $this->isGranted( "changeLocation" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changeLocation( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::changeLocation( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
@@ -1372,7 +1421,15 @@ class Tedx_manager{
     public function changeSlot( $args ) {    
         $messageAccess = $this->isGranted( "changeSlot" );
         if( $messageAccess->getStatus() ) {
-            $message = ASOrganizer::changeSlot( $args ); 
+            // Check Data
+            $messageCheckData = ASDataValidator::stubCheckData($args);
+
+            if($messageCheckData->getStatus()){
+                $message = ASOrganizer::changeSlot( $args );
+            } else {
+                $message = $messageCheckData;
+            }
+
         }
         else {
             $message = $messageAccess;
