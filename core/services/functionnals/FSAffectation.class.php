@@ -179,7 +179,6 @@ class FSAffectation {
             " . $organizer->getNo() . "
         );";
         $crud->exec($sql);
-        echo $sql;
         // Validate Existant Affectation
         $argsAffectation = array(
             'teamRole' => $args['teamRole'],
