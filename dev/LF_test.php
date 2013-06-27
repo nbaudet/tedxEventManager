@@ -26,6 +26,32 @@ require_once(APP_DIR .'/core/services/applicatives/ASFree.class.php');
 require_once(APP_DIR .'/core/model/Member.class.php');
 require_once(APP_DIR .'/core/model/Unit.class.php');
 
+$string = "Rue de l'Eglantier";
+echo $string;
+
+$string = addslashes($string);
+echo $string;
+
+$args = array(
+    'name'        => 'Bieber', // String
+    'firstname'   => 'Justin',   // String
+    'dateOfBirth' => '1999-04-15', // Date
+    'address'     => 'Rue de l\'Eglantier', // String
+    'city'        => 'Lausanne', // String
+    'country'     => 'Suisse', // String
+    'phoneNumber' => '079-345-67-89', // String
+    'email'       => 'stephan.robert@test.ch', // String
+    'description' => 'Professeur à la HEIG-VD', // String
+    'idmember'    => 'srt543', // String
+    'password'    => 'test' // String encrypt to MD5
+);
+// Register the Visitor
+//$messageRegisteredVisitor = $tedx_manager->registerVisitor( $args );
+
+//var_dump($messageRegisteredVisitor);
+
+
+/*------------- TEST setTalk
 $speaker = $tedx_manager->getSpeaker(6)->getContent();
 $event = $tedx_manager->getEvent(15)->getContent();
 
@@ -42,6 +68,10 @@ $aTalkToSet = new Talk($arrayTalkToSet);
 var_dump($aTalkToSet);
 
 var_dump(FSTalk::setTalk($aTalkToSet));
+ -----------------
+ */
+
+
 /*------------------------
 $speaker = $tedx_manager->getSpeaker(24)->getContent();
 var_dump($speaker);

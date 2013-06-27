@@ -80,17 +80,17 @@ class FSPerson {
 
         if ($data) {
             $argsPerson = array(
-                'no' => $data['No'],
-                'name' => $data['Name'],
-                'firstname' => $data['Firstname'],
-                'dateOfBirth' => $data['DateOfBirth'],
-                'address' => $data['Address'],
-                'city' => $data['City'],
-                'country' => $data['Country'],
-                'phoneNumber' => $data['PhoneNumber'],
-                'email' => $data['Email'],
-                'description' => $data['Description'],
-                'isArchived' => $data['IsArchived']
+                'no'            => $data['No'],
+                'name'          => $data['Name'],
+                'firstname'     => $data['Firstname'],
+                'dateOfBirth'   => $data['DateOfBirth'],
+                'address'       => $data['Address'],
+                'city'          => $data['City'],
+                'country'       => $data['Country'],
+                'phoneNumber'   => $data['PhoneNumber'],
+                'email'         => $data['Email'],
+                'description'   => $data['Description'],
+                'isArchived'    => $data['IsArchived']
             );
 
             $person = new Person($argsPerson);
@@ -128,17 +128,17 @@ class FSPerson {
 
             foreach ($data as $row) {
                 $argsPerson = array(
-                    'no' => $row['No'],
-                    'name' => $row['Name'],
-                    'firstname' => $row['Firstname'],
-                    'dateOfBirth' => $row['DateOfBirth'],
-                    'address' => $row['Address'],
-                    'city' => $row['City'],
-                    'country' => $row['Country'],
-                    'phoneNumber' => $row['PhoneNumber'],
-                    'email' => $row['Email'],
-                    'description' => $row['Description'],
-                    'isArchived' => $row['IsArchived']
+                    'no'            => $row['No'],
+                    'name'          => $row['Name'],
+                    'firstname'     => $row['Firstname'],
+                    'dateOfBirth'   => $row['DateOfBirth'],
+                    'address'       => $row['Address'],
+                    'city'          => $row['City'],
+                    'country'       => $row['Country'],
+                    'phoneNumber'   => $row['PhoneNumber'],
+                    'email'         => $row['Email'],
+                    'description'   => $row['Description'],
+                    'isArchived'    => $row['IsArchived']
                 );
 
                 $persons[] = new Person($argsPerson);
@@ -180,6 +180,7 @@ class FSPerson {
             $description = addslashes($args['description']);
         }
         $address = addslashes($args['address']);
+        
         $sql = "INSERT INTO `Person` (`Name`, `Firstname`, `DateOfBirth`, `Address`, `City`, `Country`, `PhoneNumber`, `Email`, `Description`) VALUES ('" . addslashes($args['name']) . "', '" . addslashes($args['firstname']) . "', '" . addslashes($args['dateOfBirth']) . "', '" . addslashes($args['address']) . "', '" . addslashes($args['city']) . "', '" . addslashes($args['country']) . "', '" . addslashes($args['phoneNumber']) . "', '" . addslashes($args['email']) . "', '" . $description . "')";
 
         $messageFreeEmail = self::checkFreeEmail(array('email' => $args['email']));

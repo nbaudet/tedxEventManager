@@ -9,9 +9,8 @@ require_once(APP_DIR . '/core/model/Person.class.php');
  * FSOrganizer.class.php
  * 
  * Author : Lauric Francelet
- * Date : 25.06.2013
  * 
- * Description : define the class FSOrganizer as definited in the model
+ * Description : define the class FSOrganizer as defined in the model
  * 
  */
 class FSOrganizer{

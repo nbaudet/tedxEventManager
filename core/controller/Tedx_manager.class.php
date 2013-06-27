@@ -33,6 +33,7 @@ require_once(APP_DIR.'/core/services/applicatives/ASParticipant.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASOrganizer.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASValidator.class.php');
 require_once(APP_DIR.'/core/services/applicatives/ASAdmin.class.php');
+require_once(APP_DIR.'/core/services/applicatives/ASDataValidator.class.php');
 
 
 /**
