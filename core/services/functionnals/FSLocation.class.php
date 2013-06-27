@@ -131,19 +131,19 @@ class FSLocation{
             if(isset($args['direction'])){
                 $sql = "INSERT INTO Location (
                     Name, Address, City, Country, Direction) VALUES (
-                        '".$args['name']."', 
-                        '".$args['address']."', 
-                        '".$args['city']."', 
-                        '".$args['country']."',
-                        '".$args['direction']."'
+                        '". addslashes($args['name']) ."', 
+                        '". addslashes($args['address']) ."', 
+                        '". addslashes($args['city']) ."', 
+                        '". addslashes($args['country']) ."',
+                        '". addslashes($args['direction']) ."'
                 );";
             }else{
                 $sql = "INSERT INTO Location (
                     Name, Address, City, Country) VALUES (
-                        '".$args['name']."', 
-                        '".$args['address']."', 
-                        '".$args['city']."', 
-                        '".$args['country']."'
+                        '".addslashes($args['name'])."', 
+                        '".addslashes($args['address'])."', 
+                        '".addslashes($args['city'])."', 
+                        '".addslashes($args['country'])."'
                 );";
             }
             
