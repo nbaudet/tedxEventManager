@@ -7,6 +7,15 @@
  */
 require_once( '../tedx-config.php' );
 
+?>
+<style>
+body {
+    font-family: Helvetica, Verdana, Sans-serif;
+}
+</style>
+
+
+<?php
 // DEBUG
 /*echo '<h2>Session</h2>';
 var_dump($_SESSION);
@@ -130,10 +139,10 @@ if( isset( $_REQUEST['action'] ) ) {
     case 'login':
         $message = $tedx_manager->login( $_REQUEST['id'], $_REQUEST['password'] );
         if( $message->getStatus() ) {
-            header( "Location: rightsManagement_RS.php" );
+            header( "Location: rightsManagement.php" );
         }
         else {
-            header( "Location: rightsManagement_RS.php?try=fail" );
+            header( "Location: rightsManagement.php?try=fail" );
         }
         break;
     
